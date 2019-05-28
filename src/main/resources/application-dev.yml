@@ -1,0 +1,6 @@
+spring:
+ datasource:
+  url: jdbc:mysql://localhost/renfei?useSSL=false&serverTimezone=UTC
+  username: root
+  password: root
+  driver-class-name: com.mysql.jdbc.Driver
