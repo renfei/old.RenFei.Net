@@ -11,3 +11,4 @@ before_install:
   - sudo mysql -e 'CREATE DATABASE renfei;'
   - mysql -u root --default-character-set=utf8 renfei < db/renfei.sql
   - sudo mysql -e "use mysql; update user set authentication_string=PASSWORD('root') where User='root'; update user set plugin='mysql_native_password';FLUSH PRIVILEGES;"
+  - sudo mysql -e "INSERT INTO mysql.user (Host, User, Password) VALUES ('%', 'root', password('root')); GRANT ALL ON *.* TO 'root'@'%' WITH GRANT OPTION;"
