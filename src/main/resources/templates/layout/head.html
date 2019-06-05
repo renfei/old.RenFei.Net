@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head th:fragment="head(head)">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title th:text="${head.sitename}"></title>
+        <link th:each="cs:${head.css}" rel="stylesheet" type="text/css" th:href="${cs}"/>
+        <script th:utext="${head.script}"></script>
+    </head>
+</html>

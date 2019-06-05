@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/head::head(${head})">
+</head>
+<body>
+<header th:replace="layout/header::header"></header>
+<main class="site-main" id="site-main">
+    <section class="main-banner d-flex px-4 flex-column">
+        <div class="main-banner-text container pb-4">
+            <h1 class="main-banner-text-title">RenFei Blog</h1>
+            <div class="sub-categories">
+                <div class="categories-list d-block px-4">
+                    <ul>
+                        <li><a href="#">Posts Categories</a></li>
+                        <li><a href="#">lalal</a></li>
+                        <li><a href="#">lalal</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="main-banner-bg">
+            <img src="/img/home_banner.jpg"/>
+        </div>
+    </section>
+    <section class="post-feed">
+        <div class="post-feed-top">
+        </div>
+        <div class="featured">
+            <div class="container">
+                <strong class="underline-dash">
+                    Featured
+                </strong>
+            </div>
+        </div>
+        <div class="container">
+            <div class="main">
+                sadgsg
+            </div>
+            <div th:replace="layout/sidebar::sidebar"></div>
+            <div class="clear"></div>
+        </div>
+    </section>
+</main>
+<footer th:replace="layout/footer::footer(${footer},${performance})"></footer>
+</body>
+</html>

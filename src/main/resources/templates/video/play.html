@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/head::head(${head})">
+</head>
+<body>
+<header th:replace="/layout/header::header"></header>
+<main class="site-main" id="site-main">
+    <section class="post-feed">
+        <div class="container">
+            <div class="main">
+                <div class="videobox">
+                    <div class="videobox_2" style="background-color: blue">
+                        <video id='my-video' class='video-js' controls preload='auto' style="position: absolute;top: 0; bottom: 0; left: 0; right: 0;"
+                               poster='https://vjs.zencdn.net/v/oceans.png' data-setup='{}'>
+                            <source src='https://vjs.zencdn.net/v/oceans.mp4' type='video/mp4'>
+                            <source src='https://vjs.zencdn.net/v/oceans.webm' type='video/webm'>
+                            <p class='vjs-no-js'>
+                                To view this video please enable JavaScript, and consider upgrading to a web browser that
+                                <a href='https://videojs.com/html5-video-support/' target='_blank'>supports HTML5 video</a>
+                            </p>
+                        </video>
+                    </div>
+                </div>
+            </div>
+            <div th:replace="/layout/sidebar::sidebar"></div>
+            <div class="clear"></div>
+        </div>
+    </section>
+</main>
+<footer th:replace="layout/footer::footer(${footer},${performance})"></footer>
+<script src='https://vjs.zencdn.net/7.5.4/video.js'></script>
+</body>
+</html>

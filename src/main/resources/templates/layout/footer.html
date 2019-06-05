@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <body>
+        <footer id="footer" th:fragment="footer(footer,performance)" class="footer mt-6">
+            <div class="container p-responsive">
+                <div class="d-flex flex-wrap py-5 mb-5">
+                    <div class="col-12 col-lg-4 mb-5">
+                        <a href="/">
+                            <img src="https://cdn.neilren.com/neilren4j/upload/557e9977103248b789c81f1cb082c091.jpeg"
+                                 width="84" height="30">
+                        </a>
+                    </div>
+                    <div class="col-6 col-sm-3 col-lg-2 mb-6 mb-md-2 pr-3 pr-lg-0 pl-lg-4">
+                        asf
+                    </div>
+                    <div class="col-6 col-sm-3 col-lg-2 mb-6 mb-md-2 pr-3 pr-md-0 pl-md-4">
+                        asdf
+                    </div>
+                    <div class="col-6 col-sm-3 col-lg-2 mb-6 mb-md-2 pr-3 pr-md-0 pl-md-4">
+                        asdf
+                    </div>
+                    <div class="col-6 col-sm-3 col-lg-2 mb-6 mb-md-2 pr-3 pr-md-0 pl-md-4">
+                        asfd
+                    </div>
+                </div>
+            </div>
+            <div class="bg-gray-light">
+                <div class="container py-3">
+                    <div class="tar py-3">
+                        <uL class="copyList">
+                            <li th:each="menu:${footer.footerMenu}">
+                                <a th:href="${menu.link}" target="_blank" th:text="${menu.text}"></a>
+                            </li>
+                        </uL>
+                    </div>
+                    <div class="clear"></div>
+                    <div class="tar py-3">
+                        <uL class="copyList">
+                            <li th:each="info:${performance.infor}" th:text="${info}"></li>
+                        </uL>
+                    </div>
+                </div>
+            </div>
+            <div th:utext="${footer.analyticsCode}"></div>
+        </footer>
+    </body>
+</html>
