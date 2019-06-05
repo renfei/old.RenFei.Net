@@ -1,6 +1,6 @@
 language: java
 sudo: true
-dist: precise
+dist: trusty
 jdk:
   - openjdk8
 services:
