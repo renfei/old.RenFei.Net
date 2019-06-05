@@ -8,8 +8,6 @@ script: "mvn cobertura:cobertura"
 after_success:
   - bash <(curl -s https://codecov.io/bash)
 before_install:
+  - sudo mysql -e 'CREATE DATABASE renfei;'
+  - mysql -u root --default-character-set=utf8 renfei < db/renfei.sql
   - sudo mysql -e "use mysql; update user set authentication_string=PASSWORD('root') where User='root'; update user set plugin='mysql_native_password';FLUSH PRIVILEGES;"
-  - mysql -e 'CREATE DATABASE renfei;'
-  - sudo service mysql restart
-before_script:
-  - mysql -u root -proot --default-character-set=utf8 renfei < db/renfei.sql
