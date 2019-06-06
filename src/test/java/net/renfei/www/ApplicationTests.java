@@ -18,6 +18,9 @@ public class ApplicationTests {
         System.out.println("开始测试-----------------");
     }
 
+    @Test
+    public void test(){}
+
     @After
     public void after() {
         System.out.println("测试结束-----------------");
