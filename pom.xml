@@ -123,6 +123,14 @@
                     <verbose>true</verbose>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.eluder.coveralls</groupId>
+                <artifactId>coveralls-maven-plugin</artifactId>
+                <version>4.3.0</version>
+                <configuration>
+                    <repoToken>gKIltRidPZOXmGzu4SxBth4pZeh4r4FXh</repoToken>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
