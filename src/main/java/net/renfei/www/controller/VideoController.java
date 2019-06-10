@@ -9,8 +9,8 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/video")
 public class VideoController extends BaseController {
     @RequestMapping("play")
-    public ModelAndView playVideo() {
-        ModelAndView mv = new ModelAndView();
+    public ModelAndView playVideo(ModelAndView mv) {
+        setVideoJS(mv);
         mv.setViewName("video/play");
         return mv;
     }

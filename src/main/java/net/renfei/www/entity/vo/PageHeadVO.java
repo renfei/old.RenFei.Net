@@ -9,6 +9,7 @@ import java.util.List;
 @Component
 public class PageHeadVO {
     private String sitename;
+    private String description;
     private List<String> css;
     private List<String> jss;
     private String script;

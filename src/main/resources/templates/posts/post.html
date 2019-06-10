@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/head::head(${head})">
+</head>
+<body>
+<header th:replace="/layout/header::header(${header})"></header>
+<main class="site-main" id="site-main">
+    <section class="post-feed">
+        <div class="container">
+            <div class="main">
+                <div class="posts_content">
+                    <div class="featured_image" th:if="${postsVO.featuredImage!=null}">
+                        <div class="featured_image_box" th:if="${postsVO.featuredImage!=null}"
+                             th:style="${'background-image: url('+postsVO.featuredImage+')'}">
+                        </div>
+                    </div>
+                    <div class="posts_info">
+                        <span th:text="${'Date: '+(postsVO.releaseTime==null?'Unknown':#dates.format(postsVO.releaseTime,'yyyy-MM-dd hh:mm:ss'))}"></span>
+                        <span class="spacer-line"></span>
+                        <span th:text="${'Views: '+(postsVO.views==null?'Unknown':postsVO.views)}"></span>
+                        <span class="spacer-line"></span>
+                        <span th:text="${'Category: '+(postsVO.categoryName==null?'Unknown':postsVO.categoryName)}"></span>
+                    </div>
+                    <div class="posts_title">
+                        <h1 th:text="${postsVO.title}"></h1>
+                    </div>
+                    <div style="padding-top: 20px;">
+                        <div id="toc" class="toc" style="position: initial;">
+                        </div>
+                        <div id="posts" class="posts_text" th:utext="${postsVO.content}"></div>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+            </div>
+            <div th:replace="/layout/sidebar::sidebar"></div>
+            <div class="clear"></div>
+        </div>
+    </section>
+</main>
+<footer th:replace="layout/footer::footer(${footer},${performance})"></footer>
+<script>
+    $(function () {
+    });
+    function mashiroToc(mashiro) {
+        // 初始化
+        if (mashiro) {
+            var id = 1;
+            $("#posts").children("h1,h2,h3,h4,h5").each(function() {
+                //var hyphenated = $(this).text().replace(/\s/g, '-');
+                var hyphenated = "mashiro-" + id;
+                $(this).attr('id', hyphenated);
+                id++;
+            });
+            // 初始化 tocbot.js
+            tocbot.init({
+                tocSelector: '#toc',
+                contentSelector: '#posts',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                positionFixedSelector: "#toc"
+            });
+        }
+    }
+    mashiroToc(true);
+</script>
+</body>
+</html>

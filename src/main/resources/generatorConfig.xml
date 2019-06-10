@@ -35,7 +35,9 @@
         <!--<table tableName="t_category" domainObjectName="CategoryDO"></table>-->
         <!--<table tableName="t_page" domainObjectName="PageDO"></table>-->
         <!--<table tableName="t_posts" domainObjectName="PostsDO"></table>-->
-        <table tableName="t_video" domainObjectName="VideoDO"></table>
+        <!--<table tableName="t_video" domainObjectName="VideoDO"></table>-->
+        <!--<table tableName="t_setting" domainObjectName="SettingDO"></table>-->
+        <table tableName="v_allinfo" domainObjectName="VAllInfo"></table>
 
     </context>
 </generatorConfiguration>

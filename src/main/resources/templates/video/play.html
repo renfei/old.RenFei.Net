@@ -1,23 +1,73 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="layout/head::head(${head})">
 </head>
 <body>
-<header th:replace="/layout/header::header"></header>
+<!-- Preload -->
+<link
+        rel="preload"
+        as="font"
+        crossorigin
+        type="font/woff2"
+        href="/font/plyr/gordita-medium.woff2"
+/>
+<link
+        rel="preload"
+        as="font"
+        crossorigin
+        type="font/woff2"
+        href="/font/plyr/gordita-bold.woff2"
+/>
+<header th:replace="/layout/header::header(${header})"></header>
 <main class="site-main" id="site-main">
     <section class="post-feed">
         <div class="container">
             <div class="main">
                 <div class="videobox">
-                    <div class="videobox_2" style="background-color: blue">
-                        <video id='my-video' class='video-js' controls preload='auto' style="position: absolute;top: 0; bottom: 0; left: 0; right: 0;"
-                               poster='https://vjs.zencdn.net/v/oceans.png' data-setup='{}'>
-                            <source src='https://vjs.zencdn.net/v/oceans.mp4' type='video/mp4'>
-                            <source src='https://vjs.zencdn.net/v/oceans.webm' type='video/webm'>
-                            <p class='vjs-no-js'>
-                                To view this video please enable JavaScript, and consider upgrading to a web browser that
-                                <a href='https://videojs.com/html5-video-support/' target='_blank'>supports HTML5 video</a>
-                            </p>
+                    <div class="videobox_2">
+                        <video style="position: absolute;top: 0; bottom: 0; left: 0; right: 0;"
+                                controls
+                                crossorigin
+                                playsinline
+                                poster="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.jpg"
+                                id="player"
+                        >
+                            <!-- Video files -->
+                            <source
+                                    src="https://cdn.neilren.com/video/mv/BanGeShiJiDeGuShi.mp4"
+                                    type="video/mp4"
+                                    size="576"
+                            />
+                            <source
+                                    src="https://cdn.neilren.com/video/mv/BanGeShiJiDeGuShi.mp4"
+                                    type="video/mp4"
+                                    size="720"
+                            />
+                            <source
+                                    src="https://cdn.neilren.com/video/mv/BanGeShiJiDeGuShi.mp4"
+                                    type="video/mp4"
+                                    size="1080"
+                            />
+
+                            <!-- Caption files -->
+                            <track
+                                    kind="captions"
+                                    label="English"
+                                    srclang="en"
+                                    src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.en.vtt"
+                                    default
+                            />
+                            <track
+                                    kind="captions"
+                                    label="Fran莽ais"
+                                    srclang="fr"
+                                    src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.fr.vtt"
+                            />
+
+                            <!-- Fallback for browsers that don't support the <video> element -->
+                            <a href="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4" download
+                            >Download</a
+                            >
                         </video>
                     </div>
                 </div>
@@ -28,6 +78,15 @@
     </section>
 </main>
 <footer th:replace="layout/footer::footer(${footer},${performance})"></footer>
-<script src='https://vjs.zencdn.net/7.5.4/video.js'></script>
+<!-- Polyfills -->
+<script
+        src="https://cdn.polyfill.io/v3/polyfill.min.js?features=es6,Array.prototype.includes,CustomEvent,Object.entries,Object.values,URL,Math.trunc&flags=gated"
+        crossorigin="anonymous"
+></script>
+
+<!-- Sharing libary (https://shr.one) -->
+<script src="https://cdn.shr.one/2.0.0-beta.2/shr.js" crossorigin="anonymous"></script>
+<!-- Docs script -->
+<script src="/font/plyr/video.js" crossorigin="anonymous"></script>
 </body>
 </html>
