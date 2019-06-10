@@ -3,7 +3,7 @@
 <head th:replace="layout/head::head(${head})">
 </head>
 <body>
-<header th:replace="layout/header::header"></header>
+<header th:replace="layout/header::header(${header})"></header>
 <main class="site-main" id="site-main">
     <section class="main-banner d-flex px-4 flex-column">
         <div class="main-banner-text container pb-4">
@@ -11,9 +11,9 @@
             <div class="sub-categories">
                 <div class="categories-list d-block px-4">
                     <ul>
-                        <li><a href="#">Posts Categories</a></li>
-                        <li><a href="#">lalal</a></li>
-                        <li><a href="#">lalal</a></li>
+                        <li th:if="${typeDTOS!=null}" th:each="type:${typeDTOS}">
+                            <a th:href="${domain+type.uriPath}" th:text="${type.typeName}"></a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -34,7 +34,34 @@
         </div>
         <div class="container">
             <div class="main">
-                sadgsg
+                <h3 class="all-posts__title py-5 pt-md-10 pb-md-9 p-y4 px-3 px-md-0">
+                    All Information
+                </h3>
+                <div class="allinfo">
+                    <article th:if="${allInfoVOList!=null}" th:each="info:${allInfoVOList}"
+                             class="allinfo-item d-flex mb-8">
+                        <div class="allinfo-item-left col-12 col-md-3">
+                            <span class="mb-3" th:text="${#dates.format(info.releaseTime,'MMM d, yyyy')}"></span>
+                            <div class="img-box">
+                                <a th:href="${info.href}">
+                                    <div class="img-box2"
+                                         th:style="'background-image: url(\''+${info.featuredImage}+'\');'">
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="allinfo-item-right col-12 col-lg-7">
+                            <div class="cat mb-3">
+                                <a th:href="${info.catHref}" th:text="${info.catName}"></a>
+                            </div>
+                            <a th:href="${info.href}" style="color: #000000;">
+                                <h4 class="f3 mb-4" th:text="${info.title}"></h4>
+                            </a>
+                            <div class="excerpt mb-3" th:text="${info.describes}">
+                            </div>
+                        </div>
+                    </article>
+                </div>
             </div>
             <div th:replace="layout/sidebar::sidebar"></div>
             <div class="clear"></div>

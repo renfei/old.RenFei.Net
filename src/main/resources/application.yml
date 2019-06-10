@@ -35,3 +35,9 @@ spring:
 mybatis:
   typeAliasesPackage: net.renfei.www.entity.dbo
   mapperLocations: classpath:mapping/*.xml
+#pagehelper分页插件配置
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql

@@ -1,6 +1,7 @@
 package net.renfei.www.controller;
 
 import net.renfei.www.common.baseclass.BaseController;
+import net.renfei.www.entity.dto.PostsDTO;
 import net.renfei.www.entity.dto.PostsListDTO;
 import net.renfei.www.entity.vo.PostsVO;
 import net.renfei.www.service.PostsService;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 import java.util.List;
 
@@ -107,8 +109,21 @@ public class PostsController extends BaseController {
      * @return
      */
     @RequestMapping("{id}")
-    public ModelAndView getPostsByID(@PathVariable("id") Long id) {
-        ModelAndView mv = new ModelAndView();
+    public ModelAndView getPostsByID(@PathVariable("id") String id, ModelAndView mv) throws NoHandlerFoundException {
+        PostsDTO postsDTO = postsService.getPostsByID(id);
+        if (postsDTO != null) {
+            PostsVO postsVO = ejbGenerator.convert(postsDTO, PostsVO.class);
+            mv.addObject("postsVO", postsVO);
+            setHead(mv, postsVO.getTitle(), postsVO.getDescribes());
+            if (postsVO.getContent().indexOf("<pre class=") != -1) {
+                //检测到有代码显示，需要增加代码高亮插件
+                setHighlightJS(mv);
+            }
+            setPostsPageJSCSS(mv);
+        } else {
+            throwNoHandlerFoundException();
+        }
+        mv.setViewName("posts/post");
         return mv;
     }
 }

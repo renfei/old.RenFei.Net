@@ -28,6 +28,10 @@ ol, ul {
     margin-bottom: 0;
 }
 
+p {
+    text-indent: 2em;
+}
+
 .clear {
     clear: both;
 }
@@ -83,6 +87,18 @@ ol, ul {
     width: 50%;
 }
 
+.col-12 {
+    width: 100%;
+}
+
+.mb-3 {
+    margin-bottom: 16px!important;
+}
+
+.mb-4 {
+    margin-bottom: 24px!important;
+}
+
 .mb-5 {
     margin-bottom: 32px !important;
 }
@@ -91,8 +107,25 @@ ol, ul {
     margin-bottom: 40px !important;
 }
 
+.mb-8, .my-8 {
+    margin-bottom: 64px!important;
+}
+
 .pr-3 {
     padding-right: 16px !important;
+}
+
+.pl-3, .px-3 {
+    padding-left: 16px!important;
+}
+
+.px-3 {
+    padding-right: 16px!important;
+}
+
+.py-5 {
+    padding-top: 32px!important;
+    padding-bottom: 32px!important;
 }
 
 .text-normal {
@@ -197,6 +230,13 @@ ol, ul {
     background-color: #fff;
 }
 
+.spacer-line {
+    height: 1px;
+    background: #000;
+    margin: 0 12px;
+    width: 20px;
+}
+
 /***************
  * 业务样式
  ***************/
@@ -222,13 +262,12 @@ ol, ul {
 
 .main {
     padding: 5px;
-    background-color: aquamarine;
 }
 
 .sidebar {
     height: 300px;
     padding: 5px;
-    background-color: aqua;
+    background-color: #fafbfc !important;
 }
 
 .itellyou360 {
@@ -402,7 +441,6 @@ ol, ul {
 .videobox {
     width: 100%;
     padding-bottom: 56.25%;
-    background: gold; /** <-- For the demo **/
     position: relative;
 }
 
@@ -432,6 +470,93 @@ ol, ul {
     font-size: 12px;
 }
 
+.featured_image {
+    width: 100%;
+    padding-bottom: 36.23%;
+    position: relative;
+}
+
+
+.featured_image_box {
+    background-size: cover;
+    background-position: center;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.posts_info {
+    color: #959da5;
+    margin-top: 16px !important;
+    margin-bottom: 16px !important;
+    font-size: 14px;
+}
+
+.posts_info .spacer-line {
+    background: #959da5;
+    margin-bottom: 4px;
+}
+
+.posts_title h1 {
+    font-weight: 500 !important;
+    line-height: 1.25 !important;
+}
+
+.all-posts__title {
+    font-size: 40px;
+}
+
+.allinfo {
+}
+
+.allinfo .allinfo-item {
+}
+
+.allinfo .allinfo-item .allinfo-item-left {
+    color: #6a737d;
+    padding-right: 10px;
+}
+
+.allinfo .allinfo-item .allinfo-item-left span{
+    margin: 10px 0;
+}
+
+.allinfo .allinfo-item .allinfo-item-left .img-box{
+    width: 100%;
+    padding-bottom: 56.25%;
+    position: relative;
+    margin: 16px 0;
+}
+.allinfo .allinfo-item .allinfo-item-left .img-box .img-box2{
+    background-size: cover;
+    background-position: center;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.allinfo .allinfo-item .allinfo-item-right {
+}
+
+.allinfo .allinfo-item .allinfo-item-right .excerpt{
+    text-indent: 2em;
+}
+
+.allinfo .allinfo-item .allinfo-item-right .cat{
+    color: #6a737d;
+}
+.allinfo .allinfo-item .allinfo-item-right .cat a{
+    color: #6a737d;
+}
+
+.f3 {
+    font-size: 18px!important;
+}
+
 /***************
  * 响应样式
  ***************/
@@ -449,10 +574,6 @@ ol, ul {
 
     .mb-md-2 {
         margin-bottom: 8px !important;
-    }
-
-    .col-12 {
-        width: 100%;
     }
 
     .pl-md-4, .px-md-4 {
@@ -478,16 +599,61 @@ ol, ul {
     .featured {
         padding: 20px;
     }
+
+    .posts_info span {
+        display: block;
+    }
+
+    .posts_info .spacer-line {
+        display: none;
+    }
+
+    .posts_title h1 {
+        font-size: 40px !important;
+    }
+
+    .posts_text {
+    }
+
+    #toc {
+        width: 100%;
+        margin-left: 0;
+        margin-top: 0;
+    }
 }
 
 /* 大屏幕（平板，大于等于 768px） */
 @media screen and (min-width: 768px) {
+    .col-md-3 {
+        width: 25%;
+    }
+
     .col-4 {
         width: 33.33333%;
     }
 
     .col-8 {
         width: 66.66666%;
+    }
+
+    .col-lg-7 {
+        width: 58.33333%;
+    }
+
+    .pl-md-0, .px-md-0 {
+        padding-left: 0!important;
+    }
+
+    .px-md-0 {
+        padding-right: 0!important;
+    }
+
+    .pb-md-9, .py-md-9 {
+        padding-bottom: 80px!important;
+    }
+
+    .pt-md-10 {
+        padding-top: 96px!important;
     }
 
     .main {
@@ -525,6 +691,10 @@ ol, ul {
         order: 2;
     }
 
+    .f3 {
+        font-size: 20px!important;
+    }
+
     .post-feed-top {
         display: block;
     }
@@ -544,5 +714,27 @@ ol, ul {
 
     .col-lg-4 {
         width: 33.33333%;
+    }
+
+    .posts_info .spacer-line {
+        display: inline-block;
+    }
+
+    .posts_title h1 {
+        font-size: 48px !important;
+    }
+
+    .posts_text {
+        margin-left: 10px;
+        float: left;
+        min-height: 10px;
+        width: calc(100% - 210px);
+    }
+
+    #toc {
+        width: 200px;
+        float: left;
+        margin-left: 0;
+        margin-top: 0;
     }
 }
