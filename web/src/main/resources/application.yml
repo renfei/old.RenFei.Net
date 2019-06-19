@@ -41,3 +41,5 @@ pagehelper:
   reasonable: true
   supportMethodsArguments: true
   params: count=countSql
+swagger:
+  host: www.renfei.net
