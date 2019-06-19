@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <body>
+        <header th:fragment="header(header)" class="site-header px-3">
+            <div class="headeline"></div>
+            <div class="d-flex container py-3">
+                <div class="d-flex col-4 col-12 flex-items-center">
+                    <a th:href="${header.domain}" class="d-flex">
+                        <img src="https://cdn.neilren.com/neilren4j/upload/557e9977103248b789c81f1cb082c091.jpeg"
+                             width="28" height="28" style="height: 28px;">
+                        <h1 class="h4 pl-3 mt-1 text-normal" th:text="${header.siteName}">The RenFei Blog</h1>
+                    </a>
+                </div>
+                <div class="d-flex col-8 col-6 flex-justify-end">
+                    <div class="d-none d-lg-flex flex-items-center">
+                        <nav id="primary-nav">
+                            <ul class="d-flex flex-self-center">
+                                <li th:if="${header.menuVOS!=null}" th:each="menu:${header.menuVOS}">
+                                    <a th:href="${menu.menuLink}"
+                                       th:text="${menu.menuText}"
+                                       th:target="${menu.isNewWin?'_blank':'_self'}"
+                                    ></a>
+                                    <ul th:if="${menu.child!=null}">
+                                        <li th:each="child:${menu.child}">
+                                            <a th:href="${child.menuLink}"
+                                               th:text="${child.menuText}"
+                                               th:target="${child.isNewWin?'_blank':'_self'}"
+                                            ></a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </nav>
+                        <div class="header-search d-flex mx-3 flex-justify-end">
+                            <button type="button" class="px-2 btn btn-outline btn-link">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+    </body>
+</html>

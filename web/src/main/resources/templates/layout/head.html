@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head th:fragment="head(head)">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title th:text="${head.sitename}"></title>
+        <meta name="description" th:content="${head.description}">
+        <meta name="og:title" th:content="${head.sitename}">
+        <meta name="og:description" th:content="${head.description}">
+        <meta name="twitter:title" th:content="${head.sitename}">
+        <meta name="twitter:description" th:content="${head.description}">
+        <link th:each="cs:${head.css}" rel="stylesheet" type="text/css" th:href="${cs}"/>
+        <script type='text/javascript' th:each="js:${head.jss}" th:src="${js}"></script>
+        <script th:utext="${head.script}"></script>
+    </head>
+</html>
