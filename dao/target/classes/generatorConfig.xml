@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <!--参数配置-->
+    <properties resource="generator.properties"/>
+    <!--驱动jar-->
+    <classPathEntry location="${classPathEntry}"/>
+
+    <context id="OracleTables" targetRuntime="MyBatis3">
+        <jdbcConnection driverClass="${driverClass}" connectionURL="${connectionURL}" userId="${userId}"
+                        password="${password}">
+        </jdbcConnection>
+
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <javaModelGenerator targetPackage="${modelTargetPackage}" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <sqlMapGenerator targetPackage="${sqlMapTargetPackage}" targetProject="src/main/resources">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <javaClientGenerator type="XMLMAPPER" targetPackage="${javaClientTargetPackage}" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <!--<table tableName="t_type" domainObjectName="TypeDO"></table>-->
+        <!--<table tableName="t_category" domainObjectName="CategoryDO"></table>-->
+        <!--<table tableName="t_page" domainObjectName="PageDO"></table>-->
+        <!--<table tableName="t_posts" domainObjectName="PostsDO"></table>-->
+        <!--<table tableName="t_video" domainObjectName="VideoDO"></table>-->
+        <!--<table tableName="t_setting" domainObjectName="SettingDO"></table>-->
+        <!--<table tableName="v_allinfo" domainObjectName="VAllInfo"></table>-->
+        <table tableName="t_menu" domainObjectName="MenuDO"></table>
+
+    </context>
+</generatorConfiguration>
