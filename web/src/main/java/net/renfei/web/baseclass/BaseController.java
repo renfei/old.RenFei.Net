@@ -2,10 +2,7 @@ package net.renfei.web.baseclass;
 
 import net.renfei.core.baseclass.BaseClass;
 import net.renfei.core.entity.TypeDTO;
-import net.renfei.web.entity.FooterVO;
-import net.renfei.web.entity.HeaderVO;
-import net.renfei.web.entity.MenuVO;
-import net.renfei.web.entity.PageHeadVO;
+import net.renfei.web.entity.*;
 import net.renfei.core.service.GlobalService;
 import net.renfei.core.service.MenuService;
 import net.renfei.core.service.TypeService;
@@ -25,12 +22,20 @@ import java.util.Map;
 
 @Controller
 public class BaseController extends BaseClass {
+    protected static final String HEAD_KEY = "head";
+    protected static final String HEADER_KEY = "header";
+    protected static final String FOOTER_KEY = "footer";
+    protected static final String SIDEBAR_KEY = "sidebar";
+    protected static final String SITE_NAME_KEY = "siteName";
+    protected static final String DOMAIN_KEY = "domain";
+    protected static final String STATIC_DOMAIN_KEY = "staticdomain";
     protected String siteName;
     protected String domain;
     protected String staticdomain;
     protected PageHeadVO pageHeadVO;
     protected FooterVO footerVO;
     protected HeaderVO headerVO;
+    protected SidebarVO sidebarVO;
     @Autowired
     protected GlobalService globalService;
     @Autowired
@@ -87,22 +92,25 @@ public class BaseController extends BaseClass {
         pageHeadVO.setScript(globalService.getScript());
         pageHeadVO.setDescription(globalService.getDescription());
         pageHeadVO.setSitename(siteName);
-        mv.addObject("head", pageHeadVO);
+        mv.addObject(HEAD_KEY, pageHeadVO);
         //全局页头
         headerVO.setSiteName(siteName);
         headerVO.setDomain(domain);
         //添加全局菜单
         List<MenuVO> menuVOS = ejbGenerator.convert(menuService.getAllHeadMenu(), MenuVO.class);
         headerVO.setMenuVOS(menuVOS);
-        mv.addObject("header", headerVO);
+        mv.addObject(HEADER_KEY, headerVO);
         //全局页脚
         footerVO.setAnalyticsCode(globalService.getAnalyticsCode());
         footerVO.setFooterMenu(ejbGenerator.convert(menuService.getAllFooterMenu(), MenuVO.class));
         footerVO.setCopyList(ejbGenerator.convert(menuService.getAllFooterCopyMenu(), MenuVO.class));
-        mv.addObject("footer", footerVO);
-        mv.addObject("siteName", siteName);
-        mv.addObject("domain", domain);
-        mv.addObject("staticdomain", staticdomain);
+        //全局侧边栏
+        sidebarVO = new SidebarVO();
+        mv.addObject(FOOTER_KEY, footerVO);
+        mv.addObject(SIDEBAR_KEY, sidebarVO);
+        mv.addObject(SITE_NAME_KEY, siteName);
+        mv.addObject(DOMAIN_KEY, domain);
+        mv.addObject(STATIC_DOMAIN_KEY, staticdomain);
     }
 
     protected void setHead(ModelAndView mv, String title) {
@@ -113,7 +121,7 @@ public class BaseController extends BaseClass {
         PageHeadVO pageHeadVO = getHead(mv);
         pageHeadVO.setSitename(title + " - " + siteName);
         pageHeadVO.setDescription(description);
-        mv.addObject("head", pageHeadVO);
+        mv.addObject(HEAD_KEY, pageHeadVO);
     }
 
     /**
@@ -133,7 +141,7 @@ public class BaseController extends BaseClass {
         script += "$(function(){$(\"code\").each(function(){$(this).html(\"<ul><li>\" + $(this).html().replace(/\\n/g,\"\\n</li><li>\") +\"\\n</li></ul>\");});});\n" +
                 "hljs.initHighlightingOnLoad();";
         pageHeadVO.setScript(script);
-        mv.addObject("head", pageHeadVO);
+        mv.addObject(HEAD_KEY, pageHeadVO);
     }
 
     /**
@@ -149,7 +157,7 @@ public class BaseController extends BaseClass {
         List<String> css = pageHeadVO.getCss();
         css.add("//" + staticdomain + "/css/toc.css");
         pageHeadVO.setCss(css);
-        mv.addObject("head", pageHeadVO);
+        mv.addObject(HEAD_KEY, pageHeadVO);
     }
 
     /**
@@ -168,17 +176,22 @@ public class BaseController extends BaseClass {
         String script = pageHeadVO.getScript();
         script += "";
         pageHeadVO.setScript(script);
-        mv.addObject("head", pageHeadVO);
+        mv.addObject(HEAD_KEY, pageHeadVO);
     }
 
     private PageHeadVO getHead(ModelAndView mv) {
         Map<String, Object> map = mv.getModel();
         PageHeadVO pageHeadVO = new PageHeadVO();
-        Object obj = map.get("head");
+        Object obj = map.get(HEAD_KEY);
         if (obj instanceof PageHeadVO) {
             pageHeadVO = (PageHeadVO) obj;
         }
         return pageHeadVO;
+    }
+
+    protected Object getObjFromMV(ModelAndView mv, String key) {
+        Map<String, Object> map = mv.getModel();
+        return map.get(key);
     }
 
     protected void throwNoHandlerFoundException() throws NoHandlerFoundException {

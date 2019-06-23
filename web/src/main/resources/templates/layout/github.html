@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <body>
+        <div th:fragment="mygithub" class="mygithub">
+            <a href="https://github.com/NeilRen/RenFei.Net" target="_blank">
+                <h3>
+                    <i class="fa fa-github"></i>
+                    RenFei.Net Source Code
+                </h3>
+            </a>
+            <div style="padding: 16px 0 0 0;">
+                <a class="mygithub-icon" href="https://github.com/NeilRen/RenFei.Net/stargazers" target="_blank">
+                    <i class="fa fa-star"></i>
+                    <span id="gitstar">0</span>
+                </a>
+                <a class="mygithub-icon" href="https://github.com/NeilRen/RenFei.Net/watchers" target="_blank">
+                    <i class="fa fa-eye"></i>
+                    <span id="gitwatch">0</span>
+                </a>
+                <a class="mygithub-icon" href="https://github.com/NeilRen/RenFei.Net/network/members"
+                   target="_blank">
+                    <i class="fa fa-code-fork"></i>
+                    <span id="gitfork">0</span>
+                </a>
+                <div style="margin-top: 5px;">
+                    <a href="https://travis-ci.org/NeilRen/RenFei.Net"
+                       target="_blank">
+                        <img src="https://travis-ci.org/NeilRen/RenFei.Net.svg?branch=master">
+                    </a>
+                    <a href="https://coveralls.io/github/NeilRen/RenFei.Net?branch=master"
+                       target="_blank">
+                        <img src="https://coveralls.io/repos/github/NeilRen/RenFei.Net/badge.svg?branch=master">
+                    </a>
+                    <a href="https://codebeat.co/projects/github-com-neilren-renfei-net-master"
+                       target="_blank">
+                        <img src="https://codebeat.co/badges/aa156256-094d-4d10-8df3-34682eac16b0">
+                    </a>
+                </div>
+            </div>
+            <p>
+                RenFei.Net
+                的代码已经开源，使用Java8、SpringBoot、Maven、前台使用Thymeleaf、后台管理使用Vue.js前后端分离，前台前端纯手写，后台前端使用Element-UI。
+            </p>
+            <p>
+                自2012年使用
+                <a href="https://www.wordpress.org" target="_blank">PHP(WordPress)</a>
+                ，2015年使用
+                <a href="https://github.com/NeilRen/NeilNT" target="_blank">ASP.NET(NeilNT)</a>
+                ，2017年使用Java(SpringMVC)，2018年使用
+                <a href="https://github.com/NeilRen/NEILREN4J" target="_blank">SpringBoot(NEILREN4J)</a>
+                ，2019年收购了RenFei.Net域名，由于学会了Vue.js开发SPA单页面，再次重写，欢迎同学们一起学习提升。
+            </p>
+            <p>
+                开源项目让我开始了对编程的探索，我也毫无保留的将我学到的公开分享，如果您喜欢，希望您能在Github上给我一个Star！
+            </p>
+            <script>
+                $(function () {
+                    getGithunInfo();
+                });
+
+                function getGithunInfo() {
+                    $.ajax({
+                        type: 'GET',
+                        url: 'https://api.github.com/repos/NeilRen/RenFei.Net',
+                        data: {},
+                        dataType: 'JSON', //如果后台本来返回的就是Json数据则可以省略
+                        success: function (result) {
+                            //result为返回结果
+                            $("#gitstar").html(result.stargazers_count);
+                            $("#gitwatch").html(result.watchers_count);
+                            $("#gitfork").html(result.forks_count);
+                        },
+                        error: function () {
+                        }
+                    });
+
+                }
+            </script>
+        </div>
+    </body>
+</html>

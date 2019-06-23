@@ -11,7 +11,7 @@
  Target Server Version : 50717
  File Encoding         : 65001
 
- Date: 10/06/2019 23:32:47
+ Date: 23/06/2019 18:42:50
 */
 
 SET NAMES utf8mb4;
@@ -26,16 +26,50 @@ CREATE TABLE `t_category` (
   `type_id` bigint(20) unsigned NOT NULL,
   `en_name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `zh_name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `featured_image` text COLLATE utf8mb4_unicode_ci COMMENT '特色图像',
   PRIMARY KEY (`id`),
   KEY `fk_category_type` (`type_id`),
   CONSTRAINT `fk_category_type` FOREIGN KEY (`type_id`) REFERENCES `t_type` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of t_category
 -- ----------------------------
 BEGIN;
-INSERT INTO `t_category` VALUES (1, 1, 'default', '未分类');
+INSERT INTO `t_category` VALUES (1, 1, 'default', '未分类', 'https://cdn.neilren.com/neilren4j/upload/557e9977103248b789c81f1cb082c091.jpeg');
+INSERT INTO `t_category` VALUES (2, 2, 'default', '默认页', 'https://cdn.neilren.com/neilren4j/upload/557e9977103248b789c81f1cb082c091.jpeg');
+COMMIT;
+
+-- ----------------------------
+-- Table structure for t_menu
+-- ----------------------------
+DROP TABLE IF EXISTS `t_menu`;
+CREATE TABLE `t_menu` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `pid` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `menu_text` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '名称',
+  `menu_link` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '链接',
+  `is_new_win` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否新窗口打开',
+  `is_enable` tinyint(1) DEFAULT '1' COMMENT '是否启用',
+  `menu_type` int(10) unsigned NOT NULL COMMENT '菜单类型，页头菜单还是页尾菜单',
+  `order_number` int(11) DEFAULT NULL COMMENT '排序',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Records of t_menu
+-- ----------------------------
+BEGIN;
+INSERT INTO `t_menu` VALUES (1, 0, 'Home', '/', 0, 1, 1, 0);
+INSERT INTO `t_menu` VALUES (2, 0, 'Posts', '/posts', 0, 1, 1, 1);
+INSERT INTO `t_menu` VALUES (3, 0, '社会化互动', 'JavaScript:void(0)', 0, 1, 2, 0);
+INSERT INTO `t_menu` VALUES (4, 0, '公益与捐赠', 'JavaScript:void(0)', 0, 1, 2, 1);
+INSERT INTO `t_menu` VALUES (5, 0, '推荐厂商', 'JavaScript:void(0)', 0, 1, 2, 2);
+INSERT INTO `t_menu` VALUES (6, 0, '其他内容', 'JavaScript:void(0)', 0, 1, 2, 3);
+INSERT INTO `t_menu` VALUES (7, 3, '开发者交流QQ群', 'https://shang.qq.com/wpa/qunwpa?idkey=bfbde7e5dec79fd3cdb23c7cf590ca698e3da8b48a71369139ed6aa52f9a7513', 1, 1, 2, 1);
+INSERT INTO `t_menu` VALUES (8, 3, 'Github', 'https://github.com/neilren', 1, 1, 2, 0);
+INSERT INTO `t_menu` VALUES (9, 0, '测试', '#', 1, 1, 3, 0);
+INSERT INTO `t_menu` VALUES (10, 0, '© RENFEI.NET 2019', 'javascript:void(0)', 0, 1, 3, 9999999);
 COMMIT;
 
 -- ----------------------------
@@ -56,8 +90,16 @@ CREATE TABLE `t_page` (
   `is_delete` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '软删除',
   PRIMARY KEY (`id`),
   KEY `fk_page_category` (`category_id`),
+  FULLTEXT KEY `ft_index` (`title`,`content`) /*!50100 WITH PARSER `ngram` */ ,
   CONSTRAINT `fk_page_category` FOREIGN KEY (`category_id`) REFERENCES `t_category` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Records of t_page
+-- ----------------------------
+BEGIN;
+INSERT INTO `t_page` VALUES (1, 2, '隐私声明和 Cookie', 'https://cdn.neilren.com/neilren4j/upload/b8bfb737a838450ca2e373ad4dd264f7.jpeg', '<style>\n\n            </style>\n            <div class=\"about\">\n                <div class=\"about-title\">\n                    <h1>隐私声明和 Cookie</h1>\n                    <p>Legal Resources</p>\n                </div>\n                <p>我们十分重视你的隐私。 本隐私声明阐述了 RENFEI.NET 处理的个人数据以及 RENFEI.NET 处理个人数据的方式和目的。</p>\n                <p>请阅读本隐私声明中特定于服务的详细信息，这些详细信息提供了其他相关信息。 此声明适用于 RENFEI.NET 与你之间的互动、 RENFEI.NET 提供的所有服务。</p>\n            </div>\n            <article class=\"d-flex\">\n                <div class=\"row content d-flex\">\n                    <div class=\"col-md-3 px-3\" style=\"font-size: 12px;\">\n                        <div>\n                            <ul style=\"list-style: none;font-size: 14px;\">\n                                <li><a href=\"#1\">我们收集的个人数据</a></li>\n                                <li><a href=\"#2\">我们如何使用个人数据</a></li>\n                                <li><a href=\"#3\">Cookie 和类似技术</a></li>\n                                <li><a href=\"#4\">搜索和人工智能</a></li>\n                            </ul>\n                        </div>\n                        <div style=\"margin-top: 40px;\">\n                            <h4>Cookie</h4>\n                            <p>\n                                大多数 RENFEI.NET 站点使用 Cookie - Cookie 是放置在设备上的小文本文件，域中放置 Cookie 的 Web\n                                服务器稍后可以检索这些小文本文件。 我们使用 Cookie 来存储你的首选项和设置、帮助登录、提供定向广告，以及分析站点运行。\n                            </p>\n                        </div>\n                    </div>\n                    <div class=\"col-md-7 px-3\">\n                        <h2 style=\"margin-bottom: 20px;\" id=\"1\">我们收集的个人数据</h2>\n                        <div class=\"gray-bar\" style=\"margin-bottom: 20px;\"></div>\n                        <p>\n                            我们会收集你的数据作为分析来源，其中包括但不限于：你的设备信息、IP地址、访问行为信息。我们收集的数据取决于你与 RENFEI.NET 互动的环境、你所做的选择。\n                        </p>\n                        <p>\n                            在你使用 RENFEI.NET 提供的服务时，将默认为您已经阅读并同意了我们的隐私条款。\n                        </p>\n                        <h2 style=\"margin-bottom: 20px;\" id=\"2\">我们如何使用个人数据</h2>\n                        <div class=\"gray-bar\" style=\"margin-bottom: 20px;\"></div>\n                        <p>\n                            RENFEI.NET 使用我们收集的数据为你提供丰富的交互式体验。给您提供更有价值的信息。\n                        </p>\n                        <p>\n                            我们还有可能根据您的信息进行广告推荐、性能分析调查。\n                        </p>\n                        <p></p>\n                        <h2 style=\"margin-bottom: 20px;\" id=\"3\">Cookie 和类似技术</h2>\n                        <div class=\"gray-bar\" style=\"margin-bottom: 20px;\"></div>\n                        <p>\n                            Cookie 是放置在设备上的小型文本文件，用于存储数据，域中放置 Cookie 的 Web 服务器可以调用这些数据。 我们使用 Cookie\n                            和类似技术来存储和遵守你的偏好和设置、使你能够登录、提供基于兴趣的广告、打击欺诈行为、分析我们服务的性能以及实现其他合法目的。\n                        </p>\n                        <p>我们也使用“Web 信号”帮助提供 Cookie 和收集用法和性能数据。 我们的网站可能包含来自第三方服务提供商的 Web 信号、Cookie 或类似技术。</p>\n                        <p>\n                            你有各种用于控制 Cookie、Web 信号和类似技术所收集的数据的工具。 例如，你可以使用 Internet 浏览器中的控件来限制你所访问的网站可如何使用\n                            Cookie，并通过清除或阻止 Cookie 来撤消同意。\n                        </p>\n                        <h2 style=\"margin-bottom: 20px;\" id=\"4\">搜索和人工智能</h2>\n                        <div class=\"gray-bar\" style=\"margin-bottom: 20px;\"></div>\n                        <p>搜索和人工智能产品会将你与信息联系起来，并智能地感知、处理和处置信息—随着时间的推移进行学习和适应。</p>\n                    </div>\n                </div>\n            </article>', 0, '2019-06-15 22:32:51', '2019-06-15 22:32:56', '我们十分重视你的隐私。 本隐私声明阐述了 RENFEI.NET 处理的个人数据以及 RENFEI.NET 处理个人数据的方式和目的。', NULL, 0);
+COMMIT;
 
 -- ----------------------------
 -- Table structure for t_photo
@@ -75,6 +117,7 @@ CREATE TABLE `t_photo` (
   `is_delete` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `fk_photo_cat` (`category_id`),
+  FULLTEXT KEY `ft_index` (`title`,`describes`) /*!50100 WITH PARSER `ngram` */ ,
   CONSTRAINT `fk_photo_cat` FOREIGN KEY (`category_id`) REFERENCES `t_category` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -100,7 +143,7 @@ CREATE TABLE `t_posts` (
   `is_comment` tinyint(1) NOT NULL DEFAULT '1' COMMENT '是否允许评论',
   PRIMARY KEY (`id`),
   KEY `fk_posts_category` (`category_id`) USING BTREE COMMENT '与类别的外键约束',
-  FULLTEXT KEY `ft_index` (`content`,`title`) COMMENT '全文检索',
+  FULLTEXT KEY `ft_index` (`title`,`content`) /*!50100 WITH PARSER `ngram` */ ,
   CONSTRAINT `fk_posts_category` FOREIGN KEY (`category_id`) REFERENCES `t_category` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -121,7 +164,7 @@ CREATE TABLE `t_setting` (
   `values` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '值',
   `orders` int(10) unsigned DEFAULT NULL COMMENT '排序',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of t_setting
@@ -139,6 +182,7 @@ INSERT INTO `t_setting` VALUES (9, 'script', ' ', NULL);
 INSERT INTO `t_setting` VALUES (10, 'analyticscode', '<!-- Global site tag (gtag.js) - Google Analytics -->\n<script async src=\"https://www.googletagmanager.com/gtag/js?id=UA-141370164-1\"></script>\n<script>\n    window.dataLayer = window.dataLayer || [];\n    function gtag(){dataLayer.push(arguments);}\n    gtag(\'js\', new Date());\n\n    gtag(\'config\', \'UA-141370164-1\');\n</script>', NULL);
 INSERT INTO `t_setting` VALUES (11, 'footermenu', '测试|#', NULL);
 INSERT INTO `t_setting` VALUES (12, 'jss', '/js/scrolltopcontrol.js', NULL);
+INSERT INTO `t_setting` VALUES (13, 'homebanner', '/img/home_banner.jpg', NULL);
 COMMIT;
 
 -- ----------------------------
@@ -175,7 +219,8 @@ CREATE TABLE `t_video` (
   `release_time` datetime NOT NULL COMMENT '发布时间',
   `add_time` datetime NOT NULL COMMENT '添加时间',
   `is_delete` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '删除标志',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  FULLTEXT KEY `ft_index` (`title`,`describes`) /*!50100 WITH PARSER `ngram` */ 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------

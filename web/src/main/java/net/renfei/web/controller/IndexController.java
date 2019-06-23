@@ -1,5 +1,7 @@
 package net.renfei.web.controller;
 
+import net.renfei.core.entity.CategoryDTO;
+import net.renfei.core.service.CategorService;
 import net.renfei.web.baseclass.BaseController;
 import net.renfei.dao.entity.VAllInfoWithBLOBs;
 import net.renfei.core.entity.AllInfoDTOList;
@@ -7,6 +9,7 @@ import net.renfei.core.entity.TypeDTO;
 import net.renfei.web.entity.AllInfoVO;
 import net.renfei.core.service.IndexService;
 import net.renfei.core.service.TypeService;
+import net.renfei.web.entity.CategoryVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +25,8 @@ public class IndexController extends BaseController {
     private IndexService indexService;
     @Autowired
     private TypeService typeService;
+    @Autowired
+    private CategorService categorService;
 
     @RequestMapping("/")
     public ModelAndView index(ModelAndView mv,
@@ -42,6 +47,17 @@ public class IndexController extends BaseController {
         }
         List<TypeDTO> typeDTOS = typeService.getAllType();
         mv.addObject("typeDTOS", typeDTOS);
+        List<CategoryDTO> categoryDTOS = categorService.getAllCategory();
+        if (categoryDTOS != null && categoryDTOS.size() > 0) {
+            List<CategoryVO> categoryVOS = new ArrayList<>();
+            for (CategoryDTO cat : categoryDTOS
+            ) {
+                CategoryVO categoryVO = ejbGenerator.convert(cat, CategoryVO.class);
+                categoryVO.setHref(domain + categoryVO.getUriPath() + "/" + categoryVO.getEnName());
+                categoryVOS.add(categoryVO);
+            }
+            mv.addObject("categories", categoryVOS);
+        }
         mv.addObject("homebanner", globalService.getHomeBanner());
         mv.setViewName("index");
         return mv;
