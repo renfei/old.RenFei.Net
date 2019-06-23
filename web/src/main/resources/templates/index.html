@@ -26,27 +26,7 @@
         <div class="post-feed-top">
         </div>
         <div class="featured">
-            <div class="container category-panel__container">
-                <strong class="underline-dash">
-                    Categories
-                </strong>
-                <div class="category-panel__controls col-12 col-md-4 d-flex flex-justify-end">
-                    <button type="button" class="category-panel__prev">
-                        <i class="fa fa-angle-left"></i>
-                    </button>
-                    <button type="button" class="category-panel__next">
-                        <i class="fa fa-angle-right"></i>
-                    </button>
-                </div>
-                <div class="category-panel__blocks flex-row">
-                    <div class="d-flex tns-item pd-4 pr-4">
-                        啦啦啦
-                    </div>
-                    <div class="d-flex tns-item pd-4 pr-4">
-                        啦啦啦
-                    </div>
-                </div>
-            </div>
+            <div th:replace="layout/xlist::xlist(${categories})"></div>
         </div>
         <div class="container">
             <div class="main">
@@ -79,7 +59,7 @@
                     </article>
                 </div>
             </div>
-            <div th:replace="layout/sidebar::sidebar"></div>
+            <div th:replace="layout/sidebar::sidebar(${sidebar})"></div>
             <div class="clear"></div>
         </div>
     </section>

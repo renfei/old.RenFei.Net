@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <body>
+        <div th:fragment="xlist(categories)">
+            <div class="container category-panel__container">
+                <strong class="underline-dash">
+                    Categories
+                </strong>
+                <div class="category-panel__controls col-12 col-md-4 d-flex flex-justify-end">
+                    <button type="button" class="category-panel__prev" onclick="og_prev()">
+                        <i class="fa fa-angle-left"></i>
+                    </button>
+                    <button type="button" class="category-panel__next" onclick="og_next()">
+                        <i class="fa fa-angle-right"></i>
+                    </button>
+                </div>
+                <div class="category-panel__blocks flex-row mt-md-10">
+                    <div style="overflow: hidden;position: relative;height: 310px;">
+                        <ul id="og-ul" th:style="${'width:'+categories.size()*220+'px'}">
+                            <li class="category-panel__bg" th:each="cat:${categories}">
+                                <a class="px-4 pt-4 d-block" th:href="${cat.href}" target="_blank">
+                                    <img th:src="${cat.featuredImage}">
+                                    <h4 class="pt-4"
+                                        th:utext="${cat.zhName}+'<i class=\'fa fa-arrow-right\' style=\'margin-left: 5px;\'></i>'"></h4>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <script>
+                function og_next() {
+                    var left = parseInt($('#og-ul').css('left'));//默认ul位置
+                    var width = parseInt($('#og-ul').css('width'));//画布长度
+                    var toLeft = left - 220;
+                    if ((width + toLeft) < 200) {
+                        return;
+                    } else {
+                        $('#og-ul').animate({left: toLeft + 'px'}, 'slow');//默认图片滚动
+                    }
+                }
+
+                function og_prev() {
+                    var left = parseInt($('#og-ul').css('left'));//默认ul位置
+                    var toLeft = left + 220;
+                    if (toLeft > 0) {
+                        toLeft = 0;
+                    }
+                    $('#og-ul').animate({left: toLeft + 'px'}, 'slow');//默认图片滚动
+                }
+            </script>
+        </div>
+    </body>
+</html>

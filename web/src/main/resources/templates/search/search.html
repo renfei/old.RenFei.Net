@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/head::head(${head})">
+</head>
+<body>
+<header th:replace="/layout/header::header(${header})"></header>
+<main class="site-main" id="site-main">
+    <section class="post-feed">
+        <div class="container">
+            <div th:style="${search==null?'padding-top: 100px;':''}"></div>
+            <div>
+                <h2><i class="fa fa-search"></i>Search RenFei.Net</h2>
+            </div>
+            <div>
+                <form id="search_form" class="my-3" action="/search" accept-charset="UTF-8" method="get">
+                    <div class="d-flex">
+                        <div class="flex-auto">
+                            <input
+                                    aria-label="Search RenFei.Net"
+                                    autocapitalize="off"
+                                    autocomplete="off"
+                                    autofocus
+                                    class="form-control"
+                                    data-hotkey="s"
+                                    name="q"
+                                    placeholder="Search RenFei.Net"
+                                    spellcheck="false"
+                                    type="text"
+                                    style="width: 100%;min-height: 30px;"
+                                    th:value="${search==null?'':(search.searchWord==null?'':search.searchWord)}"
+                            >
+                        </div>
+                        <button class="btn" style="margin-left: 8px;" type="submit">Search</button>
+                    </div>
+                </form>
+            </div>
+            <div class="clear"></div>
+            <div style="font-size: 12px;color: #777;" th:if="${search!=null}"
+                 th:text="'About '+${search.results}+' results ('+${search.seconds}+' seconds)'"></div>
+            <div class="main">
+                <ul class="search-ul" th:if="${search!=null}">
+                    <li th:if="${search.searchList!=null}" th:each="sea:${search.searchList}">
+                        <a th:text="${sea.title}" th:href="${sea.link}" target="_blank">
+                        </a>
+                        <div class="search-link" th:text="${sea.link}">
+                        </div>
+                        <div class="search-description" th:utext="'<span>'+${#dates.format(sea.date,'yyyy-MM-dd')}+'</span>'+${#strings.abbreviate(sea.describe,150)}">
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div th:if="${search!=null}">
+                <div th:replace="layout/sidebar::sidebar(${sidebar})"></div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </section>
+</main>
+<footer th:replace="layout/footer::footer(${footer},${performance})"></footer>
+</body>
+</html>
