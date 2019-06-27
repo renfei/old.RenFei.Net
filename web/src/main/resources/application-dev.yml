@@ -1,6 +1,26 @@
 spring:
- datasource:
-  url: jdbc:mysql://localhost/renfei?useSSL=false&serverTimezone=UTC
-  username: root
-  password: root
-  driver-class-name: com.mysql.jdbc.Driver
+  datasource:
+    url: ENC(w4d3r8Gmzr/TY9tt+Cst//LwYduDWCp2VsexbdT3YQj3+cOchcLWqMPnIAGdhBshaR6r2JluDq1EfMMfOVfhTT1DbYXHTK7C)
+    username: ENC(qsdpai1H179WuvJVu3CfYQ==)
+    password: ENC(XXjERRQgq7TSsMbaxThQcg==)
+    driver-class-name: com.mysql.jdbc.Driver
+  mail:
+    host: smtp.zoho.com
+    port: 465
+    username: noreply@email.renfei.net
+    password: [yourpassword]
+    protocol: smtp
+    default-encoding: UTF-8
+    eeply-to: i@renfei.net
+    properties:
+      mail.smtp.localhost: email.renfei.net
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
+      mail.smtp.starttls.required: true
+      mail.smtp.socketFactory.port: 465
+      mail.smtp.socketFactory.class: javax.net.ssl.SSLSocketFactory
+      mail.smtp.socketFactory.fallback: false
+#jasypt加密的密匙
+jasypt:
+  encryptor:
+    password: EbfYkitulv73I2p0mXI50JMXoaxZTKJ7

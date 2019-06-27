@@ -11,7 +11,7 @@
  Target Server Version : 50717
  File Encoding         : 65001
 
- Date: 23/06/2019 18:42:50
+ Date: 27/06/2019 19:10:36
 */
 
 SET NAMES utf8mb4;
@@ -39,6 +39,70 @@ BEGIN;
 INSERT INTO `t_category` VALUES (1, 1, 'default', '未分类', 'https://cdn.neilren.com/neilren4j/upload/557e9977103248b789c81f1cb082c091.jpeg');
 INSERT INTO `t_category` VALUES (2, 2, 'default', '默认页', 'https://cdn.neilren.com/neilren4j/upload/557e9977103248b789c81f1cb082c091.jpeg');
 COMMIT;
+
+-- ----------------------------
+-- Table structure for t_comments
+-- ----------------------------
+DROP TABLE IF EXISTS `t_comments`;
+CREATE TABLE `t_comments` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `target_id` bigint(20) unsigned NOT NULL COMMENT '目标ID',
+  `type_id` bigint(20) unsigned NOT NULL COMMENT '目标的分类ID',
+  `author` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '作者名称',
+  `author_email` text COLLATE utf8mb4_unicode_ci COMMENT '作者邮箱',
+  `author_url` text COLLATE utf8mb4_unicode_ci COMMENT '作者链接',
+  `author_IP` text COLLATE utf8mb4_unicode_ci COMMENT '作者IP',
+  `author_address` text COLLATE utf8mb4_unicode_ci COMMENT '作者物理地址',
+  `addtime` datetime NOT NULL COMMENT '评论时间',
+  `content` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '评论内容',
+  `is_delete` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否删除',
+  `parent_id` bigint(20) unsigned DEFAULT NULL COMMENT '父级评论ID',
+  PRIMARY KEY (`id`),
+  KEY `fk_comment_type` (`type_id`),
+  KEY `fk_comments` (`parent_id`),
+  CONSTRAINT `fk_comment_type` FOREIGN KEY (`type_id`) REFERENCES `t_type` (`id`),
+  CONSTRAINT `fk_comments` FOREIGN KEY (`parent_id`) REFERENCES `t_comments` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Table structure for t_ipv4
+-- ----------------------------
+DROP TABLE IF EXISTS `t_ipv4`;
+CREATE TABLE `t_ipv4` (
+  `ip_from` int(10) unsigned DEFAULT NULL,
+  `ip_to` int(10) unsigned DEFAULT NULL,
+  `country_code` char(2) COLLATE utf8_bin DEFAULT NULL,
+  `country_name` varchar(64) COLLATE utf8_bin DEFAULT NULL,
+  `region_name` varchar(128) COLLATE utf8_bin DEFAULT NULL,
+  `city_name` varchar(128) COLLATE utf8_bin DEFAULT NULL,
+  `latitude` double DEFAULT NULL,
+  `longitude` double DEFAULT NULL,
+  `zip_code` varchar(30) COLLATE utf8_bin DEFAULT NULL,
+  `time_zone` varchar(8) COLLATE utf8_bin DEFAULT NULL,
+  KEY `idx_ip_from` (`ip_from`),
+  KEY `idx_ip_to` (`ip_to`),
+  KEY `idx_ip_from_to` (`ip_from`,`ip_to`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- ----------------------------
+-- Table structure for t_ipv6
+-- ----------------------------
+DROP TABLE IF EXISTS `t_ipv6`;
+CREATE TABLE `t_ipv6` (
+  `ip_from` decimal(39,0) unsigned DEFAULT NULL,
+  `ip_to` decimal(39,0) unsigned NOT NULL,
+  `country_code` char(2) COLLATE utf8_bin DEFAULT NULL,
+  `country_name` varchar(64) COLLATE utf8_bin DEFAULT NULL,
+  `region_name` varchar(128) COLLATE utf8_bin DEFAULT NULL,
+  `city_name` varchar(128) COLLATE utf8_bin DEFAULT NULL,
+  `latitude` double DEFAULT NULL,
+  `longitude` double DEFAULT NULL,
+  `zip_code` varchar(30) COLLATE utf8_bin DEFAULT NULL,
+  `time_zone` varchar(8) COLLATE utf8_bin DEFAULT NULL,
+  KEY `idx_ip_from` (`ip_from`),
+  KEY `idx_ip_to` (`ip_to`),
+  KEY `idx_ip_from_to` (`ip_from`,`ip_to`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ----------------------------
 -- Table structure for t_menu

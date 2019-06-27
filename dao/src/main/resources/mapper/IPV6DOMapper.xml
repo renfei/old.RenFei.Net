@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.renfei.dao.persistences.IPV6DOMapper">
+  <resultMap id="BaseResultMap" type="net.renfei.dao.entity.IPV6DO">
+    <result column="ip_from" jdbcType="DECIMAL" property="ipFrom" />
+    <result column="ip_to" jdbcType="DECIMAL" property="ipTo" />
+    <result column="country_code" jdbcType="CHAR" property="countryCode" />
+    <result column="country_name" jdbcType="VARCHAR" property="countryName" />
+    <result column="region_name" jdbcType="VARCHAR" property="regionName" />
+    <result column="city_name" jdbcType="VARCHAR" property="cityName" />
+    <result column="latitude" jdbcType="DOUBLE" property="latitude" />
+    <result column="longitude" jdbcType="DOUBLE" property="longitude" />
+    <result column="zip_code" jdbcType="VARCHAR" property="zipCode" />
+    <result column="time_zone" jdbcType="VARCHAR" property="timeZone" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ip_from, ip_to, country_code, country_name, region_name, city_name, latitude, longitude, 
+    zip_code, time_zone
+  </sql>
+  <select id="selectByExample" parameterType="net.renfei.dao.entity.IPV6DOExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_ipv6
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="net.renfei.dao.entity.IPV6DOExample">
+    delete from t_ipv6
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="net.renfei.dao.entity.IPV6DO">
+    insert into t_ipv6 (ip_from, ip_to, country_code, 
+      country_name, region_name, city_name, 
+      latitude, longitude, zip_code, 
+      time_zone)
+    values (#{ipFrom,jdbcType=DECIMAL}, #{ipTo,jdbcType=DECIMAL}, #{countryCode,jdbcType=CHAR}, 
+      #{countryName,jdbcType=VARCHAR}, #{regionName,jdbcType=VARCHAR}, #{cityName,jdbcType=VARCHAR}, 
+      #{latitude,jdbcType=DOUBLE}, #{longitude,jdbcType=DOUBLE}, #{zipCode,jdbcType=VARCHAR}, 
+      #{timeZone,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="net.renfei.dao.entity.IPV6DO">
+    insert into t_ipv6
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ipFrom != null">
+        ip_from,
+      </if>
+      <if test="ipTo != null">
+        ip_to,
+      </if>
+      <if test="countryCode != null">
+        country_code,
+      </if>
+      <if test="countryName != null">
+        country_name,
+      </if>
+      <if test="regionName != null">
+        region_name,
+      </if>
+      <if test="cityName != null">
+        city_name,
+      </if>
+      <if test="latitude != null">
+        latitude,
+      </if>
+      <if test="longitude != null">
+        longitude,
+      </if>
+      <if test="zipCode != null">
+        zip_code,
+      </if>
+      <if test="timeZone != null">
+        time_zone,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ipFrom != null">
+        #{ipFrom,jdbcType=DECIMAL},
+      </if>
+      <if test="ipTo != null">
+        #{ipTo,jdbcType=DECIMAL},
+      </if>
+      <if test="countryCode != null">
+        #{countryCode,jdbcType=CHAR},
+      </if>
+      <if test="countryName != null">
+        #{countryName,jdbcType=VARCHAR},
+      </if>
+      <if test="regionName != null">
+        #{regionName,jdbcType=VARCHAR},
+      </if>
+      <if test="cityName != null">
+        #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null">
+        #{latitude,jdbcType=DOUBLE},
+      </if>
+      <if test="longitude != null">
+        #{longitude,jdbcType=DOUBLE},
+      </if>
+      <if test="zipCode != null">
+        #{zipCode,jdbcType=VARCHAR},
+      </if>
+      <if test="timeZone != null">
+        #{timeZone,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="net.renfei.dao.entity.IPV6DOExample" resultType="java.lang.Long">
+    select count(*) from t_ipv6
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_ipv6
+    <set>
+      <if test="record.ipFrom != null">
+        ip_from = #{record.ipFrom,jdbcType=DECIMAL},
+      </if>
+      <if test="record.ipTo != null">
+        ip_to = #{record.ipTo,jdbcType=DECIMAL},
+      </if>
+      <if test="record.countryCode != null">
+        country_code = #{record.countryCode,jdbcType=CHAR},
+      </if>
+      <if test="record.countryName != null">
+        country_name = #{record.countryName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.regionName != null">
+        region_name = #{record.regionName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cityName != null">
+        city_name = #{record.cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.latitude != null">
+        latitude = #{record.latitude,jdbcType=DOUBLE},
+      </if>
+      <if test="record.longitude != null">
+        longitude = #{record.longitude,jdbcType=DOUBLE},
+      </if>
+      <if test="record.zipCode != null">
+        zip_code = #{record.zipCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.timeZone != null">
+        time_zone = #{record.timeZone,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_ipv6
+    set ip_from = #{record.ipFrom,jdbcType=DECIMAL},
+      ip_to = #{record.ipTo,jdbcType=DECIMAL},
+      country_code = #{record.countryCode,jdbcType=CHAR},
+      country_name = #{record.countryName,jdbcType=VARCHAR},
+      region_name = #{record.regionName,jdbcType=VARCHAR},
+      city_name = #{record.cityName,jdbcType=VARCHAR},
+      latitude = #{record.latitude,jdbcType=DOUBLE},
+      longitude = #{record.longitude,jdbcType=DOUBLE},
+      zip_code = #{record.zipCode,jdbcType=VARCHAR},
+      time_zone = #{record.timeZone,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

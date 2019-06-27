@@ -26,6 +26,11 @@
             <artifactId>word</artifactId>
             <version>${word.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.github.ulisesbocchio</groupId>
+            <artifactId>jasypt-spring-boot-starter</artifactId>
+            <version>${jasypt-spring-boot-starter.version}</version>
+        </dependency>
     </dependencies>
 
 </project>
