@@ -38,6 +38,9 @@ public class IndexController extends BaseController {
             for (VAllInfoWithBLOBs vAllInfoWithBLOBs : allInfoDTOList.getVAllInfoWithBLOBsList()
             ) {
                 AllInfoVO obj = ejbGenerator.convert(vAllInfoWithBLOBs, AllInfoVO.class);
+                if (stringUtil.isEmpty(obj.getDescribes())) {
+                    obj.setDescribes(stringUtil.getTextFromHtml(obj.getTitle()));
+                }
                 obj.setHref(getUrl(obj.getTypeId(), obj.getId()));
                 obj.setCatHref(geCattUrl(obj.getTypeId(), obj.getCatEname()));
                 allInfoVOList.add(obj);
