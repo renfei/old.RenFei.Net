@@ -63,14 +63,88 @@
             <version>${swagger.version}</version>
         </dependency>
     </dependencies>
-
     <build>
         <finalName>web</finalName>
         <plugins>
+            <!--
+            npm打包：注意这里配置的是Linux的npm命令，如果是Windows需要修改命令
+            -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <executions>
+
+                    <execution>
+                        <id>exec-npm-install</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>npm</executable>
+                            <arguments>
+                                <argument>install</argument>
+                            </arguments>
+                            <workingDirectory>${basedir}/src/main/console</workingDirectory>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>exec-npm-run-build</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>npm</executable>
+                            <arguments>
+                                <argument>run</argument>
+                                <argument>build</argument>
+                            </arguments>
+                            <workingDirectory>${basedir}/src/main/console</workingDirectory>
+                        </configuration>
+                    </execution>
+
+                </executions>
+            </plugin>
+            <!--将npm打包的结果复制到项目中-->
+            <!--<plugin>-->
+                <!--<groupId>org.apache.maven.plugins</groupId>-->
+                <!--<artifactId>maven-resources-plugin</artifactId>-->
+                <!--<configuration>-->
+                    <!--<encoding>${project.build.sourceEncoding}</encoding>-->
+                <!--</configuration>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<id>copy-spring-boot-webapp</id>-->
+                        <!--&lt;!&ndash; here the phase you need &ndash;&gt;-->
+                        <!--<phase>validate</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>copy-resources</goal>-->
+                        <!--</goals>-->
+                        <!--<configuration>-->
+                            <!--<encoding>utf-8</encoding>-->
+                            <!--<outputDirectory>${basedir}/src/main/resources/static</outputDirectory>-->
+                            <!--<resources>-->
+                                <!--<resource>-->
+                                    <!--<directory>${basedir}/src/main/console/dist/static</directory>-->
+                                <!--</resource>-->
+                            <!--</resources>-->
+                        <!--</configuration>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+            <!--</plugin>-->
             <!--jar包方式-->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <!--war包方式-->
             <!--<plugin>-->

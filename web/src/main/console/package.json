@@ -1,7 +1,7 @@
 {
-  "name": "supervise",
+  "name": "console",
   "version": "1.0.0",
-  "description": "RenFei.Net Supervise By Vue.js",
+  "description": "RenFei.Net Console By Vue.js",
   "author": "RenFei <i@renfei.net>",
   "private": true,
   "scripts": {
