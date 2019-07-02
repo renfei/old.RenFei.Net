@@ -40,4 +40,12 @@ public class CategorService extends BaseService {
             return null;
         }
     }
+
+    public List<CategoryDTO> getCatByTypeIdAndName(Long TypeID, String name) {
+        CategoryDOExample categoryDOExample = new CategoryDOExample();
+        categoryDOExample.createCriteria()
+                .andTypeIdEqualTo(TypeID)
+                .andEnNameEqualTo(name);
+        return ejbGenerator.convert(categoryDOMapper.selectByExampleWithBLOBs(categoryDOExample), CategoryDTO.class);
+    }
 }

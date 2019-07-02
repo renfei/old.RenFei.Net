@@ -1,0 +1,50 @@
+version: "1"
+services:
+  mysql:
+    container_name: mysql
+    image: mysql:latest #拉取MySQL镜像
+    restart: always
+    volumes:
+      - /opt/RenFeiNet/mysql/data/:/var/lib/mysql/                             #映射mysql的数据目录到宿主机，保存数据
+      - /opt/RenFeiNet/mysql/conf/mysqld.cnf:/etc/mysql/mysql.conf.d/mysqld.cnf #把mysql的配置文件映射到容器的相应目录
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=ROOT
+  redis:
+    container_name: redis
+    image: redis:latest
+    restart: always
+    ports:
+        - 6379:6379
+    volumes:
+      - /opt/RenFeiNet/redis/conf:/usr/local/etc/redis
+      - /opt/RenFeiNet/redis/data:/data
+    command:
+      redis-server
+  nginx:
+    container_name: nginx
+    image: nginx:latest #拉取Nginx镜像
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - /opt/RenFeiNet/webserver:/webserver
+      - /opt/RenFeiNet/nginx/conf/nginx.conf:/etc/nginx/nginx.conf            #映射nginx的配置文件到容器里
+      - /opt/RenFeiNet/nginx/logs/:/var/log/nginx/
+      - /opt/RenFeiNet/nginx/html/:/var/share/nginx/html/                     #映射nginx的网页目录到容器里
+    links:
+      - tomcat                                               #连接 tomcat镜像
+  tomcat:
+    container_name: tomcat_1
+    image: tomcat:latest  #拉取Tomcat镜像
+    restart: always
+    ports:
+      - 8080:8080
+    volumes:
+      - /opt/RenFeiNet/tomcat/webapps/web:/usr/local/tomcat/webapps/web          #映射一个web服务
+      - /opt/RenFeiNet/tomcat/conf/server.xml:/usr/local/tomcat/conf/server.xml  #映射 tomcat的配置文件到容器里
+      - /opt/RenFeiNet/tomcat/logs/:/usr/local/tomcat/logs/
+    links:
+      - mysql                                                   #连接数据库镜像

@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 文章服务
@@ -35,11 +36,20 @@ public class PostsService extends BaseService {
                 .createCriteria()
                 .andIsDeleteEqualTo(false)
                 .andReleaseTimeLessThanOrEqualTo(new Date());
-        PostsListDTO postsListDTO = new PostsListDTO();
         Page page = PageHelper.startPage(intPage, intRows);
-        postsListDTO.setPostsList(postsDOMapper.selectByExampleWithBLOBs(postsDOExample));
-        postsListDTO.setCount(page.getTotal());
-        return postsListDTO;
+        return convert(postsDOMapper.selectByExampleWithBLOBs(postsDOExample), page.getTotal());
+    }
+
+    public PostsListDTO getAllPostsByCatID(Long catID, String pages, String rows) {
+        int intPage = convertPage(pages), intRows = convertRows(rows);
+        PostsDOExample postsDOExample = new PostsDOExample();
+        postsDOExample
+                .createCriteria()
+                .andIsDeleteEqualTo(false)
+                .andCategoryIdEqualTo(catID)
+                .andReleaseTimeLessThanOrEqualTo(new Date());
+        Page page = PageHelper.startPage(intPage, intRows);
+        return convert(postsDOMapper.selectByExampleWithBLOBs(postsDOExample), page.getTotal());
     }
 
     /**
@@ -61,5 +71,12 @@ public class PostsService extends BaseService {
         } else {
             return null;
         }
+    }
+
+    private PostsListDTO convert(List<PostsDOWithBLOBs> postsDOWithBLOBs, Long count) {
+        PostsListDTO postsListDTO = new PostsListDTO();
+        postsListDTO.setPostsList(postsDOWithBLOBs);
+        postsListDTO.setCount(count);
+        return postsListDTO;
     }
 }

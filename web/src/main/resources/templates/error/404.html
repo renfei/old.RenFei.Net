@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/head::head(${head})">
+</head>
+<body>
+<header th:replace="layout/header::header(${header})"></header>
+<main class="site-main" id="site-main">
+    <section class="main-banner d-flex px-4 flex-column">
+        <div class="main-banner-text container pb-4">
+            <h1 class="main-banner-text-title">404 - Not Found</h1>
+            <div class="sub-categories">
+                <div class="categories-list d-block px-4">
+                    抱歉-您访问的页面不存在！<br/>
+                    Sorry-We cannot find the page you requested！
+                </div>
+            </div>
+        </div>
+        <div class="main-banner-bg">
+            <img th:src="${domain+'/img/banner/404_banner.jpg'}"/>
+        </div>
+    </section>
+    <section class="post-feed">
+        <div class="post-feed-top">
+        </div>
+        <div class="featured">
+            <div class="container">
+                <strong class="underline-dash">
+                    您访问的页面找不回来了，但我们可以一起帮他们回家
+                </strong>
+                <div style="padding-top: 20px;">
+                    <div class="col-md-3 col-sm-3">
+                        <div id="error404img" class="img"></div>
+                    </div>
+                    <div class="col-md-9 col-sm-9">
+                        <div style="padding-left: 20px;">
+                            <strong style="font-size: 22px;"><span id="name"></span>(<span
+                                    id="sex"></span>)</strong><br/>
+                            <hr style="border-top: 1px solid #000;">
+                            <strong>出生日期：</strong><span id="birth_time"></span><br/>
+                            <strong>失踪日期：</strong><span id="lost_time"></span><br/>
+                            <strong>失踪地点：</strong><span id="lost_place"></span><br/>
+                            <strong>特征描述：</strong><span
+                                id="child_feature"></span><br/>
+                            <a href="JavaScript:void(0)" id="404url"
+                               class="btn btn-primary"
+                               data-animation-delay="60"
+                               style="margin-bottom: 5px;" target="_blank">
+                                查看详情
+                            </a>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+        </div>
+        <div class="featured">
+        </div>
+        <div class="container">
+            <div class="clear"></div>
+        </div>
+    </section>
+</main>
+<footer th:replace="layout/footer::footer(${footer},${performance})"></footer>
+<script th:inline="javascript">
+    $(function () {
+        if (jsondata != undefined) {
+            var num = Math.random() * jsondata.data.length;
+            num = parseInt(num, 10);
+            $('#error404img').css("background-image", "url(" + jsondata.data[num].child_pic + ")");
+            $('#name').html(jsondata.data[num].name);
+            $('#sex').html(jsondata.data[num].sex);
+            $('#birth_time').html(jsondata.data[num].birth_time);
+            $('#lost_time').html(jsondata.data[num].lost_time);
+            $('#lost_place').html(jsondata.data[num].lost_place);
+            $('#child_feature').html(jsondata.data[num].child_feature);
+            $('#404url').attr('href', jsondata.data[num].url);
+        } else {
+            $('#xuanchuan').hide();
+        }
+    });
+</script>
+</body>
+</html>

@@ -46,5 +46,7 @@
         <!--<table tableName="t_comments" domainObjectName="CommentDO"></table>-->
         <!--<table tableName="t_ipv4" domainObjectName="IPV4DO"></table>-->
         <!--<table tableName="t_ipv6" domainObjectName="IPV6DO"></table>-->
+        <!--<table tableName="t_tag" domainObjectName="TagDO"></table>-->
+        <!--<table tableName="t_tag_relation" domainObjectName="TagRelationDO"></table>-->
     </context>
 </generatorConfiguration>

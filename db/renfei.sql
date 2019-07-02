@@ -1,21 +1,17 @@
-/*
- Navicat Premium Data Transfer
+-- ----------------------------
+-- 此处会修改root的网络可访问权限
+-- ----------------------------
+update user set host ='%'where user ='root';
+flush privileges;
 
- Source Server         : localhost
- Source Server Type    : MySQL
- Source Server Version : 50717
- Source Host           : localhost:3306
- Source Schema         : renfei
-
- Target Server Type    : MySQL
- Target Server Version : 50717
- File Encoding         : 65001
-
- Date: 27/06/2019 19:10:36
-*/
-
-SET NAMES utf8mb4;
-SET FOREIGN_KEY_CHECKS = 0;
+-- ----------------------------
+-- 判断数据是否存在
+-- ----------------------------
+CASE WHEN exists (select * from sys.databases where name = 'renfei')
+THEN
+ELSE
+CREATE DATABASE renfei;
+USE renfei;
 
 -- ----------------------------
 -- Table structure for t_category
@@ -284,7 +280,7 @@ CREATE TABLE `t_video` (
   `add_time` datetime NOT NULL COMMENT '添加时间',
   `is_delete` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '删除标志',
   PRIMARY KEY (`id`),
-  FULLTEXT KEY `ft_index` (`title`,`describes`) /*!50100 WITH PARSER `ngram` */ 
+  FULLTEXT KEY `ft_index` (`title`,`describes`) /*!50100 WITH PARSER `ngram` */
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
@@ -294,3 +290,4 @@ DROP VIEW IF EXISTS `v_allinfo`;
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`%` SQL SECURITY DEFINER VIEW `v_allinfo` AS select `t_category`.`type_id` AS `type_id`,`t_category`.`zh_name` AS `cat_name`,`t_category`.`en_name` AS `cat_ename`,`t_posts`.`category_id` AS `category_id`,`t_posts`.`id` AS `id`,`t_posts`.`title` AS `title`,`t_posts`.`featured_image` AS `featured_image`,`t_posts`.`describes` AS `describes`,`t_posts`.`release_time` AS `release_time` from (`t_category` join `t_posts` on((`t_category`.`id` = `t_posts`.`category_id`))) where ((`t_posts`.`is_delete` = 0) and (`t_posts`.`release_time` <= now())) union all select `t_category`.`type_id` AS `type_id`,`t_category`.`zh_name` AS `cat_name`,`t_category`.`en_name` AS `cat_ename`,`t_video`.`category_id` AS `category_id`,`t_video`.`id` AS `id`,`t_video`.`title` AS `title`,`t_video`.`featured_image` AS `featured_image`,`t_video`.`describes` AS `describes`,`t_video`.`release_time` AS `release_time` from (`t_category` join `t_video` on((`t_category`.`id` = `t_video`.`category_id`))) where ((`t_video`.`is_delete` = 0) and (`t_video`.`release_time` <= now())) union all select `t_category`.`type_id` AS `type_id`,`t_category`.`zh_name` AS `cat_name`,`t_category`.`en_name` AS `cat_ename`,`t_page`.`category_id` AS `category_id`,`t_page`.`id` AS `id`,`t_page`.`title` AS `title`,`t_page`.`featured_image` AS `featured_image`,`t_page`.`describes` AS `describes`,`t_page`.`release_time` AS `release_time` from (`t_category` join `t_page` on((`t_category`.`id` = `t_page`.`category_id`))) where ((`t_page`.`is_delete` = 0) and (`t_page`.`release_time` <= now())) union all select `t_category`.`type_id` AS `type_id`,`t_category`.`zh_name` AS `cat_name`,`t_category`.`en_name` AS `cat_ename`,`t_photo`.`category_id` AS `category_id`,`t_photo`.`id` AS `id`,`t_photo`.`title` AS `title`,`t_photo`.`featured_image` AS `featured_image`,`t_photo`.`describes` AS `describes`,`t_photo`.`release_time` AS `release_time` from (`t_category` join `t_photo` on((`t_category`.`id` = `t_photo`.`category_id`))) where ((`t_photo`.`is_delete` = 0) and (`t_photo`.`release_time` <= now()));
 
 SET FOREIGN_KEY_CHECKS = 1;
+END;

@@ -33,6 +33,7 @@ public class IndexController extends BaseController {
                               @RequestParam(value = "page", required = false) String page,
                               @RequestParam(value = "rows", required = false) String rows) {
         AllInfoDTOList allInfoDTOList = indexService.getAllInfo(page, rows);
+        int intPage = indexService.convertPage(page);
         if (allInfoDTOList.getCount() > 0) {
             List<AllInfoVO> allInfoVOList = new ArrayList<>();
             for (VAllInfoWithBLOBs vAllInfoWithBLOBs : allInfoDTOList.getVAllInfoWithBLOBsList()
@@ -56,11 +57,12 @@ public class IndexController extends BaseController {
             for (CategoryDTO cat : categoryDTOS
             ) {
                 CategoryVO categoryVO = ejbGenerator.convert(cat, CategoryVO.class);
-                categoryVO.setHref(domain + categoryVO.getUriPath() + "/" + categoryVO.getEnName());
+                categoryVO.setHref(domain + "/cat" + categoryVO.getUriPath() + "/" + categoryVO.getEnName());
                 categoryVOS.add(categoryVO);
             }
             mv.addObject("categories", categoryVOS);
         }
+        mv.addObject("page", intPage);
         mv.addObject("homebanner", globalService.getHomeBanner());
         mv.setViewName("index");
         return mv;
