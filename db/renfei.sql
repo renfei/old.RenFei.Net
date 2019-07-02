@@ -1,7 +1,8 @@
 -- ----------------------------
 -- 此处会修改root的网络可访问权限
 -- ----------------------------
-update mysql.user set host ='%'where mysql.user ='root';
+USE mysql;
+update user set host ='%'where user ='root';
 flush privileges;
 
 -- ----------------------------
