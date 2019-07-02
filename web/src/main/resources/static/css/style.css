@@ -744,6 +744,14 @@ p {
     margin-right: 5px;
 }
 
+#error404img {
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 0;
+    padding-top: 100%;
+}
+
 
 /***************
  * 响应样式
@@ -816,6 +824,9 @@ p {
 
 /* 大屏幕（平板，大于等于 768px） */
 @media screen and (min-width: 768px) {
+    .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9 {
+        float: left;
+    }
     .col-md-3 {
         width: 25%;
     }
@@ -830,6 +841,10 @@ p {
 
     .col-md-7 {
         width: 58.33333333%;
+    }
+
+    .col-md-9 {
+        width: 75%;
     }
 
     .col-lg-7 {

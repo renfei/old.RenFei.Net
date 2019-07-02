@@ -65,7 +65,11 @@ public class SystemService extends BaseService {
             String staticDomain = getStaticDomain();
             List<String> css = new ArrayList<>();
             for (SettingDOWithBLOBs setting : settingDOWithBLOBs) {
-                css.add("//" + staticDomain + setting.getValues());
+                if (setting.getValues().startsWith("//") || setting.getValues().startsWith("http")) {
+                    css.add(setting.getValues());
+                } else {
+                    css.add("//" + staticDomain + setting.getValues());
+                }
             }
             return css;
         } else {

@@ -1,45 +1,24 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="layout/head::head(${head})">
+<head th:replace="/layout/head::head(${head})">
 </head>
 <body>
-<header th:replace="layout/header::header(${header})"></header>
+<header th:replace="/layout/header::header(${header})"></header>
 <main class="site-main" id="site-main">
-    <section class="main-banner d-flex px-4 flex-column">
-        <div class="main-banner-text container pb-4">
-            <h1 class="main-banner-text-title">RenFei Blog</h1>
-            <div class="sub-categories">
-                <div class="categories-list d-block px-4">
-                    <ul>
-                        <li th:if="${typeDTOS!=null}" th:each="type:${typeDTOS}">
-                            <a th:href="${domain+type.uriPath}" th:text="${type.typeName}"></a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="main-banner-bg">
-            <img th:src="${domain+homebanner}"/>
-        </div>
-    </section>
+
     <section class="post-feed">
-        <div class="post-feed-top">
-        </div>
-        <div class="featured">
-            <div th:replace="layout/xlist::xlist(${categories})"></div>
-        </div>
         <div class="container">
             <div class="main">
                 <h3 class="all-posts__title py-5 pt-md-10 pb-md-9 p-y4 px-3 px-md-0">
                     All Information
                 </h3>
                 <div class="allinfo">
-                    <article th:if="${allInfoVOList!=null}" th:each="info:${allInfoVOList}"
+                    <article th:if="${postsVOList!=null}" th:each="info:${postsVOList}"
                              class="allinfo-item mb-8">
                         <div class="allinfo-item-left col-12 col-md-3">
                             <span class="mb-3" th:text="${#dates.format(info.releaseTime,'MMM d, yyyy')}"></span>
                             <div class="img-box">
-                                <a th:href="${info.href}">
+                                <a th:href="${domain}+'/posts/'+${info.id}">
                                     <div class="img-box2"
                                          th:style="'background-image: url(\''+${info.featuredImage}+'\');'">
                                     </div>
@@ -48,9 +27,9 @@
                         </div>
                         <div class="allinfo-item-right col-12 col-lg-7">
                             <div class="cat mb-3">
-                                <a th:href="${info.catHref}" th:text="${info.catName}"></a>
+                                <a th:href="${domain}+'/posts/cat/'+${info.categoryId}" th:text="${info.categoryName}"></a>
                             </div>
-                            <a th:href="${info.href}" style="color: #000000;">
+                            <a th:href="${domain}+'/posts/'+${info.id}" style="color: #000000;">
                                 <h4 class="f3 mb-4" th:text="${info.title}"></h4>
                             </a>
                             <div class="excerpt mb-3" th:text="${info.describes}">
@@ -62,18 +41,18 @@
                     </div>
                 </div>
             </div>
-            <div th:replace="layout/sidebar::sidebar(${sidebar})"></div>
+            <div th:replace="/layout/sidebar::sidebar(${sidebar})"></div>
             <div class="clear"></div>
         </div>
     </section>
 </main>
-<footer th:replace="layout/footer::footer(${footer},${performance})"></footer>
+<footer th:replace="/layout/footer::footer(${footer},${performance})"></footer>
 <script th:inline="javascript">
     var domain = [[${domain}]];
     var page = [[${page}]];
 
     function nextPage() {
-        window.location.href=domain + '/?page=' + (page + 1);
+        window.location.href = domain + '/posts?page=' + (page + 1);
     }
 </script>
 </body>

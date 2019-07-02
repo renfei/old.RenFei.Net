@@ -23,14 +23,18 @@ public class TypeService extends BaseService {
     public List<TypeDTO> getAllType() {
         TypeDOExample typeDOExample = new TypeDOExample();
         typeDOExample.createCriteria();
-        List<TypeDO> typeDOList = typeDOMapper.selectByExample(typeDOExample);
-        if (typeDOList != null && typeDOList.size() > 0) {
-            List<TypeDTO> typeDTOS = new ArrayList<>();
-            for (TypeDO t : typeDOList
-            ) {
-                typeDTOS.add(ejbGenerator.convert(t, TypeDTO.class));
-            }
-            return typeDTOS;
+        return convertTypeDTOS(typeDOMapper.selectByExample(typeDOExample));
+    }
+
+    public List<TypeDTO> getTypeByName(String name) {
+        TypeDOExample typeDOExample = new TypeDOExample();
+        typeDOExample.createCriteria().andTypeNameEqualTo(name);
+        return convertTypeDTOS(typeDOMapper.selectByExample(typeDOExample));
+    }
+
+    private List<TypeDTO> convertTypeDTOS(List<TypeDO> typeDOS) {
+        if (typeDOS != null && typeDOS.size() > 0) {
+            return ejbGenerator.convert(typeDOS, TypeDTO.class);
         } else {
             return null;
         }

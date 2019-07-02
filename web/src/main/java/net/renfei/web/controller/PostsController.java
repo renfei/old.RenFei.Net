@@ -1,8 +1,11 @@
 package net.renfei.web.controller;
 
+import net.renfei.core.entity.CategoryDTO;
+import net.renfei.core.service.CategorService;
 import net.renfei.web.baseclass.BaseController;
 import net.renfei.core.entity.PostsDTO;
 import net.renfei.core.entity.PostsListDTO;
+import net.renfei.web.entity.CategoryVO;
 import net.renfei.web.entity.PostsVO;
 import net.renfei.core.service.PostsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,82 +27,22 @@ import java.util.List;
 public class PostsController extends BaseController {
     @Autowired
     private PostsService postsService;
+    @Autowired
+    private CategorService categorService;
 
     /**
      * 获取所有文章列表
      *
      * @param page 页码
-     * @param rows 每页容量
      * @return
      */
     @RequestMapping("")
     public ModelAndView getAllPostsList(@RequestParam(value = "page", required = false) String page,
-                                        @RequestParam(value = "rows", required = false) String rows) {
-        ModelAndView mv = new ModelAndView();
-        PostsListDTO postsListDTO = postsService.getAllPosts(page, rows);
+                                        ModelAndView mv) {
+        PostsListDTO postsListDTO = postsService.getAllPosts(page, "10");
         List<PostsVO> postsVOList = ejbGenerator.convert(postsListDTO.getPostsList(), PostsVO.class);
-        //[TODO]还需要每个文章的分类和去掉HTML标签
         mv.addObject("postsVOList", postsVOList);
-        return mv;
-    }
-
-    /**
-     * 获取所有分类列表
-     *
-     * @param page 页码
-     * @param rows 每页容量
-     * @return
-     */
-    @RequestMapping("cat")
-    public ModelAndView getAllCatList(@RequestParam(value = "page", required = false) String page,
-                                      @RequestParam(value = "rows", required = false) String rows) {
-        ModelAndView mv = new ModelAndView();
-        return mv;
-    }
-
-    /**
-     * 根据分类ID获取分类下面所有文章列表
-     *
-     * @param catID 分类ID
-     * @param page  页码
-     * @param rows  每页容量
-     * @return
-     */
-    @RequestMapping("cat/{id}")
-    public ModelAndView getPostsListByCatID(@PathVariable("id") String catID,
-                                            @RequestParam(value = "page", required = false) int page,
-                                            @RequestParam(value = "rows", required = false) int rows) {
-        ModelAndView mv = new ModelAndView();
-        return mv;
-    }
-
-    /**
-     * 获取所有标签列表
-     *
-     * @param page 页码
-     * @param rows 每页容量
-     * @return
-     */
-    @RequestMapping("tag")
-    public ModelAndView getAllTagList(@RequestParam(value = "page", required = false) int page,
-                                      @RequestParam(value = "rows", required = false) int rows) {
-        ModelAndView mv = new ModelAndView();
-        return mv;
-    }
-
-    /**
-     * 根据标签ID获取标签下面所有文章列表
-     *
-     * @param tagID 标签ID
-     * @param page  页码
-     * @param rows  每页容量
-     * @return
-     */
-    @RequestMapping("tag/{id}")
-    public ModelAndView getPostsListByTagID(@PathVariable("id") String tagID,
-                                            @RequestParam(value = "page", required = false) int page,
-                                            @RequestParam(value = "rows", required = false) int rows) {
-        ModelAndView mv = new ModelAndView();
+        mv.setViewName("posts/list");
         return mv;
     }
 

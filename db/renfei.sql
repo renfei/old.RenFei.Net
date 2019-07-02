@@ -1,21 +1,6 @@
-/*
- Navicat Premium Data Transfer
-
- Source Server         : localhost
- Source Server Type    : MySQL
- Source Server Version : 50717
- Source Host           : localhost:3306
- Source Schema         : renfei
-
- Target Server Type    : MySQL
- Target Server Version : 50717
- File Encoding         : 65001
-
- Date: 27/06/2019 19:10:36
-*/
-
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
+USE renfei;
 
 -- ----------------------------
 -- Table structure for t_category
@@ -284,7 +269,7 @@ CREATE TABLE `t_video` (
   `add_time` datetime NOT NULL COMMENT '添加时间',
   `is_delete` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '删除标志',
   PRIMARY KEY (`id`),
-  FULLTEXT KEY `ft_index` (`title`,`describes`) /*!50100 WITH PARSER `ngram` */ 
+  FULLTEXT KEY `ft_index` (`title`,`describes`) /*!50100 WITH PARSER `ngram` */
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------

@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: ENC(w4d3r8Gmzr/TY9tt+Cst//LwYduDWCp2VsexbdT3YQj3+cOchcLWqMPnIAGdhBshaR6r2JluDq1EfMMfOVfhTT1DbYXHTK7C)
+    url: jdbc:mysql://mysql/renfei?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
     username: ENC(qsdpai1H179WuvJVu3CfYQ==)
     password: ENC(XXjERRQgq7TSsMbaxThQcg==)
     driver-class-name: com.mysql.jdbc.Driver
