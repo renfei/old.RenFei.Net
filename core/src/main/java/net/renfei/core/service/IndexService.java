@@ -90,4 +90,9 @@ public class IndexService extends BaseService {
             return null;
         }
     }
+
+    @Override
+    public int convertPage(String page) {
+        return super.convertPage(page);
+    }
 }

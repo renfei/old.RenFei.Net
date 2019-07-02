@@ -1,3 +1,3 @@
-FROM mysql:latest
+FROM mysql:5.7.17
 MAINTAINER i@renfei.net
-ADD init.sql /docker-entrypoint-initdb.d/
+ADD db/renfei.sql /docker-entrypoint-initdb.d/

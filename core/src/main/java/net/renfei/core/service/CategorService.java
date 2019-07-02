@@ -19,6 +19,32 @@ public class CategorService extends BaseService {
     @Autowired
     private TypeService typeService;
 
+    public CategoryDTO getCategoryByID(Long id) {
+        return ejbGenerator.convert(categoryDOMapper.selectByPrimaryKey(id), CategoryDTO.class);
+    }
+
+    public List<CategoryDTO> getAllCategoryByType(Long id) {
+        CategoryDOExample categoryDOExample = new CategoryDOExample();
+        categoryDOExample.createCriteria().andTypeIdEqualTo(id);
+        List<CategoryDO> categoryDOS = categoryDOMapper.selectByExampleWithBLOBs(categoryDOExample);
+        if (categoryDOS != null && categoryDOS.size() > 0) {
+            List<CategoryDTO> categoryDTOS = new ArrayList<>();
+            TypeDTO typeDTO = typeService.getTypeByID(id);
+            for (CategoryDO cdo : categoryDOS
+            ) {
+                CategoryDTO categoryDTO = ejbGenerator.convert(cdo, CategoryDTO.class);
+                if (typeDTO != null) {
+                    categoryDTO.setTypeName(typeDTO.getTypeName());
+                    categoryDTO.setUriPath(typeDTO.getUriPath());
+                }
+                categoryDTOS.add(categoryDTO);
+            }
+            return categoryDTOS;
+        } else {
+            return null;
+        }
+    }
+
     public List<CategoryDTO> getAllCategory() {
         CategoryDOExample categoryDOExample = new CategoryDOExample();
         categoryDOExample.createCriteria();
