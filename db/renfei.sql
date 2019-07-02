@@ -1,7 +1,3 @@
-CASE WHEN exists (select * from sys.databases where name = 'renfei')
-THEN
-ELSE
-CREATE DATABASE renfei;
 USE renfei;
 
 -- ----------------------------
