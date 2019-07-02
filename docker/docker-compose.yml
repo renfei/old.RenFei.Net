@@ -14,7 +14,7 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - MYSQL_DATABASE=${MYSQL_DATABASE}
-      - MYSQL_ROOT_HOST=%
+      - MYSQL_ROOT_HOST='%'
   redis:
     container_name: redis
     image: redis:latest
@@ -31,7 +31,7 @@ services:
     image: nginx:latest #拉取Nginx镜像
     restart: always
     ports:
-      - 81:80
+      - 80:80
       - 443:443
     volumes:
       - ${DIR}/nginx/webserver:/webserver

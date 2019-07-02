@@ -1,14 +1,3 @@
--- ----------------------------
--- 此处会修改root的网络可访问权限
--- ----------------------------
-
-USE mysql;
-update user set host ='%'where user ='root';
-flush privileges;
-
--- ----------------------------
--- 判断数据是否存在
--- ----------------------------
 CASE WHEN exists (select * from sys.databases where name = 'renfei')
 THEN
 ELSE
