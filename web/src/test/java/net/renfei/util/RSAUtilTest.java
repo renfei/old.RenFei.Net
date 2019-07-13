@@ -21,7 +21,7 @@ public class RSAUtilTest extends TestApplication {
         log.info("获取公钥:" + publicKey);
         String privateKey = rsaUtils.getPrivateKey(map);
         log.info("获取私钥:" + privateKey);
-        String plaintext = "这是一个RSA非对称加密测试";
+        String plaintext = "This is an RSA asymmetric encryption test";
         log.info("设置明文：" + plaintext);
         log.info("使用私钥加密");
         String data = rsaUtils.encryptedByPrivateKey(plaintext, privateKey);

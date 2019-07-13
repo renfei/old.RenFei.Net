@@ -16,7 +16,7 @@ public class AesEncryptUtilsTest extends TestApplication {
     public void aesTest() throws Exception {
         String key = stringUtil.getRandomString(16);
         log.info("生成16位的AES秘钥:" + key);
-        String plaintext = "这是一个AES加解密测试";
+        String plaintext = "This is an AES encryption and decryption test";
         log.info("设置明文:" + plaintext);
         String data = aesEncryptUtils.encrypt(plaintext, key);
         log.info("加密以后密文：" + data);
