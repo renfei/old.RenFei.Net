@@ -18,6 +18,10 @@ public class APIResult<T> {
      */
     private String message;
     /**
+     * 状态码
+     */
+    private int code = 200;
+    /**
      * 响应返回的数据对象
      */
     private T data;

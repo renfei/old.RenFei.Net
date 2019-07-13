@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/open")
+@RequestMapping("/open/api")
 @Api(description = "开放接口测试", tags = "Open API Test")
 public class ApiTestController extends BaseRestController {
     @GetMapping("test")

@@ -35,6 +35,8 @@ spring:
 mybatis:
   typeAliasesPackage: net.renfei.dao.entity
   mapperLocations: classpath*:mapper/*.xml
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   #pagehelper分页插件配置
 pagehelper:
   helperDialect: mysql
@@ -43,3 +45,8 @@ pagehelper:
   params: count=countSql
 swagger:
   host: www.renfei.net
+#logging:
+#  level:
+#    net.renfei: debug
+#  pattern:
+#    console: '%d{yyyy-MMM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{15} - %msg%n'

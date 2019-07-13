@@ -32,7 +32,7 @@
                             <a th:href="${domain}+'/posts/'+${info.id}" style="color: #000000;">
                                 <h4 class="f3 mb-4" th:text="${info.title}"></h4>
                             </a>
-                            <div class="excerpt mb-3" th:text="${info.describes}">
+                            <div class="excerpt mb-3" th:text="${#strings.abbreviate(info.describes,150)}">
                             </div>
                         </div>
                     </article>
