@@ -32,12 +32,20 @@ public class PostsService extends BaseService {
     public PostsListDTO getAllPosts(String pages, String rows) {
         int intPage = convertPage(pages), intRows = convertRows(rows);
         PostsDOExample postsDOExample = new PostsDOExample();
+        postsDOExample.setOrderByClause("release_time DESC");
         postsDOExample
                 .createCriteria()
                 .andIsDeleteEqualTo(false)
                 .andReleaseTimeLessThanOrEqualTo(new Date());
         Page page = PageHelper.startPage(intPage, intRows);
-        return convert(postsDOMapper.selectByExampleWithBLOBs(postsDOExample), page.getTotal());
+        List<PostsDOWithBLOBs> postsDOWithBLOBs = postsDOMapper.selectByExampleWithBLOBs(postsDOExample);
+        for (PostsDOWithBLOBs p : postsDOWithBLOBs
+        ) {
+            if (stringUtil.isEmpty(p.getDescribes())) {
+                p.setDescribes(stringUtil.getTextFromHtml(p.getContent()));
+            }
+        }
+        return convert(postsDOWithBLOBs, page.getTotal());
     }
 
     public PostsListDTO getAllPostsByCatID(Long catID, String pages, String rows) {

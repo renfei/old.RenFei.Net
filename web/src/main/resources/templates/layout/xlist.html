@@ -15,7 +15,7 @@
                     </button>
                 </div>
                 <div class="category-panel__blocks flex-row mt-md-10">
-                    <div style="overflow: hidden;position: relative;height: 310px;">
+                    <div style="overflow: hidden;position: relative;min-height: 310px;">
                         <ul id="og-ul" th:style="${'width:'+categories.size()*220+'px'}">
                             <li class="category-panel__bg" th:each="cat:${categories}">
                                 <a class="px-4 pt-4 d-block" th:href="${cat.href}" target="_blank">

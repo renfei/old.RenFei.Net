@@ -48,5 +48,12 @@
         <!--<table tableName="t_ipv6" domainObjectName="IPV6DO"></table>-->
         <!--<table tableName="t_tag" domainObjectName="TagDO"></table>-->
         <!--<table tableName="t_tag_relation" domainObjectName="TagRelationDO"></table>-->
+        <!--<table tableName="t_secret_key" domainObjectName="SecretKeyDO"></table>-->
+        <!--<table tableName="t_account" domainObjectName="AccountDO"></table>-->
+        <!--<table tableName="t_role" domainObjectName="RoleDO"></table>-->
+        <!--<table tableName="t_permission" domainObjectName="PermissionDO"></table>-->
+        <!--<table tableName="t_role_account" domainObjectName="RoleAccountDO"></table>-->
+        <!--<table tableName="t_permission_role" domainObjectName="PermissionRoleDO"></table>-->
+        <!--<table tableName="t_token" domainObjectName="TokenDO"></table>-->
     </context>
 </generatorConfiguration>
