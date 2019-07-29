@@ -8,10 +8,13 @@ import java.util.Date;
 public class PostsVO {
     private Long id;
     private Long categoryId;
-    private String categoryName;
+    private String categoryZhName;
+    private String categoryEnName;
+    private String categoryTypeName;
     private Boolean isOriginal;
     private Boolean isComment;
     private Long views;
+    private Long comments;
     private Date releaseTime;
     private String title;
     private String featuredImage;

@@ -138,6 +138,12 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <!--此处将打包输出的地址放到Docker映射的文件夹中，方便Docker启动-->
+                    <outputDirectory>
+                        ${basedir}/../docker/volumes/app
+                    </outputDirectory>
+                </configuration>
                 <executions>
                     <execution>
                         <goals>

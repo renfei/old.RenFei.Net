@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
-
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController extends BaseController {
@@ -22,13 +20,13 @@ public class AuthController extends BaseController {
     private RequestUtil requestUtil;
 
     @PostMapping("signin")
-    public APIResult signin(SignInVO signInVO, HttpServletRequest request) {
-        if (stringUtil.isEmpty(request.getHeader("uuid"))) {
+    public APIResult signin(SignInVO signInVO) {
+        if (stringUtil.isEmpty(localRequest.get().getHeader("uuid"))) {
             return APIResult.fillResult(false, "Head UUID missing");
         }
         SignInDTO signInDTO = ejbGenerator.convert(signInVO, SignInDTO.class);
-        signInDTO.setUuid(request.getHeader("uuid"));
-        signInDTO.setAudience(requestUtil.getClientDigest(request));
+        signInDTO.setUuid(localRequest.get().getHeader("uuid"));
+        signInDTO.setAudience(requestUtil.getClientDigest(localRequest.get()));
         signInDTO = accountService.signIn(signInDTO);
         APIResult apiResult = APIResult.fillResult(signInDTO.getSuccess(), signInDTO.getMessage(), signInDTO.getData());
         apiResult.setCode(signInDTO.getCode());

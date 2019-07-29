@@ -4,14 +4,34 @@
 </head>
 <body>
 <header th:replace="/layout/header::header(${header})"></header>
-<main class="site-main" id="site-main">
-    <section class="post-feed">
+<section id="page-breadcrumb">
+    <div class="vertical-center sun">
         <div class="container">
-            <div th:utext="${pageVO.content}"></div>
-            <div class="clear"></div>
+            <div class="row">
+                <div class="action">
+                    <div class="col-sm-12">
+                        <h1 class="title" th:text="${pageVO.title}"></h1>
+                        <p th:text="${pageVO.describes}"></p>
+                    </div>
+                </div>
+            </div>
         </div>
-    </section>
-</main>
+    </div>
+</section>
+<section id="blog-details" class="padding-top">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="single-blog blog-details two-column" th:utext="${pageVO.content}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 <footer th:replace="layout/footer::footer(${footer},${performance})"></footer>
 </body>
 </html>

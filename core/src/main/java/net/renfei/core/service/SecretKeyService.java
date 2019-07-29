@@ -2,20 +2,13 @@ package net.renfei.core.service;
 
 import net.renfei.core.baseclass.BaseService;
 import net.renfei.core.entity.SecretKeyDTO;
-import net.renfei.dao.entity.SecretKeyDOExample;
 import net.renfei.dao.entity.SecretKeyDOWithBLOBs;
-import net.renfei.dao.persistences.SecretKeyDOMapper;
 import net.renfei.util.AesEncryptUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.List;
-
 @Service
 public class SecretKeyService extends BaseService {
-    @Autowired
-    private SecretKeyDOMapper secretKeyDOMapper;
     @Autowired
     private AesEncryptUtils aesEncryptUtils;
 

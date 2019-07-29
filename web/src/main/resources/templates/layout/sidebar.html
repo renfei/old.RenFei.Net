@@ -1,34 +1,32 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <body>
-        <div th:fragment="sidebar(sidebar)" class="sidebar">
-            <div th:if="${sidebar.showSearch}">
-                <form id="search_form" class="my-3" action="/search" accept-charset="UTF-8" method="get">
-                    <div class="d-flex">
-                        <div class="flex-auto">
-                            <input
-                                    aria-label="Search RenFei.Net"
-                                    autocapitalize="off"
-                                    autocomplete="off"
-                                    class="form-control"
-                                    data-hotkey="s"
-                                    name="q"
-                                    placeholder="Search RenFei.Net"
-                                    spellcheck="false"
-                                    type="text"
-                                    style="width: 100%;min-height: 30px;"
-                            >
-                        </div>
-                        <button class="btn" style="margin-left: 8px;" type="submit">Search</button>
-                    </div>
-                </form>
+        <div th:fragment="sidebar(sidebar)" class="sidebar blog-sidebar">
+            <div class="sidebar-item">
+                <div th:replace="layout/github::mygithub"></div>
             </div>
-            <div th:replace="layout/github::mygithub"></div>
-            <div class="itellyou360">
-                <a href="https://www.aliyun.com/acts/hi-group-buying?userCode=mqe0f1u0" target="_blank">
-                    <img src="/itellyou/aliyun300250.jpg" style="width: 100%">
-                </a>
+            <div class="sidebar-item">
+                <div class="itellyou360">
+                    <a href="https://www.aliyun.com/acts/hi-group-buying?userCode=mqe0f1u0" target="_blank">
+                        <img src="/itellyou/aliyun300250.jpg" style="width: 100%">
+                    </a>
+                </div>
             </div>
+            <div class="sidebar-item categories">
+                <h3 th:if="${sidebar.categories!=null}">Categories</h3>
+                <ul class="nav navbar-stacked">
+                    <li th:if="${sidebar.categories!=null}" th:each="cat:${sidebar.categories}" th:class="${cat.activ?'active':''}">
+                        <a th:href="${cat.link}" th:utext="${cat.categoriesName}+'<span class=\'pull-right\'>('+${cat.cnt}+')</span>'">
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!--<div class="sidebar-item tag-cloud">-->
+                <!--<h3>Tag Cloud</h3>-->
+                <!--<ul class="nav nav-pills">-->
+                    <!--<li><a href="#">Corporate</a></li>-->
+                <!--</ul>-->
+            <!--</div>-->
         </div>
     </body>
 </html>

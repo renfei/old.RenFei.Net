@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/layout/head::head(${head})">
+</head>
+<body>
+<header th:replace="/layout/header::header(${header})"></header>
+<section id="page-breadcrumb">
+    <div class="vertical-center sun">
+        <div class="container">
+            <div class="row">
+                <div class="action">
+                    <div class="col-sm-12">
+                        <h1 class="title">Development Kit Box</h1>
+                        <p>工欲善其事，必先利其器。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="company-information" class="choose">
+    <div class="container">
+        <div class="row">
+            <h2>暂未开发</h2>
+        </div>
+    </div>
+</section>
+<footer th:replace="/layout/footer::footer(${footer},${performance})"></footer>
+</body>
+</html>

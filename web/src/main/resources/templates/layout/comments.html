@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <body>
+        <div class="response-area" th:fragment="comments(typeid,id,comments)">
+            <hr>
+            <h2 class="bold">Comments</h2>
+            <form id="main-contact-form" name="contact-form">
+                <div id="comments-reply" style="display: none;padding: 10px; font-size: 14px;">
+                    Reply to:
+                    <input type="hidden" id="reply">
+                    <span id="comments-reply-test"></span>
+                    <button type="button" class="btn btn-xs btn-default" onclick="cancelReply(1,1)">Cancel</button>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="name" name="name" class="form-control" required="required" placeholder="Name">
+                </div>
+                <div class="form-group">
+                    <input type="text" id="email" name="email" class="form-control" required="required" placeholder="Email">
+                </div>
+                <div class="form-group">
+                    <input type="text" id="link" name="link" class="form-control" required="required" placeholder="Link">
+                </div>
+                <div class="form-group">
+                    <textarea id="content" name="content" required="required" class="form-control" rows="8" placeholder="Your text here"></textarea>
+                </div>
+                <div class="form-group">
+                    <input type="submit" name="submit" class="btn btn-submit" value="Submit" th:onclick="'return replySubmi('+${typeid}+','+${id}+')'">
+                </div>
+            </form>
+            <ul th:if="${comments!=null}" th:replace="this::child(${comments})"></ul>
+        </div>
+        <!--递归的代码块-->
+        <th:block th:fragment="child(ul)">
+            <ul class="media-list">
+                <th:block th:each="comment:${ul}">
+                    <li class="media">
+                        <div class="post-comment">
+                            <div class="media-body">
+                                <span><i class="fa fa-user"></i>Posted by
+                                    <a th:href="${comment.link}" target="_blank">
+                                        <span th:text="${comment.author}"></span>
+                                    </a>
+                                </span>
+                                <p th:text="${comment.content}"></p>
+                                <ul class="nav navbar-nav post-nav">
+                                    <li>
+                                        <a th:utext="'<i class=\'fa fa-clock-o\'></i>'+${#dates.format(comment.datetime,'d MMM, YYYY - hh:mm:ss')}+' - '+${comment.address==null?'Unknown Address':comment.address}"></a>
+                                    </li>
+                                    <li>
+                                        <a th:href="'javascript:replyTo(\''+${comment.author}+'\','+${comment.id}+');'">
+                                            <i class="fa fa-reply"></i>Reply
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <ul th:if="${comment.child!=null}" th:replace="this::child(${comment.child})"></ul>
+                    </li>
+                </th:block>
+            </ul>
+        </th:block>
+    </body>
+</html>

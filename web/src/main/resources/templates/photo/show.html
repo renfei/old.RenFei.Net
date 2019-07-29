@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/layout/head::head(${head})">
+</head>
+<body>
+<header th:replace="/layout/header::header(${header})"></header>
+<section id="portfolio-information" class="padding-top" style="padding-top: 0;">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <img th:src="${photo.featuredImage}" class="img-responsive" alt="">
+            </div>
+            <div class="col-sm-6">
+                <div class="project-name overflow">
+                    <h2 class="bold" th:text="${photo.title}"></h2>
+                    <ul class="nav navbar-nav navbar-default">
+                        <li>
+                            <a th:utext="'<i class=\'fa fa-clock-o\'></i>'+${#dates.format(photo.releaseTime,'EEE, dd MMM HH:mm:ss')+' GMT+8 '+#dates.format(photo.releaseTime,'yyyy')}">February11,2014</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="project-info overflow">
+                    <h3>Project Info</h3>
+                    <p th:text="${photo.describes}"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--/#portfolio-information-->
+
+<section id="related-work" class="padding-top padding-bottom">
+    <div class="container">
+        <div class="row">
+            <h1 class="title text-center">Photos</h1>
+            <div class="col-sm-3" th:if="${photoImg.photoImgs!=null}" th:each="img:${photoImg.photoImgs}"
+                 style="margin-bottom: 20px;">
+                <div class="portfolio-wrapper">
+                    <div class="portfolio-single">
+                        <div class="portfolio-thumb">
+                            <a th:href="${img.uri}" data-lightbox="example-set">
+                                <img th:src="${img.uri}" class="img-responsive" alt="">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<footer th:replace="/layout/footer::footer(${footer},${performance})"></footer>
+</body>
+</html>

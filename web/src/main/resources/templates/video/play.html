@@ -3,6 +3,11 @@
 <head th:replace="layout/head::head(${head})">
 </head>
 <body>
+<style>
+    main {
+        text-align: left;
+    }
+</style>
 <!-- Preload -->
 <link
         rel="preload"
@@ -19,64 +24,75 @@
         href="/font/plyr/gordita-bold.woff2"
 />
 <header th:replace="/layout/header::header(${header})"></header>
-<main class="site-main" id="site-main">
-    <section class="post-feed">
-        <div class="container">
-            <div class="main">
-                <div class="videobox">
-                    <div class="videobox_2">
-                        <video style="position: absolute;top: 0; bottom: 0; left: 0; right: 0;"
-                                controls
-                                crossorigin
-                                playsinline
-                                poster="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.jpg"
-                                id="player"
-                        >
-                            <!-- Video files -->
-                            <source
-                                    src="https://cdn.neilren.com/video/mv/BanGeShiJiDeGuShi.mp4"
-                                    type="video/mp4"
-                                    size="576"
-                            />
-                            <source
-                                    src="https://cdn.neilren.com/video/mv/BanGeShiJiDeGuShi.mp4"
-                                    type="video/mp4"
-                                    size="720"
-                            />
-                            <source
-                                    src="https://cdn.neilren.com/video/mv/BanGeShiJiDeGuShi.mp4"
-                                    type="video/mp4"
-                                    size="1080"
-                            />
-
-                            <!-- Caption files -->
-                            <track
-                                    kind="captions"
-                                    label="English"
-                                    srclang="en"
-                                    src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.en.vtt"
-                                    default
-                            />
-                            <track
-                                    kind="captions"
-                                    label="Fran莽ais"
-                                    srclang="fr"
-                                    src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.fr.vtt"
-                            />
-
-                            <!-- Fallback for browsers that don't support the <video> element -->
-                            <a href="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4" download
-                            >Download</a
-                            >
-                        </video>
+<section id="blog-details" class="padding-top" style="padding-top: 0;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9 col-sm-7">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="single-blog blog-details two-column">
+                            <div class="post-thumb">
+                                <video style=""
+                                       controls
+                                       crossorigin
+                                       playsinline
+                                       th:poster="${video.featuredImage}"
+                                       id="player"
+                                >
+                                    <!-- Video files -->
+                                    <source th:if="${video.videoSource!=null}" th:each="source:${video.videoSource}"
+                                            th:src="${source.videoSrc}"
+                                            th:type="${source.videoType}"
+                                            th:size="${source.videoSize}"
+                                    />
+                                    <!-- Caption files -->
+                                    <track th:if="${video.videoTrack!=null}" th:each="track:${video.videoTrack}"
+                                           th:kind="${track.kind}"
+                                           th:label="${track.label}"
+                                           th:srclang="${track.srclang}"
+                                           th:src="${track.src}"
+                                    />
+                                    <!-- Fallback for browsers that don't support the <video> element -->
+                                    <a th:if="${video.download!=null}" th:href="${video.download}" download>Download</a
+                                    >
+                                </video>
+                            </div>
+                            <div class="post-content overflow">
+                                <h2 class="post-title bold"><a th:text="${video.title}"></a></h2>
+                                <h3 class="post-author">
+                                    <button type="button" class="btn btn-xs btn-default"
+                                            th:utext="'<i class=\'fa fa-calendar\'></i> '+${(video.releaseTime==null?'Unknown':#dates.format(video.releaseTime,'EEE, dd MMM HH:mm:ss')+' GMT+8 '+#dates.format(video.releaseTime,'yyyy'))}"></button>
+                                    <button type="button" class="btn btn-xs btn-default"
+                                            th:utext="'<i class=\'fa fa-eye\'></i> '+${(video.views==null?'Unknown':video.views)}"></button>
+                                </h3>
+                                <p th:utext="${video.describes}"></p>
+                                <div class="post-bottom overflow">
+                                    <ul class="nav navbar-nav post-nav">
+                                        <li>
+                                            <a th:href="${domain}+'/cat/'+${video.categoryTypeName}+'/'+${video.categoryEnName}"
+                                               th:utext="'<i class=\'fa fa-tag\'></i>'+${video.categoryZhName}"></a>
+                                        </li>
+                                        <li><a th:utext="'<i class=\'fa fa-eye\'></i>'+${video.views}+' Views'"></a>
+                                        </li>
+                                        <li>
+                                            <a th:utext="'<i class=\'fa fa-comments\'></i>'+${video.comments}+' Comments'"></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div th:replace="/layout/share::share"></div>
+                                <div th:replace="/layout/comments::comments(${commentTypeId},${commentObjId},${commentVO})"></div>
+                                <!--/Response-area-->
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div th:replace="/layout/sidebar::sidebar"></div>
-            <div class="clear"></div>
+            <div class="col-md-3 col-sm-5">
+                <div th:replace="/layout/sidebar::sidebar(${sidebar})"></div>
+            </div>
         </div>
-    </section>
-</main>
+    </div>
+</section>
 <footer th:replace="layout/footer::footer(${footer},${performance})"></footer>
 <!-- Polyfills -->
 <script

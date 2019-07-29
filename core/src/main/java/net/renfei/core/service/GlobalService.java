@@ -15,6 +15,10 @@ public class GlobalService extends BaseService {
         return systemService.getSiteName();
     }
 
+    public String getSiteLogo() {
+        return systemService.getSiteLogo();
+    }
+
     public String getDomain() {
         return systemService.getDomain();
     }

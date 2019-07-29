@@ -1,27 +1,22 @@
 package net.renfei.web.controller;
 
 import net.renfei.core.entity.SearchDTO;
-import net.renfei.core.service.SearchService;
 import net.renfei.dao.entity.FullTextIndexDO;
 import net.renfei.web.baseclass.BaseController;
 import net.renfei.web.entity.SearchVO;
 import net.renfei.web.entity.SidebarVO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Controller
 @RequestMapping("/search")
 public class SearchController extends BaseController {
-    @Autowired
-    private SearchService searchService;
+
 
     @RequestMapping("")
     public ModelAndView doSearch(ModelAndView mv,
@@ -30,7 +25,6 @@ public class SearchController extends BaseController {
         if (!stringUtil.isEmpty(query)) {
             setHead(mv, "Search:" + query + " - " + siteName);
             SidebarVO sidebarVO = (SidebarVO) getObjFromMV(mv, SIDEBAR_KEY);
-            sidebarVO.setShowSearch(false);
             mv.addObject(SIDEBAR_KEY, sidebarVO);
             Long startTime = System.nanoTime();
             SearchDTO searchDTO;
@@ -56,6 +50,7 @@ public class SearchController extends BaseController {
                     searchs.add(search);
                 }
                 searchVO.setSearchList(searchs);
+                setPagination(mv, page, searchDTO.getTotal(), "/search?q=" + query + "&p=");
                 mv.addObject("search", searchVO);
             }
         }

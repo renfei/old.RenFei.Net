@@ -5,7 +5,7 @@ import net.renfei.core.entity.CategoryDTO;
 import net.renfei.core.entity.TypeDTO;
 import net.renfei.dao.entity.CategoryDO;
 import net.renfei.dao.entity.CategoryDOExample;
-import net.renfei.dao.persistences.CategoryDOMapper;
+import net.renfei.dao.entity.PostsDOWithBLOBs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,12 +15,35 @@ import java.util.List;
 @Service
 public class CategorService extends BaseService {
     @Autowired
-    private CategoryDOMapper categoryDOMapper;
-    @Autowired
     private TypeService typeService;
 
     public CategoryDTO getCategoryByID(Long id) {
-        return ejbGenerator.convert(categoryDOMapper.selectByPrimaryKey(id), CategoryDTO.class);
+        CategoryDTO categoryDTO = ejbGenerator.convert(categoryDOMapper.selectByPrimaryKey(id), CategoryDTO.class);
+        TypeDTO typeDTO = typeService.getTypeByID(categoryDTO.getTypeId());
+        categoryDTO.setTypeName(typeDTO.getTypeName());
+        categoryDTO.setUriPath(typeDTO.getUriPath());
+        return categoryDTO;
+    }
+
+    public CategoryDTO getCategoryByEnNaeme(String enName) {
+        CategoryDOExample categoryDOExample = new CategoryDOExample();
+        categoryDOExample.createCriteria()
+                .andEnNameEqualTo(enName);
+        List<CategoryDO> categoryDOS = categoryDOMapper.selectByExampleWithBLOBs(categoryDOExample);
+        if (categoryDOS != null && categoryDOS.size() > 0) {
+            CategoryDTO categoryDTO = ejbGenerator.convert(categoryDOS.get(0), CategoryDTO.class);
+            TypeDTO typeDTO = typeService.getTypeByID(categoryDTO.getTypeId());
+            categoryDTO.setTypeName(typeDTO.getTypeName());
+            categoryDTO.setUriPath(typeDTO.getUriPath());
+            return categoryDTO;
+        } else {
+            return null;
+        }
+
+    }
+
+    public CategoryDTO getCatByPost(PostsDOWithBLOBs postsListDTO) {
+        return getCategoryByID(postsListDTO.getCategoryId());
     }
 
     public List<CategoryDTO> getAllCategoryByType(Long id) {

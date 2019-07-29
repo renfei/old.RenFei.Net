@@ -74,3 +74,8 @@ ehthumbs_vista.db
 */node_modules/
 node_modules
 dist
+
+# Docker volumes
+/docker/volumes/nginx/logs/*
+/docker/volumes/redis/data/*
+/docker/volumes/mysql/data/*

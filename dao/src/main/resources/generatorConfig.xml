@@ -55,5 +55,11 @@
         <!--<table tableName="t_role_account" domainObjectName="RoleAccountDO"></table>-->
         <!--<table tableName="t_permission_role" domainObjectName="PermissionRoleDO"></table>-->
         <!--<table tableName="t_token" domainObjectName="TokenDO"></table>-->
+        <!--<table tableName="t_video" domainObjectName="VideoDO"></table>-->
+        <!--<table tableName="t_video_source" domainObjectName="VideoSourceDO"></table>-->
+        <!--<table tableName="t_video_track" domainObjectName="VideoTrackDO"></table>-->
+        <!--<table tableName="t_photo" domainObjectName="PhotoDO"></table>-->
+        <!--<table tableName="t_photo_img" domainObjectName="PhotoImgDO"></table>-->
+        <!--<table tableName="t_link" domainObjectName="LinkDO"></table>-->
     </context>
 </generatorConfiguration>

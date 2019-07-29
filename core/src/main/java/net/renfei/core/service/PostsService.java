@@ -3,12 +3,13 @@ package net.renfei.core.service;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import net.renfei.core.baseclass.BaseService;
-import net.renfei.dao.persistences.PostsDOMapper;
-import net.renfei.dao.entity.PostsDOExample;
-import net.renfei.dao.entity.PostsDOWithBLOBs;
 import net.renfei.core.entity.PostsDTO;
 import net.renfei.core.entity.PostsListDTO;
+import net.renfei.dao.entity.PostsDOExample;
+import net.renfei.dao.entity.PostsDOWithBLOBs;
+import net.renfei.dao.persistences.PostsDOMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -19,8 +20,6 @@ import java.util.List;
  */
 @Service
 public class PostsService extends BaseService {
-    @Autowired
-    private PostsDOMapper postsDOMapper;
 
     /**
      * 获取文章列表
@@ -60,6 +59,18 @@ public class PostsService extends BaseService {
         return convert(postsDOMapper.selectByExampleWithBLOBs(postsDOExample), page.getTotal());
     }
 
+    public Long getCountByCategoryId(Long catId) {
+        PostsDOExample postsDOExample = new PostsDOExample();
+        postsDOExample
+                .createCriteria()
+                .andIsDeleteEqualTo(false)
+                .andCategoryIdEqualTo(catId)
+                .andReleaseTimeLessThanOrEqualTo(new Date());
+        Page page = PageHelper.startPage(1, 1);
+        postsDOMapper.selectByExampleWithBLOBs(postsDOExample);
+        return page.getTotal();
+    }
+
     /**
      * 根据ID获取文章
      *
@@ -71,8 +82,19 @@ public class PostsService extends BaseService {
         if (!stringUtil.isEmpty(id)) {
             try {
                 ID = Long.valueOf(id);
-                PostsDOWithBLOBs postsDOWithBLOBs = postsDOMapper.selectByPrimaryKey(ID);
-                return ejbGenerator.convert(postsDOWithBLOBs, PostsDTO.class);
+                PostsDOExample postsDOExample = new PostsDOExample();
+                postsDOExample.createCriteria()
+                        .andIdEqualTo(ID)
+                        .andReleaseTimeLessThanOrEqualTo(new Date())
+                        .andIsDeleteEqualTo(false);
+                List<PostsDOWithBLOBs> postsDOWithBLOBs = postsDOMapper.selectByExampleWithBLOBs(postsDOExample);
+                if (postsDOWithBLOBs != null && postsDOWithBLOBs.size() > 0) {
+                    PostsDOWithBLOBs postsDOWithBLOBs1 = postsDOWithBLOBs.get(0);
+                    updateView(postsDOWithBLOBs1);
+                    return ejbGenerator.convert(postsDOWithBLOBs1, PostsDTO.class);
+                } else {
+                    return null;
+                }
             } catch (NumberFormatException nfe) {
                 return null;
             }

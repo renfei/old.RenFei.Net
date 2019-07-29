@@ -28,7 +28,11 @@ public class OtherController extends BaseController {
         try {
             byte[] asBytes = Base64.getDecoder().decode(url);
             mv.addObject("siteName", siteName);
-            mv.addObject("url", new String(asBytes, "utf-8"));
+            String uri = new String(asBytes, "utf-8");
+            if (!uri.startsWith("http://") || !uri.startsWith("https://")) {
+                uri = "http://" + uri;
+            }
+            mv.addObject("url", uri);
             setHead(mv, "提示！Notice! - " + siteName);
             mv.setViewName("other/urlredirect");
         } catch (Exception e) {

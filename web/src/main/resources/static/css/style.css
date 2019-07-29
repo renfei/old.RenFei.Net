@@ -37,6 +37,41 @@ p {
     clear: both;
 }
 
+.input-control{
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 6px 12px;
+    color: #555;
+    font-size: 14px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+.button-control{
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: 1px solid #CCCCCC;
+    border-radius: 4px;
+    background: #f5f5f5;
+    color: #333;
+}
+
 .bs {
     box-sizing: border-box;
 }
@@ -516,6 +551,27 @@ p {
     left: 0;
     right: 0;
 }
+.video-title{
+    padding: 10px 0 0 0;
+    text-align: left;
+}
+.video-title h1{
+    text-align: left;
+    margin: 0;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 16px;
+}
+.video-title-view{
+    font-size: 14px;
+    padding-top: 10px;
+    color: #606060;
+}
+.video-describes{
+    font-size: 12px;
+    padding-top: 10px;
+    text-align: left;
+}
 
 .copyList {
     float: right;
@@ -715,35 +771,7 @@ p {
     margin-right: 5px;
 }
 
-.search-ul {
-    margin: 0;
-    padding: 0;
-}
 
-.search-ul li {
-    list-style: none;
-    margin-bottom: 25px;
-}
-
-.search-ul li a {
-    color: #1a0dab;
-    font-size: 18px;
-    line-height: 1.33;
-}
-
-.search-ul li .search-link {
-    color: #006621;
-    font-size: 14px;
-}
-
-.search-ul li .search-description {
-    font-size: 13px;
-}
-
-.search-ul li .search-description span {
-    color: #666;
-    margin-right: 5px;
-}
 
 #error404img {
     background-position: 50%;
@@ -752,7 +780,38 @@ p {
     height: 0;
     padding-top: 100%;
 }
-
+.renfei-comments{
+    text-align: left;
+}
+.renfei-comments textarea{
+    width: 85%;
+    height: 50px;
+}
+.renfei-comments-form{
+    background: #f7f7f7;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+}
+.comments-list{}
+.comments-list ul{
+}
+.comments-list ul li{
+    margin-top: 10px;
+    padding: 10px;
+    background:rgba(0,0,0,0.1);
+}
+.comments-list ul li a{
+    font-size: 12px;
+    color: #000;
+}
+.comments-list ul li span{
+    font-size: 12px;
+    color: #000;
+}
+.comments-list ul li ul{
+    padding-left: 20px;
+}
+.comments-list ul li ul li{}
 
 /***************
  * 响应样式

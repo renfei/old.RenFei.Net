@@ -5,7 +5,6 @@ import com.github.pagehelper.PageHelper;
 import net.renfei.core.baseclass.BaseService;
 import net.renfei.core.entity.SearchDTO;
 import net.renfei.dao.entity.FullTextIndexDO;
-import net.renfei.dao.persistences.FullTextIndexMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,8 +14,6 @@ import java.util.List;
 public class SearchService extends BaseService {
     @Autowired
     private WordService wordService;
-    @Autowired
-    private FullTextIndexMapper fullTextIndexMapper;
 
     public SearchDTO search(String word) {
         return search(word, "1");

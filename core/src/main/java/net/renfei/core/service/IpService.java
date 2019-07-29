@@ -7,10 +7,7 @@ import net.renfei.dao.entity.IPV4DO;
 import net.renfei.dao.entity.IPV4DOExample;
 import net.renfei.dao.entity.IPV6DO;
 import net.renfei.dao.entity.IPV6DOExample;
-import net.renfei.dao.persistences.IPV4DOMapper;
-import net.renfei.dao.persistences.IPV6DOMapper;
 import net.renfei.util.StringUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,10 +21,6 @@ import java.util.Map;
 @Service
 public class IpService extends BaseService {
     private StringUtil stringUtil = new StringUtil();
-    @Autowired
-    private IPV4DOMapper ipv4DOMapper;
-    @Autowired
-    private IPV6DOMapper ipv6DOMapper;
 
     /**
      * 获取来访的IP地址
@@ -40,12 +33,17 @@ public class IpService extends BaseService {
         try {
             String remoteAddress = "";
             if (request != null) {
-                //来自AWS的映射，自定义的
-                remoteAddress = request.getHeader("AWS-APIGateway-sourceIp");
+                //来自cloudflare的映射，自定义的
+                remoteAddress = request.getHeader("Cf-Connecting-IP");
                 if (remoteAddress == null || "".equals(remoteAddress)) {
-                    remoteAddress = request.getHeader("X-Forwarded-For");
+                    //来自AWS的映射，自定义的
+                    remoteAddress = request.getHeader("AWS-APIGateway-sourceIp");
                     if (remoteAddress == null || "".equals(remoteAddress)) {
-                        remoteAddress = request.getRemoteAddr();
+                        //来自Nginx的映射
+                        remoteAddress = request.getHeader("X-Forwarded-For");
+                        if (remoteAddress == null || "".equals(remoteAddress)) {
+                            remoteAddress = request.getRemoteAddr();
+                        }
                     }
                 }
             }

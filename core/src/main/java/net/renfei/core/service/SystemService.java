@@ -12,6 +12,7 @@ import java.util.List;
 @Service
 public class SystemService extends BaseService {
     private static String SITENAME = "sitename";
+    private static String SITELOGO = "sitelogo";
     private static String DOMAIN = "domain";
     private static String HOMEBANNER = "homebanner";
     private static String STATICDOMAIN = "staticdomain";
@@ -20,11 +21,13 @@ public class SystemService extends BaseService {
     private static String DESCRIPTION = "description";
     private static String SCRIPT = "script";
     private static String ANALYTICSCODE = "analyticscode";
-    @Autowired
-    private SettingDOMapper settingDOMapper;
 
     public String getSiteName() {
         return getValue(SITENAME);
+    }
+
+    public String getSiteLogo() {
+        return getValue(SITELOGO);
     }
 
     public String getDomain() {
