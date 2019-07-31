@@ -17,6 +17,7 @@ public class PasswordStorageUtilsTest extends TestApplication {
         String password = "renfei";
         String hashPasswd = passwordStorageUtils.createHash(password);
         log.info(hashPasswd);
+        //断言
         Assert.assertTrue(passwordStorageUtils.verifyPassword(password, hashPasswd));
         log.info("Test PasswordStorageUtils End.");
     }

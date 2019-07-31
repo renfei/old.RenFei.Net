@@ -4,56 +4,65 @@
 </head>
 <body>
 <header th:replace="/layout/header::header(${header})"></header>
-<main class="site-main" id="site-main">
-
-    <section class="post-feed">
+<section id="page-breadcrumb">
+    <div class="vertical-center sun">
         <div class="container">
-            <div class="main">
-                <h3 class="all-posts__title py-5 pt-md-10 pb-md-9 p-y4 px-3 px-md-0">
-                    All Information
-                </h3>
-                <div class="allinfo">
-                    <article th:if="${postsVOList!=null}" th:each="info:${postsVOList}"
-                             class="allinfo-item mb-8">
-                        <div class="allinfo-item-left col-12 col-md-3">
-                            <span class="mb-3" th:text="${#dates.format(info.releaseTime,'MMM d, yyyy')}"></span>
-                            <div class="img-box">
-                                <a th:href="${domain}+'/posts/'+${info.id}">
-                                    <div class="img-box2"
-                                         th:style="'background-image: url(\''+${info.featuredImage}+'\');'">
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="allinfo-item-right col-12 col-lg-7">
-                            <div class="cat mb-3">
-                                <a th:href="${domain}+'/posts/cat/'+${info.categoryId}" th:text="${info.categoryName}"></a>
-                            </div>
-                            <a th:href="${domain}+'/posts/'+${info.id}" style="color: #000000;">
-                                <h4 class="f3 mb-4" th:text="${info.title}"></h4>
-                            </a>
-                            <div class="excerpt mb-3" th:text="${#strings.abbreviate(info.describes,150)}">
-                            </div>
-                        </div>
-                    </article>
-                    <div>
-                        <a href="javascript:nextPage()" class="btn">NextPage</a>
+            <div class="row">
+                <div class="action">
+                    <div class="col-sm-12">
+                        <h1 class="title">Posts</h1>
+                        <p>The RenFei Blog</p>
                     </div>
                 </div>
             </div>
-            <div th:replace="/layout/sidebar::sidebar(${sidebar})"></div>
-            <div class="clear"></div>
         </div>
-    </section>
-</main>
+    </div>
+</section>
+<section id="blog" class="padding-top">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9 col-sm-7">
+                <div class="row">
+                    <div th:if="${postsVOList!=null}" th:each="info:${postsVOList}" class="col-md-6 col-sm-12 blog-padding-right">
+                        <div class="single-blog two-column">
+                            <div class="post-thumb">
+                                <a th:href="${domain}+'/posts/'+${info.id}">
+                                    <img th:src="${info.featuredImage}" class="img-responsive" alt=""></a>
+                                <div class="post-overlay">
+                                    <span class="uppercase">
+                                        <a th:href="${domain}+'/posts/'+${info.id}"
+                                                               th:utext="${#dates.format(info.releaseTime,'d')}+
+                                                               '<br><small>'+${#dates.format(info.releaseTime,'MMM')}+
+                                                               '</small>'"></a></span>
+                                </div>
+                            </div>
+                            <div class="post-content overflow">
+                                <h2 class="post-title bold"><a th:href="${domain}+'/posts/'+${info.id}" th:text="${info.title}">Advanced business cards design</a></h2>
+                                <h3 class="post-author"><a href="#" th:text="${#dates.format(info.releaseTime,'EEE, dd MMM HH:mm:ss')+' GMT+8 '+#dates.format(info.releaseTime,'yyyy')}"></a></h3>
+                                <p th:text="${#strings.abbreviate(info.describes,150)}"></p>
+                                <a th:href="${domain}+'/posts/'+${info.id}">View More</a>
+                                <div class="post-bottom overflow">
+                                    <ul class="nav nav-justified post-nav">
+                                        <li><a th:href="${domain}+'/cat/'+${info.categoryTypeName}+'/'+${info.categoryEnName}" th:utext="'<i class=\'fa fa-tag\'></i>'+${info.categoryZhName}"></a></li>
+                                        <li><a th:utext="'<i class=\'fa fa-eye\'></i>'+${info.views}+'Views'"></a></li>
+                                        <li><a th:utext="'<i class=\'fa fa-comments\'></i>'+${info.comments}+' Comments'"></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clear"></div>
+                <div class="blog-pagination">
+                    <div th:replace="/layout/pagination::pagination(${pagination})"></div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-5">
+                <div th:replace="/layout/sidebar::sidebar(${sidebar})"></div>
+            </div>
+        </div>
+    </div>
+</section>
 <footer th:replace="/layout/footer::footer(${footer},${performance})"></footer>
-<script th:inline="javascript">
-    var domain = [[${domain}]];
-    var page = [[${page}]];
-
-    function nextPage() {
-        window.location.href = domain + '/posts?page=' + (page + 1);
-    }
-</script>
 </body>
 </html>

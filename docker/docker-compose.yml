@@ -9,18 +9,19 @@ services:
     volumes:
       - ${DIR}/mysql/data/:/var/lib/mysql/  #映射mysql的数据目录到宿主机，保存数据
       - ${DIR}/mysql/conf/my.cnf:/etc/my.cnf #把mysql的配置文件映射到容器的相应目录
-    ports:
-      - 3306:3306
+    expose:
+      - 3306
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - MYSQL_DATABASE=${MYSQL_DATABASE}
-      - MYSQL_ROOT_HOST='%'
+      - MYSQL_ROOT_HOST=%
+    command: mysqld -uroot --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --init-connect='SET NAMES utf8mb4;' --innodb-flush-log-at-trx-commit=0
   redis:
     container_name: redis
     image: redis:latest
     restart: always
-    ports:
-      - 6379:6379
+    expose:
+      - 6379
     volumes:
       - ${DIR}/redis/conf:/usr/local/etc/redis
       - ${DIR}/redis/data:/data
@@ -28,15 +29,17 @@ services:
       redis-server
   nginx:
     container_name: nginx
-    image: nginx:latest #拉取Nginx镜像
+    build:
+      context: ../
+      dockerfile: docker/nginx-dockerfile
     restart: always
     ports:
       - 80:80
       - 443:443
     volumes:
       - ${DIR}/nginx/webserver:/webserver
-      - ${DIR}/nginx/conf/nginx.conf:/etc/nginx/nginx.conf            #映射nginx的配置文件到容器里
-      - ${DIR}/nginx/logs/:/var/log/nginx/
+      - ${DIR}/nginx/conf/:/usr/local/nginx/conf/           #映射nginx的配置文件到容器里
+      - ${DIR}/nginx/logs/:/usr/local/nginx/logs/
       - ${DIR}/nginx/html/:/var/share/nginx/html/                     #映射nginx的网页目录到容器里
     links:
       - app                                               #连接 tomcat镜像

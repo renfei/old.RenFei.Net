@@ -1,11 +1,10 @@
 package net.renfei.web.baseclass;
 
 import net.renfei.core.baseclass.BaseClass;
-import net.renfei.core.entity.TypeDTO;
+import net.renfei.core.entity.*;
+import net.renfei.core.service.*;
 import net.renfei.web.entity.*;
-import net.renfei.core.service.GlobalService;
-import net.renfei.core.service.MenuService;
-import net.renfei.core.service.TypeService;
+import net.renfei.web.service.PaginationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
@@ -17,6 +16,8 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.Map;
 
@@ -27,9 +28,11 @@ public class BaseController extends BaseClass {
     protected static final String FOOTER_KEY = "footer";
     protected static final String SIDEBAR_KEY = "sidebar";
     protected static final String SITE_NAME_KEY = "siteName";
+    protected static final String SITE_LOGO_KEY = "sitelogo";
     protected static final String DOMAIN_KEY = "domain";
     protected static final String STATIC_DOMAIN_KEY = "staticdomain";
     protected String siteName;
+    protected String siteLogo;
     protected String domain;
     protected String staticdomain;
     protected PageHeadVO pageHeadVO;
@@ -39,9 +42,29 @@ public class BaseController extends BaseClass {
     @Autowired
     protected GlobalService globalService;
     @Autowired
-    private TypeService typeService;
+    protected TypeService typeService;
     @Autowired
-    private MenuService menuService;
+    protected MenuService menuService;
+    @Autowired
+    protected PaginationService paginationService;
+    @Autowired
+    protected CommentsService commentsService;
+    @Autowired
+    protected VideoService videoService;
+    @Autowired
+    protected PostsService postsService;
+    @Autowired
+    protected CategorService categorService;
+    @Autowired
+    protected PhotoService photoService;
+    @Autowired
+    protected IndexService indexService;
+    @Autowired
+    protected PageService pageService;
+    @Autowired
+    protected SearchService searchService;
+    @Autowired
+    protected LinkService linkService;
 
     /**
      * 线程绑定Request对象
@@ -72,6 +95,7 @@ public class BaseController extends BaseClass {
     @ModelAttribute
     public void mdeolAttribute(HttpServletRequest request, HttpServletResponse response, ModelAndView mv) {
         siteName = globalService.getSiteName();
+        siteLogo = globalService.getSiteLogo();
         domain = globalService.getDomain();
         staticdomain = globalService.getStaticDomain();
         response.setHeader("X-Frame-Options", "SAMEORIGIN");
@@ -95,12 +119,16 @@ public class BaseController extends BaseClass {
         mv.addObject(HEAD_KEY, pageHeadVO);
         //全局页头
         headerVO.setSiteName(siteName);
+        headerVO.setSiteLogo(siteLogo);
         headerVO.setDomain(domain);
         //添加全局菜单
         List<MenuVO> menuVOS = ejbGenerator.convert(menuService.getAllHeadMenu(), MenuVO.class);
+        List<MenuVO> topNavVOS = ejbGenerator.convert(menuService.getTopNavMenu(), MenuVO.class);
         headerVO.setMenuVOS(menuVOS);
+        headerVO.setTopNavVOS(topNavVOS);
         mv.addObject(HEADER_KEY, headerVO);
         //全局页脚
+        footerVO.setLogo(globalService.getSiteLogo());
         footerVO.setAnalyticsCode(globalService.getAnalyticsCode());
         footerVO.setFooterMenu(ejbGenerator.convert(menuService.getAllFooterMenu(), MenuVO.class));
         footerVO.setCopyList(ejbGenerator.convert(menuService.getAllFooterCopyMenu(), MenuVO.class));
@@ -215,5 +243,122 @@ public class BaseController extends BaseClass {
         } else {
             return null;
         }
+    }
+
+    protected void setComment(ModelAndView mv, Long typeid, Long id) {
+        List<CommentVO> commentVOS = new ArrayList<>();
+        List<CommentDTO> commentDTOS = commentsService.getComment(typeid, id);
+        if (commentDTOS != null) {
+            for (CommentDTO dto : commentDTOS
+            ) {
+                CommentVO commentVO = new CommentVO();
+                commentVO = commentVO.convert(dto);
+                commentVOS.add(commentVO);
+            }
+        }
+        mv.addObject("commentTypeId", typeid);
+        mv.addObject("commentObjId", id);
+        mv.addObject("commentVO", commentVOS);
+    }
+
+    protected void setPagination(ModelAndView mv, String page, Long count, String link) {
+        int totalPage = Integer.valueOf((count / 10) + "");
+        if (count % 10 > 0) {
+            totalPage++;
+        }
+        if (totalPage <= 0) {
+            totalPage = 1;
+        }
+        mv.addObject("pagination", paginationService.getPagination(page, totalPage, domain + link));
+    }
+
+    /**
+     * 文章的侧边栏
+     *
+     * @param mv
+     */
+    protected void setSidebarByPost(ModelAndView mv, String id) {
+        SidebarVO sidebarVO = new SidebarVO();
+        List<CategoryDTO> categoryDTOS = categorService.getAllCategoryByType(1L);
+        PostsDTO postsDTO = postsService.getPostsByID(id);
+        if (categoryDTOS != null && categoryDTOS.size() > 0) {
+            List<CategoriesVo> categories = new ArrayList<>();
+            for (CategoryDTO c : categoryDTOS
+            ) {
+                CategoriesVo categoriesVo = new CategoriesVo();
+                categoriesVo.setCategoriesName(c.getZhName());
+                categoriesVo.setCnt(postsService.getCountByCategoryId(c.getId()));
+                categoriesVo.setLink(domain + "/cat/Posts/" + c.getEnName());
+                if (postsDTO != null && c.getId().equals(postsDTO.getCategoryId())) {
+                    categoriesVo.setActiv(true);
+                } else {
+                    categoriesVo.setActiv(false);
+                }
+                categories.add(categoriesVo);
+            }
+            sidebarVO.setCategories(categories);
+        }
+        //[TODO]标签类
+        mv.addObject(SIDEBAR_KEY, sidebarVO);
+    }
+
+    /**
+     * 视频的侧边栏
+     *
+     * @param mv
+     */
+    protected void setSidebarByVideo(ModelAndView mv, String id) {
+        SidebarVO sidebarVO = new SidebarVO();
+        List<CategoryDTO> categoryDTOS = categorService.getAllCategoryByType(3L);
+        VideoDTO videoDTO = videoService.getVideoByID(id);
+        if (categoryDTOS != null && categoryDTOS.size() > 0) {
+            List<CategoriesVo> categories = new ArrayList<>();
+            for (CategoryDTO c : categoryDTOS
+            ) {
+                CategoriesVo categoriesVo = new CategoriesVo();
+                categoriesVo.setCategoriesName(c.getZhName());
+                categoriesVo.setCnt(videoService.getCountByCategoryId(c.getId()));
+                categoriesVo.setLink(domain + "/cat/Video/" + c.getEnName());
+                if (videoDTO != null && c.getId().equals(videoDTO.getCategoryId())) {
+                    categoriesVo.setActiv(true);
+                } else {
+                    categoriesVo.setActiv(false);
+                }
+                categories.add(categoriesVo);
+            }
+            sidebarVO.setCategories(categories);
+        }
+        //[TODO]标签类
+        mv.addObject(SIDEBAR_KEY, sidebarVO);
+    }
+
+    /**
+     * 相册的侧边栏
+     *
+     * @param mv
+     */
+    protected void setSidebarByPhoto(ModelAndView mv, String id) {
+        SidebarVO sidebarVO = new SidebarVO();
+        List<CategoryDTO> categoryDTOS = categorService.getAllCategoryByType(4L);
+        PhotoDTO photoDTO = photoService.getPhotoById(id);
+        if (categoryDTOS != null && categoryDTOS.size() > 0) {
+            List<CategoriesVo> categories = new ArrayList<>();
+            for (CategoryDTO c : categoryDTOS
+            ) {
+                CategoriesVo categoriesVo = new CategoriesVo();
+                categoriesVo.setCategoriesName(c.getZhName());
+                categoriesVo.setCnt(photoService.getCountByCategoryId(c.getId()));
+                categoriesVo.setLink(domain + "/cat/Photo/" + c.getEnName());
+                if (photoDTO != null && c.getId().equals(photoDTO.getCategoryId())) {
+                    categoriesVo.setActiv(true);
+                } else {
+                    categoriesVo.setActiv(false);
+                }
+                categories.add(categoriesVo);
+            }
+            sidebarVO.setCategories(categories);
+        }
+        //[TODO]标签类
+        mv.addObject(SIDEBAR_KEY, sidebarVO);
     }
 }

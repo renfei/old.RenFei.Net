@@ -14,6 +14,7 @@ import java.util.List;
 @Service
 public class MenuService extends BaseService {
     private static int HEAD_MENU_TYPE = 1;
+    private static int HEAD_TOPNAV_TYPE = 4;
     private static int FOOTER_MENU_TYPE = 2;
     private static int FOOTER_COPY_MENU_TYPE = 3;
     @Autowired
@@ -21,6 +22,10 @@ public class MenuService extends BaseService {
 
     public List<MenuDTO> getAllHeadMenu() {
         return getMenuByPid(0L, HEAD_MENU_TYPE);
+    }
+
+    public List<MenuDTO> getTopNavMenu() {
+        return getMenuByPid(0L, HEAD_TOPNAV_TYPE);
     }
 
     public List<MenuDTO> getAllFooterMenu() {

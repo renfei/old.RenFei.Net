@@ -4,58 +4,104 @@
 </head>
 <body>
 <header th:replace="/layout/header::header(${header})"></header>
-<main class="site-main" id="site-main">
-    <section class="post-feed">
+<section id="page-breadcrumb">
+    <div class="vertical-center sun">
         <div class="container">
-            <div th:style="${search==null?'padding-top: 100px;':''}"></div>
-            <div>
-                <h2><i class="fa fa-search"></i>Search RenFei.Net</h2>
-            </div>
-            <div>
-                <form id="search_form" class="my-3" action="/search" accept-charset="UTF-8" method="get">
-                    <div class="d-flex">
-                        <div class="flex-auto">
-                            <input
-                                    aria-label="Search RenFei.Net"
-                                    autocapitalize="off"
-                                    autocomplete="off"
-                                    autofocus
-                                    class="form-control"
-                                    data-hotkey="s"
-                                    name="q"
-                                    placeholder="Search RenFei.Net"
-                                    spellcheck="false"
-                                    type="text"
-                                    style="width: 100%;min-height: 30px;"
-                                    th:value="${search==null?'':(search.searchWord==null?'':search.searchWord)}"
-                            >
-                        </div>
-                        <button class="btn" style="margin-left: 8px;" type="submit">Search</button>
+            <div class="row">
+                <div class="action">
+                    <div class="col-sm-12">
+                        <h1 class="title">Search RenFei.Net</h1>
+                        <p>搜索全站内容</p>
                     </div>
-                </form>
+                </div>
             </div>
-            <div class="clear"></div>
-            <div style="font-size: 12px;color: #777;" th:if="${search!=null}"
-                 th:text="'About '+${search.results}+' results ('+${search.seconds}+' seconds)'"></div>
-            <div class="main">
-                <ul class="search-ul" th:if="${search!=null}">
-                    <li th:if="${search.searchList!=null}" th:each="sea:${search.searchList}">
-                        <a th:text="${sea.title}" th:href="${sea.link}" target="_blank">
-                        </a>
-                        <div class="search-link" th:text="${sea.link}">
-                        </div>
-                        <div class="search-description" th:utext="'<span>'+${#dates.format(sea.date,'yyyy-MM-dd')}+'</span>'+${#strings.abbreviate(sea.describe,150)}">
-                        </div>
-                    </li>
-                </ul>
-            </div>
-            <div th:if="${search!=null}">
-                <div th:replace="layout/sidebar::sidebar(${sidebar})"></div>
-            </div>
-            <div class="clear"></div>
         </div>
-    </section>
-</main>
+    </div>
+</section>
+<section id="blog" class="padding-top">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9 col-sm-7">
+                <div class="row">
+                    <form id="search_form" class="form-inline" action="/search" accept-charset="UTF-8" method="get">
+                        <div class="form-group" style="width: 100%;">
+                            <div class="input-group" style="width: 100%;">
+                                <input
+                                        aria-label="Search RenFei.Net"
+                                        autocapitalize="off"
+                                        autocomplete="off"
+                                        autofocus
+                                        class="form-control input-lg"
+                                        data-hotkey="s"
+                                        name="q"
+                                        placeholder="Search RenFei.Net"
+                                        spellcheck="false"
+                                        type="text"
+                                        th:value="${search==null?'':(search.searchWord==null?'':search.searchWord)}"
+                                >
+                                <span class="input-group-addon btn btn-default" onclick="search()">Search</span>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="clear"></div>
+                    <div style="font-size: 12px;color: #777;" th:if="${search!=null}"
+                         th:text="'About '+${search.results}+' results ('+${search.seconds}+' seconds)'"></div>
+                    <div class="main">
+                        <ul class="search-ul" th:if="${search!=null}">
+                            <li th:if="${search.searchList!=null}" th:each="sea:${search.searchList}">
+                                <a th:text="${sea.title}" th:href="${sea.link}" target="_blank">
+                                </a>
+                                <div class="search-link" th:text="${sea.link}">
+                                </div>
+                                <div class="search-description" th:utext="'<span>'+${#dates.format(sea.date,'yyyy-MM-dd')}+'</span>'+${#strings.abbreviate(sea.describe,150)}">
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div th:if="${postsVOList!=null}" th:each="info:${postsVOList}" class="col-md-6 col-sm-12 blog-padding-right">
+                        <div class="single-blog two-column">
+                            <div class="post-thumb">
+                                <a th:href="${domain}+'/posts/'+${info.id}">
+                                    <img th:src="${info.featuredImage}" class="img-responsive" alt=""></a>
+                                <div class="post-overlay">
+                                    <span class="uppercase">
+                                        <a th:href="${domain}+'/posts/'+${info.id}"
+                                           th:utext="${#dates.format(info.releaseTime,'d')}+
+                                                               '<br><small>'+${#dates.format(info.releaseTime,'MMM')}+
+                                                               '</small>'"></a></span>
+                                </div>
+                            </div>
+                            <div class="post-content overflow">
+                                <h2 class="post-title bold"><a th:href="${domain}+'/posts/'+${info.id}" th:text="${info.title}">Advanced business cards design</a></h2>
+                                <h3 class="post-author"><a href="#" th:text="${#dates.format(info.releaseTime,'EEE, dd MMM HH:mm:ss')+' GMT+8 '+#dates.format(info.releaseTime,'yyyy')}"></a></h3>
+                                <p th:text="${#strings.abbreviate(info.describes,150)}"></p>
+                                <a th:href="${domain}+'/posts/'+${info.id}">View More</a>
+                                <div class="post-bottom overflow">
+                                    <ul class="nav nav-justified post-nav">
+                                        <li><a th:href="${domain}+'/cat/'+${info.categoryTypeName}+'/'+${info.categoryEnName}" th:utext="'<i class=\'fa fa-tag\'></i>'+${info.categoryZhName}"></a></li>
+                                        <li><a th:utext="'<i class=\'fa fa-eye\'></i>'+${info.views}+'Views'"></a></li>
+                                        <li><a th:utext="'<i class=\'fa fa-comments\'></i>'+${info.comments}+' Comments'"></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="blog-pagination">
+                    <div th:replace="/layout/pagination::pagination(${pagination})"></div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-5">
+                <div th:replace="/layout/sidebar::sidebar(${sidebar})"></div>
+            </div>
+        </div>
+    </div>
+</section>
 <footer th:replace="layout/footer::footer(${footer},${performance})"></footer>
+<script>
+    function search() {
+        $("#search_form").submit();
+    }
+</script>
 </body>
 </html>

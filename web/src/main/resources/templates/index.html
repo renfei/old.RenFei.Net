@@ -4,76 +4,163 @@
 </head>
 <body>
 <header th:replace="layout/header::header(${header})"></header>
-<main class="site-main" id="site-main">
-    <section class="main-banner d-flex px-4 flex-column">
-        <div class="main-banner-text container pb-4">
-            <h1 class="main-banner-text-title">RenFei Blog</h1>
-            <div class="sub-categories">
-                <div class="categories-list d-block px-4">
-                    <ul>
-                        <li th:if="${typeDTOS!=null}" th:each="type:${typeDTOS}">
-                            <a th:href="${domain+type.uriPath}" th:text="${type.typeName}"></a>
+<section id="home-slider">
+    <div class="container">
+        <div class="row">
+            <div class="main-slider">
+                <div class="slide-text">
+                    <h1 th:text="${siteName}"></h1>
+                    <p>这是 任霏 的个人网站与博客，一个程序员自己写的网站，不仅仅是文章内容，还包括网站程序的代码。
+                        对新鲜事物都十分感兴趣，利用这个站点向大家分享自己的所见所得，同时这个站点也是我的实验室。</p>
+                </div>
+                <img th:src="'//'+${staticdomain}+'/images/home/slider/hill.png'" class="slider-hill"
+                     alt="slider image">
+                <!--<img src="/images/home/slider/house.png" class="slider-house" alt="slider image">-->
+                <img th:src="'//'+${staticdomain}+'/images/home/slider/sun.png'" class="slider-sun" alt="slider image">
+                <img th:src="'//'+${staticdomain}+'/images/home/slider/birds1.png'" class="slider-birds1"
+                     alt="slider image">
+                <img th:src="'//'+${staticdomain}+'/images/home/slider/birds2.png'" class="slider-birds2"
+                     alt="slider image">
+            </div>
+        </div>
+    </div>
+    <div class="preloader"><i class="fa fa-sun-o fa-spin"></i></div>
+</section>
+<!--/#home-slider-->
+
+<section id="services">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4 text-center padding wow fadeIn" data-wow-duration="1000ms" data-wow-delay="300ms">
+                <div class="single-service">
+                    <a th:href="${domain}+'/posts'">
+                        <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="300ms">
+                            <img th:src="'//'+${staticdomain}+'/images/ico/blogs.png'" alt="">
+                        </div>
+                        <h2>Blog Posts</h2>
+                    </a>
+                    <p>写博客不仅仅是为了分享，更是自己对知识的回顾和理解的加深，但是我更新代码的频率可能会超过文章的频率，也记得去我的Github上看看哦</p>
+
+                </div>
+            </div>
+            <div class="col-sm-4 text-center padding wow fadeIn" data-wow-duration="1000ms" data-wow-delay="600ms">
+                <div class="single-service">
+                    <a th:href="${domain}+'/video'">
+                        <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="600ms">
+                            <img th:src="'//'+${staticdomain}+'/images/ico/video.png'" alt="">
+                        </div>
+                        <h2>Video Vlog</h2>
+                    </a>
+                    <p>一个Vlog，一个人的生活方式，每个人都有自己独一份的人生体验；一个Vlog，一份虚拟的陪伴，点开一个视频就仿佛陪伴着主角走过精彩的一天</p>
+
+                </div>
+            </div>
+            <div class="col-sm-4 text-center padding wow fadeIn" data-wow-duration="1000ms" data-wow-delay="900ms">
+                <div class="single-service">
+                    <a th:href="${domain}+'/posts'">
+                        <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="900ms">
+                            <img th:src="'//'+${staticdomain}+'/images/ico/Album.png'" alt="">
+                        </div>
+                        <h2>Photo Album</h2>
+                    </a>
+                    <p>时间的流逝无法停止，但是美好的一瞬可以留住。一张照片，记载着一个故事；一张照片，讲述了一段经历；一张照片，勾起了一份回忆</p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--/#services-->
+
+<section id="action" class="responsive">
+    <div class="vertical-center">
+        <div class="container">
+            <div class="row">
+                <div class="action take-tour">
+                    <div class="col-sm-7 wow fadeInLeft" data-wow-duration="500ms" data-wow-delay="300ms">
+                        <h1 class="title">Open source on GitHub</h1>
+                        <p>源于开源，回馈开源，从开源社区取得知识和技术，也要记得分享回去。</p>
+                    </div>
+                    <div class="col-sm-5 text-center wow fadeInRight" data-wow-duration="500ms" data-wow-delay="300ms">
+                        <div class="tour-button">
+                            <a href="https://github.com/neilren" class="btn btn-common" target="_blank">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--/#action-->
+
+<section id="features">
+    <div class="container">
+        <div class="row">
+            <div class="single-features">
+                <div class="col-sm-5 wow fadeInLeft" data-wow-duration="500ms" data-wow-delay="300ms">
+                    <a href="https://github.com/NeilRen/RenFei.Net" target="_blank"><img
+                            th:src="'//'+${staticdomain}+'/images/home/renfeinetgithub.jpg'" class="img-responsive"
+                            alt=""></a>
+                </div>
+                <div class="col-sm-6 wow fadeInRight" data-wow-duration="500ms" data-wow-delay="300ms">
+                    <a href="https://github.com/NeilRen/RenFei.Net" target="_blank"><h2>Open Source: RenFei.Net</h2></a>
+                    <P>2019年收购了 renfei.net 域名，由于流行前后端分离，重新开启开发之旅，用以替代 NEILREN4J，并尝试使用Docker容器技术。</P>
+                </div>
+            </div>
+            <div class="single-features">
+                <div class="col-sm-6 col-sm-offset-1 align-right wow fadeInLeft" data-wow-duration="500ms"
+                     data-wow-delay="300ms">
+                    <a href="https://github.com/NeilRen/NEILREN4J" target="_blank"><h2>Open Source: NEILREN4J</h2></a>
+                    <P>2017年技术转型Java开发，使用SpringMVC重新开发新的个人网站，代号 NEIRLEN4J，用以替代 ASP.NET 的 NeilNT 站点，并在Github上开源。</P>
+                </div>
+                <div class="col-sm-5 wow fadeInRight" data-wow-duration="500ms" data-wow-delay="300ms">
+                    <a href="https://github.com/NeilRen/NEILREN4J" target="_blank"><img
+                            th:src="'//'+${staticdomain}+'/images/home/neilren4jgithub.jpg'" class="img-responsive"
+                            alt=""></a>
+                </div>
+            </div>
+            <div class="single-features">
+                <div class="col-sm-5 wow fadeInLeft" data-wow-duration="500ms" data-wow-delay="300ms">
+                    <a href="https://github.com/NeilRen/NeilNT" target="_blank"><img
+                            th:src="'//'+${staticdomain}+'/images/home/neilntgithub.jpg'" class="img-responsive" alt=""></a>
+                </div>
+                <div class="col-sm-6 wow fadeInRight" data-wow-duration="500ms" data-wow-delay="300ms">
+                    <a href="https://github.com/NeilRen/NeilNT" target="_blank"><h2>Open Source: NeilNT</h2></a>
+                    <P>2015年大学毕业使用 ASP.NET 尝试开发自己的个人网站系统，代号 NeilNT，用以替代高中时期的 WordPress，并在 NEILREN4J上线时，在Github上开源。</P>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--/#features-->
+
+<section id="clients">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="clients text-center wow fadeInUp" data-wow-duration="500ms" data-wow-delay="300ms">
+                    <p><img src="/images/home/clients.png" class="img-responsive" alt=""></p>
+                    <h1 class="title">Friendship Links</h1>
+                    <p>访问我们朋友的站点也十分精彩，不妨去看看。<br> 我们不对友站中内容负责，请注意甄别 </p>
+                </div>
+                <div class="clients-logo wow fadeIn" data-wow-duration="1000ms" data-wow-delay="600ms">
+                    <ul class="flink">
+                        <li th:if="${linkDTO!=null}" th:each="link:${linkDTO.links}">
+                            <a th:href="${link.sitelink}" th:text="${link.sitename}" target="_blank"></a>
                         </li>
                     </ul>
                 </div>
             </div>
         </div>
-        <div class="main-banner-bg">
-            <img th:src="${domain+homebanner}"/>
-        </div>
-    </section>
-    <section class="post-feed">
-        <div class="post-feed-top">
-        </div>
-        <div class="featured">
-            <div th:replace="layout/xlist::xlist(${categories})"></div>
-        </div>
-        <div class="container">
-            <div class="main">
-                <h3 class="all-posts__title py-5 pt-md-10 pb-md-9 p-y4 px-3 px-md-0">
-                    All Information
-                </h3>
-                <div class="allinfo">
-                    <article th:if="${allInfoVOList!=null}" th:each="info:${allInfoVOList}"
-                             class="allinfo-item mb-8">
-                        <div class="allinfo-item-left col-12 col-md-3">
-                            <span class="mb-3" th:text="${#dates.format(info.releaseTime,'MMM d, yyyy')}"></span>
-                            <div class="img-box">
-                                <a th:href="${info.href}">
-                                    <div class="img-box2"
-                                         th:style="'background-image: url(\''+${info.featuredImage}+'\');'">
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="allinfo-item-right col-12 col-lg-7">
-                            <div class="cat mb-3">
-                                <a th:href="${info.catHref}" th:text="${info.catName}"></a>
-                            </div>
-                            <a th:href="${info.href}" style="color: #000000;">
-                                <h4 class="f3 mb-4" th:text="${info.title}"></h4>
-                            </a>
-                            <div class="excerpt mb-3" th:text="${#strings.abbreviate(info.describes,150)}">
-                            </div>
-                        </div>
-                    </article>
-                    <div>
-                        <a href="javascript:nextPage()" class="btn">NextPage</a>
-                    </div>
-                </div>
-            </div>
-            <div th:replace="layout/sidebar::sidebar(${sidebar})"></div>
-            <div class="clear"></div>
-        </div>
-    </section>
-</main>
+    </div>
+</section>
 <footer th:replace="layout/footer::footer(${footer},${performance})"></footer>
 <script th:inline="javascript">
     var domain = [[${domain}]];
     var page = [[${page}]];
 
     function nextPage() {
-        window.location.href=domain + '/?page=' + (page + 1);
+        window.location.href = domain + '/?page=' + (page + 1);
     }
 </script>
 </body>

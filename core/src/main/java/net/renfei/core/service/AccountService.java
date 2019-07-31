@@ -9,8 +9,6 @@ import net.renfei.dao.entity.AccountDO;
 import net.renfei.dao.entity.AccountDOExample;
 import net.renfei.dao.entity.TokenDO;
 import net.renfei.dao.entity.TokenDOExample;
-import net.renfei.dao.persistences.AccountDOMapper;
-import net.renfei.dao.persistences.TokenDOMapper;
 import net.renfei.util.PasswordStorageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -21,10 +19,6 @@ import java.util.*;
 @Slf4j
 @Service
 public class AccountService extends BaseService {
-    @Autowired
-    private AccountDOMapper accountDOMapper;
-    @Autowired
-    private TokenDOMapper tokenDOMapper;
     @Autowired
     private SecretKeyService secretKeyService;
     @Autowired

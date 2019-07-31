@@ -10,6 +10,9 @@
         <meta name="twitter:title" th:content="${head.sitename}">
         <meta name="twitter:description" th:content="${head.description}">
         <link th:each="cs:${head.css}" rel="stylesheet" type="text/css" th:href="${cs}"/>
+        <script>
+            var staticdomain = '[[${staticdomain}]]';
+        </script>
         <script type='text/javascript' th:each="js:${head.jss}" th:src="${js}"></script>
         <script th:utext="${head.script}"></script>
     </head>

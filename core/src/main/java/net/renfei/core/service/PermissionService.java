@@ -6,8 +6,6 @@ import net.renfei.core.entity.RoleDTO;
 import net.renfei.dao.entity.PermissionDOExample;
 import net.renfei.dao.entity.PermissionRoleDO;
 import net.renfei.dao.entity.PermissionRoleDOExample;
-import net.renfei.dao.persistences.PermissionDOMapper;
-import net.renfei.dao.persistences.PermissionRoleDOMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,10 +14,7 @@ import java.util.List;
 
 @Service
 public class PermissionService extends BaseService {
-    @Autowired
-    private PermissionDOMapper permissionDOMapper;
-    @Autowired
-    private PermissionRoleDOMapper permissionRoleDOMapper;
+
     @Autowired
     private RoleService roleService;
 

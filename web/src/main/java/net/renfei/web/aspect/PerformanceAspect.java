@@ -46,8 +46,8 @@ public class PerformanceAspect extends BaseClass {
             List<String> info = new ArrayList<>();
             Long time = System.nanoTime() - startTime.get();
             double timed = time / 1000000000D;
-            SimpleDateFormat aDate = new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss");
-            info.add("GMT+8, " + aDate.format(new Date())+", ");
+            SimpleDateFormat aDate = new SimpleDateFormat("EEE, dd MMM HH:mm:ss 'GMT+8' yyyy");
+            info.add(aDate.format(new Date())+", ");
             info.add("Processed in " + df.format(timed) + " second(s),");
             info.add("calls " + calls.get() + " methods.");
             footer.setInfor(info);
