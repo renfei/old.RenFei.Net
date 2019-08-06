@@ -62,6 +62,11 @@
             <artifactId>springfox-swagger-ui</artifactId>
             <version>${swagger.version}</version>
         </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.4</version>
+        </dependency>
     </dependencies>
     <build>
         <finalName>web</finalName>
@@ -139,6 +144,8 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
+                    <!-- 指定该Main Class为全局的唯一入口 -->
+                    <mainClass>net.renfei.web.WebApplication</mainClass>
                     <!--此处将打包输出的地址放到Docker映射的文件夹中，方便Docker启动-->
                     <outputDirectory>
                         ${basedir}/../docker/volumes/app

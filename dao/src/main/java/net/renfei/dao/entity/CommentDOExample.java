@@ -464,6 +464,66 @@ public class CommentDOExample {
             addCriterion("parent_id not between", value1, value2, "parentId");
             return (Criteria) this;
         }
+
+        public Criteria andIsOwnerIsNull() {
+            addCriterion("is_owner is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsOwnerIsNotNull() {
+            addCriterion("is_owner is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsOwnerEqualTo(Boolean value) {
+            addCriterion("is_owner =", value, "isOwner");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsOwnerNotEqualTo(Boolean value) {
+            addCriterion("is_owner <>", value, "isOwner");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsOwnerGreaterThan(Boolean value) {
+            addCriterion("is_owner >", value, "isOwner");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsOwnerGreaterThanOrEqualTo(Boolean value) {
+            addCriterion("is_owner >=", value, "isOwner");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsOwnerLessThan(Boolean value) {
+            addCriterion("is_owner <", value, "isOwner");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsOwnerLessThanOrEqualTo(Boolean value) {
+            addCriterion("is_owner <=", value, "isOwner");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsOwnerIn(List<Boolean> values) {
+            addCriterion("is_owner in", values, "isOwner");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsOwnerNotIn(List<Boolean> values) {
+            addCriterion("is_owner not in", values, "isOwner");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsOwnerBetween(Boolean value1, Boolean value2) {
+            addCriterion("is_owner between", value1, value2, "isOwner");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsOwnerNotBetween(Boolean value1, Boolean value2) {
+            addCriterion("is_owner not between", value1, value2, "isOwner");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

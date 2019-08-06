@@ -9,8 +9,8 @@ services:
     volumes:
       - ${DIR}/mysql/data/:/var/lib/mysql/  #映射mysql的数据目录到宿主机，保存数据
       - ${DIR}/mysql/conf/my.cnf:/etc/my.cnf #把mysql的配置文件映射到容器的相应目录
-    expose:
-      - 3306
+    ports:
+      - 3306:3306
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - MYSQL_DATABASE=${MYSQL_DATABASE}
@@ -46,14 +46,15 @@ services:
   app:
     container_name: app
     restart: always
-    build: ./
+    iamge: java:8
     working_dir: /app
     volumes:
       - ${DIR}/app:/app
+      - ${DIR}/log:/opt/RenFeiNet/log
       - ~/.m2:/root/.m2
     expose:
       - 8091
     depends_on:
       - redis
       - mysql
-    command: java -jar /app/web.jar
+    entrypoint: java -jar /app/web.jar

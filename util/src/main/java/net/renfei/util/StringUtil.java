@@ -23,21 +23,21 @@ public class StringUtil {
         return result;
     }
 
-    public String getTextFromHtml(String htmlStr){
+    public String getTextFromHtml(String htmlStr) {
         //去除html标签
         htmlStr = delHtmlTags(htmlStr);
         //去除空格" "
-        htmlStr = htmlStr.replaceAll(" ","");
+        htmlStr = htmlStr.replaceAll(" ", "");
         return htmlStr;
     }
 
     public String delHtmlTags(String htmlStr) {
         //定义script的正则表达式，去除js可以防止注入
-        String scriptRegex="<script[^>]*?>[\\s\\S]*?<\\/script>";
+        String scriptRegex = "<script[^>]*?>[\\s\\S]*?<\\/script>";
         //定义style的正则表达式，去除style样式，防止css代码过多时只截取到css样式代码
-        String styleRegex="<style[^>]*?>[\\s\\S]*?<\\/style>";
+        String styleRegex = "<style[^>]*?>[\\s\\S]*?<\\/style>";
         //定义HTML标签的正则表达式，去除标签，只提取文字内容
-        String htmlRegex="<[^>]+>";
+        String htmlRegex = "<[^>]+>";
         //定义空格,回车,换行符,制表符
         String spaceRegex = "\\s*|\t|\r|\n";
 
@@ -91,6 +91,7 @@ public class StringUtil {
 
     /**
      * 创建指定位数的随机字符串
+     *
      * @param length 表示生成字符串的长度
      * @return 字符串
      */
@@ -101,6 +102,24 @@ public class StringUtil {
         for (int i = 0; i < length; i++) {
             int number = random.nextInt(base.length());
             sb.append(base.charAt(number));
+        }
+        return sb.toString();
+    }
+
+    /**
+     * 创建随机字符串
+     *
+     * @return 字符串
+     */
+    public String getRandomString() {
+        char[] base = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+                'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+                'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
+        Random random = new Random();
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < 6; i++) {
+            int number = random.nextInt(base.length);
+            sb.append(base[number]);
         }
         return sb.toString();
     }

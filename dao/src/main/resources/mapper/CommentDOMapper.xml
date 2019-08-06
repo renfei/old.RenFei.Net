@@ -8,6 +8,7 @@
     <result column="addtime" jdbcType="TIMESTAMP" property="addtime" />
     <result column="is_delete" jdbcType="BIT" property="isDelete" />
     <result column="parent_id" jdbcType="BIGINT" property="parentId" />
+    <result column="is_owner" jdbcType="BIT" property="isOwner" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="net.renfei.dao.entity.CommentDOWithBLOBs">
     <result column="author" jdbcType="LONGVARCHAR" property="author" />
@@ -76,7 +77,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, target_id, type_id, addtime, is_delete, parent_id
+    id, target_id, type_id, addtime, is_delete, parent_id, is_owner
   </sql>
   <sql id="Blob_Column_List">
     author, author_email, author_url, author_IP, author_address, content
@@ -132,14 +133,14 @@
   <insert id="insert" parameterType="net.renfei.dao.entity.CommentDOWithBLOBs">
     insert into t_comments (id, target_id, type_id, 
       addtime, is_delete, parent_id, 
-      author, author_email, author_url, 
-      author_IP, author_address, content
-      )
+      is_owner, author, author_email, 
+      author_url, author_IP, author_address, 
+      content)
     values (#{id,jdbcType=BIGINT}, #{targetId,jdbcType=BIGINT}, #{typeId,jdbcType=BIGINT}, 
       #{addtime,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=BIT}, #{parentId,jdbcType=BIGINT}, 
-      #{author,jdbcType=LONGVARCHAR}, #{authorEmail,jdbcType=LONGVARCHAR}, #{authorUrl,jdbcType=LONGVARCHAR}, 
-      #{authorIp,jdbcType=LONGVARCHAR}, #{authorAddress,jdbcType=LONGVARCHAR}, #{content,jdbcType=LONGVARCHAR}
-      )
+      #{isOwner,jdbcType=BIT}, #{author,jdbcType=LONGVARCHAR}, #{authorEmail,jdbcType=LONGVARCHAR}, 
+      #{authorUrl,jdbcType=LONGVARCHAR}, #{authorIp,jdbcType=LONGVARCHAR}, #{authorAddress,jdbcType=LONGVARCHAR}, 
+      #{content,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="net.renfei.dao.entity.CommentDOWithBLOBs">
     insert into t_comments
@@ -161,6 +162,9 @@
       </if>
       <if test="parentId != null">
         parent_id,
+      </if>
+      <if test="isOwner != null">
+        is_owner,
       </if>
       <if test="author != null">
         author,
@@ -199,6 +203,9 @@
       </if>
       <if test="parentId != null">
         #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="isOwner != null">
+        #{isOwner,jdbcType=BIT},
       </if>
       <if test="author != null">
         #{author,jdbcType=LONGVARCHAR},
@@ -247,6 +254,9 @@
       <if test="record.parentId != null">
         parent_id = #{record.parentId,jdbcType=BIGINT},
       </if>
+      <if test="record.isOwner != null">
+        is_owner = #{record.isOwner,jdbcType=BIT},
+      </if>
       <if test="record.author != null">
         author = #{record.author,jdbcType=LONGVARCHAR},
       </if>
@@ -278,6 +288,7 @@
       addtime = #{record.addtime,jdbcType=TIMESTAMP},
       is_delete = #{record.isDelete,jdbcType=BIT},
       parent_id = #{record.parentId,jdbcType=BIGINT},
+      is_owner = #{record.isOwner,jdbcType=BIT},
       author = #{record.author,jdbcType=LONGVARCHAR},
       author_email = #{record.authorEmail,jdbcType=LONGVARCHAR},
       author_url = #{record.authorUrl,jdbcType=LONGVARCHAR},
@@ -295,7 +306,8 @@
       type_id = #{record.typeId,jdbcType=BIGINT},
       addtime = #{record.addtime,jdbcType=TIMESTAMP},
       is_delete = #{record.isDelete,jdbcType=BIT},
-      parent_id = #{record.parentId,jdbcType=BIGINT}
+      parent_id = #{record.parentId,jdbcType=BIGINT},
+      is_owner = #{record.isOwner,jdbcType=BIT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -317,6 +329,9 @@
       </if>
       <if test="parentId != null">
         parent_id = #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="isOwner != null">
+        is_owner = #{isOwner,jdbcType=BIT},
       </if>
       <if test="author != null">
         author = #{author,jdbcType=LONGVARCHAR},
@@ -346,6 +361,7 @@
       addtime = #{addtime,jdbcType=TIMESTAMP},
       is_delete = #{isDelete,jdbcType=BIT},
       parent_id = #{parentId,jdbcType=BIGINT},
+      is_owner = #{isOwner,jdbcType=BIT},
       author = #{author,jdbcType=LONGVARCHAR},
       author_email = #{authorEmail,jdbcType=LONGVARCHAR},
       author_url = #{authorUrl,jdbcType=LONGVARCHAR},
@@ -360,7 +376,8 @@
       type_id = #{typeId,jdbcType=BIGINT},
       addtime = #{addtime,jdbcType=TIMESTAMP},
       is_delete = #{isDelete,jdbcType=BIT},
-      parent_id = #{parentId,jdbcType=BIGINT}
+      parent_id = #{parentId,jdbcType=BIGINT},
+      is_owner = #{isOwner,jdbcType=BIT}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

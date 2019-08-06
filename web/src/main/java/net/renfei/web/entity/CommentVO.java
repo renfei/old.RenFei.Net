@@ -18,6 +18,7 @@ public class CommentVO {
     private String content;
     private Date datetime;
     private String address;
+    private Boolean isOwner;
     private List<CommentVO> child;
 
     public CommentDTO convert() {
@@ -30,6 +31,7 @@ public class CommentVO {
         commentDTO.setAuthorUrl(link);
         commentDTO.setContent(address);
         commentDTO.setContent(content);
+        commentDTO.setIsOwner(isOwner);
         if (this.child != null && this.child.size() > 0) {
             List<CommentDTO> commentDTOS = new ArrayList<>();
             for (CommentVO comment : this.child
@@ -58,6 +60,7 @@ public class CommentVO {
         commentVO.setAuthor(commentDTO.getAuthor());
         commentVO.setAddress(commentDTO.getAuthorAddress());
         commentVO.setReply(commentDTO.getParentId());
+        commentVO.setIsOwner(commentDTO.getIsOwner());
         if (commentDTO.getChild() != null && commentDTO.getChild().size() > 0) {
             List<CommentVO> child = new ArrayList<>();
             for (CommentDTO comment : commentDTO.getChild()

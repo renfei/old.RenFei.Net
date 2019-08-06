@@ -17,7 +17,6 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.List;
 import java.util.Map;
 
@@ -65,6 +64,8 @@ public class BaseController extends BaseClass {
     protected SearchService searchService;
     @Autowired
     protected LinkService linkService;
+    @Autowired
+    protected SiteMapService siteMapService;
 
     /**
      * 线程绑定Request对象

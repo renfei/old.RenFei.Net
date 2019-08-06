@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/open/api/service")
+@RequestMapping("/api/open")
 @Api(description = "开放接口服务", tags = "Open API Service")
 public class OpenServiceController extends BaseRestController {
     @Autowired
