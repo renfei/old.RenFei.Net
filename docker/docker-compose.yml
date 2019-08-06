@@ -12,6 +12,7 @@ services:
     ports:
       - 3306:3306
     environment:
+      - TZ=Asia/Shanghai
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - MYSQL_DATABASE=${MYSQL_DATABASE}
       - MYSQL_ROOT_HOST=%
@@ -43,6 +44,8 @@ services:
       - ${DIR}/nginx/html/:/var/share/nginx/html/                     #映射nginx的网页目录到容器里
     links:
       - app                                               #连接 tomcat镜像
+    environment:
+      - TZ=Asia/Shanghai
   app:
     container_name: app
     restart: always
@@ -58,3 +61,5 @@ services:
       - redis
       - mysql
     entrypoint: java -jar /app/web.jar
+    environment:
+      - TZ=Asia/Shanghai
