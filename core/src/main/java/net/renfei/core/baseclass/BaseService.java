@@ -1,9 +1,11 @@
 package net.renfei.core.baseclass;
 
 import net.renfei.core.config.RenFeiConfig;
+import net.renfei.core.service.GlobalService;
 import net.renfei.dao.entity.PostsDOWithBLOBs;
 import net.renfei.dao.entity.VideoDOWithBLOBs;
 import net.renfei.dao.persistences.*;
+import net.renfei.util.FileUtil;
 import net.renfei.util.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -19,6 +21,8 @@ public class BaseService extends BaseClass {
 
     @Autowired
     protected MD5Util md5Util;
+    @Autowired
+    protected FileUtil fileUtil;
     @Autowired
     protected VAllInfoMapper vAllInfoMapper;
     @Autowired
@@ -65,6 +69,8 @@ public class BaseService extends BaseClass {
     protected TypeDOMapper typeDOMapper;
     @Autowired
     protected LinkDOMapper linkDOMapper;
+    @Autowired
+    protected SysMenuDOMapper sysMenuDOMapper;
 
     protected int convertPage(String page) {
         return stringUtil.convertInt(page, DEFAULT_PAGE);

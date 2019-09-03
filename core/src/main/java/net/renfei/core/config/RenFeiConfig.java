@@ -12,4 +12,7 @@ public class RenFeiConfig {
     private String jwtprivatekey;
     private String jwtpublickey;
     private String jwtaeskey;
+    private String GREEN_REGION_ID;
+    private String ALIYUN_ACCESS_KEY_ID;
+    private String ALIYUN_ACCESS_KEY_SECRET;
 }

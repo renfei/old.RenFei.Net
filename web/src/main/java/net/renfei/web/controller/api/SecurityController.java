@@ -18,10 +18,6 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/security")
 public class SecurityController extends BaseRestController {
-    @Autowired
-    private RSAUtils rsaUtils;
-    @Autowired
-    private SecretKeyService secretKeyService;
 
     /**
      * 获取服务器公钥

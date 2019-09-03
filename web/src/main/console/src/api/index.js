@@ -12,3 +12,7 @@ export const setPublicKey = (uuid, params) => {
 export const signin = (params) => {
     return postRequest('/api/auth/signin', params)
 }
+//获取菜单
+export const getMenu = (params) => {
+    return getRequest('/api/menu', params)
+}

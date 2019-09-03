@@ -1,7 +1,7 @@
 {
-  "name": "console",
+  "name": "Dashboard",
   "version": "1.0.0",
-  "description": "RenFei.Net Console By Vue.js",
+  "description": "RenFei.Net Dashboard By Vue.js",
   "author": "RenFei <i@renfei.net>",
   "private": true,
   "scripts": {

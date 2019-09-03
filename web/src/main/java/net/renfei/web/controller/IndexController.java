@@ -91,7 +91,6 @@ public class IndexController extends BaseController {
         List<SiteMapXml> siteMapXmls = siteMapService.getSiteMaps();
         String xml = "    <url>\n" +
                 "        <loc>%s</loc>\n" +
-                "        <mobile type=\"pc,mobile\"/>\n" +
                 "        <changefreq>%s</changefreq>\n" +
                 "        <priority>%s</priority>\n" +
                 "        <lastmod>%s</lastmod>\n" +

@@ -61,5 +61,6 @@
         <!--<table tableName="t_photo" domainObjectName="PhotoDO"></table>-->
         <!--<table tableName="t_photo_img" domainObjectName="PhotoImgDO"></table>-->
         <!--<table tableName="t_link" domainObjectName="LinkDO"></table>-->
+        <!--<table tableName="t_sys_menu" domainObjectName="SysMenuDO"></table>-->
     </context>
 </generatorConfiguration>

@@ -11,7 +11,9 @@ import net.renfei.util.EccUtils;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.security.KeyPair;
 import java.security.PrivateKey;
 import java.security.PublicKey;
@@ -121,5 +123,13 @@ public class JwtService extends BaseService {
         System.out.println("si:" + Base64.encodeBase64String(keyPair.getPrivate().getEncoded()));
         System.out.println("go:" + Base64.encodeBase64String(keyPair.getPublic().getEncoded()));
         return Base64.encodeBase64String(keyPair.getPrivate().getEncoded());
+    }
+
+    public String getJwtFromRequest(HttpServletRequest request) {
+        String bearerToken = request.getHeader("Authorization");
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
+            return bearerToken.substring(7, bearerToken.length());
+        }
+        return null;
     }
 }

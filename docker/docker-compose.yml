@@ -49,7 +49,7 @@ services:
   app:
     container_name: app
     restart: always
-    iamge: java:8
+    image: java:8
     working_dir: /app
     volumes:
       - ${DIR}/app:/app

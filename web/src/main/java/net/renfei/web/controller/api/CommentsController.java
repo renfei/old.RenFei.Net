@@ -20,10 +20,6 @@ import java.util.Date;
 @RestController
 @RequestMapping("/api/comments")
 public class CommentsController extends BaseController {
-    @Autowired
-    private IpService ipService;
-    @Autowired
-    private CommentsService commentsService;
 
     /**
      * 评论

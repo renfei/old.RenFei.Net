@@ -80,7 +80,9 @@
                                     </ul>
                                 </div>
                                 <div th:replace="layout/share::share"></div>
-                                <div th:replace="layout/comments::comments(${commentTypeId},${commentObjId},${commentVO})"></div>
+                                <div th:if="${globalComment=='1'&&video.isComment}">
+                                    <div th:replace="layout/comments::comments(${commentTypeId},${commentObjId},${commentVO})"></div>
+                                </div>
                                 <!--/Response-area-->
                             </div>
                         </div>

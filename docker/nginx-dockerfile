@@ -3,14 +3,14 @@ MAINTAINER i@renfei.net
 
 RUN yum -y install crontabs gcc gcc-c++ glibc libpcre3-dev make zlib autoconf openssl openssl-devel wget libxslt-devel gd gd-devel GeoIP GeoIP-devel pcre pcre-devel
 RUN useradd -M -s /sbin/nologin nginx
-RUN wget -P /usr/local/src/ http://nginx.org/download/nginx-1.16.0.tar.gz
+RUN wget -P /usr/local/src/ http://nginx.org/download/nginx-1.16.1.tar.gz
 RUN wget -P /usr/local/src/ https://github.com/nbs-system/naxsi/archive/untagged-afabfc163946baa8036f.tar.gz
 WORKDIR /usr/local/src/
 
-RUN tar vxf nginx-1.16.0.tar.gz
+RUN tar vxf nginx-1.16.1.tar.gz
 RUN tar vxf untagged-afabfc163946baa8036f.tar.gz
 
-WORKDIR /usr/local/src/nginx-1.16.0
+WORKDIR /usr/local/src/nginx-1.16.1
 
 RUN mkdir /usr/local/nginx
 RUN mkdir /usr/local/nginx/modules
@@ -24,7 +24,8 @@ RUN ./configure \
     --with-http_stub_status_module\
     --with-http_gzip_static_module\
     --with-http_realip_module\
-    --with-http_ssl_module
+    --with-http_ssl_module\
+    --with-ipv6
 
 RUN make modules
 RUN make
