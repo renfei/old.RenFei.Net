@@ -3,6 +3,7 @@ package net.renfei.web.controller.api.open;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import net.renfei.core.entity.IPDTO;
+import net.renfei.core.service.DomainNameService;
 import net.renfei.core.service.IpService;
 import net.renfei.web.baseclass.BaseRestController;
 import net.renfei.web.entity.APIResult;
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class OpenServiceController extends BaseRestController {
     @Autowired
     private IpService ipService;
+    @Autowired
+    private DomainNameService domainNameService;
 
     @GetMapping("ipinfo/{ip}")
     @ApiOperation(
@@ -34,5 +37,15 @@ public class OpenServiceController extends BaseRestController {
             return APIResult.fillResult(true, "Success!", ipdto);
         }
         return APIResult.fillResult(false);
+    }
+
+    @GetMapping("/dns/dig/{domain}")
+    @ApiOperation(
+            value = "域名 dig+trace",
+            notes = "使用该接口可以查询域名的解析过程",
+            tags = "Open API Service"
+    )
+    public net.renfei.core.entity.APIResult getDomainDigTrace(@PathVariable(value = "domain") String domain) {
+        return domainNameService.execDigTrace(domain);
     }
 }

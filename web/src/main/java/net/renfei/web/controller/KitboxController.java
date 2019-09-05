@@ -18,6 +18,8 @@ public class KitboxController extends BaseController {
         List<KitboxVO> kitboxVOList = new ArrayList<>();
         kitboxVOList.add(new KitboxVO("fa-globe", "IP地址信息查询",
                 "IP地址信息查询工具，开放服务接口实现IP信息查询", domain + "/kitbox/ip"));
+        kitboxVOList.add(new KitboxVO("fa-globe", "Dig+trace命令工具",
+                "域名解析查询工具，开放服务接口实现dig+trace查询", domain + "/kitbox/digtrace"));
         mv.addObject("kitboxVOList", kitboxVOList);
         setHead(mv, "开发者工具箱 - Kitbox", "免费的开发者工具箱小工具，工欲善其事，必先利其器。");
         mv.setViewName("kitbox/index");
@@ -32,6 +34,13 @@ public class KitboxController extends BaseController {
         mv.addObject("ipdto", ipdto);
         setHead(mv, "IP地址信息查询工具 - 开发者工具箱 - Kitbox", "IP地址信息查询工具，开放服务接口实现IP信息查询");
         mv.setViewName("kitbox/ipinfo");
+        return mv;
+    }
+
+    @RequestMapping("digtrace")
+    public ModelAndView getDigTrace(ModelAndView mv) {
+        setHead(mv, "在线Dig+trace命令检测DNS状态工具 - 开发者工具箱 - Kitbox", "域名解析信息查询工具，开放服务接口实现dig+trace域名解析过程查询");
+        mv.setViewName("kitbox/digtrace");
         return mv;
     }
 }

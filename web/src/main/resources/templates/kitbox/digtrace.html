@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/head::head(${head})">
+</head>
+<body>
+<header th:replace="layout/header::header(${header})"></header>
+<section id="page-breadcrumb">
+    <div class="vertical-center sun">
+        <div class="container">
+            <div class="row">
+                <div class="action">
+                    <div class="col-sm-12">
+                        <h1 class="title">Domain Name Dig+trace Information Query</h1>
+                        <p>域名解析Dig+trace信息查询工具</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="company-information" class="choose">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-1 col-sm-2 col-md-3"></div>
+            <div class="col-xs-10 col-sm-8 col-md-6">
+                <div class="form-group">
+                    <h2>Domain Name Dig+trace Information Query</h2>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="domain"
+                               placeholder="Domain Name">
+                        <div class="input-group-addon btn btn-primary" onclick="query()">Query</div>
+                    </div>
+                </div>
+                <div>
+                    <textarea id="data" name="data" class="form-control" rows="8"></textarea>
+                </div>
+                <div>
+                    <blockquote style="font-size: 14px;">
+                        <p>IP查询接口服务已经开放。更多开放接口服务，请参考<a href="/swagger-ui.html" target="_blank">开放接口文档</a>。</p>
+                        <p th:text="${'此工具使用的接口是：'+domain+'/api/open/dns/dig/{domain}'}"></p>
+                        <footer>{domain} - 更换为需要查询的域名，使用 GET 请求。</footer>
+                    </blockquote>
+                </div>
+            </div>
+            <div class="col-xs-1 col-sm-2 col-md-3"></div>
+        </div>
+    </div>
+</section>
+<script>
+    function query() {
+        var domain = $("#domain").val();
+        if (domain == '') {
+            notice("Please fill in the domain name to be queried.", "请填写要查询的域名");
+            return;
+        }
+        $("#data").val("Please wait a moment while you are inquiring.\n正在查询请稍后。");
+        $.ajax({
+            url: '/api/open/dns/dig/' + domain,
+            type: 'GET', //GET
+            async: true,
+            timeout: 60000,
+            dataType: 'json',
+            success: function (data, textStatus, jqXHR) {
+                if (data.success) {
+                    $("#data").val(data.data);
+                } else {
+                    $("#data").val("Error.\n" + data.message);
+                    notice("Error", data.message);
+                }
+            },
+            error: function (xhr, textStatus) {
+                $("#data").val("Error.\n" + xhr.responseText);
+                notice("Error", xhr.responseText);
+            }
+        })
+    }
+</script>
+<footer th:replace="layout/footer::footer(${footer},${performance})"></footer>
+</body>
+</html>
