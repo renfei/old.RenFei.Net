@@ -21,6 +21,7 @@ public class SystemService extends BaseService {
     private static String DESCRIPTION = "description";
     private static String SCRIPT = "script";
     private static String ANALYTICSCODE = "analyticscode";
+    private static String GLOBALCOMMENT = "global_comment";
 
     public String getSiteName() {
         return getValue(SITENAME);
@@ -60,6 +61,10 @@ public class SystemService extends BaseService {
 
     public List<String> getJss() {
         return getCJss(GLOBALJSS);
+    }
+
+    public String getGlobalComment() {
+        return getValue(GLOBALCOMMENT);
     }
 
     private List<String> getCJss(String key) {

@@ -41,10 +41,13 @@
                                         <span th:text="${comment.author}"></span>
                                     </a>
                                 </span>
+                                <span th:if="${comment.isOwner}" style="color: #ffb032;margin-left: 10px;font-weight: 900;">
+                                    <i style="color: #ffb032;margin-right: 0;" class="fa fa-check-circle"></i> Verified Website Owner
+                                </span>
                                 <p th:text="${comment.content}"></p>
                                 <ul class="nav navbar-nav post-nav">
                                     <li>
-                                        <a th:utext="'<i class=\'fa fa-clock-o\'></i>'+${#dates.format(comment.datetime,'d MMM, YYYY - hh:mm:ss')}+' - '+${comment.address==null?'Unknown Address':comment.address}"></a>
+                                        <a th:utext="'<i class=\'fa fa-clock-o\'></i>'+${#dates.format(comment.datetime,'d MMM, YYYY - HH:mm:ss')}+' - '+${comment.address==null?'Unknown Address':comment.address}"></a>
                                     </li>
                                     <li>
                                         <a th:href="'javascript:replyTo(\''+${comment.author}+'\','+${comment.id}+');'">

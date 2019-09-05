@@ -1,9 +1,9 @@
 package net.renfei.dao.entity;
 
 public class IPV4DO {
-    private Integer ipFrom;
+    private Long ipFrom;
 
-    private Integer ipTo;
+    private Long ipTo;
 
     private String countryCode;
 
@@ -21,19 +21,19 @@ public class IPV4DO {
 
     private String timeZone;
 
-    public Integer getIpFrom() {
+    public Long getIpFrom() {
         return ipFrom;
     }
 
-    public void setIpFrom(Integer ipFrom) {
+    public void setIpFrom(Long ipFrom) {
         this.ipFrom = ipFrom;
     }
 
-    public Integer getIpTo() {
+    public Long getIpTo() {
         return ipTo;
     }
 
-    public void setIpTo(Integer ipTo) {
+    public void setIpTo(Long ipTo) {
         this.ipTo = ipTo;
     }
 

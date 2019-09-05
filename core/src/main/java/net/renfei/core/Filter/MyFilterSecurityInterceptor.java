@@ -1,12 +1,6 @@
 package net.renfei.core.Filter;
 
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-
+import net.renfei.core.config.PermitUrlConfig;
 import net.renfei.core.service.MyAccessDecisionManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.SecurityMetadataSource;
@@ -16,12 +10,16 @@ import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.*;
 import java.io.IOException;
 
 @Service
-public class FilterSecurityInterceptor extends AbstractSecurityInterceptor implements Filter {
+public class MyFilterSecurityInterceptor
+        extends AbstractSecurityInterceptor implements Filter {
     @Autowired
     private FilterInvocationSecurityMetadataSource securityMetadataSource;
+    @Autowired
+    private PermitUrlConfig permitUrlConfig;
 
     @Autowired
     public void setMyAccessDecisionManager(MyAccessDecisionManager myAccessDecisionManager) {
@@ -43,6 +41,10 @@ public class FilterSecurityInterceptor extends AbstractSecurityInterceptor imple
 
 
     public void invoke(FilterInvocation fi) throws IOException, ServletException {
+        if (permitUrlConfig.permit(fi.getRequestUrl())) {
+            fi.getChain().doFilter(fi.getRequest(), fi.getResponse());
+            return;
+        }
         //fi里面有一个被拦截的url
         //里面调用InvocationSecurityMetadataSource的getAttributes(Object object)这个方法获取fi对应的所有权限
         //再调用MyAccessDecisionManager的decide方法来校验用户的权限是否足够

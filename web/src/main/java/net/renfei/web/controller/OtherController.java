@@ -29,8 +29,11 @@ public class OtherController extends BaseController {
             byte[] asBytes = Base64.getDecoder().decode(url);
             mv.addObject("siteName", siteName);
             String uri = new String(asBytes, "utf-8");
-            if (!uri.startsWith("http://") || !uri.startsWith("https://")) {
+            if (!uri.startsWith("http://") && !uri.startsWith("https://")) {
                 uri = "http://" + uri;
+            }
+            if (uri.startsWith(domain)) {
+                return new ModelAndView("redirect:" + uri);
             }
             mv.addObject("url", uri);
             setHead(mv, "提示！Notice! - " + siteName);

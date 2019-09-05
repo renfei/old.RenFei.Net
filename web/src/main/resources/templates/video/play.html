@@ -23,7 +23,7 @@
         type="font/woff2"
         href="/font/plyr/gordita-bold.woff2"
 />
-<header th:replace="/layout/header::header(${header})"></header>
+<header th:replace="layout/header::header(${header})"></header>
 <section id="blog-details" class="padding-top" style="padding-top: 0;">
     <div class="container">
         <div class="row">
@@ -79,8 +79,10 @@
                                         </li>
                                     </ul>
                                 </div>
-                                <div th:replace="/layout/share::share"></div>
-                                <div th:replace="/layout/comments::comments(${commentTypeId},${commentObjId},${commentVO})"></div>
+                                <div th:replace="layout/share::share"></div>
+                                <div th:if="${globalComment=='1'&&video.isComment}">
+                                    <div th:replace="layout/comments::comments(${commentTypeId},${commentObjId},${commentVO})"></div>
+                                </div>
                                 <!--/Response-area-->
                             </div>
                         </div>
@@ -88,7 +90,7 @@
                 </div>
             </div>
             <div class="col-md-3 col-sm-5">
-                <div th:replace="/layout/sidebar::sidebar(${sidebar})"></div>
+                <div th:replace="layout/sidebar::sidebar(${sidebar})"></div>
             </div>
         </div>
     </div>

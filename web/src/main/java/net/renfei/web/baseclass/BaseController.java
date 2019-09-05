@@ -17,7 +17,6 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.List;
 import java.util.Map;
 
@@ -31,10 +30,12 @@ public class BaseController extends BaseClass {
     protected static final String SITE_LOGO_KEY = "sitelogo";
     protected static final String DOMAIN_KEY = "domain";
     protected static final String STATIC_DOMAIN_KEY = "staticdomain";
+    protected static final String GLOBAL_COMMENT = "globalComment";
     protected String siteName;
     protected String siteLogo;
     protected String domain;
     protected String staticdomain;
+    protected String globalComment;
     protected PageHeadVO pageHeadVO;
     protected FooterVO footerVO;
     protected HeaderVO headerVO;
@@ -65,6 +66,12 @@ public class BaseController extends BaseClass {
     protected SearchService searchService;
     @Autowired
     protected LinkService linkService;
+    @Autowired
+    protected SiteMapService siteMapService;
+    @Autowired
+    protected IpService ipService;
+    @Autowired
+    protected MailService mailService;
 
     /**
      * 线程绑定Request对象
@@ -98,6 +105,7 @@ public class BaseController extends BaseClass {
         siteLogo = globalService.getSiteLogo();
         domain = globalService.getDomain();
         staticdomain = globalService.getStaticDomain();
+        globalComment = globalService.getGlobalComment();
         response.setHeader("X-Frame-Options", "SAMEORIGIN");
         localRequest.set(request);
         localResponse.set(response);
@@ -139,6 +147,7 @@ public class BaseController extends BaseClass {
         mv.addObject(SITE_NAME_KEY, siteName);
         mv.addObject(DOMAIN_KEY, domain);
         mv.addObject(STATIC_DOMAIN_KEY, staticdomain);
+        mv.addObject(GLOBAL_COMMENT, globalComment);
     }
 
     protected void setHead(ModelAndView mv, String title) {

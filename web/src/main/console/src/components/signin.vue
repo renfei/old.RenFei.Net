@@ -5,15 +5,15 @@
             <el-col :xs="24" :sm="9" :md="8" :lg="6" :xl="5">
                 <el-form ref="form" :model="form" label-width="80px" style="background-color: #ffffff;">
                     <div style="padding: 10px;">
-                        <h3>Sign In</h3>
+                        <h3>Sign In RENFEI.NET</h3>
                         <el-form-item label="Account">
                             <el-input v-model="form.account" clearable></el-input>
                         </el-form-item>
                         <el-form-item label="Password">
                             <el-input v-model="form.password" show-password clearable></el-input>
                         </el-form-item>
-                        <el-form-item v-if="form.showopt" label="OPT">
-                            <el-input v-model="form.opt" clearable></el-input>
+                        <el-form-item v-if="form.showotp" label="otp">
+                            <el-input v-model="form.otp" clearable></el-input>
                         </el-form-item>
                         <el-form-item>
                             <el-checkbox-group v-model="form.remember">
@@ -78,31 +78,34 @@
                 form: {
                     account: '',
                     password: '',
-                    opt: '',
-                    showopt: false,
+                    otp: '',
+                    showotp: false,
                     remember: false
                 },
                 sub: {
                     account: '',
                     password: '',
-                    opt: '',
+                    otp: '',
                     remember: 0
                 }
             }
         },
         methods: {
             onSubmit() {
-                console.log(getStore('aesKey'));
                 this.sub.account = this.encryption.encryption(this.form.account);
                 this.sub.password = this.encryption.encryption(this.form.password);
-                this.sub.opt = this.form.opt;
+                this.sub.otp = this.form.otp;
                 this.sub.remember = this.form.remember ? 1 : 0;
                 signin(this.sub).then(res => {
-                    if(res.success){
-                        setStore("Authorization",res.data.Authorization);
+                    if (res.success) {
+                        setStore("Authorization", res.data.Authorization);
                         this.router.push('/');
-                    }else {
+                    } else {
                         this.Notification.info(res.message);
+                        if (res.code = 411) {
+                            this.form.showotp = true;
+                            return;
+                        }
                     }
                 });
             }

@@ -47,15 +47,21 @@ public class InvocationSecurityMetadataSourceService implements
         AntPathRequestMatcher matcher;
         String resUrl, method;
         for (Iterator<String> iter = map.keySet().iterator(); iter.hasNext(); ) {
-            resUrl = iter.next().split("-")[0];
-            method = iter.next().split("-")[1];
+            String itern = iter.next();
+            String[] arr = itern.split("-");
+            resUrl = arr[0];
+            method = arr[1];
             matcher = new AntPathRequestMatcher(resUrl);
             if (matcher.matches(request) && request.getMethod().toUpperCase().equals(method.toUpperCase())) {
                 //请求的地址和请求的方法都符合，返回权限名称集合
-                return map.get(iter.next());
+                return map.get(itern);
             }
         }
-        return null;
+        //返回一个默认的，这里不能返回 null
+        Collection<ConfigAttribute> array = new LinkedList<>();
+        ConfigAttribute configAttribute = new SecurityConfig("ROLE_NO_USER");
+        array.add(configAttribute);
+        return array;
     }
 
     @Override

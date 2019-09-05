@@ -1,7 +1,7 @@
 package net.renfei.core.Filter;
 
 import lombok.extern.slf4j.Slf4j;
-import net.renfei.core.config.RenFeiConfig;
+import net.renfei.core.config.PermitUrlConfig;
 import net.renfei.core.entity.TokenSubject;
 import net.renfei.core.service.AccountService;
 import net.renfei.core.service.CustomUserDetailsService;
@@ -34,11 +34,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private RequestUtil requestUtil;
     @Autowired
     private AccountService accountService;
+    @Autowired
+    private PermitUrlConfig permitUrlConfig;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        if (permitUrlConfig.permit(request.getRequestURI())) {
+            filterChain.doFilter(request, response);
+            return;
+        }
         try {
-            String jwt = getJwtFromRequest(request);
+            String jwt = jwtService.getJwtFromRequest(request);
             if (StringUtils.hasText(jwt) && jwtService.validateToken(jwt)) {
                 TokenSubject tokenSubject = jwtService.readToken(jwt, requestUtil.getClientDigest(request));
                 if (tokenSubject == null) {
@@ -63,13 +69,5 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         filterChain.doFilter(request, response);
-    }
-
-    private String getJwtFromRequest(HttpServletRequest request) {
-        String bearerToken = request.getHeader("Authorization");
-        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
-            return bearerToken.substring(7, bearerToken.length());
-        }
-        return null;
     }
 }

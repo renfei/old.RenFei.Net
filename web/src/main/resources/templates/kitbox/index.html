@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="/layout/head::head(${head})">
+<head th:replace="layout/head::head(${head})">
 </head>
 <body>
-<header th:replace="/layout/header::header(${header})"></header>
+<header th:replace="layout/header::header(${header})"></header>
 <section id="page-breadcrumb">
     <div class="vertical-center sun">
         <div class="container">
@@ -21,10 +21,20 @@
 <section id="company-information" class="choose">
     <div class="container">
         <div class="row">
-            <h2>暂未开发</h2>
+            <div th:if="${kitboxVOList!=null}" th:each="kit:${kitboxVOList}" class="col-xs-6 col-sm-4 col-md-3 col-lg-2"
+                 style="padding: 5px;">
+                <div style="border: 1px #eeeeee solid;padding: 5px;">
+                    <a th:href="${kit.link}" style="color: #000000;">
+                        <h5 th:utext="'<i class=\'fa '+${kit.icon}+'\'></i>'+${kit.title}"></h5>
+                        <hr>
+                        <p th:text="${kit.text}"></p>
+                    </a>
+                </div>
+            </div>
+
         </div>
     </div>
 </section>
-<footer th:replace="/layout/footer::footer(${footer},${performance})"></footer>
+<footer th:replace="layout/footer::footer(${footer},${performance})"></footer>
 </body>
 </html>

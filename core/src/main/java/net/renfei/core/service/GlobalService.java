@@ -50,4 +50,6 @@ public class GlobalService extends BaseService {
     public List<String> getGlobalJSsList() {
         return systemService.getJss();
     }
+
+    public String getGlobalComment(){return systemService.getGlobalComment();}
 }

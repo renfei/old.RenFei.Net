@@ -9,6 +9,7 @@ import net.renfei.dao.entity.AccountDO;
 import net.renfei.dao.entity.AccountDOExample;
 import net.renfei.dao.entity.TokenDO;
 import net.renfei.dao.entity.TokenDOExample;
+import net.renfei.dao.persistences.TokenDOMapper;
 import net.renfei.util.PasswordStorageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -27,6 +28,47 @@ public class AccountService extends BaseService {
     private TotpService totpService;
     @Autowired
     private JwtService jwtService;
+
+    public TokenDO getTokenByToken(String token) {
+        if (stringUtil.isEmpty(token)) {
+            return null;
+        }
+        TokenDOExample tokenDOExample = new TokenDOExample();
+        tokenDOExample.createCriteria()
+                .andTokenEqualTo(token)
+                .andExpirationTimeGreaterThan(new Date());
+        List<TokenDO> tokenDOS = tokenDOMapper.selectByExample(tokenDOExample);
+        if (tokenDOS != null && tokenDOS.size() > 0) {
+            return tokenDOS.get(0);
+        } else {
+            return null;
+        }
+    }
+
+    public AccountDO getAccountByToken(String token) {
+        if (stringUtil.isEmpty(token)) {
+            return null;
+        }
+        TokenDO tokenDO = getTokenByToken(token);
+        if (tokenDO != null) {
+            return getAccountByUserName(tokenDO.getAccount());
+        } else {
+            return null;
+        }
+    }
+
+    public AccountDO getAccountByUserName(String username) {
+        //先根据用户名查找用户
+        AccountDOExample accountDOExample = new AccountDOExample();
+        accountDOExample.createCriteria()
+                .andAccountEqualTo(username);
+        List<AccountDO> accountDOS = accountDOMapper.selectByExample(accountDOExample);
+        if (accountDOS != null && accountDOS.size() > 0) {
+            return accountDOS.get(0);
+        } else {
+            return null;
+        }
+    }
 
     public SignInDTO signIn(SignInDTO signInDTO) {
         //对账户密码等进行解密
@@ -63,7 +105,7 @@ public class AccountService extends BaseService {
                             signInDTO.setCode(411);
                             return signInDTO;
                         }
-                        if (!totpService.authcode(signInDTO.getOtp(), accountDO.getTotp())){
+                        if (!totpService.authcode(signInDTO.getOtp(), accountDO.getTotp())) {
                             //OTP验证失败
                             signInDTO.setSuccess(false);
                             signInDTO.setMessage("OTP Password Validation Failed");
@@ -81,6 +123,10 @@ public class AccountService extends BaseService {
                     signInDTO.setMessage("Success!");
                     signInDTO.setCode(200);
                     signInDTO.setData(data);
+                    //消除错误次数
+                    accountDO.setTries(0);
+                    //更新
+                    updateAccount(accountDO);
                     return signInDTO;
                 } else {
                     //密码错误
@@ -119,7 +165,17 @@ public class AccountService extends BaseService {
         AccountDOExample accountDOExample = new AccountDOExample();
         accountDOExample.createCriteria()
                 .andAccountEqualTo(accountName);
-        return ejbGenerator.convert(accountDOMapper.selectByExample(accountDOExample).get(0), UserDTO.class);
+        List<AccountDO> accountDOS = accountDOMapper.selectByExample(accountDOExample);
+        if (accountDOS != null && accountDOS.size() > 0) {
+            UserDTO userDTO = new UserDTO();
+            userDTO.setId(accountDOS.get(0).getId());
+            userDTO.setName(accountDOS.get(0).getAccount());
+            userDTO.setUsername(accountDOS.get(0).getAccount());
+            userDTO.setPassword(accountDOS.get(0).getPassword());
+            return userDTO;
+        } else {
+            return null;
+        }
     }
 
     public int updateAccount(AccountDO accountDO) {

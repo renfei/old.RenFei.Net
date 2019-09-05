@@ -79,3 +79,4 @@ dist
 /docker/volumes/nginx/logs/*
 /docker/volumes/redis/data/*
 /docker/volumes/mysql/data/*
+/docker/volumes/nginx/conf/extra/renfei.net.conf

@@ -15,6 +15,8 @@ public class CommentDO {
 
     private Long parentId;
 
+    private Boolean isOwner;
+
     public Long getId() {
         return id;
     }
@@ -61,5 +63,13 @@ public class CommentDO {
 
     public void setParentId(Long parentId) {
         this.parentId = parentId;
+    }
+
+    public Boolean getIsOwner() {
+        return isOwner;
+    }
+
+    public void setIsOwner(Boolean isOwner) {
+        this.isOwner = isOwner;
     }
 }

@@ -14,5 +14,6 @@ public class TotpServiceTest extends TestApplication {
     public void Test() {
         String secret = totpService.generateSecretKey();
         String totp = totpService.genTotpString("renfei", secret);
+        log.info(totp);
     }
 }

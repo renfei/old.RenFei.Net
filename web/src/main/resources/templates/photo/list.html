@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="/layout/head::head(${head})">
+<head th:replace="layout/head::head(${head})">
 </head>
 <body>
-<header th:replace="/layout/header::header(${header})"></header>
+<header th:replace="layout/header::header(${header})"></header>
 <section id="page-breadcrumb">
     <div class="vertical-center sun">
         <div class="container">
@@ -41,16 +41,16 @@
                     </div>
                     <div class="clear"></div>
                     <div class="blog-pagination">
-                        <div th:replace="/layout/pagination::pagination(${pagination})"></div>
+                        <div th:replace="layout/pagination::pagination(${pagination})"></div>
                     </div>
                 </div>
             </div>
             <div class="col-md-3 col-sm-4">
-                <div th:replace="/layout/sidebar::sidebar(${sidebar})"></div>
+                <div th:replace="layout/sidebar::sidebar(${sidebar})"></div>
             </div>
         </div>
     </div>
 </section>
-<footer th:replace="/layout/footer::footer(${footer},${performance})"></footer>
+<footer th:replace="layout/footer::footer(${footer},${performance})"></footer>
 </body>
 </html>

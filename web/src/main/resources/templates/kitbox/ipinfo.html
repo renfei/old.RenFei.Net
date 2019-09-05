@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/head::head(${head})">
+</head>
+<body>
+<header th:replace="layout/header::header(${header})"></header>
+<section id="page-breadcrumb">
+    <div class="vertical-center sun">
+        <div class="container">
+            <div class="row">
+                <div class="action">
+                    <div class="col-sm-12">
+                        <h1 class="title">IP Address Information Query</h1>
+                        <p>IP地址信息查询工具</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="company-information" class="choose">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-1 col-sm-2 col-md-3"></div>
+            <div class="col-xs-10 col-sm-8 col-md-6">
+                <div class="form-group">
+                    <h2>IP Address Information Query</h2>
+                    <div class="input-group">
+                        <div class="input-group-addon">IP:</div>
+                        <input type="text" th:value="${myip==null?'':myip}" class="form-control" id="iptext"
+                               placeholder="IP">
+                        <div class="input-group-addon btn btn-primary" onclick="query()">Query</div>
+                    </div>
+                </div>
+                <div>
+                    <dl class="dl-horizontal">
+                        <dt>IP</dt>
+                        <dd id="ip" th:text="${ipdto==null?'...':ipdto.ip}">...</dd>
+                        <dt>CountryCode(国家代码)</dt>
+                        <dd id="countryCode" th:text="${ipdto==null?'...':ipdto.countryCode}">...</dd>
+                        <dt>Country(国家)</dt>
+                        <dd id="countryName" th:text="${ipdto==null?'...':ipdto.countryName}">...</dd>
+                        <dt>Region(行政区)</dt>
+                        <dd id="regionName" th:text="${ipdto==null?'...':ipdto.regionName}">...</dd>
+                        <dt>City(城市)</dt>
+                        <dd id="cityName" th:text="${ipdto==null?'...':ipdto.cityName}">...</dd>
+                        <dt>Zip(邮编)</dt>
+                        <dd id="zipCode" th:text="${ipdto==null?'...':ipdto.zipCode}">...</dd>
+                        <dt>Latitude(纬度)</dt>
+                        <dd id="latitude" th:text="${ipdto==null?'...':ipdto.latitude}">...</dd>
+                        <dt>Longitude(经度)</dt>
+                        <dd id="longitude" th:text="${ipdto==null?'...':ipdto.longitude}">...</dd>
+                        <dt>TimeZone(时区)</dt>
+                        <dd id="timeZone" th:text="${ipdto==null?'...':ipdto.timeZone}">...</dd>
+                    </dl>
+                </div>
+                <div>
+                    <blockquote style="font-size: 14px;">
+                        <p>IP查询接口服务已经开放。更多开放接口服务，请参考<a href="/swagger-ui.html" target="_blank">开放接口文档</a>。</p>
+                        <p th:text="${'此工具使用的接口是：'+domain+'/api/open/ipinfo/{ip}'}"></p>
+                        <footer>{ip} - 更换为需要查询的IP地址，使用 GET 请求。</footer>
+                    </blockquote>
+                </div>
+            </div>
+            <div class="col-xs-1 col-sm-2 col-md-3"></div>
+        </div>
+    </div>
+</section>
+<script>
+    function query() {
+        var ip = $("#iptext").val();
+        if (ip == '') {
+            notice("Please fill in the IP address to be queried.", "请填写要查询的IP地址");
+            return;
+        }
+        $.ajax({
+            url: '/api/open/ipinfo/' + ip,
+            type: 'GET', //GET
+            async: true,
+            timeout: 10000,
+            dataType: 'json',
+            success: function (data, textStatus, jqXHR) {
+                if (data.success) {
+                    $("#ip").html(data.data.ip);
+                    $("#countryCode").html(data.data.countryCode);
+                    $("#countryName").html(data.data.countryName);
+                    $("#regionName").html(data.data.regionName);
+                    $("#cityName").html(data.data.cityName);
+                    $("#zipCode").html(data.data.zipCode);
+                    $("#latitude").html(data.data.latitude);
+                    $("#longitude").html(data.data.longitude);
+                    $("#timeZone").html(data.data.timeZone);
+                } else {
+                    notice("Error", data.message);
+                }
+            },
+            error: function (xhr, textStatus) {
+                notice("Error", xhr.responseText);
+            }
+        })
+    }
+</script>
+<footer th:replace="layout/footer::footer(${footer},${performance})"></footer>
+</body>
+</html>
