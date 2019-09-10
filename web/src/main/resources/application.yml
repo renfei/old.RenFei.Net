@@ -5,7 +5,7 @@ spring:
   application:
     name: RenFei.Net
   profiles:
-    active: prod
+    active: dev
   jackson:
     time-zone: GMT+8
   thymeleaf:
