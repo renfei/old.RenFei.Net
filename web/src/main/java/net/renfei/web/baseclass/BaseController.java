@@ -308,6 +308,7 @@ public class BaseController extends BaseClass {
             sidebarVO.setCategories(categories);
         }
         //[TODO]标签类
+        sidebarVO.setStaticdomain(staticdomain);
         mv.addObject(SIDEBAR_KEY, sidebarVO);
     }
 
@@ -338,6 +339,7 @@ public class BaseController extends BaseClass {
             sidebarVO.setCategories(categories);
         }
         //[TODO]标签类
+        sidebarVO.setStaticdomain(staticdomain);
         mv.addObject(SIDEBAR_KEY, sidebarVO);
     }
 
@@ -368,6 +370,7 @@ public class BaseController extends BaseClass {
             sidebarVO.setCategories(categories);
         }
         //[TODO]标签类
+        sidebarVO.setStaticdomain(staticdomain);
         mv.addObject(SIDEBAR_KEY, sidebarVO);
     }
 }

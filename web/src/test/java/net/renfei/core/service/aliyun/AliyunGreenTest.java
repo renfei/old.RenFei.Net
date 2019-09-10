@@ -12,6 +12,6 @@ public class AliyunGreenTest extends TestApplication {
 
     @Test
     public void textScan(){
-        aliyunGreen.textScan("暴恐检测示例：法轮大法");
+//        aliyunGreen.textScan("暴恐检测示例");
     }
 }

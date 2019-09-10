@@ -9,4 +9,5 @@ public class SidebarVO {
     private ITellYou iTellYou;
     private List<CategoriesVo> categories;
     private List<String> tags;
+    private String staticdomain;
 }
