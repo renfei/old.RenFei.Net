@@ -13,7 +13,7 @@
         <script>
             var staticdomain = '[[${staticdomain}]]';
         </script>
-        <script type='text/javascript' th:each="js:${head.jss}" th:src="${js}"></script>
-        <script th:utext="${head.script}"></script>
+        <script type='text/javascript' charset="UTF-8" th:each="js:${head.jss}" th:src="${js}"></script>
+        <script charset="UTF-8" th:utext="${head.script}"></script>
     </head>
 </html>

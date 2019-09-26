@@ -70,7 +70,7 @@ public class PostsController extends BaseController {
             setInfo(postsVO);
             mv.addObject("postsVO", postsVO);
             setHead(mv, postsVO.getTitle() +" - Posts", postsVO.getDescribes());
-            if (postsVO.getContent().indexOf("<pre class=") != -1) {
+            if (postsVO.getContent().indexOf("code class=") != -1) {
                 //检测到有代码显示，需要增加代码高亮插件
                 setHighlightJS(mv);
             }
