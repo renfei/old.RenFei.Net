@@ -1,11 +1,9 @@
 server:
-  port: 8092
+  port: 8091
 
 spring:
-  resources:
-    static-locations: file:/opt/CSSCShow
   application:
-    name: CSSCShow
+    name: RenFei.Net
   profiles:
     active: dev
   jackson:

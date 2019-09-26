@@ -172,10 +172,10 @@ public class BaseController extends BaseClass {
         jss.add("//" + staticdomain + "/font/highlight/highlight.pack.js");
         pageHeadVO.setJss(jss);
         List<String> css = pageHeadVO.getCss();
-        css.add("//" + staticdomain + "/font/highlight/styles/idea.css");
+        css.add("//" + staticdomain + "/font/highlight/styles/default.css");
         pageHeadVO.setCss(css);
         String script = pageHeadVO.getScript();
-        script += "$(function(){$(\"code\").each(function(){$(this).html(\"<ol><li>\" + $(this).html().replace(/\\n/g,\"\\n</li><li>\") +\"\\n</li></ol>\");});});\n" +
+        script += "$(function(){$(\"code\").each(function(){$(this).html(\"<ul><li>\" + $(this).html().replace(/\\n/g,\"\\n</li><li>\") +\"\\n</li></ul>\");});});\n" +
                 "hljs.initHighlightingOnLoad();";
         pageHeadVO.setScript(script);
         mv.addObject(HEAD_KEY, pageHeadVO);
@@ -216,7 +216,7 @@ public class BaseController extends BaseClass {
         mv.addObject(HEAD_KEY, pageHeadVO);
     }
 
-    protected PageHeadVO getHead(ModelAndView mv) {
+    private PageHeadVO getHead(ModelAndView mv) {
         Map<String, Object> map = mv.getModel();
         PageHeadVO pageHeadVO = new PageHeadVO();
         Object obj = map.get(HEAD_KEY);

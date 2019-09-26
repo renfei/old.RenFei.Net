@@ -3,22 +3,165 @@
 <head th:replace="layout/head::head(${head})">
 </head>
 <body>
-<div id="index">
-    <header th:replace="layout/header::header(${header})"></header>
-    <div class="banner">
-        <img src="./img/图层 0.png" alt="">
-        <div class="lltext">
-            <h1>前</h1>
-            <h1>言</h1>
-            <p>
-                党的十九大以来，以习近平同志为核心的党中央一以贯之、坚定不移推进全面从严治党，贯彻落实新时代党的建设总要求，坚持把党的政治建设摆在首位，深化运用监督执纪“四种形态”，惩治群众身边腐败问题，完善党和国家监督体系，夺取了反腐败斗争压倒性胜利。近年来，中船集团党组高度重视全面从严治党，始终以习近平新时代中国特色社会主义思想为指导，按照党中央、中央纪委国家监委和国务院国资委党委部署，领导各级党组织认真履行全面从严治党主体责任，扎实推进各项任务落地落实。
-            </p>
-            <p>
-                为进一步深入学习贯彻习近平新时代中国特色社会主义思想和党的十九大精神，积极落实党中央“不忘初心，牢记使命”主题教育要求，2019年5月以来，集团公司纪检监察组组织开展了以“寻找中船廉洁之美”为主题的廉洁文化作品作品征集、评审和展示活动。截至8月底，本次活动共征集包括廉洁故事、家书家规家训、书画作品、微视频、摄影等五类作品共计XX件，通过初评、复评和终评遴选出一批融合政治性、思想性、艺术性为一体的廉洁文化精品进行集中展示。这些作品充分宣传展现了近年以来中船集团全面从严治党、党风廉政建设和反腐败斗争的生动实践，挖掘各地区各单位各部门在红色革命、爱国主义、传统文化中的廉洁文化基因。我们希望通过这些廉洁文化作品，宣传廉洁理念，传播廉洁文化，引导广大党员干部赓续党的优良作风，守初心、担使命，找差距、抓落实，永葆家国情怀和军工报国的赤子之心，努力营造风清气正的良好氛围，助推中船集团高质量发展，向新中国成立70周年献礼！
-            </p>
+<header th:replace="layout/header::header(${header})"></header>
+<section id="home-slider">
+    <div class="container">
+        <div class="row">
+            <div class="main-slider">
+                <div class="slide-text">
+                    <h1 th:text="${siteName}"></h1>
+                    <p>这是 任霏 的个人网站与博客，一个程序员自己写的网站，不仅仅是文章内容，还包括网站程序的代码。
+                        对新鲜事物都十分感兴趣，利用这个站点向大家分享自己的所见所得，同时这个站点也是我的实验室。</p>
+                </div>
+                <img th:src="'//'+${staticdomain}+'/images/home/slider/hill.png'" class="slider-hill"
+                     alt="slider image">
+                <!--<img src="/images/home/slider/house.png" class="slider-house" alt="slider image">-->
+                <img th:src="'//'+${staticdomain}+'/images/home/slider/sun.png'" class="slider-sun" alt="slider image">
+                <img th:src="'//'+${staticdomain}+'/images/home/slider/birds1.png'" class="slider-birds1"
+                     alt="slider image">
+                <img th:src="'//'+${staticdomain}+'/images/home/slider/birds2.png'" class="slider-birds2"
+                     alt="slider image">
+            </div>
         </div>
     </div>
-    <footer th:replace="layout/footer::footer(${footer},${performance})"></footer>
-</div>
+    <div class="preloader"><i class="fa fa-sun-o fa-spin"></i></div>
+</section>
+<!--/#home-slider-->
+
+<section id="services">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4 text-center padding wow fadeIn" data-wow-duration="1000ms" data-wow-delay="300ms">
+                <div class="single-service">
+                    <a th:href="${domain}+'/posts'">
+                        <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="300ms">
+                            <img th:src="'//'+${staticdomain}+'/images/ico/blogs.png'" alt="">
+                        </div>
+                        <h2>Blog Posts</h2>
+                    </a>
+                    <p>写博客不仅仅是为了分享，更是自己对知识的回顾和理解的加深，但是我更新代码的频率可能会超过文章的频率，也记得去我的Github上看看哦</p>
+
+                </div>
+            </div>
+            <div class="col-sm-4 text-center padding wow fadeIn" data-wow-duration="1000ms" data-wow-delay="600ms">
+                <div class="single-service">
+                    <a th:href="${domain}+'/video'">
+                        <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="600ms">
+                            <img th:src="'//'+${staticdomain}+'/images/ico/video.png'" alt="">
+                        </div>
+                        <h2>Video Vlog</h2>
+                    </a>
+                    <p>一个Vlog，一个人的生活方式，每个人都有自己独一份的人生体验；一个Vlog，一份虚拟的陪伴，点开一个视频就仿佛陪伴着主角走过精彩的一天</p>
+
+                </div>
+            </div>
+            <div class="col-sm-4 text-center padding wow fadeIn" data-wow-duration="1000ms" data-wow-delay="900ms">
+                <div class="single-service">
+                    <a th:href="${domain}+'/posts'">
+                        <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="900ms">
+                            <img th:src="'//'+${staticdomain}+'/images/ico/Album.png'" alt="">
+                        </div>
+                        <h2>Photo Album</h2>
+                    </a>
+                    <p>时间的流逝无法停止，但是美好的一瞬可以留住。一张照片，记载着一个故事；一张照片，讲述了一段经历；一张照片，勾起了一份回忆</p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--/#services-->
+
+<section id="action" class="responsive">
+    <div class="vertical-center">
+        <div class="container">
+            <div class="row">
+                <div class="action take-tour">
+                    <div class="col-sm-7 wow fadeInLeft" data-wow-duration="500ms" data-wow-delay="300ms">
+                        <h1 class="title">Open source on GitHub</h1>
+                        <p>源于开源，回馈开源，从开源社区取得知识和技术，也要记得分享回去。</p>
+                    </div>
+                    <div class="col-sm-5 text-center wow fadeInRight" data-wow-duration="500ms" data-wow-delay="300ms">
+                        <div class="tour-button">
+                            <a href="https://github.com/neilren" class="btn btn-common" target="_blank">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--/#action-->
+
+<section id="features">
+    <div class="container">
+        <div class="row">
+            <div class="single-features">
+                <div class="col-sm-5 wow fadeInLeft" data-wow-duration="500ms" data-wow-delay="300ms">
+                    <a href="https://github.com/NeilRen/RenFei.Net" target="_blank"><img
+                            th:src="'//'+${staticdomain}+'/images/home/renfeinetgithub.jpg'" class="img-responsive"
+                            alt=""></a>
+                </div>
+                <div class="col-sm-6 wow fadeInRight" data-wow-duration="500ms" data-wow-delay="300ms">
+                    <a href="https://github.com/NeilRen/RenFei.Net" target="_blank"><h2>Open Source: RenFei.Net</h2></a>
+                    <P>2019年收购了 renfei.net 域名，由于流行前后端分离，重新开启开发之旅，用以替代 NEILREN4J，并尝试使用Docker容器技术。</P>
+                </div>
+            </div>
+            <div class="single-features">
+                <div class="col-sm-6 col-sm-offset-1 align-right wow fadeInLeft" data-wow-duration="500ms"
+                     data-wow-delay="300ms">
+                    <a href="https://github.com/NeilRen/NEILREN4J" target="_blank"><h2>Open Source: NEILREN4J</h2></a>
+                    <P>2017年技术转型Java开发，使用SpringMVC重新开发新的个人网站，代号 NEIRLEN4J，用以替代 ASP.NET 的 NeilNT 站点，并在Github上开源。</P>
+                </div>
+                <div class="col-sm-5 wow fadeInRight" data-wow-duration="500ms" data-wow-delay="300ms">
+                    <a href="https://github.com/NeilRen/NEILREN4J" target="_blank"><img
+                            th:src="'//'+${staticdomain}+'/images/home/neilren4jgithub.jpg'" class="img-responsive"
+                            alt=""></a>
+                </div>
+            </div>
+            <div class="single-features">
+                <div class="col-sm-5 wow fadeInLeft" data-wow-duration="500ms" data-wow-delay="300ms">
+                    <a href="https://github.com/NeilRen/NeilNT" target="_blank"><img
+                            th:src="'//'+${staticdomain}+'/images/home/neilntgithub.jpg'" class="img-responsive" alt=""></a>
+                </div>
+                <div class="col-sm-6 wow fadeInRight" data-wow-duration="500ms" data-wow-delay="300ms">
+                    <a href="https://github.com/NeilRen/NeilNT" target="_blank"><h2>Open Source: NeilNT</h2></a>
+                    <P>2015年大学毕业使用 ASP.NET 尝试开发自己的个人网站系统，代号 NeilNT，用以替代高中时期的 WordPress，并在 NEILREN4J上线时，在Github上开源。</P>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--/#features-->
+
+<section id="clients">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="clients text-center wow fadeInUp" data-wow-duration="500ms" data-wow-delay="300ms">
+                    <p><img src="/images/home/clients.png" class="img-responsive" alt=""></p>
+                    <h1 class="title">Friendship Links</h1>
+                    <p>访问我们朋友的站点也十分精彩，不妨去看看。<br> 我们不对友站中内容负责，请注意甄别 </p>
+                </div>
+                <div class="clients-logo wow fadeIn" data-wow-duration="1000ms" data-wow-delay="600ms">
+                    <ul class="flink">
+                        <li th:if="${linkDTO!=null}" th:each="link:${linkDTO.links}">
+                            <a th:href="${link.sitelink}" th:text="${link.sitename}" target="_blank"></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<footer th:replace="layout/footer::footer(${footer},${performance})"></footer>
+<script th:inline="javascript">
+    var domain = [[${domain}]];
+    var page = [[${page}]];
+
+    function nextPage() {
+        window.location.href = domain + '/?page=' + (page + 1);
+    }
+</script>
 </body>
 </html>

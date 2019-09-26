@@ -13,5 +13,4 @@ public class HeaderVO {
     private String domain;
     private List<MenuVO> topNavVOS;
     private List<MenuVO> menuVOS;
-    private List<Menu2> menu2;
 }

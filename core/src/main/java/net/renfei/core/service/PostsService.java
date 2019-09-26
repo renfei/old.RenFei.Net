@@ -50,7 +50,6 @@ public class PostsService extends BaseService {
     public PostsListDTO getAllPostsByCatID(Long catID, String pages, String rows) {
         int intPage = convertPage(pages), intRows = convertRows(rows);
         PostsDOExample postsDOExample = new PostsDOExample();
-        postsDOExample.setOrderByClause("prize, ordernuber");
         postsDOExample
                 .createCriteria()
                 .andIsDeleteEqualTo(false)
