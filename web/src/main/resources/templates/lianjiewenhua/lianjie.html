@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/head::head(${head})">
+</head>
+<body>
+<div id="index">
+    <header th:replace="layout/header::header(${header})"></header>
+    <div class="banner redbg">
+        <div th:if="${post!=null}" class="">
+            <div class="llnav"><span>首页</span><span>></span><span th:text="${title2}"></span><span>></span><span
+                    th:text="${post.prizeName+post.sourceName}">等奖唐金兰</span></div>
+            <div class="textdesc">
+                <div class="huojiang">
+                    <p th:text="${post.prizeName}">一等奖</p>
+                    <p th:text="${'作者：'+post.sourceName}">唐金兰</p>
+                    <p th:text="${'单位：'+post.sourceUrl}">单位：桂船口集合开户行公司</p>
+                </div>
+                <div class="texttitle">
+                    <p th:text="${post.title}">父亲，我的榜样</p>
+                </div>
+            </div>
+            <br>
+            <div class="textmain" th:utext="${post.content}">
+
+            </div>
+        </div>
+    </div>
+    <footer th:replace="layout/footer::footer(${footer},${performance})"></footer>
+</div>
+</body>
+</html>

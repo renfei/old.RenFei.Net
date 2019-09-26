@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/head::head(${head})">
+</head>
+<body>
+<div id="index">
+    <header th:replace="layout/header::header(${header})"></header>
+    <div class="banner lllist1">
+        <div class="sheyingcontain shufacontain">
+            <div class="htmleaf-container">
+                <div class="htmleaf-content">
+                    <div id="example5" class="slider-pro">
+                        <div class="sp-slides">
+
+                            <div class="sp-slide">
+                                <video controls style="width:100%;height:300px;object-fit: fill">
+                                    <source src="../img/1.mp4" type="video/mp4">
+                                </video>
+                                <div class="sp-caption">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</div>
+                            </div>
+
+                        </div>
+
+                        <div class="sp-thumbnails">
+
+                            <div class="sp-thumbnail">
+                                <div class="sp-thumbnail-image-container">
+                                    <img src="../../doc/微视频作品缩略/1.1.png" alt="">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer th:replace="layout/footer::footer(${footer},${performance})"></footer>
+    <script type="text/javascript">
+        $(document).ready(function ($) {
+            var containh = $(".banner").height() - 60;
+            var containw = $(".sheyingcontain").width();
+            var splidew = (containw * 0.8);
+            // console.log(containh, containw)
+            var videoW = splidew - 20;
+            // var videoH = $(".sp-slides").height();
+            console.log(splidew, containh)
+            $("video").width(videoW);
+            $("video").height(containh);
+            $('#example5').sliderPro({
+                width: splidew,
+                height: containh,
+                orientation: 'vertical',
+                loop: false,
+                arrows: true,
+                buttons: false,
+                thumbnailsPosition: 'right',
+                thumbnailPointer: true,
+                thumbnailWidth: 170,
+                breakpoints: {
+                    800: {
+                        thumbnailsPosition: 'bottom',
+                        thumbnailWidth: 270,
+                        thumbnailHeight: 100
+                    },
+                    500: {
+                        thumbnailsPosition: 'bottom',
+                        thumbnailWidth: 120,
+                        thumbnailHeight: 50
+                    }
+                }
+            });
+
+            // 下面描述的宽度
+            var descw = $(".sp-slides-container").width() - 20;
+            // console.log(descw)
+            $(".sp-caption-container").width(descw)
+        });
+    </script>
+</div>
+</body>
+</html>

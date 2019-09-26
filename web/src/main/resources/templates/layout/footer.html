@@ -2,46 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <body>
         <footer id="footer" th:fragment="footer(footer,performance)">
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-12 text-center bottom-separator">
-                        <img src="/images/home/under.png" class="img-responsive inline" alt="">
-                    </div>
-                    <div th:if="${footer.footerMenu!=null}"
-                         th:each="menu:${footer.footerMenu}" class="col-md-3 col-sm-6 footerMenu">
-                        <div class="testimonial bottom">
-                            <h2 th:text="${menu.menuText}"></h2>
-                            <ul th:if="${menu.child!=null}" class="list-style-none">
-                                <li th:each="cm:${menu.child}" class="mb-3">
-                                    <a th:href="${cm.menuLink}" class="link-gray"
-                                       th:text="${cm.menuText}"
-                                       th:target="${cm.isNewWin?'_blank':'_self'}"></a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div style="height: 50px;clear: both;"></div>
-
-                    <div class="col-sm-12">
-                        <div class="copyright-text text-center">
-                            <div class="tar py-3">
-                                <uL class="copyList">
-                                    <li th:if="${footer.copyList!=null}" th:each="menu:${footer.copyList}" style="font-size: 13px;">
-                                        <a th:href="${menu.menuLink}" th:target="${menu.isNewWin?'_blank':'_self'}"
-                                           th:text="${menu.menuText}" style="color: #fff;"></a>
-                                    </li>
-                                    <li style="font-size: 13px;">Designed by <a target="_blank" style="color: #fff;" href="http://www.themeum.com">Themeum</a></li>
-                                </uL>
-                            </div>
-                            <div class="clear"></div>
-                            <div class="tar py-3">
-                                <uL class="copyList">
-                                    <li th:each="info:${performance.infor}" th:text="${info}" style="font-size: 12px;"></li>
-                                </uL>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="footer">
+                <p>《中船廉洁文化》大型主题数字博物馆 制作: cssc.com 支持: 中共中央宣传部 中国国家博物馆 中国船舶工业系统工程研究院</p>
             </div>
             <div th:utext="${footer.analyticsCode}"></div>
         </footer>
