@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/head::head(${head})">
+</head>
+<body>
+<header th:replace="layout/header::header(${header})"></header>
+<section id="blog-details" class="padding-top">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-sm-4">
+                <img th:src="${movieDOWithBLOBs.featuredImage}" class="img-responsive"
+                     th:alt="${movieDOWithBLOBs.name}">
+            </div>
+            <div class="col-md-8 col-sm-8">
+                <div class="project-name overflow">
+                    <h2 class="bold" th:text="${movieDOWithBLOBs.name}">Sailing Vivamus </h2>
+                    <ul class="nav navbar-nav navbar-default">
+                        <li><a th:text="${'年代：'+movieDOWithBLOBs.years}"></a></li>
+                        <li><a th:text="${'地区：'+movieDOWithBLOBs.region}"></a></li>
+                    </ul>
+                </div>
+                <div class="project-info overflow">
+                    <h3>剧情简介</h3>
+                    <p th:text="${movieDOWithBLOBs.synopsis}"></p>
+                </div>
+                <div class="skills overflow">
+                    <h3>导演:</h3>
+                    <ul class="nav navbar-nav navbar-default">
+                        <li><a th:text="${movieDOWithBLOBs.director}"></a></li>
+                    </ul>
+                </div>
+                <div class="client overflow">
+                    <h3>主演:</h3>
+                    <ul class="nav navbar-nav navbar-default">
+                        <li><a th:text="${movieDOWithBLOBs.lead}"></li>
+                    </ul>
+                </div>
+                <div class="live-preview">
+                    <a href="#play" class="btn btn-common uppercase">观看</a>
+                </div>
+            </div>
+        </div>
+        <div id="play" class="row" style="margin-top: 30px;">
+            <iframe class="col-sm-12" frameborder="0" allowfullscreen="true" width="100%" height="450px"
+                    th:src="${movieDOWithBLOBs.resource}"></iframe>
+        </div>
+    </div>
+</section>
+<footer th:replace="layout/footer::footer(${footer},${performance})"></footer>
+<script>
+</script>
+</body>
+</html>

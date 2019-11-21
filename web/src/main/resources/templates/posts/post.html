@@ -11,7 +11,7 @@
                 <div class="action">
                     <div class="col-sm-12">
                         <h1 class="title" th:text="${postsVO.title}">Blog Details</h1>
-                        <p th:text="${(postsVO.releaseTime==null?'Unknown':#dates.format(postsVO.releaseTime,'EEE, dd MMM HH:mm:ss')+' GMT+8 '+#dates.format(postsVO.releaseTime,'yyyy'))}">Blog with right sidebar</p>
+                        <p th:text="${(postsVO.releaseTime==null?'Unknown':#dates.format(postsVO.releaseTime,'yyyy-MM-dd HH:mm:ss'))}">Blog with right sidebar</p>
                     </div>
                 </div>
             </div>
@@ -36,7 +36,7 @@
                             <div class="post-content overflow">
                                 <h2 class="post-title bold"><a th:text="${postsVO.title}">Advanced business cards design</a></h2>
                                 <h3 class="post-author">
-                                    <button type="button" class="btn btn-xs btn-default" th:utext="'<i class=\'fa fa-calendar\'></i> '+${(postsVO.releaseTime==null?'Unknown':#dates.format(postsVO.releaseTime,'EEE, dd MMM HH:mm:ss')+' GMT+8 '+#dates.format(postsVO.releaseTime,'yyyy'))}"></button>
+                                    <button type="button" class="btn btn-xs btn-default" th:utext="'<i class=\'fa fa-calendar\'></i> '+${(postsVO.releaseTime==null?'Unknown':#dates.format(postsVO.releaseTime,'yyyy-MM-dd HH:mm:ss'))}"></button>
                                     <button type="button" class="btn btn-xs btn-default" th:utext="'<i class=\'fa fa-eye\'></i> '+${(postsVO.views==null?'Unknown':postsVO.views)}"></button>
                                 </h3>
                                 <p th:utext="${postsVO.content}">

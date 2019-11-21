@@ -80,3 +80,6 @@ dist
 /docker/volumes/redis/data/*
 /docker/volumes/mysql/data/*
 /docker/volumes/nginx/conf/extra/renfei.net.conf
+#license
+/core/src/main/java/net/renfei/core/license
+/core/src/main/java/net/renfei/core/collector

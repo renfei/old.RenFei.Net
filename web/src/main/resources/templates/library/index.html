@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/head::head(${head})">
+</head>
+<body>
+<style>
+    .treeview .list-group-item {
+        cursor: pointer;
+        border: 0;
+        white-space: nowrap;
+    }
+
+    .treeview span.indent {
+        margin-left: 10px;
+        margin-right: 10px
+    }
+
+    .treeview span.icon {
+        width: 12px;
+        margin-right: 5px
+    }
+
+    .treeview .node-disabled {
+        color: silver;
+        cursor: not-allowed
+    }
+</style>
+<header th:replace="layout/header::header(${header})"></header>
+<section id="page-breadcrumb">
+    <div class="vertical-center sun">
+        <div class="container">
+            <div class="row">
+                <div class="action">
+                    <div class="col-sm-12">
+                        <h1 class="title">Library</h1>
+                        <p>资源文件收藏库，收藏了常用IT技术资料和文件下载链接。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="blog-details" class="padding-top">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-sm-5">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Library Directory</h3>
+                    </div>
+                    <div class="panel-body" style="padding: 5px;">
+                        <div id="LibDir"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8 col-sm-7" style="margin-bottom: 10px;">
+                <div class="row">
+                    <div class="alert alert-success fade in">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        <h4>声明</h4>
+                        <p>本站资源均来自于网络。本站只收录下载链接地址，下载的资源不存放在本站内。由于网络环境和下载工具的不确定性，不保证所有人都可以下载成功，如果失败可以更换网络或者下载工具尝试。下载完成后务必进行病毒查杀和SHA校验，与网站核对一致后再使用。</p>
+                    </div>
+                    <div class="panel panel-default" id="panel">
+                        <div class="panel-body" id="panel-body">
+                            <h2 class="post-title bold">任霏的收藏库 RenFei's Library</h2>
+                            <h3 class="post-author"><a href="https://www.renfei.net" target="_blank">Powered by The RenFei Blog</a></h3>
+                            <p>
+                                每次给客户或者同事安装环境的时候总要在网络上寻找相关的安装包，我就整理收录了这个资源库，共享出来给大家一起使用。所有资源都来自于网络，本站只收录下载链接地址，不存储任何资源文件，需要您自己甄别和查杀病毒木马。
+                            </p>
+                            <Blockquote>
+                                点击左侧的资源目录树，展开你需要的资源目录，就可以看到下载链接。
+                            </Blockquote>
+                        </div>
+                    </div>
+                    <div class="panel-group" id="accordion" style="display: none;">
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                        Collapsible Group Item #1
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseOne" class="panel-collapse collapse in">
+                                <div class="panel-body">
+                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry
+                                    richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor
+                                    brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt
+                                    aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et.
+                                    Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente
+                                    ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
+                                    farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them
+                                    accusamus labore sustainable VHS.
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<footer th:replace="layout/footer::footer(${footer},${performance})"></footer>
+<script>
+    var treeview;
+
+    function onclik(link, nodeId) {
+        $("#accordion").hide();
+        $("#panel-body").html("Loading.... 正在加载中....");
+        $("#panel").show();
+        $.ajax({
+            url: '/library/getLibraryDetails',
+            type: 'get', //GET
+            async: true,    //或false,是否异步
+            data: {library: link},
+            timeout: 5000,    //超时时间
+            dataType: 'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+            success: function (data, textStatus, jqXHR) {
+                if (data.success) {
+                    if (data.data != undefined && data.data.length > 0) {
+                        setData(data.data);
+                        $("#panel").hide();
+                        $("#accordion").show();
+                    } else {
+                        expandNode(nodeId);//子节点展开
+                        $("#panel-body").html("暂无数据");
+                    }
+                } else {
+                    expandNode(nodeId);//子节点展开
+                    $("#panel-body").html("暂无数据");
+                }
+            }
+        });
+    }
+
+    function expandNode(nodeId) {
+        var tree = $('#LibDir');
+        //获取当前节点对象
+        var node = tree.treeview('getNode', nodeId);
+        if (node.state.expanded) {
+            //处于展开状态则折叠
+            tree.treeview('collapseNode', node.nodeId);
+        } else {
+            //展开
+            tree.treeview('expandNode', node.nodeId);
+        }
+    }
+
+    function setData(data) {
+        var html = "";
+        for (var i = 0; i < data.length; i++) {
+            if (i == 0) {
+                html += "<div class=\"panel panel-default\">\n" +
+                    "                            <div class=\"panel-heading\">\n" +
+                    "                                <h4 class=\"panel-title\">\n" +
+                    "                                    <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#" + data[i].id + "\">\n" +
+                    data[i].fileName +
+                    "                                    </a>\n" +
+                    "                                </h4>\n" +
+                    "                            </div>\n" +
+                    "                            <div id=\"" + data[i].id + "\" class=\"panel-collapse collapse in\">\n" +
+                    "                                <div class=\"panel-body form-horizontal\">\n" +
+                    "<div class=\"form-group\">\n" +
+                    "    <label for=\"inputEmail3\" class=\"col-sm-2 control-label\">文件名</label>\n" +
+                    "    <div class=\"col-sm-10\">\n" +
+                    "      <input type=\"text\" class=\"form-control\" readonly='readonly' value='" + data[i].fileName + "'>\n" +
+                    "    </div>\n" +
+                    "  </div>" +
+                    "<div class=\"form-group\">\n" +
+                    "    <label for=\"inputEmail3\" class=\"col-sm-2 control-label\">SHA</label>\n" +
+                    "    <div class=\"col-sm-10\">\n" +
+                    "      <input type=\"text\" class=\"form-control\" readonly='readonly' value='" + data[i].sha1 + "'>\n" +
+                    "    </div>\n" +
+                    "  </div>" +
+                    "<div class=\"form-group\">\n" +
+                    "    <label for=\"inputEmail3\" class=\"col-sm-2 control-label\">语言</label>\n" +
+                    "    <div class=\"col-sm-10\">\n" +
+                    "      <input type=\"text\" class=\"form-control\" readonly='readonly' value='" + data[i].lang + "'>\n" +
+                    "    </div>\n" +
+                    "  </div>" +
+                    "<div class=\"form-group\">\n" +
+                    "    <label for=\"inputEmail3\" class=\"col-sm-2 control-label\">文件大小</label>\n" +
+                    "    <div class=\"col-sm-10\">\n" +
+                    "      <input type=\"text\" class=\"form-control\" readonly='readonly' value='" + data[i].size + "'>\n" +
+                    "    </div>\n" +
+                    "  </div>" +
+                    "<div class=\"form-group\">\n" +
+                    "    <label for=\"inputEmail3\" class=\"col-sm-2 control-label\">发布时间</label>\n" +
+                    "    <div class=\"col-sm-10\">\n" +
+                    "      <input type=\"text\" class=\"form-control\" readonly='readonly' value='" + data[i].postDateString + "'>\n" +
+                    "    </div>\n" +
+                    "  </div>" +
+                    "<div class=\"form-group\">\n" +
+                    "    <label for=\"inputEmail3\" class=\"col-sm-2 control-label\">下载链接</label>\n" +
+                    "    <div class=\"col-sm-10\">\n" +
+                    "<textarea class=\"form-control\" rows=\"3\" readonly='readonly'>" + data[i].downLoad + "</textarea>" +
+                    "    </div>\n" +
+                    "  </div>" +
+                    "                                </div>\n" +
+                    "                            </div>\n" +
+                    "                        </div>";
+            } else {
+                html += "<div class=\"panel panel-default\">\n" +
+                    "                            <div class=\"panel-heading\">\n" +
+                    "                                <h4 class=\"panel-title\">\n" +
+                    "                                    <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#" + data[i].id + "\">\n" +
+                    data[i].fileName +
+                    "                                    </a>\n" +
+                    "                                </h4>\n" +
+                    "                            </div>\n" +
+                    "                            <div id=\"" + data[i].id + "\" class=\"panel-collapse collapse\">\n" +
+                    "                                <div class=\"panel-body form-horizontal\">\n" +
+                    "<div class=\"form-group\">\n" +
+                    "    <label for=\"inputEmail3\" class=\"col-sm-2 control-label\">文件名</label>\n" +
+                    "    <div class=\"col-sm-10\">\n" +
+                    "      <input type=\"text\" class=\"form-control\" readonly='readonly' value='" + data[i].fileName + "'>\n" +
+                    "    </div>\n" +
+                    "  </div>" +
+                    "<div class=\"form-group\">\n" +
+                    "    <label for=\"inputEmail3\" class=\"col-sm-2 control-label\">SHA</label>\n" +
+                    "    <div class=\"col-sm-10\">\n" +
+                    "      <input type=\"text\" class=\"form-control\" readonly='readonly' value='" + data[i].sha1 + "'>\n" +
+                    "    </div>\n" +
+                    "  </div>" +
+                    "<div class=\"form-group\">\n" +
+                    "    <label for=\"inputEmail3\" class=\"col-sm-2 control-label\">语言</label>\n" +
+                    "    <div class=\"col-sm-10\">\n" +
+                    "      <input type=\"text\" class=\"form-control\" readonly='readonly' value='" + data[i].lang + "'>\n" +
+                    "    </div>\n" +
+                    "  </div>" +
+                    "<div class=\"form-group\">\n" +
+                    "    <label for=\"inputEmail3\" class=\"col-sm-2 control-label\">文件大小</label>\n" +
+                    "    <div class=\"col-sm-10\">\n" +
+                    "      <input type=\"text\" class=\"form-control\" readonly='readonly' value='" + data[i].size + "'>\n" +
+                    "    </div>\n" +
+                    "  </div>" +
+                    "<div class=\"form-group\">\n" +
+                    "    <label for=\"inputEmail3\" class=\"col-sm-2 control-label\">发布时间</label>\n" +
+                    "    <div class=\"col-sm-10\">\n" +
+                    "      <input type=\"text\" class=\"form-control\" readonly='readonly' value='" + data[i].postDateString + "'>\n" +
+                    "    </div>\n" +
+                    "  </div>" +
+                    "<div class=\"form-group\">\n" +
+                    "    <label for=\"inputEmail3\" class=\"col-sm-2 control-label\">下载链接</label>\n" +
+                    "    <div class=\"col-sm-10\">\n" +
+                    "<textarea class=\"form-control\" rows=\"3\" readonly='readonly'>" + data[i].downLoad + "</textarea>" +
+                    "    </div>\n" +
+                    "  </div>" +
+                    "                                </div>\n" +
+                    "                            </div>\n" +
+                    "                        </div>";
+            }
+        }
+        $("#accordion").html(html);
+    }
+
+    $(function () {
+        $.ajax({
+            url: '/library/getLibDirJson',
+            type: 'get', //GET
+            async: true,    //或false,是否异步
+            data: {},
+            timeout: 5000,    //超时时间
+            dataType: 'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+            success: function (data, textStatus, jqXHR) {
+                $("#LibDir").treeview({data: data});
+                $('#LibDir').on('nodeSelected', function (event, data) {   //插件中的方法
+                    onclik(data.menuLink, data['nodeId']);
+                });
+            }
+        });
+
+    });
+</script>
+</body>
+</html>

@@ -72,6 +72,10 @@ public class BaseController extends BaseClass {
     protected IpService ipService;
     @Autowired
     protected MailService mailService;
+    @Autowired
+    protected LibraryService libraryService;
+    @Autowired
+    protected MoviesService moviesService;
 
     /**
      * 线程绑定Request对象
@@ -289,7 +293,7 @@ public class BaseController extends BaseClass {
     protected void setSidebarByPost(ModelAndView mv, String id) {
         SidebarVO sidebarVO = new SidebarVO();
         List<CategoryDTO> categoryDTOS = categorService.getAllCategoryByType(1L);
-        PostsDTO postsDTO = postsService.getPostsByID(id);
+        PostsDTO postsDTO = postsService.getPostsByID(id, false);
         if (categoryDTOS != null && categoryDTOS.size() > 0) {
             List<CategoriesVo> categories = new ArrayList<>();
             for (CategoryDTO c : categoryDTOS

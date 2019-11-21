@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.renfei.dao.persistences.LibraryDetailsDOMapper">
+  <resultMap id="BaseResultMap" type="net.renfei.dao.entity.LibraryDetailsDO">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="library_id" jdbcType="BIGINT" property="libraryId" />
+    <result column="file_name" jdbcType="VARCHAR" property="fileName" />
+    <result column="lang" jdbcType="VARCHAR" property="lang" />
+    <result column="post_date_string" jdbcType="VARCHAR" property="postDateString" />
+    <result column="SHA1" jdbcType="VARCHAR" property="sha1" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="net.renfei.dao.entity.LibraryDetailsDOWithBLOBs">
+    <result column="down_load" jdbcType="LONGVARCHAR" property="downLoad" />
+    <result column="size" jdbcType="LONGVARCHAR" property="size" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, library_id, file_name, lang, post_date_string, SHA1
+  </sql>
+  <sql id="Blob_Column_List">
+    down_load, size
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="net.renfei.dao.entity.LibraryDetailsDOExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_library_details
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="net.renfei.dao.entity.LibraryDetailsDOExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_library_details
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_library_details
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_library_details
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="net.renfei.dao.entity.LibraryDetailsDOExample">
+    delete from t_library_details
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="net.renfei.dao.entity.LibraryDetailsDOWithBLOBs">
+    insert into t_library_details (id, library_id, file_name, 
+      lang, post_date_string, SHA1, 
+      down_load, size)
+    values (#{id,jdbcType=BIGINT}, #{libraryId,jdbcType=BIGINT}, #{fileName,jdbcType=VARCHAR}, 
+      #{lang,jdbcType=VARCHAR}, #{postDateString,jdbcType=VARCHAR}, #{sha1,jdbcType=VARCHAR}, 
+      #{downLoad,jdbcType=LONGVARCHAR}, #{size,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="net.renfei.dao.entity.LibraryDetailsDOWithBLOBs">
+    insert into t_library_details
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="libraryId != null">
+        library_id,
+      </if>
+      <if test="fileName != null">
+        file_name,
+      </if>
+      <if test="lang != null">
+        lang,
+      </if>
+      <if test="postDateString != null">
+        post_date_string,
+      </if>
+      <if test="sha1 != null">
+        SHA1,
+      </if>
+      <if test="downLoad != null">
+        down_load,
+      </if>
+      <if test="size != null">
+        size,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="libraryId != null">
+        #{libraryId,jdbcType=BIGINT},
+      </if>
+      <if test="fileName != null">
+        #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="lang != null">
+        #{lang,jdbcType=VARCHAR},
+      </if>
+      <if test="postDateString != null">
+        #{postDateString,jdbcType=VARCHAR},
+      </if>
+      <if test="sha1 != null">
+        #{sha1,jdbcType=VARCHAR},
+      </if>
+      <if test="downLoad != null">
+        #{downLoad,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="size != null">
+        #{size,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="net.renfei.dao.entity.LibraryDetailsDOExample" resultType="java.lang.Long">
+    select count(*) from t_library_details
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_library_details
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.libraryId != null">
+        library_id = #{record.libraryId,jdbcType=BIGINT},
+      </if>
+      <if test="record.fileName != null">
+        file_name = #{record.fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lang != null">
+        lang = #{record.lang,jdbcType=VARCHAR},
+      </if>
+      <if test="record.postDateString != null">
+        post_date_string = #{record.postDateString,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sha1 != null">
+        SHA1 = #{record.sha1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.downLoad != null">
+        down_load = #{record.downLoad,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.size != null">
+        size = #{record.size,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update t_library_details
+    set id = #{record.id,jdbcType=BIGINT},
+      library_id = #{record.libraryId,jdbcType=BIGINT},
+      file_name = #{record.fileName,jdbcType=VARCHAR},
+      lang = #{record.lang,jdbcType=VARCHAR},
+      post_date_string = #{record.postDateString,jdbcType=VARCHAR},
+      SHA1 = #{record.sha1,jdbcType=VARCHAR},
+      down_load = #{record.downLoad,jdbcType=LONGVARCHAR},
+      size = #{record.size,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_library_details
+    set id = #{record.id,jdbcType=BIGINT},
+      library_id = #{record.libraryId,jdbcType=BIGINT},
+      file_name = #{record.fileName,jdbcType=VARCHAR},
+      lang = #{record.lang,jdbcType=VARCHAR},
+      post_date_string = #{record.postDateString,jdbcType=VARCHAR},
+      SHA1 = #{record.sha1,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="net.renfei.dao.entity.LibraryDetailsDOWithBLOBs">
+    update t_library_details
+    <set>
+      <if test="libraryId != null">
+        library_id = #{libraryId,jdbcType=BIGINT},
+      </if>
+      <if test="fileName != null">
+        file_name = #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="lang != null">
+        lang = #{lang,jdbcType=VARCHAR},
+      </if>
+      <if test="postDateString != null">
+        post_date_string = #{postDateString,jdbcType=VARCHAR},
+      </if>
+      <if test="sha1 != null">
+        SHA1 = #{sha1,jdbcType=VARCHAR},
+      </if>
+      <if test="downLoad != null">
+        down_load = #{downLoad,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="size != null">
+        size = #{size,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="net.renfei.dao.entity.LibraryDetailsDOWithBLOBs">
+    update t_library_details
+    set library_id = #{libraryId,jdbcType=BIGINT},
+      file_name = #{fileName,jdbcType=VARCHAR},
+      lang = #{lang,jdbcType=VARCHAR},
+      post_date_string = #{postDateString,jdbcType=VARCHAR},
+      SHA1 = #{sha1,jdbcType=VARCHAR},
+      down_load = #{downLoad,jdbcType=LONGVARCHAR},
+      size = #{size,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="net.renfei.dao.entity.LibraryDetailsDO">
+    update t_library_details
+    set library_id = #{libraryId,jdbcType=BIGINT},
+      file_name = #{fileName,jdbcType=VARCHAR},
+      lang = #{lang,jdbcType=VARCHAR},
+      post_date_string = #{postDateString,jdbcType=VARCHAR},
+      SHA1 = #{sha1,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

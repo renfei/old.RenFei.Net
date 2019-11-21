@@ -64,12 +64,12 @@ public class PostsController extends BaseController {
      */
     @RequestMapping("{id}")
     public ModelAndView getPostsByID(@PathVariable("id") String id, ModelAndView mv) throws NoHandlerFoundException {
-        PostsDTO postsDTO = postsService.getPostsByID(id);
+        PostsDTO postsDTO = postsService.getPostsByID(id, true);
         if (postsDTO != null) {
             PostsVO postsVO = ejbGenerator.convert(postsDTO, PostsVO.class);
             setInfo(postsVO);
             mv.addObject("postsVO", postsVO);
-            setHead(mv, postsVO.getTitle() +" - Posts", postsVO.getDescribes());
+            setHead(mv, postsVO.getTitle() + " - Posts", postsVO.getDescribes());
             if (postsVO.getContent().indexOf("code class=") != -1) {
                 //检测到有代码显示，需要增加代码高亮插件
                 setHighlightJS(mv);

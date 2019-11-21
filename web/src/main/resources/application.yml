@@ -62,3 +62,9 @@ logging:
   config: classpath:logback.xml
 #  level:
 #    net.renfei: debug
+license:
+  subject: RenFeiNet #主题
+  publicAlias: publicCert #公钥别称
+  storePass: mypassword123 #访问公钥的密码
+  licensePath: /Users/neil/WorkSpace/license/LicenseFile/license.lic #license位置
+  publicKeysStorePath: /Users/neil/WorkSpace/license/LicenseFile/Test/publicCerts.keystore #公钥位置

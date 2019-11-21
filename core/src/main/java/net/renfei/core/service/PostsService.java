@@ -74,10 +74,11 @@ public class PostsService extends BaseService {
     /**
      * 根据ID获取文章
      *
-     * @param id
+     * @param id          文章编号
+     * @param recordViews 是否记录浏览量
      * @return
      */
-    public PostsDTO getPostsByID(String id) {
+    public PostsDTO getPostsByID(String id, boolean recordViews) {
         Long ID = 0L;
         if (!stringUtil.isEmpty(id)) {
             try {
@@ -90,7 +91,9 @@ public class PostsService extends BaseService {
                 List<PostsDOWithBLOBs> postsDOWithBLOBs = postsDOMapper.selectByExampleWithBLOBs(postsDOExample);
                 if (postsDOWithBLOBs != null && postsDOWithBLOBs.size() > 0) {
                     PostsDOWithBLOBs postsDOWithBLOBs1 = postsDOWithBLOBs.get(0);
-                    updateView(postsDOWithBLOBs1);
+                    if (recordViews) {
+                        updateView(postsDOWithBLOBs1);
+                    }
                     return ejbGenerator.convert(postsDOWithBLOBs1, PostsDTO.class);
                 } else {
                     return null;

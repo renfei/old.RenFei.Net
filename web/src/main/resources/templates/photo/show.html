@@ -15,7 +15,7 @@
                     <h2 class="bold" th:text="${photo.title}"></h2>
                     <ul class="nav navbar-nav navbar-default">
                         <li>
-                            <a th:utext="'<i class=\'fa fa-clock-o\'></i>'+${#dates.format(photo.releaseTime,'EEE, dd MMM HH:mm:ss')+' GMT+8 '+#dates.format(photo.releaseTime,'yyyy')}">February11,2014</a>
+                            <a th:utext="'<i class=\'fa fa-clock-o\'></i>'+${#dates.format(photo.releaseTime,'yyyy-MM-dd HH:mm:ss')}">February11,2014</a>
                         </li>
                     </ul>
                 </div>

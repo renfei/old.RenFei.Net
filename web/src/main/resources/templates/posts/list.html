@@ -26,21 +26,21 @@
                     <div th:if="${postsVOList!=null}" th:each="info:${postsVOList}" class="col-md-6 col-sm-12 blog-padding-right">
                         <div class="single-blog two-column">
                             <div class="post-thumb">
-                                <a th:href="${domain}+'/posts/'+${info.id}">
+                                <a th:href="${domain}+'/posts/'+${info.id}" target="_blank">
                                     <img th:src="${info.featuredImage}" class="img-responsive" alt=""></a>
                                 <div class="post-overlay">
                                     <span class="uppercase">
-                                        <a th:href="${domain}+'/posts/'+${info.id}"
+                                        <a th:href="${domain}+'/posts/'+${info.id}"  target="_blank"
                                                                th:utext="${#dates.format(info.releaseTime,'d')}+
                                                                '<br><small>'+${#dates.format(info.releaseTime,'MMM')}+
                                                                '</small>'"></a></span>
                                 </div>
                             </div>
                             <div class="post-content overflow">
-                                <h2 class="post-title bold"><a th:href="${domain}+'/posts/'+${info.id}" th:text="${info.title}">Advanced business cards design</a></h2>
-                                <h3 class="post-author"><a href="#" th:text="${#dates.format(info.releaseTime,'EEE, dd MMM HH:mm:ss')+' GMT+8 '+#dates.format(info.releaseTime,'yyyy')}"></a></h3>
+                                <h2 class="post-title bold"><a th:href="${domain}+'/posts/'+${info.id}"  target="_blank" th:text="${info.title}">Advanced business cards design</a></h2>
+                                <h3 class="post-author"><a href="#" th:text="${#dates.format(info.releaseTime,'yyyy-MM-dd HH:mm:ss')}"></a></h3>
                                 <p th:text="${#strings.abbreviate(info.describes,150)}"></p>
-                                <a th:href="${domain}+'/posts/'+${info.id}">View More</a>
+                                <a th:href="${domain}+'/posts/'+${info.id}"  target="_blank">View More</a>
                                 <div class="post-bottom overflow">
                                     <ul class="nav nav-justified post-nav">
                                         <li><a th:href="${domain}+'/cat/'+${info.categoryTypeName}+'/'+${info.categoryEnName}" th:utext="'<i class=\'fa fa-tag\'></i>'+${info.categoryZhName}"></a></li>

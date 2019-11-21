@@ -61,7 +61,7 @@
                                 <h2 class="post-title bold"><a th:text="${video.title}"></a></h2>
                                 <h3 class="post-author">
                                     <button type="button" class="btn btn-xs btn-default"
-                                            th:utext="'<i class=\'fa fa-calendar\'></i> '+${(video.releaseTime==null?'Unknown':#dates.format(video.releaseTime,'EEE, dd MMM HH:mm:ss')+' GMT+8 '+#dates.format(video.releaseTime,'yyyy'))}"></button>
+                                            th:utext="'<i class=\'fa fa-calendar\'></i> '+${(video.releaseTime==null?'Unknown':#dates.format(video.releaseTime,'yyyy-MM-dd HH:mm:ss'))}"></button>
                                     <button type="button" class="btn btn-xs btn-default"
                                             th:utext="'<i class=\'fa fa-eye\'></i> '+${(video.views==null?'Unknown':video.views)}"></button>
                                 </h3>
