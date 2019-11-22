@@ -31,6 +31,17 @@ public class StringUtil {
         return htmlStr;
     }
 
+    public String getLikeString(String[] strings) {
+        StringBuilder like = new StringBuilder();
+        like.append("%");
+        for (String str : strings
+        ) {
+            like.append(str);
+            like.append("%");
+        }
+        return like.toString();
+    }
+
     public String delHtmlTags(String htmlStr) {
         //定义script的正则表达式，去除js可以防止注入
         String scriptRegex = "<script[^>]*?>[\\s\\S]*?<\\/script>";

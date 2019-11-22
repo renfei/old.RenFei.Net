@@ -53,6 +53,36 @@ public class MoviesService extends BaseService {
     }
 
     /**
+     * 获得相同主演的其他电影
+     *
+     * @param movieDOWithBLOBs
+     * @return
+     */
+    public List<MovieDOWithBLOBs> getSameMainActor(MovieDOWithBLOBs movieDOWithBLOBs) {
+        if (movieDOWithBLOBs != null) {
+            if (!stringUtil.isEmpty(movieDOWithBLOBs.getLead())) {
+                String[] leads = movieDOWithBLOBs.getLead().split(",");
+                if (leads.length > 0) {
+                    MovieDOExample movieDOExample = new MovieDOExample();
+                    movieDOExample.setOrderByClause("years DESC,update_time DESC");
+                    movieDOExample.createCriteria();
+                    for (String lead : leads
+                    ) {
+                        movieDOExample.or().andLeadLike("%" + lead + "%");
+                    }
+                    return movieDOMapper.selectByExampleWithBLOBs(movieDOExample);
+                } else {
+                    return null;
+                }
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
+    }
+
+    /**
      * 根据ID获取电影详情
      *
      * @param id

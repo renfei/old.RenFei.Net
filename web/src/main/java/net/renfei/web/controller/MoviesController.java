@@ -5,6 +5,7 @@ import net.renfei.core.entity.MovieClassificationDTO;
 import net.renfei.core.entity.MoviesListDTO;
 import net.renfei.dao.entity.MovieDOWithBLOBs;
 import net.renfei.web.baseclass.BaseController;
+import net.renfei.web.entity.MovieSameMainActorVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -77,8 +78,11 @@ public class MoviesController extends BaseController {
     public ModelAndView getPostsByID(@PathVariable("id") String id, ModelAndView mv) throws NoHandlerFoundException {
         MovieDOWithBLOBs movieDOWithBLOBs = moviesService.getMovieById(id, true);
         if (movieDOWithBLOBs != null) {
+            List<MovieDOWithBLOBs> movieSameMainActor = moviesService.getSameMainActor(movieDOWithBLOBs);
+            MovieSameMainActorVO movieSameMainActorVO = new MovieSameMainActorVO(movieSameMainActor);
             setHead(mv, movieDOWithBLOBs.getName() + " - 休闲影视频道", movieDOWithBLOBs.getSynopsis());
             mv.addObject("movieDOWithBLOBs", movieDOWithBLOBs);
+            mv.addObject("movieSameMainActorVO", movieSameMainActorVO);
         } else {
             throwNoHandlerFoundException();
         }
