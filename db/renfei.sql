@@ -2,6 +2,235 @@ SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
+-- Table structure for QRTZ_BLOB_TRIGGERS
+-- ----------------------------
+DROP TABLE IF EXISTS `QRTZ_BLOB_TRIGGERS`;
+CREATE TABLE `QRTZ_BLOB_TRIGGERS` (
+  `SCHED_NAME` varchar(120) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `TRIGGER_NAME` varchar(190) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `TRIGGER_GROUP` varchar(190) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `BLOB_DATA` blob,
+  PRIMARY KEY (`SCHED_NAME`,`TRIGGER_NAME`,`TRIGGER_GROUP`),
+  KEY `SCHED_NAME` (`SCHED_NAME`,`TRIGGER_NAME`,`TRIGGER_GROUP`),
+  CONSTRAINT `qrtz_blob_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) REFERENCES `QRTZ_TRIGGERS` (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Table structure for QRTZ_CALENDARS
+-- ----------------------------
+DROP TABLE IF EXISTS `QRTZ_CALENDARS`;
+CREATE TABLE `QRTZ_CALENDARS` (
+  `SCHED_NAME` varchar(120) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `CALENDAR_NAME` varchar(190) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `CALENDAR` blob NOT NULL,
+  PRIMARY KEY (`SCHED_NAME`,`CALENDAR_NAME`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Table structure for QRTZ_CRON_TRIGGERS
+-- ----------------------------
+DROP TABLE IF EXISTS `QRTZ_CRON_TRIGGERS`;
+CREATE TABLE `QRTZ_CRON_TRIGGERS` (
+  `SCHED_NAME` varchar(120) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `TRIGGER_NAME` varchar(190) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `TRIGGER_GROUP` varchar(190) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `CRON_EXPRESSION` varchar(120) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `TIME_ZONE_ID` varchar(80) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`SCHED_NAME`,`TRIGGER_NAME`,`TRIGGER_GROUP`),
+  CONSTRAINT `qrtz_cron_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) REFERENCES `QRTZ_TRIGGERS` (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Records of QRTZ_CRON_TRIGGERS
+-- ----------------------------
+BEGIN;
+INSERT INTO `QRTZ_CRON_TRIGGERS` VALUES ('clusteredScheduler', 'UpdatePostPageRankTrigger', 'PostTriggerGroup', '0 0/3 * * * ? ', 'Asia/Shanghai');
+COMMIT;
+
+-- ----------------------------
+-- Table structure for QRTZ_FIRED_TRIGGERS
+-- ----------------------------
+DROP TABLE IF EXISTS `QRTZ_FIRED_TRIGGERS`;
+CREATE TABLE `QRTZ_FIRED_TRIGGERS` (
+  `SCHED_NAME` varchar(120) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ENTRY_ID` varchar(95) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `TRIGGER_NAME` varchar(190) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `TRIGGER_GROUP` varchar(190) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `INSTANCE_NAME` varchar(190) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `FIRED_TIME` bigint(13) NOT NULL,
+  `SCHED_TIME` bigint(13) NOT NULL,
+  `PRIORITY` int(11) NOT NULL,
+  `STATE` varchar(16) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `JOB_NAME` varchar(190) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `JOB_GROUP` varchar(190) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `IS_NONCONCURRENT` varchar(1) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `REQUESTS_RECOVERY` varchar(1) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`SCHED_NAME`,`ENTRY_ID`),
+  KEY `IDX_QRTZ_FT_TRIG_INST_NAME` (`SCHED_NAME`,`INSTANCE_NAME`),
+  KEY `IDX_QRTZ_FT_INST_JOB_REQ_RCVRY` (`SCHED_NAME`,`INSTANCE_NAME`,`REQUESTS_RECOVERY`),
+  KEY `IDX_QRTZ_FT_J_G` (`SCHED_NAME`,`JOB_NAME`,`JOB_GROUP`),
+  KEY `IDX_QRTZ_FT_JG` (`SCHED_NAME`,`JOB_GROUP`),
+  KEY `IDX_QRTZ_FT_T_G` (`SCHED_NAME`,`TRIGGER_NAME`,`TRIGGER_GROUP`),
+  KEY `IDX_QRTZ_FT_TG` (`SCHED_NAME`,`TRIGGER_GROUP`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Table structure for QRTZ_JOB_DETAILS
+-- ----------------------------
+DROP TABLE IF EXISTS `QRTZ_JOB_DETAILS`;
+CREATE TABLE `QRTZ_JOB_DETAILS` (
+  `SCHED_NAME` varchar(120) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `JOB_NAME` varchar(190) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `JOB_GROUP` varchar(190) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `DESCRIPTION` varchar(250) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `JOB_CLASS_NAME` varchar(250) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `IS_DURABLE` varchar(1) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `IS_NONCONCURRENT` varchar(1) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `IS_UPDATE_DATA` varchar(1) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `REQUESTS_RECOVERY` varchar(1) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `JOB_DATA` blob,
+  PRIMARY KEY (`SCHED_NAME`,`JOB_NAME`,`JOB_GROUP`),
+  KEY `IDX_QRTZ_J_REQ_RECOVERY` (`SCHED_NAME`,`REQUESTS_RECOVERY`),
+  KEY `IDX_QRTZ_J_GRP` (`SCHED_NAME`,`JOB_GROUP`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Records of QRTZ_JOB_DETAILS
+-- ----------------------------
+BEGIN;
+INSERT INTO `QRTZ_JOB_DETAILS` VALUES ('clusteredScheduler', 'UpdatePostPageRankJob', 'Post', NULL, 'net.renfei.core.task.UpdatePostPageRankJob', '0', '0', '0', '0', 0xACED0005737200156F72672E71756172747A2E4A6F62446174614D61709FB083E8BFA9B0CB020000787200266F72672E71756172747A2E7574696C732E537472696E674B65794469727479466C61674D61708208E8C3FBC55D280200015A0013616C6C6F77735472616E7369656E74446174617872001D6F72672E71756172747A2E7574696C732E4469727479466C61674D617013E62EAD28760ACE0200025A000564697274794C00036D617074000F4C6A6176612F7574696C2F4D61703B787000737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F40000000000010770800000010000000007800);
+COMMIT;
+
+-- ----------------------------
+-- Table structure for QRTZ_LOCKS
+-- ----------------------------
+DROP TABLE IF EXISTS `QRTZ_LOCKS`;
+CREATE TABLE `QRTZ_LOCKS` (
+  `SCHED_NAME` varchar(120) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `LOCK_NAME` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`SCHED_NAME`,`LOCK_NAME`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Records of QRTZ_LOCKS
+-- ----------------------------
+BEGIN;
+INSERT INTO `QRTZ_LOCKS` VALUES ('clusteredScheduler', 'STATE_ACCESS');
+INSERT INTO `QRTZ_LOCKS` VALUES ('clusteredScheduler', 'TRIGGER_ACCESS');
+COMMIT;
+
+-- ----------------------------
+-- Table structure for QRTZ_PAUSED_TRIGGER_GRPS
+-- ----------------------------
+DROP TABLE IF EXISTS `QRTZ_PAUSED_TRIGGER_GRPS`;
+CREATE TABLE `QRTZ_PAUSED_TRIGGER_GRPS` (
+  `SCHED_NAME` varchar(120) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `TRIGGER_GROUP` varchar(190) COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`SCHED_NAME`,`TRIGGER_GROUP`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Table structure for QRTZ_SCHEDULER_STATE
+-- ----------------------------
+DROP TABLE IF EXISTS `QRTZ_SCHEDULER_STATE`;
+CREATE TABLE `QRTZ_SCHEDULER_STATE` (
+  `SCHED_NAME` varchar(120) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `INSTANCE_NAME` varchar(190) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `LAST_CHECKIN_TIME` bigint(13) NOT NULL,
+  `CHECKIN_INTERVAL` bigint(13) NOT NULL,
+  PRIMARY KEY (`SCHED_NAME`,`INSTANCE_NAME`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Records of QRTZ_SCHEDULER_STATE
+-- ----------------------------
+BEGIN;
+INSERT INTO `QRTZ_SCHEDULER_STATE` VALUES ('clusteredScheduler', 'NeilMacBookPro1575266098598', 1575266250532, 10000);
+COMMIT;
+
+-- ----------------------------
+-- Table structure for QRTZ_SIMPLE_TRIGGERS
+-- ----------------------------
+DROP TABLE IF EXISTS `QRTZ_SIMPLE_TRIGGERS`;
+CREATE TABLE `QRTZ_SIMPLE_TRIGGERS` (
+  `SCHED_NAME` varchar(120) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `TRIGGER_NAME` varchar(190) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `TRIGGER_GROUP` varchar(190) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `REPEAT_COUNT` bigint(7) NOT NULL,
+  `REPEAT_INTERVAL` bigint(12) NOT NULL,
+  `TIMES_TRIGGERED` bigint(10) NOT NULL,
+  PRIMARY KEY (`SCHED_NAME`,`TRIGGER_NAME`,`TRIGGER_GROUP`),
+  CONSTRAINT `qrtz_simple_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) REFERENCES `QRTZ_TRIGGERS` (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Table structure for QRTZ_SIMPROP_TRIGGERS
+-- ----------------------------
+DROP TABLE IF EXISTS `QRTZ_SIMPROP_TRIGGERS`;
+CREATE TABLE `QRTZ_SIMPROP_TRIGGERS` (
+  `SCHED_NAME` varchar(120) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `TRIGGER_NAME` varchar(190) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `TRIGGER_GROUP` varchar(190) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `STR_PROP_1` varchar(512) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `STR_PROP_2` varchar(512) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `STR_PROP_3` varchar(512) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `INT_PROP_1` int(11) DEFAULT NULL,
+  `INT_PROP_2` int(11) DEFAULT NULL,
+  `LONG_PROP_1` bigint(20) DEFAULT NULL,
+  `LONG_PROP_2` bigint(20) DEFAULT NULL,
+  `DEC_PROP_1` decimal(13,4) DEFAULT NULL,
+  `DEC_PROP_2` decimal(13,4) DEFAULT NULL,
+  `BOOL_PROP_1` varchar(1) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `BOOL_PROP_2` varchar(1) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`SCHED_NAME`,`TRIGGER_NAME`,`TRIGGER_GROUP`),
+  CONSTRAINT `qrtz_simprop_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) REFERENCES `QRTZ_TRIGGERS` (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Table structure for QRTZ_TRIGGERS
+-- ----------------------------
+DROP TABLE IF EXISTS `QRTZ_TRIGGERS`;
+CREATE TABLE `QRTZ_TRIGGERS` (
+  `SCHED_NAME` varchar(120) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `TRIGGER_NAME` varchar(190) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `TRIGGER_GROUP` varchar(190) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `JOB_NAME` varchar(190) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `JOB_GROUP` varchar(190) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `DESCRIPTION` varchar(250) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `NEXT_FIRE_TIME` bigint(13) DEFAULT NULL,
+  `PREV_FIRE_TIME` bigint(13) DEFAULT NULL,
+  `PRIORITY` int(11) DEFAULT NULL,
+  `TRIGGER_STATE` varchar(16) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `TRIGGER_TYPE` varchar(8) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `START_TIME` bigint(13) NOT NULL,
+  `END_TIME` bigint(13) DEFAULT NULL,
+  `CALENDAR_NAME` varchar(190) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `MISFIRE_INSTR` smallint(2) DEFAULT NULL,
+  `JOB_DATA` blob,
+  PRIMARY KEY (`SCHED_NAME`,`TRIGGER_NAME`,`TRIGGER_GROUP`),
+  KEY `IDX_QRTZ_T_J` (`SCHED_NAME`,`JOB_NAME`,`JOB_GROUP`),
+  KEY `IDX_QRTZ_T_JG` (`SCHED_NAME`,`JOB_GROUP`),
+  KEY `IDX_QRTZ_T_C` (`SCHED_NAME`,`CALENDAR_NAME`),
+  KEY `IDX_QRTZ_T_G` (`SCHED_NAME`,`TRIGGER_GROUP`),
+  KEY `IDX_QRTZ_T_STATE` (`SCHED_NAME`,`TRIGGER_STATE`),
+  KEY `IDX_QRTZ_T_N_STATE` (`SCHED_NAME`,`TRIGGER_NAME`,`TRIGGER_GROUP`,`TRIGGER_STATE`),
+  KEY `IDX_QRTZ_T_N_G_STATE` (`SCHED_NAME`,`TRIGGER_GROUP`,`TRIGGER_STATE`),
+  KEY `IDX_QRTZ_T_NEXT_FIRE_TIME` (`SCHED_NAME`,`NEXT_FIRE_TIME`),
+  KEY `IDX_QRTZ_T_NFT_ST` (`SCHED_NAME`,`TRIGGER_STATE`,`NEXT_FIRE_TIME`),
+  KEY `IDX_QRTZ_T_NFT_MISFIRE` (`SCHED_NAME`,`MISFIRE_INSTR`,`NEXT_FIRE_TIME`),
+  KEY `IDX_QRTZ_T_NFT_ST_MISFIRE` (`SCHED_NAME`,`MISFIRE_INSTR`,`NEXT_FIRE_TIME`,`TRIGGER_STATE`),
+  KEY `IDX_QRTZ_T_NFT_ST_MISFIRE_GRP` (`SCHED_NAME`,`MISFIRE_INSTR`,`NEXT_FIRE_TIME`,`TRIGGER_GROUP`,`TRIGGER_STATE`),
+  CONSTRAINT `qrtz_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `JOB_NAME`, `JOB_GROUP`) REFERENCES `QRTZ_JOB_DETAILS` (`SCHED_NAME`, `JOB_NAME`, `JOB_GROUP`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Records of QRTZ_TRIGGERS
+-- ----------------------------
+BEGIN;
+INSERT INTO `QRTZ_TRIGGERS` VALUES ('clusteredScheduler', 'UpdatePostPageRankTrigger', 'PostTriggerGroup', 'UpdatePostPageRankJob', 'Post', NULL, 1575266400000, 1575266220000, 5, 'WAITING', 'CRON', 1575262409000, 0, NULL, 0, '');
+COMMIT;
+
+-- ----------------------------
 -- Table structure for t_account
 -- ----------------------------
 DROP TABLE IF EXISTS `t_account`;
@@ -18,6 +247,13 @@ CREATE TABLE `t_account` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `unique_account` (`account`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Records of t_account
+-- ----------------------------
+BEGIN;
+INSERT INTO `t_account` VALUES (1, 'renfei', 'sha1:64000:18:rZNN9/MlvYHaiVoKioG7G0E7h1gbqUj/:NI4eEfylEvrElpkKIq8Atf9g', 'EV3RYRYEKY7RD4PZ', 0, 1, '2019-07-11 19:29:08', 0, '2019-08-10 13:14:43');
+COMMIT;
 
 -- ----------------------------
 -- Table structure for t_category
@@ -136,6 +372,7 @@ CREATE TABLE `t_library_details` (
   CONSTRAINT `fk_library_details` FOREIGN KEY (`library_id`) REFERENCES `t_library` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2106 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+
 -- ----------------------------
 -- Table structure for t_link
 -- ----------------------------
@@ -236,14 +473,15 @@ CREATE TABLE `t_movie` (
   PRIMARY KEY (`id`),
   KEY `fk_movie_cat` (`category_id`),
   CONSTRAINT `fk_movie_cat` FOREIGN KEY (`category_id`) REFERENCES `t_category` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of t_movie
 -- ----------------------------
 BEGIN;
-INSERT INTO `t_movie` VALUES (1, 9, '//cdn.renfei.net/movie/cover/2kbug5e3cec5wjr.jpg', '恐怖蜡像馆', '美国', 2005, '佐米·希尔拉', '伊丽莎·库斯伯特,查德·迈克尔·墨瑞,布莱恩·范·霍尔特,帕丽斯·希尔顿,贾德·帕达里克', '几个好友结伴前往观看美国大学美式足球冠军赛，他们在前往比赛地时决定顺便在野外进行一次野营。于是，卡莉（伊丽莎•库斯伯特 Elisha Cuthbert 饰）、佩兹（帕丽斯•希尔顿 Paris Hilton 饰）等几个年轻人在了野外一处荒地扎了营。他们的恐怖经历就此展开。 　　首先，一名神秘的司机和这群年轻人起了争执，令大家游玩的兴致全无；接着第二天他们起床后发现，他们的汽车被人动了手脚发动不了了。在一名当地人的指引下，他们只能徒步前往附近的偏僻小镇安布罗斯找人帮忙。安布罗斯由于太过偏远，以至地图上根本没有标出它的所在。一行人来到小镇，发现这里人迹罕至。好奇心下，他们走进了镇上的杜蒂蜡像馆，这里的蜡像做得栩栩如生。原来，这是一个杀人狂魔将镇上的人杀了用真人做到蜡像！此时那杀人狂魔正在暗处幽幽的盯着他们……', 41, 6.9, 'https://v.qq.com/txp/iframe/player.html?vid=p0022bw2oxy', '2019-11-20 22:13:39');
-INSERT INTO `t_movie` VALUES (2, 9, '//cdn.renfei.net/movie/cover/0516000051FF714A675839534907BAE4.jpeg', '我的恐怖女友', '韩国', 2006, '孙在坤', '崔江熙,朴勇宇,曹恩智', '尽管大学老师黄大宇（朴勇宇 饰）仪表堂堂，满腹经纶，堪称好男人的典范，但仿佛命中注定缺少女人缘似的，他一辈子一次正正经经的恋爱都没有谈过。眼看着自己的年龄即将跨越三十大关，依旧形单影只的他只能在心里暗暗的着急。一次偶然中，黄大宇结识了美丽知性的新邻居李美娜（崔江熙 饰），他鼓起勇气提出了约会，没想到李美娜兴然应允。 　　一来二往之间，黄大宇和李美娜之间的距离越来越近，也就在这期间，黄大宇开始觉得李美娜的身份变得刻意起来，自称文学艺术爱好者的她竟然连《罪与罚》和蒙德里安都不知道，甚至连“李美娜”这个名字都是捏造而成的。这个突然出现的女人究竟是谁？她接近黄大宇又到底有何目的呢？', 2, 5.8, 'http://open.iqiyi.com/developer/player_js/coopPlayerIndex.html?vid=b68e1579a4944903cd3de4b9a61d0296&tvId=338005700&accessToken=2.f22860a2479ad60d8da7697274de9346&appKey=3955c3425820435e86d0f4cdfe56f5e7&appId=1368&height=100%&width=100%', '2019-11-20 22:16:40');
+INSERT INTO `t_movie` VALUES (1, 9, '//cdn.renfei.net/movie/cover/2kbug5e3cec5wjr.jpg', '恐怖蜡像馆', '美国', 2005, '佐米·希尔拉', '伊丽莎·库斯伯特,查德·迈克尔·墨瑞,布莱恩·范·霍尔特,帕丽斯·希尔顿,贾德·帕达里克', '几个好友结伴前往观看美国大学美式足球冠军赛，他们在前往比赛地时决定顺便在野外进行一次野营。于是，卡莉（伊丽莎•库斯伯特 Elisha Cuthbert 饰）、佩兹（帕丽斯•希尔顿 Paris Hilton 饰）等几个年轻人在了野外一处荒地扎了营。他们的恐怖经历就此展开。 　　首先，一名神秘的司机和这群年轻人起了争执，令大家游玩的兴致全无；接着第二天他们起床后发现，他们的汽车被人动了手脚发动不了了。在一名当地人的指引下，他们只能徒步前往附近的偏僻小镇安布罗斯找人帮忙。安布罗斯由于太过偏远，以至地图上根本没有标出它的所在。一行人来到小镇，发现这里人迹罕至。好奇心下，他们走进了镇上的杜蒂蜡像馆，这里的蜡像做得栩栩如生。原来，这是一个杀人狂魔将镇上的人杀了用真人做到蜡像！此时那杀人狂魔正在暗处幽幽的盯着他们……', 82, 6.9, 'https://v.qq.com/txp/iframe/player.html?vid=p0022bw2oxy', '2019-11-20 22:13:39');
+INSERT INTO `t_movie` VALUES (2, 9, '//cdn.renfei.net/movie/cover/0516000051FF714A675839534907BAE4.jpeg', '我的恐怖女友', '韩国', 2006, '孙在坤', '崔江熙,朴勇宇,曹恩智', '尽管大学老师黄大宇（朴勇宇 饰）仪表堂堂，满腹经纶，堪称好男人的典范，但仿佛命中注定缺少女人缘似的，他一辈子一次正正经经的恋爱都没有谈过。眼看着自己的年龄即将跨越三十大关，依旧形单影只的他只能在心里暗暗的着急。一次偶然中，黄大宇结识了美丽知性的新邻居李美娜（崔江熙 饰），他鼓起勇气提出了约会，没想到李美娜兴然应允。 　　一来二往之间，黄大宇和李美娜之间的距离越来越近，也就在这期间，黄大宇开始觉得李美娜的身份变得刻意起来，自称文学艺术爱好者的她竟然连《罪与罚》和蒙德里安都不知道，甚至连“李美娜”这个名字都是捏造而成的。这个突然出现的女人究竟是谁？她接近黄大宇又到底有何目的呢？', 23, 5.8, 'http://open.iqiyi.com/developer/player_js/coopPlayerIndex.html?vid=b68e1579a4944903cd3de4b9a61d0296&tvId=338005700&accessToken=2.f22860a2479ad60d8da7697274de9346&appKey=3955c3425820435e86d0f4cdfe56f5e7&appId=1368&height=100%&width=100%', '2019-11-20 22:16:40');
+INSERT INTO `t_movie` VALUES (3, 9, '//cdn.renfei.net/movie/cover/WX20191121-224535@2x.png', '僵尸先生', '中国', 1985, '刘观伟', '林正英,许冠英,钱小豪,李赛凤,楼南光', '富贵乡绅任发先父当年威逼利诱求得一块风水宝地，经风水先生指点，其父下葬二十年后起坟迁葬，以利子孙。然九叔察看墓穴得知，当年风水先生与任家私怨在身，在墓穴中做下手脚，二十年后任老太爷尸体已生恶变。九叔提议就地火化，在任老爷请求下才将尸骨移往义庄。虽经小心看护，但任老太爷仍化作僵尸，将其子任发杀害。九叔断定任老太爷和任发的僵尸将再次出现，于是命令徒弟秋生和文才小心应付……', 2, 8.2, 'http://open.iqiyi.com/developer/player_js/coopPlayerIndex.html?vid=fe6320eefc141536d534af5e7f8c47bd&tvId=730261500&accessToken=2.f22860a2479ad60d8da7697274de9346&appKey=3955c3425820435e86d0f4cdfe56f5e7&appId=1368&height=100%&width=100%', '2019-11-21 22:47:28');
 COMMIT;
 
 -- ----------------------------
@@ -370,6 +608,47 @@ INSERT INTO `t_photo_img` VALUES (1, 1, 'https://renfei.oncdn.cn/upload/photo/20
 INSERT INTO `t_photo_img` VALUES (2, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0172.JPG');
 INSERT INTO `t_photo_img` VALUES (3, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0173.JPG');
 INSERT INTO `t_photo_img` VALUES (4, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0214.JPG');
+INSERT INTO `t_photo_img` VALUES (5, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0217.JPG');
+INSERT INTO `t_photo_img` VALUES (6, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0219.JPG');
+INSERT INTO `t_photo_img` VALUES (7, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0221.JPG');
+INSERT INTO `t_photo_img` VALUES (8, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0225.JPG');
+INSERT INTO `t_photo_img` VALUES (9, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0228.JPG');
+INSERT INTO `t_photo_img` VALUES (10, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0234.JPG');
+INSERT INTO `t_photo_img` VALUES (11, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0235.JPG');
+INSERT INTO `t_photo_img` VALUES (12, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0236.JPG');
+INSERT INTO `t_photo_img` VALUES (13, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0253.JPG');
+INSERT INTO `t_photo_img` VALUES (14, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0254.JPG');
+INSERT INTO `t_photo_img` VALUES (15, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0255.JPG');
+INSERT INTO `t_photo_img` VALUES (16, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0256.JPG');
+INSERT INTO `t_photo_img` VALUES (17, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0261.JPG');
+INSERT INTO `t_photo_img` VALUES (18, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0267.JPG');
+INSERT INTO `t_photo_img` VALUES (19, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0268.JPG');
+INSERT INTO `t_photo_img` VALUES (20, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0272.JPG');
+INSERT INTO `t_photo_img` VALUES (21, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0274.JPG');
+INSERT INTO `t_photo_img` VALUES (22, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0276.JPG');
+INSERT INTO `t_photo_img` VALUES (23, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0278.JPG');
+INSERT INTO `t_photo_img` VALUES (24, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0683.JPG');
+INSERT INTO `t_photo_img` VALUES (25, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0688.JPG');
+INSERT INTO `t_photo_img` VALUES (26, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0743.JPG');
+INSERT INTO `t_photo_img` VALUES (27, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0746.JPG');
+INSERT INTO `t_photo_img` VALUES (28, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0748.JPG');
+INSERT INTO `t_photo_img` VALUES (29, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0753.JPG');
+INSERT INTO `t_photo_img` VALUES (30, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0754.JPG');
+INSERT INTO `t_photo_img` VALUES (31, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0874.JPG');
+INSERT INTO `t_photo_img` VALUES (32, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0875.JPG');
+INSERT INTO `t_photo_img` VALUES (33, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0880.JPG');
+INSERT INTO `t_photo_img` VALUES (34, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0882.JPG');
+INSERT INTO `t_photo_img` VALUES (35, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0884.JPG');
+INSERT INTO `t_photo_img` VALUES (36, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0885.JPG');
+INSERT INTO `t_photo_img` VALUES (37, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0887.JPG');
+INSERT INTO `t_photo_img` VALUES (38, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0888.JPG');
+INSERT INTO `t_photo_img` VALUES (39, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0889.JPG');
+INSERT INTO `t_photo_img` VALUES (40, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0891.JPG');
+INSERT INTO `t_photo_img` VALUES (41, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0898.JPG');
+INSERT INTO `t_photo_img` VALUES (42, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0899.JPG');
+INSERT INTO `t_photo_img` VALUES (43, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0900.JPG');
+INSERT INTO `t_photo_img` VALUES (44, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0973.JPG');
+INSERT INTO `t_photo_img` VALUES (45, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0974.JPG');
 COMMIT;
 
 -- ----------------------------
@@ -392,6 +671,8 @@ CREATE TABLE `t_posts` (
   `keyword` text COLLATE utf8mb4_unicode_ci COMMENT '关键字用于SEO',
   `is_delete` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '软删除',
   `is_comment` tinyint(1) NOT NULL DEFAULT '1' COMMENT '是否允许评论',
+  `page_rank` double NOT NULL DEFAULT '1000' COMMENT '权重排序',
+  `page_rank_update_time` datetime DEFAULT NULL COMMENT '权重更新时间',
   PRIMARY KEY (`id`),
   KEY `fk_posts_category` (`category_id`) USING BTREE COMMENT '与类别的外键约束',
   FULLTEXT KEY `ft_index` (`title`,`content`) /*!50100 WITH PARSER `ngram` */ ,
@@ -402,7 +683,7 @@ CREATE TABLE `t_posts` (
 -- Records of t_posts
 -- ----------------------------
 BEGIN;
-INSERT INTO `t_posts` VALUES (1, 1, 'https://cdn.neilren.com/neilren4j/upload/b8bfb737a838450ca2e373ad4dd264f7.jpeg', '你好！世界程序', '<h2><span class=\"ez-toc-section\" id=\"tocjs\">toc.js</span></h2>\n<p>这个就是那段神奇的代码</p>\n<pre class=\"lang:js decode:true\" title=\"toc.js\"><code class=\"js\">!function(a){a.fn.toc=function(b){var c,d=this,e=a.extend({},jQuery.fn.toc.defaults,b),f=a(e.container),g=a(e.selectors,f),h=[],i=e.prefix+\"-active\",j=function(b){for(var c=0,d=arguments.length;d&gt;c;c++){var e=arguments[c],f=a(e);if(f.scrollTop()&gt;0)return f;f.scrollTop(1);var g=f.scrollTop()&gt;0;if(f.scrollTop(0),g)return f}return[]},k=j(e.container,\"body\",\"html\"),l=function(b){if(e.smoothScrolling){b.preventDefault();var c=a(b.target).attr(\"href\"),f=a(c);k.animate({scrollTop:f.offset().top},400,\"swing\",function(){location.hash=c})}a(\"li\",d).removeClass(i),a(b.target).parent().addClass(i)},m=function(b){c&amp;&amp;clearTimeout(c),c=setTimeout(function(){for(var b,c=a(window).scrollTop(),f=0,g=h.length;g&gt;f;f++)if(h[f]&gt;=c){a(\"li\",d).removeClass(i),b=a(\"li:eq(\"+(f-1)+\")\",d).addClass(i),e.onHighlight(b);break}},50)};return e.highlightOnScroll&amp;&amp;(a(window).bind(\"scroll\",m),m()),this.each(function(){var b=a(this),c=a(\"&lt;ul/&gt;\");g.each(function(d,f){var g=a(f);h.push(g.offset().top-e.highlightOffset);var i=(a(\"&lt;span/&gt;\").attr(\"id\",e.anchorName(d,f,e.prefix)).insertBefore(g),a(\"&lt;a/&gt;\").text(e.headerText(d,f,g)).attr(\"href\",\"#\"+e.anchorName(d,f,e.prefix)).bind(\"click\",function(c){l(c),b.trigger(\"selected\",a(this).attr(\"href\"))})),j=a(\"&lt;li/&gt;\").addClass(e.itemClass(d,f,g,e.prefix)).append(i);c.append(j)}),b.html(c)})},jQuery.fn.toc.defaults={container:\"body\",selectors:\"h1,h2,h3\",smoothScrolling:!0,prefix:\"toc\",onHighlight:function(){},highlightOnScroll:!0,highlightOffset:100,anchorName:function(a,b,c){return c+a},headerText:function(a,b,c){return c.text()},itemClass:function(a,b,c,d){return d+\"-\"+c[0].tagName.toLowerCase()}}}(jQuery);</code></pre>\n<h2><span class=\"ez-toc-section\" id=\"i\">生成目录程序生成目录程序生成目录程序生成目录程序生成目录程序</span></h2>\n<p>下面这两段程序，第一段没明白是做什么的，第二段是用来生成目录的程序。</p>\n<pre class=\"php\"><code class=php>//这个程序没看到有什么作用，可能是考虑了固定导航栏的高度\njQuery(document).on(\"click\", \"#toc a\", function (a) {\n    // #wpadminbar 世界替换了原来的 header\n    $(\"#wpadminbar\").animate({marginBottom: 130}, 200).animate({marginBottom: 30}, 200)\n});\n//这一段是用来生成目录的\njQuery(document).ready(function () {\n    return 0 === $(\".article_content h2\").length ? ($(\"#toc\").remove(), 0) : (jQuery(\"#toc\").toc({\n         selectors: \"h2,h3,h4\",\n          container: \".article_content\"\n     }), jQuery(\"#toc\").before(\"&lt;h2&gt;目录&lt;/h2&gt;\"), \"参考链接\" === $.trim($(\".article_content h2:nth-last-of-type(1)\").text()) &amp;&amp; $(\".article_content h2:nth-last-of-type(1)\").addClass(\"reference\").next(\"ul\").addClass(\"reference-list\"), void $(\"#toc~h2\").wrap(\'&lt;div class=\"chapter\" /&gt;\'))\n});</code></pre>\n<h2><span class=\"ez-toc-section\" id=\"i-2\">美化</span></h2>\n<p>下面的css 就是本页面目录所使用的样式</p>\n<h3><span class=\"ez-toc-section\" id=\"i-2\">H3</span></h3>\n<pre class=\"php\" title=\"css\"><code class=\"php\">    &lt;style&gt;\n        #toc {\n            /*background-color: #111;\n            box-shadow: -5px 0 5px 0 #000 inset;\n            color: #fff;\n            font-family: Consolas,\"Courier New\",Courier,FreeMono,monospace;\n            font-weight: 700;*/\n            margin-bottom: 2em;\n            padding-top: 20px;\n        }\n        #toc ul {\n            /*list-style: outside none none;*/\n            list-style:none;\n            margin: 0;\n            padding: 0;\n        }\n        #toc li {\n            padding: 5px 10px;\n            list-style:none;\n        }\n        #toc a {\n            color: #a6e22e;\n            display: block;\n            text-decoration: none;\n        }\n        #toc li:hover {\n            background: #369 none repeat scroll 0 0;\n            /*box-shadow: -5px 0 10px -5px #000 inset;*/\n        }\n        #toc li a:hover{\n            border:none;\n        }\n        #toc .toc-h2 {\n            padding-left: 2em;\n        }\n        #toc .toc-h3 {\n            padding-left: 4em;\n        }\n        #toc .toc-h4 {\n            padding-left: 6em;\n        }\n    &lt;/style&gt;</code></pre>\n<p>写在最后吧：<br />\n后来，我找到了官方项目地址，就算一次快乐的旅行吧：<br />\nhttp://projects.jga.me/toc/<br />\nhttps://github.com/jgallen23/toc</p>', 1, NULL, NULL, 71, '2019-06-04 13:30:21', '2019-06-04 13:30:27', '这个是简介', NULL, 0, 1);
+INSERT INTO `t_posts` VALUES (1, 1, 'https://cdn.neilren.com/neilren4j/upload/b8bfb737a838450ca2e373ad4dd264f7.jpeg', '你好！世界程序', '<h2><span class=\"ez-toc-section\" id=\"tocjs\">toc.js</span></h2>\n<p>这个就是那段神奇的代码</p>\n<pre class=\"lang:js decode:true\" title=\"toc.js\"><code class=\"js\">!function(a){a.fn.toc=function(b){var c,d=this,e=a.extend({},jQuery.fn.toc.defaults,b),f=a(e.container),g=a(e.selectors,f),h=[],i=e.prefix+\"-active\",j=function(b){for(var c=0,d=arguments.length;d&gt;c;c++){var e=arguments[c],f=a(e);if(f.scrollTop()&gt;0)return f;f.scrollTop(1);var g=f.scrollTop()&gt;0;if(f.scrollTop(0),g)return f}return[]},k=j(e.container,\"body\",\"html\"),l=function(b){if(e.smoothScrolling){b.preventDefault();var c=a(b.target).attr(\"href\"),f=a(c);k.animate({scrollTop:f.offset().top},400,\"swing\",function(){location.hash=c})}a(\"li\",d).removeClass(i),a(b.target).parent().addClass(i)},m=function(b){c&amp;&amp;clearTimeout(c),c=setTimeout(function(){for(var b,c=a(window).scrollTop(),f=0,g=h.length;g&gt;f;f++)if(h[f]&gt;=c){a(\"li\",d).removeClass(i),b=a(\"li:eq(\"+(f-1)+\")\",d).addClass(i),e.onHighlight(b);break}},50)};return e.highlightOnScroll&amp;&amp;(a(window).bind(\"scroll\",m),m()),this.each(function(){var b=a(this),c=a(\"&lt;ul/&gt;\");g.each(function(d,f){var g=a(f);h.push(g.offset().top-e.highlightOffset);var i=(a(\"&lt;span/&gt;\").attr(\"id\",e.anchorName(d,f,e.prefix)).insertBefore(g),a(\"&lt;a/&gt;\").text(e.headerText(d,f,g)).attr(\"href\",\"#\"+e.anchorName(d,f,e.prefix)).bind(\"click\",function(c){l(c),b.trigger(\"selected\",a(this).attr(\"href\"))})),j=a(\"&lt;li/&gt;\").addClass(e.itemClass(d,f,g,e.prefix)).append(i);c.append(j)}),b.html(c)})},jQuery.fn.toc.defaults={container:\"body\",selectors:\"h1,h2,h3\",smoothScrolling:!0,prefix:\"toc\",onHighlight:function(){},highlightOnScroll:!0,highlightOffset:100,anchorName:function(a,b,c){return c+a},headerText:function(a,b,c){return c.text()},itemClass:function(a,b,c,d){return d+\"-\"+c[0].tagName.toLowerCase()}}}(jQuery);</code></pre>\n<h2><span class=\"ez-toc-section\" id=\"i\">生成目录程序生成目录程序生成目录程序生成目录程序生成目录程序</span></h2>\n<p>下面这两段程序，第一段没明白是做什么的，第二段是用来生成目录的程序。</p>\n<pre class=\"php\"><code class=php>//这个程序没看到有什么作用，可能是考虑了固定导航栏的高度\njQuery(document).on(\"click\", \"#toc a\", function (a) {\n    // #wpadminbar 世界替换了原来的 header\n    $(\"#wpadminbar\").animate({marginBottom: 130}, 200).animate({marginBottom: 30}, 200)\n});\n//这一段是用来生成目录的\njQuery(document).ready(function () {\n    return 0 === $(\".article_content h2\").length ? ($(\"#toc\").remove(), 0) : (jQuery(\"#toc\").toc({\n         selectors: \"h2,h3,h4\",\n          container: \".article_content\"\n     }), jQuery(\"#toc\").before(\"&lt;h2&gt;目录&lt;/h2&gt;\"), \"参考链接\" === $.trim($(\".article_content h2:nth-last-of-type(1)\").text()) &amp;&amp; $(\".article_content h2:nth-last-of-type(1)\").addClass(\"reference\").next(\"ul\").addClass(\"reference-list\"), void $(\"#toc~h2\").wrap(\'&lt;div class=\"chapter\" /&gt;\'))\n});</code></pre>\n<h2><span class=\"ez-toc-section\" id=\"i-2\">美化</span></h2>\n<p>下面的css 就是本页面目录所使用的样式</p>\n<h3><span class=\"ez-toc-section\" id=\"i-2\">H3</span></h3>\n<pre class=\"php\" title=\"css\"><code class=\"php\">    &lt;style&gt;\n        #toc {\n            /*background-color: #111;\n            box-shadow: -5px 0 5px 0 #000 inset;\n            color: #fff;\n            font-family: Consolas,\"Courier New\",Courier,FreeMono,monospace;\n            font-weight: 700;*/\n            margin-bottom: 2em;\n            padding-top: 20px;\n        }\n        #toc ul {\n            /*list-style: outside none none;*/\n            list-style:none;\n            margin: 0;\n            padding: 0;\n        }\n        #toc li {\n            padding: 5px 10px;\n            list-style:none;\n        }\n        #toc a {\n            color: #a6e22e;\n            display: block;\n            text-decoration: none;\n        }\n        #toc li:hover {\n            background: #369 none repeat scroll 0 0;\n            /*box-shadow: -5px 0 10px -5px #000 inset;*/\n        }\n        #toc li a:hover{\n            border:none;\n        }\n        #toc .toc-h2 {\n            padding-left: 2em;\n        }\n        #toc .toc-h3 {\n            padding-left: 4em;\n        }\n        #toc .toc-h4 {\n            padding-left: 6em;\n        }\n    &lt;/style&gt;</code></pre>\n<p>写在最后吧：<br />\n后来，我找到了官方项目地址，就算一次快乐的旅行吧：<br />\nhttp://projects.jga.me/toc/<br />\nhttps://github.com/jgallen23/toc</p>', 1, NULL, NULL, 72, '2019-12-04 13:30:21', '2019-12-04 13:30:21', '这个是简介', NULL, 0, 1, 10000, '2019-12-02 13:57:00');
 COMMIT;
 
 -- ----------------------------
@@ -456,6 +737,7 @@ CREATE TABLE `t_secret_key` (
   `expire_time` datetime NOT NULL,
   PRIMARY KEY (`uid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 
 -- ----------------------------
 -- Table structure for t_setting
@@ -533,11 +815,25 @@ COMMIT;
 DROP TABLE IF EXISTS `t_tag`;
 CREATE TABLE `t_tag` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `en_name` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `zh_name` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `en_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `zh_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `describe` text COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Records of t_tag
+-- ----------------------------
+BEGIN;
+INSERT INTO `t_tag` VALUES (1, 'domainname', '域名', NULL);
+INSERT INTO `t_tag` VALUES (2, 'usb', 'USB', NULL);
+INSERT INTO `t_tag` VALUES (3, 'udisk', 'U盘', NULL);
+INSERT INTO `t_tag` VALUES (4, 'cable', '网线', NULL);
+INSERT INTO `t_tag` VALUES (5, 'device', '硬件', NULL);
+INSERT INTO `t_tag` VALUES (6, 'network', '网络', NULL);
+INSERT INTO `t_tag` VALUES (7, 'program', '编程', NULL);
+INSERT INTO `t_tag` VALUES (8, 'develop', '开发', NULL);
+COMMIT;
 
 -- ----------------------------
 -- Table structure for t_tag_relation
@@ -553,7 +849,7 @@ CREATE TABLE `t_tag_relation` (
   KEY `fk_tag_type` (`type_id`),
   CONSTRAINT `fk_tag` FOREIGN KEY (`tag_id`) REFERENCES `t_tag` (`id`),
   CONSTRAINT `fk_tag_type` FOREIGN KEY (`type_id`) REFERENCES `t_type` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=533 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Table structure for t_token
@@ -568,7 +864,6 @@ CREATE TABLE `t_token` (
   `update_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
 
 -- ----------------------------
 -- Table structure for t_type
@@ -659,6 +954,8 @@ CREATE TABLE `t_video_track` (
   KEY `fk_video_track` (`video_id`),
   CONSTRAINT `fk_video_track` FOREIGN KEY (`video_id`) REFERENCES `t_video` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+SET FOREIGN_KEY_CHECKS = 1;
 
 -- ----------------------------
 -- Table structure for t_ipv4
