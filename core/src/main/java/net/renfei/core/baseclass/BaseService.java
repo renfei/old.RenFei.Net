@@ -77,6 +77,10 @@ public class BaseService extends BaseClass {
     protected LibraryDetailsDOMapper libraryDetailsDOMapper;
     @Autowired
     protected MovieDOMapper movieDOMapper;
+    @Autowired
+    protected TagDOMapper tagDOMapper;
+    @Autowired
+    protected TagRelationDOMapper tagRelationDOMapper;
 
     protected int convertPage(String page) {
         return stringUtil.convertInt(page, DEFAULT_PAGE);

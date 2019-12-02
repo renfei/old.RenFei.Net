@@ -163,6 +163,146 @@ public class TagDOExample {
             addCriterion("id not between", value1, value2, "id");
             return (Criteria) this;
         }
+
+        public Criteria andEnNameIsNull() {
+            addCriterion("en_name is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnNameIsNotNull() {
+            addCriterion("en_name is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnNameEqualTo(String value) {
+            addCriterion("en_name =", value, "enName");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnNameNotEqualTo(String value) {
+            addCriterion("en_name <>", value, "enName");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnNameGreaterThan(String value) {
+            addCriterion("en_name >", value, "enName");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnNameGreaterThanOrEqualTo(String value) {
+            addCriterion("en_name >=", value, "enName");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnNameLessThan(String value) {
+            addCriterion("en_name <", value, "enName");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnNameLessThanOrEqualTo(String value) {
+            addCriterion("en_name <=", value, "enName");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnNameLike(String value) {
+            addCriterion("en_name like", value, "enName");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnNameNotLike(String value) {
+            addCriterion("en_name not like", value, "enName");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnNameIn(List<String> values) {
+            addCriterion("en_name in", values, "enName");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnNameNotIn(List<String> values) {
+            addCriterion("en_name not in", values, "enName");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnNameBetween(String value1, String value2) {
+            addCriterion("en_name between", value1, value2, "enName");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnNameNotBetween(String value1, String value2) {
+            addCriterion("en_name not between", value1, value2, "enName");
+            return (Criteria) this;
+        }
+
+        public Criteria andZhNameIsNull() {
+            addCriterion("zh_name is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andZhNameIsNotNull() {
+            addCriterion("zh_name is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andZhNameEqualTo(String value) {
+            addCriterion("zh_name =", value, "zhName");
+            return (Criteria) this;
+        }
+
+        public Criteria andZhNameNotEqualTo(String value) {
+            addCriterion("zh_name <>", value, "zhName");
+            return (Criteria) this;
+        }
+
+        public Criteria andZhNameGreaterThan(String value) {
+            addCriterion("zh_name >", value, "zhName");
+            return (Criteria) this;
+        }
+
+        public Criteria andZhNameGreaterThanOrEqualTo(String value) {
+            addCriterion("zh_name >=", value, "zhName");
+            return (Criteria) this;
+        }
+
+        public Criteria andZhNameLessThan(String value) {
+            addCriterion("zh_name <", value, "zhName");
+            return (Criteria) this;
+        }
+
+        public Criteria andZhNameLessThanOrEqualTo(String value) {
+            addCriterion("zh_name <=", value, "zhName");
+            return (Criteria) this;
+        }
+
+        public Criteria andZhNameLike(String value) {
+            addCriterion("zh_name like", value, "zhName");
+            return (Criteria) this;
+        }
+
+        public Criteria andZhNameNotLike(String value) {
+            addCriterion("zh_name not like", value, "zhName");
+            return (Criteria) this;
+        }
+
+        public Criteria andZhNameIn(List<String> values) {
+            addCriterion("zh_name in", values, "zhName");
+            return (Criteria) this;
+        }
+
+        public Criteria andZhNameNotIn(List<String> values) {
+            addCriterion("zh_name not in", values, "zhName");
+            return (Criteria) this;
+        }
+
+        public Criteria andZhNameBetween(String value1, String value2) {
+            addCriterion("zh_name between", value1, value2, "zhName");
+            return (Criteria) this;
+        }
+
+        public Criteria andZhNameNotBetween(String value1, String value2) {
+            addCriterion("zh_name not between", value1, value2, "zhName");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

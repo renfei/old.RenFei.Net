@@ -3,6 +3,7 @@ package net.renfei.dao.persistences;
 import java.util.List;
 import net.renfei.dao.entity.TagDO;
 import net.renfei.dao.entity.TagDOExample;
+import net.renfei.dao.entity.TagDOExtend;
 import org.apache.ibatis.annotations.Param;
 
 public interface TagDOMapper {
@@ -31,4 +32,8 @@ public interface TagDOMapper {
     int updateByPrimaryKeySelective(TagDO record);
 
     int updateByPrimaryKeyWithBLOBs(TagDO record);
+
+    int updateByPrimaryKey(TagDO record);
+
+    List<TagDOExtend> getAllTag();
 }

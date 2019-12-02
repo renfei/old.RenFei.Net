@@ -50,6 +50,25 @@
                                     </ul>
                                 </div>
                                 <div th:replace="layout/share::share"></div>
+                                <div class="sidebar blog-sidebar" th:if="${related!=null}">
+                                    <div class="sidebar-item  recent">
+                                        <h3>相关文章</h3>
+                                        <div class="col-md-6">
+                                            <div class="media" th:each="rel,relStat:${related.postsList}" th:if="${relStat.index<5}">
+                                                <div class="media-body">
+                                                    <h4 style="white-space: nowrap;"><a th:href="${'/posts/'+rel.id}" th:text="${rel.title}"></a></h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="media" th:each="rel,relStat:${related.postsList}" th:if="${relStat.index>4}">
+                                                <div class="media-body">
+                                                    <h4 style="white-space: nowrap;"><a th:href="${'/posts/'+rel.id}" th:text="${rel.title}"></a></h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div th:if="${globalComment=='1'&&postsVO.isComment}">
                                     <div th:replace="layout/comments::comments(${commentTypeId},${commentObjId},${commentVO})"></div>
                                 </div>

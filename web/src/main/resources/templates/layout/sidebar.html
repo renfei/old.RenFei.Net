@@ -15,9 +15,19 @@
             <div class="sidebar-item categories">
                 <h3 th:if="${sidebar.categories!=null}">Categories</h3>
                 <ul class="nav navbar-stacked">
-                    <li th:if="${sidebar.categories!=null}" th:each="cat:${sidebar.categories}" th:class="${cat.activ?'active':''}">
-                        <a th:href="${cat.link}" th:utext="${cat.categoriesName}+'<span class=\'pull-right\'>('+${cat.cnt}+')</span>'">
+                    <li th:if="${sidebar.categories!=null}" th:each="cat:${sidebar.categories}"
+                        th:class="${cat.activ?'active':''}">
+                        <a th:href="${cat.link}"
+                           th:utext="${cat.categoriesName}+'<span class=\'pull-right\'>('+${cat.cnt}+')</span>'">
                         </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="sidebar-item tag-cloud" th:if="${sidebar.tags!=null}">
+                <h3>Tag Cloud</h3>
+                <ul class="nav nav-pills">
+                    <li th:if="${sidebar.tags!=null}" th:each="tag:${sidebar.tags}">
+                        <a th:href="${'/posts/tag/'+tag.enName}" th:text="${tag.zhName+'('+tag.quantity+')'}"></a>
                     </li>
                 </ul>
             </div>
@@ -37,12 +47,6 @@
                     </div>
                 </div>
             </div>
-            <!--<div class="sidebar-item tag-cloud">-->
-                <!--<h3>Tag Cloud</h3>-->
-                <!--<ul class="nav nav-pills">-->
-                    <!--<li><a href="#">Corporate</a></li>-->
-                <!--</ul>-->
-            <!--</div>-->
         </div>
     </body>
 </html>

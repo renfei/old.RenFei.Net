@@ -3,6 +3,7 @@ package net.renfei.web.baseclass;
 import net.renfei.core.baseclass.BaseClass;
 import net.renfei.core.entity.*;
 import net.renfei.core.service.*;
+import net.renfei.dao.entity.TagDOExtend;
 import net.renfei.web.entity.*;
 import net.renfei.web.service.PaginationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,6 +77,10 @@ public class BaseController extends BaseClass {
     protected LibraryService libraryService;
     @Autowired
     protected MoviesService moviesService;
+    @Autowired
+    protected TagService tagService;
+    @Autowired
+    protected QuartzService quartzService;
 
     /**
      * 线程绑定Request对象
@@ -311,7 +316,8 @@ public class BaseController extends BaseClass {
             }
             sidebarVO.setCategories(categories);
         }
-        //[TODO]标签类
+        //标签类
+        sidebarVO.setTags(tagService.getAllTagDOExtend());
         sidebarVO.setStaticdomain(staticdomain);
         mv.addObject(SIDEBAR_KEY, sidebarVO);
     }
