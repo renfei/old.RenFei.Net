@@ -38,7 +38,7 @@ public class SiteMapService extends BaseService {
                 siteMapXmls.add(new SiteMapXml(domain, Changefreq.daily, "1", new Date()));
             }
             //文章
-            PostsListDTO postsListDTO = postsService.getAllPosts("1", "999999");
+            PostsListDTO postsListDTO = postsService.getAllPosts("1", "999999","release_time DESC");
             if (postsListDTO.getPostsList() != null && postsListDTO.getPostsList().size() > 0) {
                 siteMapXmls.add(new SiteMapXml(domain + "/posts", Changefreq.daily, "1", postsListDTO.getPostsList().get(0).getReleaseTime()));
                 for (PostsDOWithBLOBs post : postsListDTO.getPostsList()

@@ -27,7 +27,7 @@
                 <h3>Tag Cloud</h3>
                 <ul class="nav nav-pills">
                     <li th:if="${sidebar.tags!=null}" th:each="tag:${sidebar.tags}">
-                        <a th:href="${'/posts/tag/'+tag.enName}" th:text="${tag.zhName+'('+tag.quantity+')'}"></a>
+                        <a th:href="${domain+'/posts/tag/'+tag.enName}" th:text="${tag.zhName+'('+tag.quantity+')'}"></a>
                     </li>
                 </ul>
             </div>

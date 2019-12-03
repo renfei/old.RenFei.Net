@@ -141,6 +141,12 @@ public class BaseController extends BaseClass {
         //添加全局菜单
         List<MenuVO> menuVOS = ejbGenerator.convert(menuService.getAllHeadMenu(), MenuVO.class);
         List<MenuVO> topNavVOS = ejbGenerator.convert(menuService.getTopNavMenu(), MenuVO.class);
+        for (MenuVO menu : menuVOS
+        ) {
+            if (menu.getMenuLink().startsWith("/")) {
+                menu.setMenuLink(domain + menu.getMenuLink());
+            }
+        }
         headerVO.setMenuVOS(menuVOS);
         headerVO.setTopNavVOS(topNavVOS);
         mv.addObject(HEADER_KEY, headerVO);

@@ -36,9 +36,20 @@ public class PostsService extends BaseService {
      * @return
      */
     public PostsListDTO getAllPosts(String pages, String rows) {
+        return getAllPosts(pages, rows, "page_rank,release_time DESC");
+    }
+
+    /**
+     * 获取文章列表
+     *
+     * @param pages 页码
+     * @param rows  每页容量
+     * @return
+     */
+    public PostsListDTO getAllPosts(String pages, String rows, String orderBy) {
         int intPage = convertPage(pages), intRows = convertRows(rows);
         PostsDOExample postsDOExample = new PostsDOExample();
-        postsDOExample.setOrderByClause("page_rank,release_time DESC");
+        postsDOExample.setOrderByClause(orderBy);
         postsDOExample
                 .createCriteria()
                 .andIsDeleteEqualTo(false)
