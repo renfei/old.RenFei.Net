@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.renfei.dao.persistences.MovieDOMapper">
+  <resultMap id="BaseResultMap" type="net.renfei.dao.entity.MovieDO">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="category_id" jdbcType="BIGINT" property="categoryId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="region" jdbcType="VARCHAR" property="region" />
+    <result column="years" jdbcType="INTEGER" property="years" />
+    <result column="director" jdbcType="VARCHAR" property="director" />
+    <result column="lead" jdbcType="VARCHAR" property="lead" />
+    <result column="views" jdbcType="BIGINT" property="views" />
+    <result column="score" jdbcType="DOUBLE" property="score" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="net.renfei.dao.entity.MovieDOWithBLOBs">
+    <result column="featured_image" jdbcType="LONGVARCHAR" property="featuredImage" />
+    <result column="synopsis" jdbcType="LONGVARCHAR" property="synopsis" />
+    <result column="resource" jdbcType="LONGVARCHAR" property="resource" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, category_id, name, region, years, director, lead, views, score, update_time
+  </sql>
+  <sql id="Blob_Column_List">
+    featured_image, synopsis, resource
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="net.renfei.dao.entity.MovieDOExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_movie
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="net.renfei.dao.entity.MovieDOExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_movie
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_movie
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_movie
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="net.renfei.dao.entity.MovieDOExample">
+    delete from t_movie
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="net.renfei.dao.entity.MovieDOWithBLOBs">
+    insert into t_movie (id, category_id, name, 
+      region, years, director, 
+      lead, views, score, update_time, 
+      featured_image, synopsis, resource
+      )
+    values (#{id,jdbcType=BIGINT}, #{categoryId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, 
+      #{region,jdbcType=VARCHAR}, #{years,jdbcType=INTEGER}, #{director,jdbcType=VARCHAR}, 
+      #{lead,jdbcType=VARCHAR}, #{views,jdbcType=BIGINT}, #{score,jdbcType=DOUBLE}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{featuredImage,jdbcType=LONGVARCHAR}, #{synopsis,jdbcType=LONGVARCHAR}, #{resource,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="net.renfei.dao.entity.MovieDOWithBLOBs">
+    insert into t_movie
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="categoryId != null">
+        category_id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="region != null">
+        region,
+      </if>
+      <if test="years != null">
+        years,
+      </if>
+      <if test="director != null">
+        director,
+      </if>
+      <if test="lead != null">
+        lead,
+      </if>
+      <if test="views != null">
+        views,
+      </if>
+      <if test="score != null">
+        score,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="featuredImage != null">
+        featured_image,
+      </if>
+      <if test="synopsis != null">
+        synopsis,
+      </if>
+      <if test="resource != null">
+        resource,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="categoryId != null">
+        #{categoryId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="region != null">
+        #{region,jdbcType=VARCHAR},
+      </if>
+      <if test="years != null">
+        #{years,jdbcType=INTEGER},
+      </if>
+      <if test="director != null">
+        #{director,jdbcType=VARCHAR},
+      </if>
+      <if test="lead != null">
+        #{lead,jdbcType=VARCHAR},
+      </if>
+      <if test="views != null">
+        #{views,jdbcType=BIGINT},
+      </if>
+      <if test="score != null">
+        #{score,jdbcType=DOUBLE},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="featuredImage != null">
+        #{featuredImage,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="synopsis != null">
+        #{synopsis,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="resource != null">
+        #{resource,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="net.renfei.dao.entity.MovieDOExample" resultType="java.lang.Long">
+    select count(*) from t_movie
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_movie
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.categoryId != null">
+        category_id = #{record.categoryId,jdbcType=BIGINT},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.region != null">
+        region = #{record.region,jdbcType=VARCHAR},
+      </if>
+      <if test="record.years != null">
+        years = #{record.years,jdbcType=INTEGER},
+      </if>
+      <if test="record.director != null">
+        director = #{record.director,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lead != null">
+        lead = #{record.lead,jdbcType=VARCHAR},
+      </if>
+      <if test="record.views != null">
+        views = #{record.views,jdbcType=BIGINT},
+      </if>
+      <if test="record.score != null">
+        score = #{record.score,jdbcType=DOUBLE},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.featuredImage != null">
+        featured_image = #{record.featuredImage,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.synopsis != null">
+        synopsis = #{record.synopsis,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.resource != null">
+        resource = #{record.resource,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update t_movie
+    set id = #{record.id,jdbcType=BIGINT},
+      category_id = #{record.categoryId,jdbcType=BIGINT},
+      name = #{record.name,jdbcType=VARCHAR},
+      region = #{record.region,jdbcType=VARCHAR},
+      years = #{record.years,jdbcType=INTEGER},
+      director = #{record.director,jdbcType=VARCHAR},
+      lead = #{record.lead,jdbcType=VARCHAR},
+      views = #{record.views,jdbcType=BIGINT},
+      score = #{record.score,jdbcType=DOUBLE},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      featured_image = #{record.featuredImage,jdbcType=LONGVARCHAR},
+      synopsis = #{record.synopsis,jdbcType=LONGVARCHAR},
+      resource = #{record.resource,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_movie
+    set id = #{record.id,jdbcType=BIGINT},
+      category_id = #{record.categoryId,jdbcType=BIGINT},
+      name = #{record.name,jdbcType=VARCHAR},
+      region = #{record.region,jdbcType=VARCHAR},
+      years = #{record.years,jdbcType=INTEGER},
+      director = #{record.director,jdbcType=VARCHAR},
+      lead = #{record.lead,jdbcType=VARCHAR},
+      views = #{record.views,jdbcType=BIGINT},
+      score = #{record.score,jdbcType=DOUBLE},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="net.renfei.dao.entity.MovieDOWithBLOBs">
+    update t_movie
+    <set>
+      <if test="categoryId != null">
+        category_id = #{categoryId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="region != null">
+        region = #{region,jdbcType=VARCHAR},
+      </if>
+      <if test="years != null">
+        years = #{years,jdbcType=INTEGER},
+      </if>
+      <if test="director != null">
+        director = #{director,jdbcType=VARCHAR},
+      </if>
+      <if test="lead != null">
+        lead = #{lead,jdbcType=VARCHAR},
+      </if>
+      <if test="views != null">
+        views = #{views,jdbcType=BIGINT},
+      </if>
+      <if test="score != null">
+        score = #{score,jdbcType=DOUBLE},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="featuredImage != null">
+        featured_image = #{featuredImage,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="synopsis != null">
+        synopsis = #{synopsis,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="resource != null">
+        resource = #{resource,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="net.renfei.dao.entity.MovieDOWithBLOBs">
+    update t_movie
+    set category_id = #{categoryId,jdbcType=BIGINT},
+      name = #{name,jdbcType=VARCHAR},
+      region = #{region,jdbcType=VARCHAR},
+      years = #{years,jdbcType=INTEGER},
+      director = #{director,jdbcType=VARCHAR},
+      lead = #{lead,jdbcType=VARCHAR},
+      views = #{views,jdbcType=BIGINT},
+      score = #{score,jdbcType=DOUBLE},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      featured_image = #{featuredImage,jdbcType=LONGVARCHAR},
+      synopsis = #{synopsis,jdbcType=LONGVARCHAR},
+      resource = #{resource,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="net.renfei.dao.entity.MovieDO">
+    update t_movie
+    set category_id = #{categoryId,jdbcType=BIGINT},
+      name = #{name,jdbcType=VARCHAR},
+      region = #{region,jdbcType=VARCHAR},
+      years = #{years,jdbcType=INTEGER},
+      director = #{director,jdbcType=VARCHAR},
+      lead = #{lead,jdbcType=VARCHAR},
+      views = #{views,jdbcType=BIGINT},
+      score = #{score,jdbcType=DOUBLE},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

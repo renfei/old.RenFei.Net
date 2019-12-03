@@ -5,6 +5,8 @@ import net.renfei.core.entity.CommentDTO;
 import net.renfei.core.service.CategorService;
 import net.renfei.core.service.CommentsService;
 import net.renfei.dao.entity.PostsDOWithBLOBs;
+import net.renfei.dao.entity.TagDO;
+import net.renfei.dao.entity.TagRelationDO;
 import net.renfei.web.baseclass.BaseController;
 import net.renfei.core.entity.PostsDTO;
 import net.renfei.core.entity.PostsListDTO;
@@ -57,6 +59,43 @@ public class PostsController extends BaseController {
     }
 
     /**
+     * 根据标签获取所有文章列表
+     *
+     * @param page 页码
+     * @return
+     */
+    @RequestMapping("tag/{enName}")
+    public ModelAndView getAllPostsListByTag(@RequestParam(value = "page", required = false) String page,
+                                             @PathVariable("enName") String enName,
+                                             ModelAndView mv) throws NoHandlerFoundException {
+        List<TagDO> tagDOS = tagService.getTagByEnName(enName);
+        if (tagDOS == null || tagDOS.size() < 1) {
+            throwNoHandlerFoundException();
+        }
+        List<TagRelationDO> tagRelationDOS = tagService.getTagRelationByEnName(enName, 1L);
+        if (tagRelationDOS == null || tagRelationDOS.size() < 1) {
+            throwNoHandlerFoundException();
+        }
+        PostsListDTO postsListDTO = postsService.getAllPostsByTag(page, "10", enName);
+        if (postsListDTO == null || postsListDTO.getCount() < 1) {
+            throwNoHandlerFoundException();
+        }
+        List<PostsVO> postsVOList = new ArrayList<>();
+        for (PostsDOWithBLOBs post : postsListDTO.getPostsList()
+        ) {
+            PostsVO postsVO = ejbGenerator.convert(post, PostsVO.class);
+            setInfo(postsVO);
+            postsVOList.add(postsVO);
+        }
+        mv.addObject("postsVOList", postsVOList);
+        setHead(mv, "Tag:" + tagDOS.get(0).getZhName() + " - Posts", "The RenFei Blog");
+        setPagination(mv, page, postsListDTO.getCount(), "/posts/tag/" + enName + "?page=");
+        setSidebarByPost(mv, null);
+        mv.setViewName("posts/list");
+        return mv;
+    }
+
+    /**
      * 根据文章ID获取文章详情
      *
      * @param id
@@ -64,12 +103,12 @@ public class PostsController extends BaseController {
      */
     @RequestMapping("{id}")
     public ModelAndView getPostsByID(@PathVariable("id") String id, ModelAndView mv) throws NoHandlerFoundException {
-        PostsDTO postsDTO = postsService.getPostsByID(id);
+        PostsDTO postsDTO = postsService.getPostsByID(id, true);
         if (postsDTO != null) {
             PostsVO postsVO = ejbGenerator.convert(postsDTO, PostsVO.class);
             setInfo(postsVO);
             mv.addObject("postsVO", postsVO);
-            setHead(mv, postsVO.getTitle() +" - Posts", postsVO.getDescribes());
+            setHead(mv, postsVO.getTitle() + " - Posts", postsVO.getDescribes());
             if (postsVO.getContent().indexOf("code class=") != -1) {
                 //检测到有代码显示，需要增加代码高亮插件
                 setHighlightJS(mv);
@@ -78,6 +117,8 @@ public class PostsController extends BaseController {
             //查询评论
             setComment(mv, 1L, postsDTO.getId());
             setSidebarByPost(mv, postsDTO.getId().toString());
+            //获得相关文章
+            mv.addObject("related", postsService.getRelated(id));
         } else {
             throwNoHandlerFoundException();
         }

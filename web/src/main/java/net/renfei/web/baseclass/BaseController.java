@@ -3,6 +3,7 @@ package net.renfei.web.baseclass;
 import net.renfei.core.baseclass.BaseClass;
 import net.renfei.core.entity.*;
 import net.renfei.core.service.*;
+import net.renfei.dao.entity.TagDOExtend;
 import net.renfei.web.entity.*;
 import net.renfei.web.service.PaginationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,6 +73,14 @@ public class BaseController extends BaseClass {
     protected IpService ipService;
     @Autowired
     protected MailService mailService;
+    @Autowired
+    protected LibraryService libraryService;
+    @Autowired
+    protected MoviesService moviesService;
+    @Autowired
+    protected TagService tagService;
+    @Autowired
+    protected QuartzService quartzService;
 
     /**
      * 线程绑定Request对象
@@ -132,6 +141,12 @@ public class BaseController extends BaseClass {
         //添加全局菜单
         List<MenuVO> menuVOS = ejbGenerator.convert(menuService.getAllHeadMenu(), MenuVO.class);
         List<MenuVO> topNavVOS = ejbGenerator.convert(menuService.getTopNavMenu(), MenuVO.class);
+        for (MenuVO menu : menuVOS
+        ) {
+            if (menu.getMenuLink().startsWith("/")) {
+                menu.setMenuLink(domain + menu.getMenuLink());
+            }
+        }
         headerVO.setMenuVOS(menuVOS);
         headerVO.setTopNavVOS(topNavVOS);
         mv.addObject(HEADER_KEY, headerVO);
@@ -289,7 +304,7 @@ public class BaseController extends BaseClass {
     protected void setSidebarByPost(ModelAndView mv, String id) {
         SidebarVO sidebarVO = new SidebarVO();
         List<CategoryDTO> categoryDTOS = categorService.getAllCategoryByType(1L);
-        PostsDTO postsDTO = postsService.getPostsByID(id);
+        PostsDTO postsDTO = postsService.getPostsByID(id, false);
         if (categoryDTOS != null && categoryDTOS.size() > 0) {
             List<CategoriesVo> categories = new ArrayList<>();
             for (CategoryDTO c : categoryDTOS
@@ -307,7 +322,8 @@ public class BaseController extends BaseClass {
             }
             sidebarVO.setCategories(categories);
         }
-        //[TODO]标签类
+        //标签类
+        sidebarVO.setTags(tagService.getAllTagDOExtend());
         sidebarVO.setStaticdomain(staticdomain);
         mv.addObject(SIDEBAR_KEY, sidebarVO);
     }

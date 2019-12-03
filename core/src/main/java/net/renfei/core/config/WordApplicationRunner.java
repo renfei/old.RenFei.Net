@@ -1,5 +1,6 @@
 package net.renfei.core.config;
 
+import net.renfei.core.service.QuartzService;
 import net.renfei.core.service.WordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
@@ -12,10 +13,14 @@ import org.springframework.stereotype.Component;
 public class WordApplicationRunner implements ApplicationRunner {
     @Autowired
     private WordService wordService;
+    @Autowired
+    private QuartzService quartzService;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
         //第一次启动需要调用一下分词服务，让分词字典加载，避免后续调用响应时间过大
 //        wordService.getWords("第一次启动需要调用一下分词服务，让分词字典加载");
+        //启动所有定时任务
+        quartzService.startJobs();
     }
 }

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/head::head(${head})">
+</head>
+<body>
+<header th:replace="layout/header::header(${header})"></header>
+<section id="blog-details" class="padding-top">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-sm-4">
+                <img th:src="${movieDOWithBLOBs.featuredImage}" class="img-responsive"
+                     th:alt="${movieDOWithBLOBs.name}">
+            </div>
+            <div class="col-md-8 col-sm-8">
+                <div class="project-name overflow">
+                    <h2 class="bold" th:text="${movieDOWithBLOBs.name}">Sailing Vivamus </h2>
+                    <ul class="nav navbar-nav navbar-default">
+                        <li><a th:text="${'年代：'+movieDOWithBLOBs.years}"></a></li>
+                        <li><a th:text="${'地区：'+movieDOWithBLOBs.region}"></a></li>
+                    </ul>
+                </div>
+                <div class="project-info overflow">
+                    <h3>剧情简介</h3>
+                    <p th:text="${movieDOWithBLOBs.synopsis}"></p>
+                </div>
+                <div class="skills overflow">
+                    <h3>导演:</h3>
+                    <ul class="nav navbar-nav navbar-default">
+                        <li><a th:text="${movieDOWithBLOBs.director}"></a></li>
+                    </ul>
+                </div>
+                <div class="client overflow">
+                    <h3>主演:</h3>
+                    <ul class="nav navbar-nav navbar-default">
+                        <li><a th:text="${movieDOWithBLOBs.lead}"></li>
+                    </ul>
+                </div>
+                <div class="live-preview">
+                    <a href="#play" class="btn btn-common uppercase">观看</a>
+                </div>
+            </div>
+        </div>
+        <div id="play" class="row" style="margin-top: 30px;margin-bottom: 30px;">
+            <iframe class="col-sm-12" frameborder="0" allowfullscreen="true" width="100%" height="450px"
+                    th:src="${movieDOWithBLOBs.resource}"></iframe>
+        </div>
+        <div class="row">
+            <h1 class="title text-center wow fadeInDown" data-wow-duration="500ms" data-wow-delay="300ms">Same Main
+                Actor</h1>
+            <p class="text-center wow fadeInDown" data-wow-duration="400ms" data-wow-delay="400ms">同一主演的其他相关电影 </p>
+            <div id="team-carousel" class="carousel slide wow fadeIn" data-ride="carousel" data-wow-duration="400ms"
+                 data-wow-delay="400ms" style="margin-bottom: 30px;">
+                <!-- Indicators -->
+                <ol class="carousel-indicators visible-xs"
+                    th:if="${movieSameMainActorVO!=null&&movieSameMainActorVO.movieDOWithBLOBs.size()>0}">
+                    <li th:each="movieSameMainActor,movieSameMainActorStat:${movieSameMainActorVO.movieDOWithBLOBs}"
+                        data-target="#team-carousel" th:data-slide-to="${movieSameMainActorStat.index}"
+                        th:class="${movieSameMainActorStat.index==0?'active':''}"></li>
+                </ol>
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner"
+                     th:if="${movieSameMainActorVO!=null&&movieSameMainActorVO.movieDOWithBLOBs.size()>0}">
+                    <div th:each="movieSameMainActor,movieSameMainActorStat:${movieSameMainActorVO.movieDOWithBLOBs}"
+                         th:class="${movieSameMainActorStat.index==0?'item active':'item'}">
+                        <div th:if="${movieSameMainActor!=null&&movieSameMainActor.size()>0}"
+                             th:each="movieMain:${movieSameMainActor}"
+                             class="col-sm-3 col-xs-6">
+                            <div class="team-single-wrapper">
+                                <div class="team-single">
+                                    <a th:href="${'/movie/view/'+movieMain.id}" target="_blank">
+                                        <div class="portfolio-thumb">
+                                            <img th:src="${movieMain.featuredImage}" class="img-responsive"
+                                                 th:alt="${movieMain.name}">
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="person-info">
+                                    <h3 style="overflow:hidden;height: 20px;" th:text="${movieMain.name}"></h3>
+                                    <div style="height: 42px;overflow:hidden;" th:text="${movieMain.synopsis}"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="clear: both;"></div>
+                    </div>
+                    <div style="clear: both;"></div>
+                </div>
+                <div style="clear: both;"></div>
+                <!-- Controls -->
+                <a class="left team-carousel-control hidden-xs" href="#team-carousel" data-slide="prev">left</a>
+                <a class="right team-carousel-control hidden-xs" href="#team-carousel" data-slide="next">right</a>
+            </div>
+        </div>
+    </div>
+</section>
+<footer th:replace="layout/footer::footer(${footer},${performance})"></footer>
+<script>
+</script>
+</body>
+</html>

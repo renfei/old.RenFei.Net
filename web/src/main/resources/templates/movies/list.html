@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/head::head(${head})">
+</head>
+<body>
+<header th:replace="layout/header::header(${header})"></header>
+<section id="page-breadcrumb">
+    <div class="vertical-center sun">
+        <div class="container">
+            <div class="row">
+                <div class="action">
+                    <div class="col-sm-12">
+                        <h1 class="title">Movies</h1>
+                        <p>这里收藏着我爱看的电影，如果不知道看些什么不妨来我这里度过休闲的时光</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="blog" class="padding-top">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 col-sm-4">
+                <div class="sidebar portfolio-sidebar">
+                    <div class="sidebar-item categories">
+                        <h3>Movie Classification</h3>
+                        <ul th:if="${movieClassificationDTOS!=null}" class="nav navbar-stacked">
+                            <li th:each="movieClass:${movieClassificationDTOS}"
+                                th:class="${movieClassName==movieClass.enName?'active':''}">
+                                <a th:href="${'/movie/cat/'+movieClass.enName}"
+                                   th:utext="${movieClass.zhName}+'<span class=\'pull-right\'\>('+${movieClass.countMovie}+')</span>'"></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9 col-sm-8">
+                <div class="row">
+
+                    <div th:if="${moviesListDTO.movieDOList!=null}" th:each="movie:${moviesListDTO.movieDOList}"
+                         class="col-xs-6 col-sm-6 col-md-4 portfolio-item branded logos">
+                        <div class="portfolio-wrapper">
+                            <div class="portfolio-single">
+                                <a th:href="${'/movie/view/'+movie.id}" target="_blank">
+                                    <div class="portfolio-thumb">
+                                        <img th:src="${movie.featuredImage}" class="img-responsive"
+                                             th:alt="${movie.name}">
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="portfolio-info ">
+                                <h2 style="overflow:hidden;height: 20px;" th:text="${movie.name}"></h2>
+                                <div style="height: 42px;overflow:hidden;" th:text="${movie.synopsis}"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                    <div class="portfolio-pagination">
+                        <div th:replace="layout/pagination::pagination(${pagination})"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<footer th:replace="layout/footer::footer(${footer},${performance})"></footer>
+</body>
+</html>

@@ -1,6 +1,7 @@
 package net.renfei.web.entity;
 
 import lombok.Data;
+import net.renfei.dao.entity.TagDOExtend;
 
 import java.util.List;
 
@@ -8,6 +9,6 @@ import java.util.List;
 public class SidebarVO {
     private ITellYou iTellYou;
     private List<CategoriesVo> categories;
-    private List<String> tags;
+    private List<TagDOExtend> tags;
     private String staticdomain;
 }

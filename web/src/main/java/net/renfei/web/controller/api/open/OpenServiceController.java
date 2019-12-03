@@ -8,10 +8,11 @@ import net.renfei.core.service.IpService;
 import net.renfei.web.baseclass.BaseRestController;
 import net.renfei.web.entity.APIResult;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/open")
@@ -47,5 +48,48 @@ public class OpenServiceController extends BaseRestController {
     )
     public net.renfei.core.entity.APIResult getDomainDigTrace(@PathVariable(value = "domain") String domain) {
         return domainNameService.execDigTrace(domain);
+    }
+
+    @GetMapping("/uuid")
+    @ApiOperation(
+            value = "UUID/GUID 生成接口",
+            notes = "批量生成 UUID/GUID",
+            tags = "Open API Service"
+    )
+    public APIResult getUUID(@RequestParam(value = "quantity", required = false) String quantity,
+                             @RequestParam(value = "upperCase", required = false) Boolean upperCase,
+                             @RequestParam(value = "hyphen", required = false) Boolean hyphen) {
+        Long lQuantity = 0L;
+        if (stringUtil.isEmpty(quantity)) {
+            quantity = "1";
+        }
+        try {
+            lQuantity = Long.parseLong(quantity);
+        } catch (NumberFormatException nfe) {
+            return APIResult.fillResult(false, "数量(quantity)传入异常");
+        }
+        if (lQuantity <= 0) {
+            return APIResult.fillResult(false, "数量(quantity)传入异常");
+        }
+        if (upperCase == null) {
+            upperCase = true;
+        }
+        if (hyphen == null) {
+            hyphen = true;
+        }
+        List<String> stringUUID = new ArrayList<>();
+        for (; lQuantity > 0; lQuantity--) {
+            String uuid = UUID.randomUUID().toString();
+            if (upperCase) {
+                uuid = uuid.toUpperCase();
+            } else {
+                uuid = uuid.toLowerCase();
+            }
+            if (!hyphen) {
+                uuid = uuid.replace("-", "");
+            }
+            stringUUID.add(uuid);
+        }
+        return APIResult.fillResult(true, "", stringUUID);
     }
 }

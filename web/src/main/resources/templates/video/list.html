@@ -38,7 +38,7 @@
                             </div>
                             <div class="post-content overflow">
                                 <h2 class="post-title bold"><a th:href="${domain}+'/video/'+${info.id}" th:text="${info.title}">Advanced business cards design</a></h2>
-                                <h3 class="post-author"><a href="#" th:text="${#dates.format(info.releaseTime,'EEE, dd MMM HH:mm:ss')+' GMT+8 '+#dates.format(info.releaseTime,'yyyy')}"></a></h3>
+                                <h3 class="post-author"><a href="#" th:text="${#dates.format(info.releaseTime,'yyyy-MM-dd HH:mm:ss')}"></a></h3>
                                 <p th:text="${#strings.abbreviate(info.describes,150)}"></p>
                                 <a th:href="${domain}+'/video/'+${info.id}">View More</a>
                                 <div class="post-bottom overflow">

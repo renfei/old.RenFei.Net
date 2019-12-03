@@ -7,6 +7,7 @@ import net.renfei.core.entity.CommentDTO;
 import net.renfei.core.entity.PostsDTO;
 import net.renfei.core.entity.TypeDTO;
 import net.renfei.core.entity.VideoDTO;
+import net.renfei.core.service.aliyun.AliyunGreen;
 import net.renfei.dao.entity.CommentDOExample;
 import net.renfei.dao.entity.CommentDOWithBLOBs;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,14 +30,27 @@ public class CommentsService extends BaseService {
     private PostsService postsService;
     @Autowired
     private VideoService videoService;
+    @Autowired
+    private AliyunGreen aliyunGreen;
 
     public int submi(CommentDTO comment) {
-        //[TODO]核验检查评论内容
-        int i = commentDOMapper.insertSelective(ejbGenerator.convert(comment, CommentDOWithBLOBs.class));
+        CommentDOWithBLOBs commentDOWithBLOBs = ejbGenerator.convert(comment, CommentDOWithBLOBs.class);
+        commentDOWithBLOBs.setIsDelete(true);
+        //核验检查评论内容
+        audit(commentDOWithBLOBs);
+        int i = commentDOMapper.insertSelective(commentDOWithBLOBs);
         if (i > 0) {
             sendNotify(comment);
         }
         return i;
+    }
+
+    public void audit(CommentDOWithBLOBs commentDOWithBLOBs) {
+        if (aliyunGreen.textScan(commentDOWithBLOBs.getContent())) {
+            commentDOWithBLOBs.setIsDelete(false);
+        } else {
+            commentDOWithBLOBs.setIsDelete(true);
+        }
     }
 
     public CommentDTO getCommentByID(Long id) {
@@ -56,6 +70,7 @@ public class CommentsService extends BaseService {
         commentDOExample.createCriteria()
                 .andTypeIdEqualTo(typeid)
                 .andTargetIdEqualTo(id)
+                .andIsDeleteEqualTo(false)
                 .andParentIdIsNull();
         List<CommentDTO> commentDTOS = ejbGenerator.convert(commentDOMapper.selectByExampleWithBLOBs(commentDOExample), CommentDTO.class);
         getCommentByParentID(commentDTOS);
@@ -117,7 +132,7 @@ public class CommentsService extends BaseService {
         link += typeDTO.getUriPath() + "/" + comment.getTargetId();
         switch (typeDTO.getTypeName()) {
             case "Posts":
-                PostsDTO postsDTO = postsService.getPostsByID(comment.getTargetId().toString());
+                PostsDTO postsDTO = postsService.getPostsByID(comment.getTargetId().toString(), false);
                 stringList.add("回顾：<a href=\"" + link + "\">" + postsDTO.getTitle() + "</a>");
                 break;
             case "Video":
