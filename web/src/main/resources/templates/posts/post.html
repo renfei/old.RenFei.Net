@@ -53,17 +53,19 @@
                                 <div class="sidebar blog-sidebar" th:if="${related!=null}">
                                     <div class="sidebar-item  recent">
                                         <h3>Related Posts</h3>
-                                        <div class="col-md-6">
-                                            <div class="media" th:each="rel,relStat:${related.postsList}" th:if="${relStat.index<5}">
-                                                <div class="media-body">
-                                                    <h4 style="white-space: nowrap;"><a th:href="${domain+'/posts/'+rel.id}" th:text="${rel.title}"></a></h4>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="media" th:each="rel,relStat:${related.postsList}" th:if="${relStat.index<5}">
+                                                    <div class="media-body">
+                                                        <h4 style="white-space: nowrap;"><a th:href="${domain+'/posts/'+rel.id}" th:text="${rel.title}"></a></h4>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="media" th:each="rel,relStat:${related.postsList}" th:if="${relStat.index>4}">
-                                                <div class="media-body">
-                                                    <h4 style="white-space: nowrap;"><a th:href="${domain+'/posts/'+rel.id}" th:text="${rel.title}"></a></h4>
+                                            <div class="col-md-6">
+                                                <div class="media" th:each="rel,relStat:${related.postsList}" th:if="${relStat.index>4}">
+                                                    <div class="media-body">
+                                                        <h4 style="white-space: nowrap;"><a th:href="${domain+'/posts/'+rel.id}" th:text="${rel.title}"></a></h4>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

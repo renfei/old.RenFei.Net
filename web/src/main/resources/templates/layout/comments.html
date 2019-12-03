@@ -2,8 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <body>
         <div class="response-area" th:fragment="comments(typeid,id,comments)">
-            <hr>
             <h2 class="bold">Comments</h2>
+            <ul th:if="${comments!=null}" th:replace="this::child(${comments})"></ul>
+            <hr>
             <form id="main-contact-form" name="contact-form">
                 <div id="comments-reply" style="display: none;padding: 10px; font-size: 14px;">
                     Reply to:
@@ -27,7 +28,6 @@
                     <input type="submit" name="submit" class="btn btn-submit" value="Submit" th:onclick="'return replySubmi('+${typeid}+','+${id}+')'">
                 </div>
             </form>
-            <ul th:if="${comments!=null}" th:replace="this::child(${comments})"></ul>
         </div>
         <!--递归的代码块-->
         <th:block th:fragment="child(ul)">
