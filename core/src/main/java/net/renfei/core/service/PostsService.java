@@ -36,7 +36,7 @@ public class PostsService extends BaseService {
      * @return
      */
     public PostsListDTO getAllPosts(String pages, String rows) {
-        return getAllPosts(pages, rows, "page_rank,release_time DESC");
+        return getAllPosts(pages, rows, "page_rank DESC,release_time DESC");
     }
 
     /**
@@ -75,7 +75,7 @@ public class PostsService extends BaseService {
             }
             int intPage = convertPage(pages), intRows = convertRows(rows);
             PostsDOExample postsDOExample = new PostsDOExample();
-            postsDOExample.setOrderByClause("page_rank,release_time DESC");
+            postsDOExample.setOrderByClause("page_rank DESC,release_time DESC");
             postsDOExample
                     .createCriteria()
                     .andIsDeleteEqualTo(false)
@@ -125,7 +125,7 @@ public class PostsService extends BaseService {
                 //3、根据文章ID获得所有文章
                 postsDOExample = new PostsDOExample();
                 postsDOExample.setDistinct(true);
-                postsDOExample.setOrderByClause("page_rank,release_time DESC");
+                postsDOExample.setOrderByClause("page_rank DESC,release_time DESC");
                 postsDOExample.createCriteria()
                         .andIdIn(ids)
                         .andIsDeleteEqualTo(false)
@@ -163,7 +163,7 @@ public class PostsService extends BaseService {
     public PostsListDTO getAllPostsByCatID(Long catID, String pages, String rows) {
         int intPage = convertPage(pages), intRows = convertRows(rows);
         PostsDOExample postsDOExample = new PostsDOExample();
-        postsDOExample.setOrderByClause("page_rank,release_time DESC");
+        postsDOExample.setOrderByClause("page_rank DESC,release_time DESC");
         postsDOExample
                 .createCriteria()
                 .andIsDeleteEqualTo(false)
