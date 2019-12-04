@@ -15,4 +15,8 @@ public class RenFeiConfig {
     private String GREEN_REGION_ID;
     private String ALIYUN_ACCESS_KEY_ID;
     private String ALIYUN_ACCESS_KEY_SECRET;
+    private String BAIDU_ZIYUAN_SITE;
+    private String BAIDU_ZIYUAN_TOKEN;
+    private String BAIDU_ZIYUAN_MOBILE_APPID;
+    private String BAIDU_ZIYUAN_MOBILE_TOKEN;
 }
