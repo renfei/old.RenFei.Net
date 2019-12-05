@@ -10,6 +10,7 @@ import java.util.List;
 public class PageHeadVO {
     private String sitename;
     private String description;
+    private String keywords;
     private List<String> css;
     private List<String> jss;
     private String script;

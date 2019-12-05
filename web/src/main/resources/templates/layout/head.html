@@ -4,7 +4,8 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title th:text="${head.sitename}"></title>
-        <meta name="description" th:content="${head.description}">
+        <meta name="description" th:if="${head.description!=null}" th:content="${head.description}">
+        <meta name="keywords" th:if="${head.keywords!=null}" th:content="${head.keywords}">
         <meta name="og:title" th:content="${head.sitename}">
         <meta name="og:description" th:content="${head.description}">
         <meta name="twitter:title" th:content="${head.sitename}">

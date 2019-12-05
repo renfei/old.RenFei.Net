@@ -112,7 +112,8 @@ jQuery(function($) {'use strict';
 
 });
 
-
+console.log("\n %c RENFEI.NET %c 你知道的太多了 %c \n","color: #fff; background: #3274ff; padding:5px 0; border: 1px solid #3274ff;","color: #3274ff; background: #fff; padding:5px 0; border: 1px solid #3274ff;","");
+console.log("\n %c 开发交流QQ群 %c 130832168 %c \n","color: #fff; background: #eb0; padding:5px 0; border: 1px solid #eb0;","color: #eb0; background: #fff; padding:5px 0; border: 1px solid #eb0;","");
 
 function cancelReply() {
     $("#reply").val(undefined);

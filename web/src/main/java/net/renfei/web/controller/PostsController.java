@@ -51,7 +51,9 @@ public class PostsController extends BaseController {
             postsVOList.add(postsVO);
         }
         mv.addObject("postsVOList", postsVOList);
-        setHead(mv, "Posts", "The RenFei Blog");
+        setHead(mv, "Posts",
+                "任霏的个人博客，分享关注软件开发技术，推动并帮助开发者通过互联网获得知识，从而让更多开发者从中受益。",
+                "任霏,RenFei,NeilRen,个人,博客,blog,开发,技术,posts");
         setPagination(mv, page, postsListDTO.getCount(), "/posts?page=");
         setSidebarByPost(mv, null);
         mv.setViewName("posts/list");
@@ -88,7 +90,9 @@ public class PostsController extends BaseController {
             postsVOList.add(postsVO);
         }
         mv.addObject("postsVOList", postsVOList);
-        setHead(mv, "Tag:" + tagDOS.get(0).getZhName() + " - Posts", "The RenFei Blog");
+        setHead(mv, "Tag:" + tagDOS.get(0).getZhName() + " - Posts",
+                "博客文章标签分类：" + tagDOS.get(0).getZhName() + "。共同类型的文章在这里聚合等待您的查阅。",
+                tagDOS.get(0).getZhName() + ",博客,blog,开发,技术,posts");
         setPagination(mv, page, postsListDTO.getCount(), "/posts/tag/" + enName + "?page=");
         setSidebarByPost(mv, null);
         mv.setViewName("posts/list");
@@ -108,7 +112,8 @@ public class PostsController extends BaseController {
             PostsVO postsVO = ejbGenerator.convert(postsDTO, PostsVO.class);
             setInfo(postsVO);
             mv.addObject("postsVO", postsVO);
-            setHead(mv, postsVO.getTitle() + " - Posts", postsVO.getDescribes());
+            setHead(mv, postsVO.getTitle() + " - Posts", postsVO.getDescribes(),
+                    postsVO.getKeyword());
             if (postsVO.getContent().indexOf("code class=") != -1) {
                 //检测到有代码显示，需要增加代码高亮插件
                 setHighlightJS(mv);

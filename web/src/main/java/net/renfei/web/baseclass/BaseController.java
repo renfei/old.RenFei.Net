@@ -170,9 +170,14 @@ public class BaseController extends BaseClass {
     }
 
     protected void setHead(ModelAndView mv, String title, String description) {
+        setHead(mv, title, description, null);
+    }
+
+    protected void setHead(ModelAndView mv, String title, String description, String keywords) {
         PageHeadVO pageHeadVO = getHead(mv);
         pageHeadVO.setSitename(title + " - " + siteName);
         pageHeadVO.setDescription(description);
+        pageHeadVO.setKeywords(keywords);
         mv.addObject(HEAD_KEY, pageHeadVO);
     }
 
