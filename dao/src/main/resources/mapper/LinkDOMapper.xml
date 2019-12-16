@@ -5,10 +5,18 @@
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="is_delete" jdbcType="BIT" property="isDelete" />
     <result column="addtime" jdbcType="TIMESTAMP" property="addtime" />
+    <result column="audit_pass" jdbcType="BIT" property="auditPass" />
+    <result column="link_type" jdbcType="INTEGER" property="linkType" />
+    <result column="contact_email" jdbcType="VARCHAR" property="contactEmail" />
+    <result column="contact_qq" jdbcType="VARCHAR" property="contactQq" />
+    <result column="order_id" jdbcType="INTEGER" property="orderId" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="net.renfei.dao.entity.LinkDOWithBLOBs">
     <result column="sitename" jdbcType="LONGVARCHAR" property="sitename" />
     <result column="sitelink" jdbcType="LONGVARCHAR" property="sitelink" />
+    <result column="in_site_link" jdbcType="LONGVARCHAR" property="inSiteLink" />
+    <result column="contact_name" jdbcType="LONGVARCHAR" property="contactName" />
+    <result column="remarks" jdbcType="LONGVARCHAR" property="remarks" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -69,10 +77,10 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, is_delete, addtime
+    id, is_delete, addtime, audit_pass, link_type, contact_email, contact_qq, order_id
   </sql>
   <sql id="Blob_Column_List">
-    sitename, sitelink
+    sitename, sitelink, in_site_link, contact_name, remarks
   </sql>
   <select id="selectByExampleWithBLOBs" parameterType="net.renfei.dao.entity.LinkDOExample" resultMap="ResultMapWithBLOBs">
     select
@@ -124,9 +132,15 @@
   </delete>
   <insert id="insert" parameterType="net.renfei.dao.entity.LinkDOWithBLOBs">
     insert into t_link (id, is_delete, addtime, 
-      sitename, sitelink)
+      audit_pass, link_type, contact_email, 
+      contact_qq, order_id, sitename, 
+      sitelink, in_site_link, contact_name, 
+      remarks)
     values (#{id,jdbcType=BIGINT}, #{isDelete,jdbcType=BIT}, #{addtime,jdbcType=TIMESTAMP}, 
-      #{sitename,jdbcType=LONGVARCHAR}, #{sitelink,jdbcType=LONGVARCHAR})
+      #{auditPass,jdbcType=BIT}, #{linkType,jdbcType=INTEGER}, #{contactEmail,jdbcType=VARCHAR}, 
+      #{contactQq,jdbcType=VARCHAR}, #{orderId,jdbcType=INTEGER}, #{sitename,jdbcType=LONGVARCHAR}, 
+      #{sitelink,jdbcType=LONGVARCHAR}, #{inSiteLink,jdbcType=LONGVARCHAR}, #{contactName,jdbcType=LONGVARCHAR}, 
+      #{remarks,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="net.renfei.dao.entity.LinkDOWithBLOBs">
     insert into t_link
@@ -140,11 +154,35 @@
       <if test="addtime != null">
         addtime,
       </if>
+      <if test="auditPass != null">
+        audit_pass,
+      </if>
+      <if test="linkType != null">
+        link_type,
+      </if>
+      <if test="contactEmail != null">
+        contact_email,
+      </if>
+      <if test="contactQq != null">
+        contact_qq,
+      </if>
+      <if test="orderId != null">
+        order_id,
+      </if>
       <if test="sitename != null">
         sitename,
       </if>
       <if test="sitelink != null">
         sitelink,
+      </if>
+      <if test="inSiteLink != null">
+        in_site_link,
+      </if>
+      <if test="contactName != null">
+        contact_name,
+      </if>
+      <if test="remarks != null">
+        remarks,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -157,11 +195,35 @@
       <if test="addtime != null">
         #{addtime,jdbcType=TIMESTAMP},
       </if>
+      <if test="auditPass != null">
+        #{auditPass,jdbcType=BIT},
+      </if>
+      <if test="linkType != null">
+        #{linkType,jdbcType=INTEGER},
+      </if>
+      <if test="contactEmail != null">
+        #{contactEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="contactQq != null">
+        #{contactQq,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null">
+        #{orderId,jdbcType=INTEGER},
+      </if>
       <if test="sitename != null">
         #{sitename,jdbcType=LONGVARCHAR},
       </if>
       <if test="sitelink != null">
         #{sitelink,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="inSiteLink != null">
+        #{inSiteLink,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="contactName != null">
+        #{contactName,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
@@ -183,11 +245,35 @@
       <if test="record.addtime != null">
         addtime = #{record.addtime,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.auditPass != null">
+        audit_pass = #{record.auditPass,jdbcType=BIT},
+      </if>
+      <if test="record.linkType != null">
+        link_type = #{record.linkType,jdbcType=INTEGER},
+      </if>
+      <if test="record.contactEmail != null">
+        contact_email = #{record.contactEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contactQq != null">
+        contact_qq = #{record.contactQq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderId != null">
+        order_id = #{record.orderId,jdbcType=INTEGER},
+      </if>
       <if test="record.sitename != null">
         sitename = #{record.sitename,jdbcType=LONGVARCHAR},
       </if>
       <if test="record.sitelink != null">
         sitelink = #{record.sitelink,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.inSiteLink != null">
+        in_site_link = #{record.inSiteLink,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.contactName != null">
+        contact_name = #{record.contactName,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.remarks != null">
+        remarks = #{record.remarks,jdbcType=LONGVARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -199,8 +285,16 @@
     set id = #{record.id,jdbcType=BIGINT},
       is_delete = #{record.isDelete,jdbcType=BIT},
       addtime = #{record.addtime,jdbcType=TIMESTAMP},
+      audit_pass = #{record.auditPass,jdbcType=BIT},
+      link_type = #{record.linkType,jdbcType=INTEGER},
+      contact_email = #{record.contactEmail,jdbcType=VARCHAR},
+      contact_qq = #{record.contactQq,jdbcType=VARCHAR},
+      order_id = #{record.orderId,jdbcType=INTEGER},
       sitename = #{record.sitename,jdbcType=LONGVARCHAR},
-      sitelink = #{record.sitelink,jdbcType=LONGVARCHAR}
+      sitelink = #{record.sitelink,jdbcType=LONGVARCHAR},
+      in_site_link = #{record.inSiteLink,jdbcType=LONGVARCHAR},
+      contact_name = #{record.contactName,jdbcType=LONGVARCHAR},
+      remarks = #{record.remarks,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -209,7 +303,12 @@
     update t_link
     set id = #{record.id,jdbcType=BIGINT},
       is_delete = #{record.isDelete,jdbcType=BIT},
-      addtime = #{record.addtime,jdbcType=TIMESTAMP}
+      addtime = #{record.addtime,jdbcType=TIMESTAMP},
+      audit_pass = #{record.auditPass,jdbcType=BIT},
+      link_type = #{record.linkType,jdbcType=INTEGER},
+      contact_email = #{record.contactEmail,jdbcType=VARCHAR},
+      contact_qq = #{record.contactQq,jdbcType=VARCHAR},
+      order_id = #{record.orderId,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -223,11 +322,35 @@
       <if test="addtime != null">
         addtime = #{addtime,jdbcType=TIMESTAMP},
       </if>
+      <if test="auditPass != null">
+        audit_pass = #{auditPass,jdbcType=BIT},
+      </if>
+      <if test="linkType != null">
+        link_type = #{linkType,jdbcType=INTEGER},
+      </if>
+      <if test="contactEmail != null">
+        contact_email = #{contactEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="contactQq != null">
+        contact_qq = #{contactQq,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null">
+        order_id = #{orderId,jdbcType=INTEGER},
+      </if>
       <if test="sitename != null">
         sitename = #{sitename,jdbcType=LONGVARCHAR},
       </if>
       <if test="sitelink != null">
         sitelink = #{sitelink,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="inSiteLink != null">
+        in_site_link = #{inSiteLink,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="contactName != null">
+        contact_name = #{contactName,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="remarks != null">
+        remarks = #{remarks,jdbcType=LONGVARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
@@ -236,14 +359,27 @@
     update t_link
     set is_delete = #{isDelete,jdbcType=BIT},
       addtime = #{addtime,jdbcType=TIMESTAMP},
+      audit_pass = #{auditPass,jdbcType=BIT},
+      link_type = #{linkType,jdbcType=INTEGER},
+      contact_email = #{contactEmail,jdbcType=VARCHAR},
+      contact_qq = #{contactQq,jdbcType=VARCHAR},
+      order_id = #{orderId,jdbcType=INTEGER},
       sitename = #{sitename,jdbcType=LONGVARCHAR},
-      sitelink = #{sitelink,jdbcType=LONGVARCHAR}
+      sitelink = #{sitelink,jdbcType=LONGVARCHAR},
+      in_site_link = #{inSiteLink,jdbcType=LONGVARCHAR},
+      contact_name = #{contactName,jdbcType=LONGVARCHAR},
+      remarks = #{remarks,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="net.renfei.dao.entity.LinkDO">
     update t_link
     set is_delete = #{isDelete,jdbcType=BIT},
-      addtime = #{addtime,jdbcType=TIMESTAMP}
+      addtime = #{addtime,jdbcType=TIMESTAMP},
+      audit_pass = #{auditPass,jdbcType=BIT},
+      link_type = #{linkType,jdbcType=INTEGER},
+      contact_email = #{contactEmail,jdbcType=VARCHAR},
+      contact_qq = #{contactQq,jdbcType=VARCHAR},
+      order_id = #{orderId,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

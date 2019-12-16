@@ -12,6 +12,7 @@ import net.renfei.core.entity.PostsDTO;
 import net.renfei.core.entity.PostsListDTO;
 import net.renfei.web.entity.CategoryVO;
 import net.renfei.web.entity.CommentVO;
+import net.renfei.web.entity.PageHeadVO;
 import net.renfei.web.entity.PostsVO;
 import net.renfei.core.service.PostsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 文章的Controller
@@ -117,6 +119,22 @@ public class PostsController extends BaseController {
             if (postsVO.getContent().indexOf("code class=") != -1) {
                 //检测到有代码显示，需要增加代码高亮插件
                 setHighlightJS(mv);
+            }
+            Map<String, Object> map = mv.getModel();
+            PageHeadVO pageHeadVO = null;
+            Object obj = map.get(HEAD_KEY);
+            if (obj instanceof PageHeadVO) {
+                pageHeadVO = (PageHeadVO) obj;
+            }
+            if (pageHeadVO != null) {
+                List<String> jss = pageHeadVO.getJss();
+                jss.add("//" + staticdomain + "/js/baguetteBox.min.js");
+                pageHeadVO.setJss(jss);
+                List<String> css = pageHeadVO.getCss();
+                css.add("//" + staticdomain + "/css/baguetteBox.min.css");
+                css.add("//" + staticdomain + "/css/gallery-clean.css");
+                pageHeadVO.setCss(css);
+                mv.addObject(HEAD_KEY, pageHeadVO);
             }
             setPostsPageJSCSS(mv);
             //查询评论

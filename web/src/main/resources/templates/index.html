@@ -145,6 +145,9 @@
                 </div>
                 <div class="clients-logo wow fadeIn" data-wow-duration="1000ms" data-wow-delay="600ms">
                     <ul class="flink">
+                        <li>
+                            <a href="/other/friendlink" target="_blank">友情链接申请</a>
+                        </li>
                         <li th:if="${linkDTO!=null}" th:each="link:${linkDTO.links}">
                             <a th:href="${link.sitelink}" th:text="${link.sitename}" target="_blank"></a>
                         </li>

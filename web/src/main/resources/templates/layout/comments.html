@@ -5,6 +5,13 @@
             <h2 class="bold">Comments</h2>
             <ul th:if="${comments!=null}" th:replace="this::child(${comments})"></ul>
             <hr>
+            <div id="comments_success" class="alert alert-success fade in" style="display: none;">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <h4>Submit successfully!</h4>
+                <p>
+                    您的评论已经提交成功！
+                </p>
+            </div>
             <form id="main-contact-form" name="contact-form">
                 <div id="comments-reply" style="display: none;padding: 10px; font-size: 14px;">
                     Reply to:

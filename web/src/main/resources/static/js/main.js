@@ -173,6 +173,8 @@ function replySubmi(typeid, id) {
                 $("#email").val("");
                 $("#link").val("");
                 $("#content").val("");
+                $("#main-contact-form").hide();
+                $("#comments_success").show();
                 cancelReply();
             } else {
                 notice("Fail - 失败", data.message);

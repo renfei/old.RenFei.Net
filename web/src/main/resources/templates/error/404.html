@@ -83,7 +83,7 @@
         if (jsondata != undefined) {
             var num = Math.random() * jsondata.data.length;
             num = parseInt(num, 10);
-            $('#error404img').attr("src", jsondata.data[num].child_pic);
+            $('#error404img').attr("src", jsondata.data[num].child_pic.replace("http://qzone.qq.com/","https://imgcache.qq.com/qzone/v6/portal/"));
             $('#name').html(jsondata.data[num].name);
             $('#sex').html(jsondata.data[num].sex);
             $('#birth_time').html(jsondata.data[num].birth_time);

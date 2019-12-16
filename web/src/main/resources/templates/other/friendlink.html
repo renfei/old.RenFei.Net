@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/head::head(${head})">
+</head>
+<body>
+<header th:replace="layout/header::header(${header})"></header>
+<section id="page-breadcrumb">
+    <div class="vertical-center sun">
+        <div class="container">
+            <div class="row">
+                <div class="action">
+                    <div class="col-sm-12">
+                        <h1 class="title">友情链接申请</h1>
+                        <p>为了与更多建站伙伴互相提高权重和品牌,特开放友情链接申请。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="blog-details">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-sm-12">
+                <h2 class="page-header">申请资质</h2>
+                <div class="post-content overflow">
+                    <h3 class="post-author">申请友情链接前，请先在贵站做上本站的友情链接</h3>
+                    <p>很荣幸能与您相互链接，但您在提交友情链接申请前，请确认您已经符合以下要求：</p>
+                    <ul class="elements">
+                        <li class="wow fadeInUp" data-wow-duration="900ms" data-wow-delay="100ms"><i
+                                class="fa fa-angle-right"></i> 请先在贵网站做好我站的文字友情链接：<a href="https://www.renfei.net"
+                                                                                    target="_blank">任霏博客</a>或者<a
+                                href="https://www.renfei.net" target="_blank">RenFei Blog</a></li>
+                        <li class="wow fadeInUp" data-wow-duration="800ms" data-wow-delay="200ms"><i
+                                class="fa fa-angle-right"></i> 申请链接的网站应美观大方，有一定的内容，且内容健康丰富，并基本建设完成。
+                        </li>
+                        <li class="wow fadeInUp" data-wow-duration="700ms" data-wow-delay="300ms"><i
+                                class="fa fa-angle-right"></i> 您的站点需要已经建站完成六个月以上，并且搜索引擎已经开始收录。
+                        </li>
+                        <li class="wow fadeInUp" data-wow-duration="600ms" data-wow-delay="400ms"><i
+                                class="fa fa-angle-right"></i> 您的网站内容需要有实质性的内容，大量转载和伪原创内容不接受友情链接申请。
+                        </li>
+                        <li class="wow fadeInUp" data-wow-duration="500ms" data-wow-delay="500ms"><i
+                                class="fa fa-angle-right"></i> 您网站的内容需要符合中国大陆和您当地的法律法律。
+                        </li>
+                        <li class="wow fadeInUp" data-wow-duration="500ms" data-wow-delay="500ms"><i
+                                class="fa fa-angle-right"></i> 软件技术、计算机技术、互联网技术、科技相关内容可以放低要求优先考虑。
+                        </li>
+                    </ul>
+                </div>
+                <h2 class="page-header">注意事项</h2>
+                <div class="post-content overflow">
+                    <h3 class="post-author">申请友情链接注意</h3>
+                    <p>在您申请成功后，您需要符合以下要求：</p>
+                    <ul class="elements">
+                        <li class="wow fadeInUp" data-wow-duration="900ms" data-wow-delay="100ms"><i
+                                class="fa fa-angle-right"></i> 如果与本站做友情链接的网站3个月未更新任何内容的话，本站将自动取消与之的链接。
+                        </li>
+                        <li class="wow fadeInUp" data-wow-duration="800ms" data-wow-delay="200ms"><i
+                                class="fa fa-angle-right"></i> 如果友情链接中有违反国家法律的，本站将自动取消与贵站的友情链接。
+                        </li>
+                        <li class="wow fadeInUp" data-wow-duration="700ms" data-wow-delay="300ms"><i
+                                class="fa fa-angle-right"></i> 申请链接的网站不得有反动、色情、暴力、迷信、赌博等不良内容，以及网站名称或内容有违反国家有关法律法规的。
+                        </li>
+                        <li class="wow fadeInUp" data-wow-duration="600ms" data-wow-delay="400ms"><i
+                                class="fa fa-angle-right"></i> 您的网站内容发生巨大变动，与申请时的内容相差过大。
+                        </li>
+                        <li class="wow fadeInUp" data-wow-duration="500ms" data-wow-delay="500ms"><i
+                                class="fa fa-angle-right"></i> 您网站更换域名时，需要按照新站重新评价是否符合交换要求。
+                        </li>
+                        <li class="wow fadeInUp" data-wow-duration="500ms" data-wow-delay="500ms"><i
+                                class="fa fa-angle-right"></i> 您需要填写真实的邮箱地址，当我站发生变动时会及时通知到您。
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-12">
+                <h2 class="page-header">提交申请</h2>
+                <div id="success" class="alert alert-success fade in" style="display: none;">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <h4>您的提交已经成功！</h4>
+                    <p>
+                        我们已经收到您的申请，您会收到一封电子邮件，请勿重复提交。后续审核通过后会给您发送电邮通知您。
+                    </p>
+                </div>
+                <div id="main-contact-form">
+                    <div class="form-group">
+                        <input type="text" id="sitename" class="form-control" required="required"
+                               placeholder="链接文字">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="sitelink" class="form-control" required="required"
+                               placeholder="链接URL">
+                    </div>
+                    <div class="form-group">
+                        <select class="form-control" id="linkType" onchange="selectLinkType()">
+                            <option value="1" selected="selected">对等互换</option>
+                            <option value="2">交叉互换</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="inSiteLinkDiv" style="display: none;">
+                        <input type="text" id="inSiteLink" class="form-control" required="required"
+                               placeholder="本站在贵站链接位置">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="contactName" class="form-control" required="required"
+                               placeholder="您的称呼">
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="contactEmail" class="form-control" required="required"
+                               placeholder="您的Email">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="contactQq" class="form-control" required="required"
+                               placeholder="您的QQ（可选）">
+                    </div>
+                    <div class="form-group">
+                                <textarea id="remarks" required="required" class="form-control" rows="8"
+                                          placeholder="备注（可选）"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <input id="submit" type="button" onclick="return submit()" class="btn btn-submit" value="Submit">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<footer th:replace="layout/footer::footer(${footer},${performance})"></footer>
+<script>
+    function submit() {
+        $("#submit").attr('disabled','disabled');
+        var data = {};
+        data.sitename = $("#sitename").val();
+        data.sitelink = $("#sitelink").val();
+        data.linkType = $('#linkType  option:selected').val();
+        if ($('#linkType  option:selected').val() == 2) {
+            data.inSiteLink = $("#inSiteLink").val();
+            if (data.inSiteLink == "") {
+                notice("表单验证不通过", "您选择了交叉交换类型，本站在贵站链接位置是必填项！");
+                $("#submit").removeAttr("disabled");
+                return false;
+            }
+        }
+        data.contactName = $("#contactName").val();
+        data.contactEmail = $("#contactEmail").val();
+        data.contactQq = $("#contactQq").val();
+        data.remarks = $("#remarks").val();
+        console.log(JSON.stringify(data));
+        $.ajax({
+            url: '/other/friendlink/submit',
+            type: 'POST', //GET
+            async: true,    //或false,是否异步
+            data: data,
+            timeout: 5000,    //超时时间
+            dataType: 'json',
+            success: function (data, textStatus, jqXHR) {
+                if (data.success) {
+                    notice("您的提交已经成功！", "我们已经收到您的申请，您会收到一封电子邮件，请勿重复提交。后续审核通过后会给您发送电邮通知您。");
+                    $("#main-contact-form").hide();
+                    $("#success").show();
+                    return false;
+                } else {
+                    notice("Fail - 失败", data.message);
+                }
+            },
+            error: function (xhr, textStatus) {
+                notice("Error - 错误:" + textStatus, xhr.responseText);
+            }
+        });
+        $("#submit").removeAttr("disabled");
+        return false;
+    }
+
+    function selectLinkType() {
+        //获取被选中的option标签
+        var vs = $('#linkType  option:selected').val();
+        if (vs == 1) {
+            $("#inSiteLinkDiv").hide();
+        } else {
+            $("#inSiteLinkDiv").show();
+        }
+    }
+</script>
+</body>
+</html>
