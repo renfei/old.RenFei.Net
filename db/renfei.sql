@@ -145,7 +145,7 @@ CREATE TABLE `QRTZ_SCHEDULER_STATE` (
 -- Records of QRTZ_SCHEDULER_STATE
 -- ----------------------------
 BEGIN;
-INSERT INTO `QRTZ_SCHEDULER_STATE` VALUES ('clusteredScheduler', 'NeilMacBookPro1575266098598', 1575266250532, 10000);
+INSERT INTO `QRTZ_SCHEDULER_STATE` VALUES ('clusteredScheduler', 'NeilMacBookPro1576224543965', 1576225585987, 10000);
 COMMIT;
 
 -- ----------------------------
@@ -227,7 +227,7 @@ CREATE TABLE `QRTZ_TRIGGERS` (
 -- Records of QRTZ_TRIGGERS
 -- ----------------------------
 BEGIN;
-INSERT INTO `QRTZ_TRIGGERS` VALUES ('clusteredScheduler', 'UpdatePostPageRankTrigger', 'PostTriggerGroup', 'UpdatePostPageRankJob', 'Post', NULL, 1575266400000, 1575266220000, 5, 'WAITING', 'CRON', 1575262409000, 0, NULL, 0, '');
+INSERT INTO `QRTZ_TRIGGERS` VALUES ('clusteredScheduler', 'UpdatePostPageRankTrigger', 'PostTriggerGroup', 'UpdatePostPageRankJob', 'Post', NULL, 1576225620000, 1576225440000, 5, 'WAITING', 'CRON', 1575262409000, 0, NULL, 0, '');
 COMMIT;
 
 -- ----------------------------
@@ -321,25 +321,7 @@ CREATE TABLE `t_comments` (
   KEY `fk_comments` (`parent_id`),
   CONSTRAINT `fk_comment_type` FOREIGN KEY (`type_id`) REFERENCES `t_type` (`id`),
   CONSTRAINT `fk_comments` FOREIGN KEY (`parent_id`) REFERENCES `t_comments` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- ----------------------------
--- Records of t_comments
--- ----------------------------
-BEGIN;
-INSERT INTO `t_comments` VALUES (3, 1, 1, '测试名称3', 'lala@alala.af', 'http://www.www.www', '0:0:0:0:0:0:0:1', NULL, '2019-07-15 13:37:43', '这是评论内容', 0, NULL, 1);
-INSERT INTO `t_comments` VALUES (4, 1, 1, '测试名称4', 'lala@alala.af', 'http://www.www.www', '0:0:0:0:0:0:0:1', NULL, '2019-07-15 13:37:55', '这是评论内容', 0, 3, 1);
-INSERT INTO `t_comments` VALUES (5, 1, 1, '测试名称5', 'lala@alala.af', 'http://www.www.www', '0:0:0:0:0:0:0:1', NULL, '2019-07-15 13:38:04', '这是评论内容', 0, 4, 0);
-INSERT INTO `t_comments` VALUES (6, 1, 1, '测试名称6', 'lala@alala.af', 'http://www.www.www', '0:0:0:0:0:0:0:1', NULL, '2019-07-15 13:38:08', '这是评论内容', 0, 5, 0);
-INSERT INTO `t_comments` VALUES (7, 1, 1, '测试名称7', 'lala@alala.af', 'http://www.www.www', '0:0:0:0:0:0:0:1', NULL, '2019-07-15 13:38:10', '这是评论内容', 0, NULL, 0);
-INSERT INTO `t_comments` VALUES (8, 1, 1, '大丰港', 'gf@dfg', NULL, '0:0:0:0:0:0:0:1', NULL, '2019-07-15 16:00:31', '是东方航空法国红酒的放假的', 0, NULL, 0);
-INSERT INTO `t_comments` VALUES (9, 1, 1, 'fg', 'zfb', NULL, '0:0:0:0:0:0:0:1', NULL, '2019-07-15 16:00:45', 'zfdndaehaweg', 0, 4, 0);
-INSERT INTO `t_comments` VALUES (10, 1, 1, '吃', 'lala', 'ls', '0:0:0:0:0:0:0:1', NULL, '2019-07-26 19:33:37', '加上大公开', 0, NULL, 0);
-INSERT INTO `t_comments` VALUES (11, 1, 1, '测', 'g', 'adg', '0:0:0:0:0:0:0:1', NULL, '2019-07-27 10:46:53', 'adgfa日嘎阿萨德噶', 0, 10, 0);
-INSERT INTO `t_comments` VALUES (12, 1, 1, '发的', 'sdg', 'asdg', '0:0:0:0:0:0:0:1', NULL, '2019-07-27 10:53:43', '大风很大方式不', 0, 10, 0);
-INSERT INTO `t_comments` VALUES (13, 1, 1, '哈哈', 'aadf', 'https://www.baidu.com/', '0:0:0:0:0:0:0:1', NULL, '2019-07-27 11:03:32', 'https://www.baidu.com/', 0, 5, 0);
-INSERT INTO `t_comments` VALUES (14, 1, 3, '测试', 'er', NULL, '0:0:0:0:0:0:0:1', NULL, '2019-07-27 14:50:26', '视频测试', 0, NULL, 0);
-COMMIT;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Table structure for t_library
@@ -372,7 +354,6 @@ CREATE TABLE `t_library_details` (
   CONSTRAINT `fk_library_details` FOREIGN KEY (`library_id`) REFERENCES `t_library` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2106 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-
 -- ----------------------------
 -- Table structure for t_link
 -- ----------------------------
@@ -382,20 +363,31 @@ CREATE TABLE `t_link` (
   `sitename` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '站点名称',
   `sitelink` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '站点链接',
   `is_delete` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否删除',
-  `addtime` datetime NOT NULL,
+  `addtime` datetime NOT NULL COMMENT '添加时间',
+  `audit_pass` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否审核通过',
+  `link_type` int(11) NOT NULL DEFAULT '1' COMMENT '交换类型：1对等交换，2交叉交换',
+  `in_site_link` text COLLATE utf8mb4_unicode_ci COMMENT '在对方的链接位置',
+  `contact_name` text COLLATE utf8mb4_unicode_ci COMMENT '联系人姓名',
+  `contact_email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '联系邮箱',
+  `contact_qq` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '联系QQ',
+  `remarks` text COLLATE utf8mb4_unicode_ci COMMENT '备注',
+  `order_id` int(11) NOT NULL DEFAULT '0' COMMENT '排序',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of t_link
 -- ----------------------------
 BEGIN;
-INSERT INTO `t_link` VALUES (1, '苏岳宁博客', 'http://suyuening.com/', 0, '2019-07-29 19:35:54');
-INSERT INTO `t_link` VALUES (2, '码农在线', 'https://www.netcode.cn/', 0, '2019-07-29 19:36:18');
-INSERT INTO `t_link` VALUES (3, '辰云博客', 'https://www.itzcy.com/', 0, '2019-07-29 19:37:01');
-INSERT INTO `t_link` VALUES (4, '逐梦博客', 'https://www.deanhan.cn/', 0, '2019-07-29 19:37:19');
-INSERT INTO `t_link` VALUES (5, '杨小羽宠物资讯网', 'http://www.anlandy.com/', 0, '2019-07-29 19:38:07');
-INSERT INTO `t_link` VALUES (6, '杜临风博客', 'http://www.linfeng.net/', 0, '2019-07-29 19:38:46');
+INSERT INTO `t_link` VALUES (1, '苏岳宁博客', 'http://suyuening.com/', 0, '2015-07-26 00:00:00', 1, 1, NULL, '苏岳宁', 'infoplat@163.com', '714682444', NULL, 1);
+INSERT INTO `t_link` VALUES (2, '码农在线', 'https://www.netcode.cn/', 0, '2015-07-26 00:00:00', 1, 1, '', '阿水', 'admin@ashui.net', NULL, NULL, 2);
+INSERT INTO `t_link` VALUES (3, '辰云博客', 'https://www.itzcy.com/', 0, '2017-06-24 00:00:00', 1, 1, NULL, '辰云', 'itzcy@itzcy.com', '369322948', NULL, 3);
+INSERT INTO `t_link` VALUES (4, '逐梦博客', 'https://www.deanhan.cn/', 0, '2017-11-29 17:50:22', 1, 1, NULL, '逐梦博客', 'info@deanhan.cn', '826554003', NULL, 5);
+INSERT INTO `t_link` VALUES (5, '杨小羽宠物资讯网', 'http://www.anlandy.com/', 0, '2015-07-26 00:00:00', 1, 1, '', '杨小羽宠物资讯网', '2966273843@qq.com', '2966273843', NULL, 8);
+INSERT INTO `t_link` VALUES (6, '杜临风博客', 'http://www.linfeng.net/', 0, '2015-07-26 00:00:00', 1, 1, '', '杜临风', '281766668@qq.com', '281766668', NULL, 6);
+INSERT INTO `t_link` VALUES (7, '刘兴刚博客', 'https://www.liuxinggang.com/', 0, '2016-04-29 00:00:00', 1, 2, 'https://www.liuxinggang.com/links.html', '刘兴刚', '2367017122@qq.com', '2367017122', NULL, 7);
+INSERT INTO `t_link` VALUES (8, 'Qicents', 'http://qicent.net/', 0, '2015-07-26 00:00:00', 1, 1, '', '奇讯网', 'me@lzq.me', '875858719', NULL, 4);
+INSERT INTO `t_link` VALUES (9, '任霏博客', 'https://www.renfei.net/', 0, '2019-09-25 09:40:36', 1, 1, NULL, '任霏', 'i@renfei.net', '16076276', NULL, -1);
 COMMIT;
 
 -- ----------------------------
@@ -683,7 +675,7 @@ CREATE TABLE `t_posts` (
 -- Records of t_posts
 -- ----------------------------
 BEGIN;
-INSERT INTO `t_posts` VALUES (1, 1, 'https://cdn.neilren.com/neilren4j/upload/b8bfb737a838450ca2e373ad4dd264f7.jpeg', '你好！世界程序', '<h2><span class=\"ez-toc-section\" id=\"tocjs\">toc.js</span></h2>\n<p>这个就是那段神奇的代码</p>\n<pre class=\"lang:js decode:true\" title=\"toc.js\"><code class=\"js\">!function(a){a.fn.toc=function(b){var c,d=this,e=a.extend({},jQuery.fn.toc.defaults,b),f=a(e.container),g=a(e.selectors,f),h=[],i=e.prefix+\"-active\",j=function(b){for(var c=0,d=arguments.length;d&gt;c;c++){var e=arguments[c],f=a(e);if(f.scrollTop()&gt;0)return f;f.scrollTop(1);var g=f.scrollTop()&gt;0;if(f.scrollTop(0),g)return f}return[]},k=j(e.container,\"body\",\"html\"),l=function(b){if(e.smoothScrolling){b.preventDefault();var c=a(b.target).attr(\"href\"),f=a(c);k.animate({scrollTop:f.offset().top},400,\"swing\",function(){location.hash=c})}a(\"li\",d).removeClass(i),a(b.target).parent().addClass(i)},m=function(b){c&amp;&amp;clearTimeout(c),c=setTimeout(function(){for(var b,c=a(window).scrollTop(),f=0,g=h.length;g&gt;f;f++)if(h[f]&gt;=c){a(\"li\",d).removeClass(i),b=a(\"li:eq(\"+(f-1)+\")\",d).addClass(i),e.onHighlight(b);break}},50)};return e.highlightOnScroll&amp;&amp;(a(window).bind(\"scroll\",m),m()),this.each(function(){var b=a(this),c=a(\"&lt;ul/&gt;\");g.each(function(d,f){var g=a(f);h.push(g.offset().top-e.highlightOffset);var i=(a(\"&lt;span/&gt;\").attr(\"id\",e.anchorName(d,f,e.prefix)).insertBefore(g),a(\"&lt;a/&gt;\").text(e.headerText(d,f,g)).attr(\"href\",\"#\"+e.anchorName(d,f,e.prefix)).bind(\"click\",function(c){l(c),b.trigger(\"selected\",a(this).attr(\"href\"))})),j=a(\"&lt;li/&gt;\").addClass(e.itemClass(d,f,g,e.prefix)).append(i);c.append(j)}),b.html(c)})},jQuery.fn.toc.defaults={container:\"body\",selectors:\"h1,h2,h3\",smoothScrolling:!0,prefix:\"toc\",onHighlight:function(){},highlightOnScroll:!0,highlightOffset:100,anchorName:function(a,b,c){return c+a},headerText:function(a,b,c){return c.text()},itemClass:function(a,b,c,d){return d+\"-\"+c[0].tagName.toLowerCase()}}}(jQuery);</code></pre>\n<h2><span class=\"ez-toc-section\" id=\"i\">生成目录程序生成目录程序生成目录程序生成目录程序生成目录程序</span></h2>\n<p>下面这两段程序，第一段没明白是做什么的，第二段是用来生成目录的程序。</p>\n<pre class=\"php\"><code class=php>//这个程序没看到有什么作用，可能是考虑了固定导航栏的高度\njQuery(document).on(\"click\", \"#toc a\", function (a) {\n    // #wpadminbar 世界替换了原来的 header\n    $(\"#wpadminbar\").animate({marginBottom: 130}, 200).animate({marginBottom: 30}, 200)\n});\n//这一段是用来生成目录的\njQuery(document).ready(function () {\n    return 0 === $(\".article_content h2\").length ? ($(\"#toc\").remove(), 0) : (jQuery(\"#toc\").toc({\n         selectors: \"h2,h3,h4\",\n          container: \".article_content\"\n     }), jQuery(\"#toc\").before(\"&lt;h2&gt;目录&lt;/h2&gt;\"), \"参考链接\" === $.trim($(\".article_content h2:nth-last-of-type(1)\").text()) &amp;&amp; $(\".article_content h2:nth-last-of-type(1)\").addClass(\"reference\").next(\"ul\").addClass(\"reference-list\"), void $(\"#toc~h2\").wrap(\'&lt;div class=\"chapter\" /&gt;\'))\n});</code></pre>\n<h2><span class=\"ez-toc-section\" id=\"i-2\">美化</span></h2>\n<p>下面的css 就是本页面目录所使用的样式</p>\n<h3><span class=\"ez-toc-section\" id=\"i-2\">H3</span></h3>\n<pre class=\"php\" title=\"css\"><code class=\"php\">    &lt;style&gt;\n        #toc {\n            /*background-color: #111;\n            box-shadow: -5px 0 5px 0 #000 inset;\n            color: #fff;\n            font-family: Consolas,\"Courier New\",Courier,FreeMono,monospace;\n            font-weight: 700;*/\n            margin-bottom: 2em;\n            padding-top: 20px;\n        }\n        #toc ul {\n            /*list-style: outside none none;*/\n            list-style:none;\n            margin: 0;\n            padding: 0;\n        }\n        #toc li {\n            padding: 5px 10px;\n            list-style:none;\n        }\n        #toc a {\n            color: #a6e22e;\n            display: block;\n            text-decoration: none;\n        }\n        #toc li:hover {\n            background: #369 none repeat scroll 0 0;\n            /*box-shadow: -5px 0 10px -5px #000 inset;*/\n        }\n        #toc li a:hover{\n            border:none;\n        }\n        #toc .toc-h2 {\n            padding-left: 2em;\n        }\n        #toc .toc-h3 {\n            padding-left: 4em;\n        }\n        #toc .toc-h4 {\n            padding-left: 6em;\n        }\n    &lt;/style&gt;</code></pre>\n<p>写在最后吧：<br />\n后来，我找到了官方项目地址，就算一次快乐的旅行吧：<br />\nhttp://projects.jga.me/toc/<br />\nhttps://github.com/jgallen23/toc</p>', 1, NULL, NULL, 72, '2019-12-04 13:30:21', '2019-12-04 13:30:21', '这个是简介', NULL, 0, 1, 10000, '2019-12-02 13:57:00');
+INSERT INTO `t_posts` VALUES (1, 1, 'https://cdn.neilren.com/neilren4j/upload/b8bfb737a838450ca2e373ad4dd264f7.jpeg', '你好！世界程序', '<h2><span class=\"ez-toc-section\" id=\"tocjs\">toc.js</span></h2>\n<p>这个就是那段神奇的代码</p>\n<pre class=\"lang:js decode:true\" title=\"toc.js\"><code class=\"js\">!function(a){a.fn.toc=function(b){var c,d=this,e=a.extend({},jQuery.fn.toc.defaults,b),f=a(e.container),g=a(e.selectors,f),h=[],i=e.prefix+\"-active\",j=function(b){for(var c=0,d=arguments.length;d&gt;c;c++){var e=arguments[c],f=a(e);if(f.scrollTop()&gt;0)return f;f.scrollTop(1);var g=f.scrollTop()&gt;0;if(f.scrollTop(0),g)return f}return[]},k=j(e.container,\"body\",\"html\"),l=function(b){if(e.smoothScrolling){b.preventDefault();var c=a(b.target).attr(\"href\"),f=a(c);k.animate({scrollTop:f.offset().top},400,\"swing\",function(){location.hash=c})}a(\"li\",d).removeClass(i),a(b.target).parent().addClass(i)},m=function(b){c&amp;&amp;clearTimeout(c),c=setTimeout(function(){for(var b,c=a(window).scrollTop(),f=0,g=h.length;g&gt;f;f++)if(h[f]&gt;=c){a(\"li\",d).removeClass(i),b=a(\"li:eq(\"+(f-1)+\")\",d).addClass(i),e.onHighlight(b);break}},50)};return e.highlightOnScroll&amp;&amp;(a(window).bind(\"scroll\",m),m()),this.each(function(){var b=a(this),c=a(\"&lt;ul/&gt;\");g.each(function(d,f){var g=a(f);h.push(g.offset().top-e.highlightOffset);var i=(a(\"&lt;span/&gt;\").attr(\"id\",e.anchorName(d,f,e.prefix)).insertBefore(g),a(\"&lt;a/&gt;\").text(e.headerText(d,f,g)).attr(\"href\",\"#\"+e.anchorName(d,f,e.prefix)).bind(\"click\",function(c){l(c),b.trigger(\"selected\",a(this).attr(\"href\"))})),j=a(\"&lt;li/&gt;\").addClass(e.itemClass(d,f,g,e.prefix)).append(i);c.append(j)}),b.html(c)})},jQuery.fn.toc.defaults={container:\"body\",selectors:\"h1,h2,h3\",smoothScrolling:!0,prefix:\"toc\",onHighlight:function(){},highlightOnScroll:!0,highlightOffset:100,anchorName:function(a,b,c){return c+a},headerText:function(a,b,c){return c.text()},itemClass:function(a,b,c,d){return d+\"-\"+c[0].tagName.toLowerCase()}}}(jQuery);</code></pre>\n<h2><span class=\"ez-toc-section\" id=\"i\">生成目录程序生成目录程序生成目录程序生成目录程序生成目录程序</span></h2>\n<p>下面这两段程序，第一段没明白是做什么的，第二段是用来生成目录的程序。</p>\n<pre class=\"php\"><code class=php>//这个程序没看到有什么作用，可能是考虑了固定导航栏的高度\njQuery(document).on(\"click\", \"#toc a\", function (a) {\n    // #wpadminbar 世界替换了原来的 header\n    $(\"#wpadminbar\").animate({marginBottom: 130}, 200).animate({marginBottom: 30}, 200)\n});\n//这一段是用来生成目录的\njQuery(document).ready(function () {\n    return 0 === $(\".article_content h2\").length ? ($(\"#toc\").remove(), 0) : (jQuery(\"#toc\").toc({\n         selectors: \"h2,h3,h4\",\n          container: \".article_content\"\n     }), jQuery(\"#toc\").before(\"&lt;h2&gt;目录&lt;/h2&gt;\"), \"参考链接\" === $.trim($(\".article_content h2:nth-last-of-type(1)\").text()) &amp;&amp; $(\".article_content h2:nth-last-of-type(1)\").addClass(\"reference\").next(\"ul\").addClass(\"reference-list\"), void $(\"#toc~h2\").wrap(\'&lt;div class=\"chapter\" /&gt;\'))\n});</code></pre>\n<h2><span class=\"ez-toc-section\" id=\"i-2\">美化</span></h2>\n<p>下面的css 就是本页面目录所使用的样式</p>\n<h3><span class=\"ez-toc-section\" id=\"i-2\">H3</span></h3>\n<pre class=\"php\" title=\"css\"><code class=\"php\">    &lt;style&gt;\n        #toc {\n            /*background-color: #111;\n            box-shadow: -5px 0 5px 0 #000 inset;\n            color: #fff;\n            font-family: Consolas,\"Courier New\",Courier,FreeMono,monospace;\n            font-weight: 700;*/\n            margin-bottom: 2em;\n            padding-top: 20px;\n        }\n        #toc ul {\n            /*list-style: outside none none;*/\n            list-style:none;\n            margin: 0;\n            padding: 0;\n        }\n        #toc li {\n            padding: 5px 10px;\n            list-style:none;\n        }\n        #toc a {\n            color: #a6e22e;\n            display: block;\n            text-decoration: none;\n        }\n        #toc li:hover {\n            background: #369 none repeat scroll 0 0;\n            /*box-shadow: -5px 0 10px -5px #000 inset;*/\n        }\n        #toc li a:hover{\n            border:none;\n        }\n        #toc .toc-h2 {\n            padding-left: 2em;\n        }\n        #toc .toc-h3 {\n            padding-left: 4em;\n        }\n        #toc .toc-h4 {\n            padding-left: 6em;\n        }\n    &lt;/style&gt;</code></pre>\n<p>写在最后吧：<br />\n后来，我找到了官方项目地址，就算一次快乐的旅行吧：<br />\nhttp://projects.jga.me/toc/<br />\nhttps://github.com/jgallen23/toc</p>', 1, NULL, NULL, 73, '2019-12-04 13:30:21', '2019-12-04 13:30:21', '这个是简介', NULL, 0, 1, 1.288888645172119, '2019-12-13 16:24:00');
 COMMIT;
 
 -- ----------------------------
@@ -738,7 +730,6 @@ CREATE TABLE `t_secret_key` (
   PRIMARY KEY (`uid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-
 -- ----------------------------
 -- Table structure for t_setting
 -- ----------------------------
@@ -775,7 +766,7 @@ INSERT INTO `t_setting` VALUES (18, 'css', '/font/jBox/plugins/Notice/jBox.Notic
 INSERT INTO `t_setting` VALUES (19, 'css', '/font/jBox/themes/NoticeFancy.css', 4);
 INSERT INTO `t_setting` VALUES (20, 'jss', '/font/jBox/jBox.js', 4);
 INSERT INTO `t_setting` VALUES (21, 'jss', '/font/jBox/plugins/Notice/jBox.Notice.js', 5);
-INSERT INTO `t_setting` VALUES (22, 'comment_switch', '1', NULL);
+INSERT INTO `t_setting` VALUES (22, 'global_comment', '1', NULL);
 INSERT INTO `t_setting` VALUES (23, 'css', '/css/animate.min.css', 6);
 INSERT INTO `t_setting` VALUES (24, 'css', '/css/lightbox.css', 7);
 INSERT INTO `t_setting` VALUES (25, 'css', '/css/main.css', 8);
@@ -833,6 +824,33 @@ INSERT INTO `t_tag` VALUES (5, 'device', '硬件', NULL);
 INSERT INTO `t_tag` VALUES (6, 'network', '网络', NULL);
 INSERT INTO `t_tag` VALUES (7, 'program', '编程', NULL);
 INSERT INTO `t_tag` VALUES (8, 'develop', '开发', NULL);
+INSERT INTO `t_tag` VALUES (9, 'java', 'Java', NULL);
+INSERT INTO `t_tag` VALUES (10, 'code', '代码', NULL);
+INSERT INTO `t_tag` VALUES (11, 'dns', 'DNS', NULL);
+INSERT INTO `t_tag` VALUES (12, 'nginx', 'Nginx', NULL);
+INSERT INTO `t_tag` VALUES (13, 'web', '建站', NULL);
+INSERT INTO `t_tag` VALUES (14, 'ops', '运维', NULL);
+INSERT INTO `t_tag` VALUES (15, 'server', '服务器', NULL);
+INSERT INTO `t_tag` VALUES (16, 'security', '安全', NULL);
+INSERT INTO `t_tag` VALUES (17, 'bigdata', '大数据', NULL);
+INSERT INTO `t_tag` VALUES (18, 'usual', '日常', NULL);
+INSERT INTO `t_tag` VALUES (19, 'database', '数据库', NULL);
+INSERT INTO `t_tag` VALUES (20, 'mysql', 'MySQL', NULL);
+INSERT INTO `t_tag` VALUES (21, 'idea', 'IDEA', NULL);
+INSERT INTO `t_tag` VALUES (22, 'opensource', '开源', NULL);
+INSERT INTO `t_tag` VALUES (23, 'github', 'GitHub', NULL);
+INSERT INTO `t_tag` VALUES (24, 'git', 'Git', NULL);
+INSERT INTO `t_tag` VALUES (25, 'mybatis', 'MyBatis', NULL);
+INSERT INTO `t_tag` VALUES (26, 'pm', '项目管理', NULL);
+INSERT INTO `t_tag` VALUES (27, 'btc', '比特币', NULL);
+INSERT INTO `t_tag` VALUES (28, 'news', '新闻', NULL);
+INSERT INTO `t_tag` VALUES (29, 'cloudcomputing', '云计算', NULL);
+INSERT INTO `t_tag` VALUES (30, 'host', '主机', NULL);
+INSERT INTO `t_tag` VALUES (31, 'sql', 'SQL', NULL);
+INSERT INTO `t_tag` VALUES (32, 'dotnet', '.NET', NULL);
+INSERT INTO `t_tag` VALUES (33, 'raspberrypi', '树莓派', NULL);
+INSERT INTO `t_tag` VALUES (34, 'oracle', 'Oracle', NULL);
+INSERT INTO `t_tag` VALUES (35, 'linux', 'Linux', NULL);
 COMMIT;
 
 -- ----------------------------
@@ -850,6 +868,13 @@ CREATE TABLE `t_tag_relation` (
   CONSTRAINT `fk_tag` FOREIGN KEY (`tag_id`) REFERENCES `t_tag` (`id`),
   CONSTRAINT `fk_tag_type` FOREIGN KEY (`type_id`) REFERENCES `t_type` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=533 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Records of t_tag_relation
+-- ----------------------------
+BEGIN;
+INSERT INTO `t_tag_relation` VALUES (1, 1, 1, 1);
+COMMIT;
 
 -- ----------------------------
 -- Table structure for t_token
