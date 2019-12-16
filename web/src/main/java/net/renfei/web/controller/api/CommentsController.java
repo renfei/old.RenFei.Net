@@ -52,7 +52,9 @@ public class CommentsController extends BaseController {
         if (ipdto != null) {
             commentDTO.setAuthorAddress(ipdto.getCityName() + ", " + ipdto.getRegionName() + ", " + ipdto.getCountryName());
         }
-        if (commentsService.submi(commentDTO) == 1) {
+        int i = commentsService.submi(commentDTO);
+        if (i > 0) {
+            commentsService.sendNotify(commentDTO);
             return APIResult.fillResult(true);
         }
         return APIResult.fillResult(false);

@@ -12,6 +12,7 @@ import net.renfei.core.entity.PostsDTO;
 import net.renfei.core.entity.PostsListDTO;
 import net.renfei.web.entity.CategoryVO;
 import net.renfei.web.entity.CommentVO;
+import net.renfei.web.entity.PageHeadVO;
 import net.renfei.web.entity.PostsVO;
 import net.renfei.core.service.PostsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 文章的Controller
@@ -51,7 +53,9 @@ public class PostsController extends BaseController {
             postsVOList.add(postsVO);
         }
         mv.addObject("postsVOList", postsVOList);
-        setHead(mv, "Posts", "The RenFei Blog");
+        setHead(mv, "Posts",
+                "任霏的个人博客，分享关注软件开发技术，推动并帮助开发者通过互联网获得知识，从而让更多开发者从中受益。",
+                "任霏,RenFei,NeilRen,个人,博客,blog,开发,技术,posts");
         setPagination(mv, page, postsListDTO.getCount(), "/posts?page=");
         setSidebarByPost(mv, null);
         mv.setViewName("posts/list");
@@ -88,7 +92,9 @@ public class PostsController extends BaseController {
             postsVOList.add(postsVO);
         }
         mv.addObject("postsVOList", postsVOList);
-        setHead(mv, "Tag:" + tagDOS.get(0).getZhName() + " - Posts", "The RenFei Blog");
+        setHead(mv, "Tag:" + tagDOS.get(0).getZhName() + " - Posts",
+                "博客文章标签分类：" + tagDOS.get(0).getZhName() + "。共同类型的文章在这里聚合等待您的查阅。",
+                tagDOS.get(0).getZhName() + ",博客,blog,开发,技术,posts");
         setPagination(mv, page, postsListDTO.getCount(), "/posts/tag/" + enName + "?page=");
         setSidebarByPost(mv, null);
         mv.setViewName("posts/list");
@@ -108,10 +114,27 @@ public class PostsController extends BaseController {
             PostsVO postsVO = ejbGenerator.convert(postsDTO, PostsVO.class);
             setInfo(postsVO);
             mv.addObject("postsVO", postsVO);
-            setHead(mv, postsVO.getTitle() + " - Posts", postsVO.getDescribes());
+            setHead(mv, postsVO.getTitle() + " - Posts", postsVO.getDescribes(),
+                    postsVO.getKeyword());
             if (postsVO.getContent().indexOf("code class=") != -1) {
                 //检测到有代码显示，需要增加代码高亮插件
                 setHighlightJS(mv);
+            }
+            Map<String, Object> map = mv.getModel();
+            PageHeadVO pageHeadVO = null;
+            Object obj = map.get(HEAD_KEY);
+            if (obj instanceof PageHeadVO) {
+                pageHeadVO = (PageHeadVO) obj;
+            }
+            if (pageHeadVO != null) {
+                List<String> jss = pageHeadVO.getJss();
+                jss.add("//" + staticdomain + "/js/baguetteBox.min.js");
+                pageHeadVO.setJss(jss);
+                List<String> css = pageHeadVO.getCss();
+                css.add("//" + staticdomain + "/css/baguetteBox.min.css");
+                css.add("//" + staticdomain + "/css/gallery-clean.css");
+                pageHeadVO.setCss(css);
+                mv.addObject(HEAD_KEY, pageHeadVO);
             }
             setPostsPageJSCSS(mv);
             //查询评论

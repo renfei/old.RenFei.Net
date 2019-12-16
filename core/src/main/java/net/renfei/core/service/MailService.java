@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,8 @@ import org.springframework.stereotype.Service;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -57,8 +61,21 @@ public class MailService extends BaseService {
     public boolean send(String to, String name, String subject, List<String> contents, Map<String, File> attachment) {
         String txt = "";
         try {
-            Resource resource = new ClassPathResource("templates/layout/email.html");
-            txt = fileUtil.readfile(resource.getFile().getPath());
+            ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+            Resource[] resources = resolver.getResources("templates/layout/email.html");
+            Resource resource = resources[0];
+            //获得文件流，因为在jar文件中，不能直接通过文件资源路径拿到文件，但是可以在jar包中拿到文件流
+            InputStream stream = resource.getInputStream();
+            StringBuilder buffer = new StringBuilder();
+            byte[] bytes = new byte[1024];
+            try {
+                for (int n; (n = stream.read(bytes)) != -1; ) {
+                    buffer.append(new String(bytes, 0, n));
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            txt = buffer.toString();
             txt = txt.replace("${NAME}", name);
             txt = txt.replace("${CONTENT}", getContent(contents));
             SimpleDateFormat sdf = new SimpleDateFormat("EEE, dd MMM y HH:mm:ss 'GMT+8'");

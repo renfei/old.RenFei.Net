@@ -38,11 +38,7 @@ public class CommentsService extends BaseService {
         commentDOWithBLOBs.setIsDelete(true);
         //核验检查评论内容
         audit(commentDOWithBLOBs);
-        int i = commentDOMapper.insertSelective(commentDOWithBLOBs);
-        if (i > 0) {
-            sendNotify(comment);
-        }
-        return i;
+        return commentDOMapper.insertSelective(commentDOWithBLOBs);
     }
 
     public void audit(CommentDOWithBLOBs commentDOWithBLOBs) {

@@ -37,9 +37,11 @@
                                 </div>
                             </div>
                             <div class="post-content overflow">
-                                <h2 class="post-title bold"><a th:href="${domain}+'/posts/'+${info.id}"  target="_blank" th:text="${info.title}">Advanced business cards design</a></h2>
+                                <h2 class="post-title bold">
+                                    <a th:href="${domain}+'/posts/'+${info.id}"  target="_blank" th:text="${info.title}">Advanced business cards design</a>
+                                </h2>
                                 <h3 class="post-author"><a href="#" th:text="${#dates.format(info.releaseTime,'yyyy-MM-dd HH:mm:ss')}"></a></h3>
-                                <p th:text="${#strings.abbreviate(info.describes,150)}"></p>
+                                <p th:text="${#strings.abbreviate(info.describes,150)}" style="height: 100px;"></p>
                                 <a th:href="${domain}+'/posts/'+${info.id}"  target="_blank">View More</a>
                                 <div class="post-bottom overflow">
                                     <ul class="nav nav-justified post-nav">

@@ -34,21 +34,27 @@ public class KitboxController extends BaseController {
         IPDTO ipdto = ipService.getIPInfor(myip);
         mv.addObject("myip", myip);
         mv.addObject("ipdto", ipdto);
-        setHead(mv, "IP地址信息查询工具 - 开发者工具箱 - Kitbox", "IP地址信息查询工具，开放服务接口实现IP信息查询");
+        setHead(mv, "IP地址信息查询工具 - 开发者工具箱 - Kitbox",
+                "IP地址信息查询工具，开放服务接口实现IP信息查询，查询IP地址所属地理位置",
+                "IP,地址,信息,查询,工具,地理,位置");
         mv.setViewName("kitbox/ipinfo");
         return mv;
     }
 
     @RequestMapping("digtrace")
     public ModelAndView getDigTrace(ModelAndView mv) {
-        setHead(mv, "在线Dig+trace命令检测DNS状态工具 - 开发者工具箱 - Kitbox", "域名解析信息查询工具，开放服务接口实现dig+trace域名解析过程查询");
+        setHead(mv, "在线Dig+trace命令检测DNS状态工具 - 开发者工具箱 - Kitbox",
+                "域名解析信息查询工具，开放服务接口实现dig+trace域名解析过程查询",
+                "域名,解析,信息,查询,工具,Dig,trace,DNS");
         mv.setViewName("kitbox/digtrace");
         return mv;
     }
 
     @RequestMapping({"uuid", "guid", "UUID", "GUID"})
     public ModelAndView getUUID(ModelAndView mv) {
-        setHead(mv, "UUID/GUID 在线批量生成工具 - 开发者工具箱 - Kitbox", "在线批量生成 UUID/GUID 工具");
+        setHead(mv, "UUID/GUID 在线批量生成工具 - 开发者工具箱 - Kitbox",
+                "在线批量生成 UUID/GUID 工具",
+                "UUID,GUID,在线,批量,生成,工具");
         mv.setViewName("kitbox/uuid");
         return mv;
     }

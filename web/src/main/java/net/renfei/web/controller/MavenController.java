@@ -10,7 +10,9 @@ import org.springframework.web.servlet.ModelAndView;
 public class MavenController extends BaseController {
     @RequestMapping("")
     public ModelAndView getMavenPage(ModelAndView mv) {
-        setHead(mv, "Maven Agent Repository", "Maven公共代理仓库，助力开发者快速构建自己的项目。代理常见Maven仓库源，有效解决国内仓库速度慢、仓库包丢失的问题。");
+        setHead(mv, "Maven Agent Repository",
+                "Maven公共代理仓库，助力开发者快速构建自己的项目。代理常见Maven仓库源，有效解决国内仓库速度慢、仓库包丢失的问题。",
+                "Maven,代理,仓库,国内");
         setHighlightJS(mv);
         mv.setViewName("maven/index");
         return mv;

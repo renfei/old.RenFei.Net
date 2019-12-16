@@ -3,6 +3,11 @@
 <head th:replace="layout/head::head(${head})">
 </head>
 <body>
+<style>
+    .lightbox{
+        position: initial;
+    }
+</style>
 <header th:replace="layout/header::header(${header})"></header>
 <section id="page-breadcrumb">
     <div class="vertical-center sun">
@@ -11,7 +16,8 @@
                 <div class="action">
                     <div class="col-sm-12">
                         <h1 class="title" th:text="${postsVO.title}">Blog Details</h1>
-                        <p th:text="${(postsVO.releaseTime==null?'Unknown':#dates.format(postsVO.releaseTime,'yyyy-MM-dd HH:mm:ss'))}">Blog with right sidebar</p>
+                        <p th:text="${(postsVO.releaseTime==null?'Unknown':#dates.format(postsVO.releaseTime,'yyyy-MM-dd HH:mm:ss'))}">
+                            Blog with right sidebar</p>
                     </div>
                 </div>
             </div>
@@ -34,19 +40,31 @@
                                 </div>
                             </div>
                             <div class="post-content overflow">
-                                <h2 class="post-title bold"><a th:text="${postsVO.title}">Advanced business cards design</a></h2>
+                                <h2 class="post-title bold" style="height: auto;">
+                                    <a th:text="${postsVO.title}">Advanced business cards design</a>
+                                </h2>
                                 <h3 class="post-author">
-                                    <button type="button" class="btn btn-xs btn-default" th:utext="'<i class=\'fa fa-calendar\'></i> '+${(postsVO.releaseTime==null?'Unknown':#dates.format(postsVO.releaseTime,'yyyy-MM-dd HH:mm:ss'))}"></button>
-                                    <button type="button" class="btn btn-xs btn-default" th:utext="'<i class=\'fa fa-eye\'></i> '+${(postsVO.views==null?'Unknown':postsVO.views)}"></button>
+                                    <a th:utext="'<i class=\'fa fa-calendar\'></i> '+${(postsVO.releaseTime==null?'Unknown':#dates.format(postsVO.releaseTime,'yyyy-MM-dd HH:mm:ss'))}"></a>
+                                    <a th:utext="'<i class=\'fa fa-eye\'></i> '+${(postsVO.views==null?'Unknown':postsVO.views)}"></a>
+                                    <a th:utext="'<i class=\'fa fa-user\'></i> '+${(postsVO.isOriginal?'原创':postsVO.sourceName)}"
+                                       th:href="${postsVO.isOriginal?'javascript:void(0)':postsVO.sourceUrl}"></a>
                                 </h3>
-                                <p th:utext="${postsVO.content}">
+                                <div class="renfei-content">
+                                    <p th:utext="${postsVO.content}">
 
-                                </p>
+                                    </p>
+                                </div>
                                 <div class="post-bottom overflow">
                                     <ul class="nav navbar-nav post-nav">
-                                        <li><a th:href="${domain}+'/cat/'+${postsVO.categoryTypeName}+'/'+${postsVO.categoryEnName}" th:utext="'<i class=\'fa fa-tag\'></i>'+${postsVO.categoryZhName}"></a></li>
-                                        <li><a th:utext="'<i class=\'fa fa-eye\'></i>'+${postsVO.views}+' Views'"></a></li>
-                                        <li><a th:utext="'<i class=\'fa fa-comments\'></i>'+${postsVO.comments}+' Comments'"></a></li>
+                                        <li>
+                                            <a th:href="${domain}+'/cat/'+${postsVO.categoryTypeName}+'/'+${postsVO.categoryEnName}"
+                                               th:utext="'<i class=\'fa fa-tag\'></i>'+${postsVO.categoryZhName}"></a>
+                                        </li>
+                                        <li><a th:utext="'<i class=\'fa fa-eye\'></i>'+${postsVO.views}+' Views'"></a>
+                                        </li>
+                                        <li>
+                                            <a th:utext="'<i class=\'fa fa-comments\'></i>'+${postsVO.comments}+' Comments'"></a>
+                                        </li>
                                     </ul>
                                 </div>
                                 <div th:replace="layout/share::share"></div>
@@ -55,16 +73,22 @@
                                         <h3>Related Posts</h3>
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <div class="media" th:each="rel,relStat:${related.postsList}" th:if="${relStat.index<5}">
+                                                <div class="media" th:each="rel,relStat:${related.postsList}"
+                                                     th:if="${relStat.index<5}">
                                                     <div class="media-body">
-                                                        <h4 style="white-space: nowrap;"><a th:href="${domain+'/posts/'+rel.id}" th:text="${rel.title}"></a></h4>
+                                                        <h4 style="white-space: nowrap;"><a
+                                                                th:href="${domain+'/posts/'+rel.id}"
+                                                                th:text="${rel.title}"></a></h4>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
-                                                <div class="media" th:each="rel,relStat:${related.postsList}" th:if="${relStat.index>4}">
+                                                <div class="media" th:each="rel,relStat:${related.postsList}"
+                                                     th:if="${relStat.index>4}">
                                                     <div class="media-body">
-                                                        <h4 style="white-space: nowrap;"><a th:href="${domain+'/posts/'+rel.id}" th:text="${rel.title}"></a></h4>
+                                                        <h4 style="white-space: nowrap;"><a
+                                                                th:href="${domain+'/posts/'+rel.id}"
+                                                                th:text="${rel.title}"></a></h4>
                                                     </div>
                                                 </div>
                                             </div>
@@ -88,12 +112,19 @@
 <footer th:replace="layout/footer::footer(${footer},${performance})"></footer>
 <script>
     $(function () {
+        $(".renfei-content img").each(function () {
+            $(this).attr('width', "100%");
+            var strA = "<a class=\"lightbox\" href='" + this.src + "'></a>";
+            $(this).wrapAll(strA);
+        });
+        baguetteBox.run('.renfei-content');
     });
+
     function mashiroToc(mashiro) {
         // 初始化
         if (mashiro) {
             var id = 1;
-            $("#posts").children("h1,h2,h3,h4,h5").each(function() {
+            $("#posts").children("h1,h2,h3,h4,h5").each(function () {
                 //var hyphenated = $(this).text().replace(/\s/g, '-');
                 var hyphenated = "mashiro-" + id;
                 $(this).attr('id', hyphenated);
@@ -108,6 +139,7 @@
             });
         }
     }
+
     mashiroToc(true);
 </script>
 </body>

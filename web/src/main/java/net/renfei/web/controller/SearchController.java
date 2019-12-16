@@ -23,7 +23,7 @@ public class SearchController extends BaseController {
                                  @RequestParam(value = "q", required = false) String query,
                                  @RequestParam(value = "p", required = false) String page) {
         if (!stringUtil.isEmpty(query)) {
-            setHead(mv, "Search:" + query + " - " + siteName);
+            setHead(mv, "Search:" + query);
             SidebarVO sidebarVO = (SidebarVO) getObjFromMV(mv, SIDEBAR_KEY);
             mv.addObject(SIDEBAR_KEY, sidebarVO);
             Long startTime = System.nanoTime();
