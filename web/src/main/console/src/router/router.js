@@ -17,6 +17,8 @@ export const otherRouter = {
     component: Main,
     children: [
         { path: 'Dashboard', title: 'Dashboard', name: 'Dashboard', component: () => import('@/components/Dashboard.vue') },
+        { path: 'Posts', title: 'Posts', name: 'Posts', component: () => import('@/components/Posts.vue') },
+        { path: 'Posts/Edit/:id/', title: 'PostsEdit.vue', name: 'PostsEdit.vue', component: () => import('@/components/PostsEdit.vue') },
         { path: 'Ue', title: 'Ue', name: 'Ue', component: () => import('@/components/ue.vue') }
 ]
 };

@@ -21,48 +21,51 @@
 <section id="company-information" class="choose">
     <div class="container">
         <div class="row">
-            <div class="col-xs-1 col-sm-2 col-md-3"></div>
-            <div class="col-xs-10 col-sm-8 col-md-6">
-                <div class="form-group">
-                    <h2>IP Address Information Query</h2>
-                    <div class="input-group">
-                        <div class="input-group-addon">IP:</div>
-                        <input type="text" th:value="${myip==null?'':myip}" class="form-control" id="iptext"
-                               placeholder="IP">
-                        <div class="input-group-addon btn btn-primary" onclick="query()">Query</div>
+            <div class="col-sm-3 col-md-3">
+                <div th:replace="kitbox/menu::menu('network','ipaddr')"></div>
+            </div>
+            <div class="col-sm-9 col-md-9">
+                <div class="" style="margin: auto;max-width: 600px;">
+                    <div class="form-group">
+                        <h2>IP Address Information Query</h2>
+                        <div class="input-group">
+                            <div class="input-group-addon">IP:</div>
+                            <input type="text" th:value="${myip==null?'':myip}" class="form-control" id="iptext"
+                                   placeholder="IP">
+                            <div class="input-group-addon btn btn-primary" onclick="query()">Query</div>
+                        </div>
+                    </div>
+                    <div>
+                        <dl class="dl-horizontal">
+                            <dt>IP</dt>
+                            <dd id="ip" th:text="${ipdto==null?'...':ipdto.ip}">...</dd>
+                            <dt>CountryCode(国家代码)</dt>
+                            <dd id="countryCode" th:text="${ipdto==null?'...':ipdto.countryCode}">...</dd>
+                            <dt>Country(国家)</dt>
+                            <dd id="countryName" th:text="${ipdto==null?'...':ipdto.countryName}">...</dd>
+                            <dt>Region(行政区)</dt>
+                            <dd id="regionName" th:text="${ipdto==null?'...':ipdto.regionName}">...</dd>
+                            <dt>City(城市)</dt>
+                            <dd id="cityName" th:text="${ipdto==null?'...':ipdto.cityName}">...</dd>
+                            <dt>Zip(邮编)</dt>
+                            <dd id="zipCode" th:text="${ipdto==null?'...':ipdto.zipCode}">...</dd>
+                            <dt>Latitude(纬度)</dt>
+                            <dd id="latitude" th:text="${ipdto==null?'...':ipdto.latitude}">...</dd>
+                            <dt>Longitude(经度)</dt>
+                            <dd id="longitude" th:text="${ipdto==null?'...':ipdto.longitude}">...</dd>
+                            <dt>TimeZone(时区)</dt>
+                            <dd id="timeZone" th:text="${ipdto==null?'...':ipdto.timeZone}">...</dd>
+                        </dl>
+                    </div>
+                    <div>
+                        <blockquote style="font-size: 14px;">
+                            <p>IP查询接口服务已经开放。更多开放接口服务，请参考<a href="/swagger-ui.html" target="_blank">开放接口文档</a>。</p>
+                            <p th:text="${'此工具使用的接口是：'+domain+'/api/open/ipinfo/{ip}'}"></p>
+                            <footer>{ip} - 更换为需要查询的IP地址，使用 GET 请求。</footer>
+                        </blockquote>
                     </div>
                 </div>
-                <div>
-                    <dl class="dl-horizontal">
-                        <dt>IP</dt>
-                        <dd id="ip" th:text="${ipdto==null?'...':ipdto.ip}">...</dd>
-                        <dt>CountryCode(国家代码)</dt>
-                        <dd id="countryCode" th:text="${ipdto==null?'...':ipdto.countryCode}">...</dd>
-                        <dt>Country(国家)</dt>
-                        <dd id="countryName" th:text="${ipdto==null?'...':ipdto.countryName}">...</dd>
-                        <dt>Region(行政区)</dt>
-                        <dd id="regionName" th:text="${ipdto==null?'...':ipdto.regionName}">...</dd>
-                        <dt>City(城市)</dt>
-                        <dd id="cityName" th:text="${ipdto==null?'...':ipdto.cityName}">...</dd>
-                        <dt>Zip(邮编)</dt>
-                        <dd id="zipCode" th:text="${ipdto==null?'...':ipdto.zipCode}">...</dd>
-                        <dt>Latitude(纬度)</dt>
-                        <dd id="latitude" th:text="${ipdto==null?'...':ipdto.latitude}">...</dd>
-                        <dt>Longitude(经度)</dt>
-                        <dd id="longitude" th:text="${ipdto==null?'...':ipdto.longitude}">...</dd>
-                        <dt>TimeZone(时区)</dt>
-                        <dd id="timeZone" th:text="${ipdto==null?'...':ipdto.timeZone}">...</dd>
-                    </dl>
-                </div>
-                <div>
-                    <blockquote style="font-size: 14px;">
-                        <p>IP查询接口服务已经开放。更多开放接口服务，请参考<a href="/swagger-ui.html" target="_blank">开放接口文档</a>。</p>
-                        <p th:text="${'此工具使用的接口是：'+domain+'/api/open/ipinfo/{ip}'}"></p>
-                        <footer>{ip} - 更换为需要查询的IP地址，使用 GET 请求。</footer>
-                    </blockquote>
-                </div>
             </div>
-            <div class="col-xs-1 col-sm-2 col-md-3"></div>
         </div>
     </div>
 </section>

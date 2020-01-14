@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/head::head(${head})">
+</head>
+<body>
+<header th:replace="layout/header::header(${header})"></header>
+<section id="page-breadcrumb">
+    <div class="vertical-center sun">
+        <div class="container">
+            <div class="row">
+                <div class="action">
+                    <div class="col-sm-12">
+                        <h1 class="title">Public IP Acquisition Tools</h1>
+                        <p>公网IP获取工具</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="company-information" class="choose">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3 col-md-3">
+                <div th:replace="kitbox/menu::menu('network','getmyip')"></div>
+            </div>
+            <div class="col-sm-9 col-md-9">
+                <div class="" style="margin: auto;max-width: 600px;">
+                    <div class="form-group">
+                        <h2>公网IP获取工具支持Linux、Windows、API</h2>
+                        <div class="col-sm-12">
+                            <div class="input-group" id="quantity">
+                                <input type="text" class="form-control" id="iprenfeinet" disabled value="ip.renfei.net">
+                                <div class="input-group-addon btn btn-primary" onclick="generate()">Get My IP</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <textarea id="data" name="data" class="form-control" rows="8"></textarea>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="col-sm-12">
+                            <blockquote style="font-size: 14px;">
+                                <p>Windows下的用户可以使用浏览器直接访问链接：<a href="http://ip.renfei.net" target="_blank">http://ip.renfei.net</a> 查看自己的互联网公网出口IP地址。</a>。
+                                </p>
+                                <p>Linux命令行用户获取互联网公网出口IP地址</h2><p>Linux用户没有图形界面，例如在服务器上，可以使用 curl 命令查看自己的互联网公网出口IP地址：</p>
+                                <pre><code class="bash">curl&nbsp;ip.renfei.net</code></pre>
+                                <footer>某些特殊网络环境中，可能包含一些上网行为管理设备，发现自己的IP被返回是敏感数据，就会进行拦截，可以尝试使用 HTTPS 的方式尝试访问。某些特殊网络环境中，可能包含一些上网行为管理设备，发现自己的IP被返回是敏感数据，就会进行拦截，可以尝试使用 HTTPS 的方式尝试访问。</footer>
+                            </blockquote>
+                            <img src="//cdn.renfei.net/upload/image/2020/20200104134319.png" alt="获取互联网公网出口IP地址" width="100%"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    $(function () {
+        generate();
+    });
+
+    function generate() {
+        $.ajax({
+            url: 'https://ip.renfei.net',
+            type: 'GET', //GET
+            async: true,
+            timeout: 60000,
+            dataType: 'json',
+            success: function (data, textStatus, jqXHR) {
+                $("#data").val(data.clientIP);
+            },
+            error: function (xhr, textStatus) {
+                $("#data").val("Error.\n" + xhr.responseText);
+                notice("Error", xhr.responseText);
+            }
+        })
+    }
+</script>
+<footer th:replace="layout/footer::footer(${footer},${performance})"></footer>
+</body>
+</html>

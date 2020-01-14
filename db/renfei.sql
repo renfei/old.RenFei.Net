@@ -1,3 +1,4 @@
+
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
@@ -44,7 +45,7 @@ CREATE TABLE `QRTZ_CRON_TRIGGERS` (
 -- Records of QRTZ_CRON_TRIGGERS
 -- ----------------------------
 BEGIN;
-INSERT INTO `QRTZ_CRON_TRIGGERS` VALUES ('clusteredScheduler', 'UpdatePostPageRankTrigger', 'PostTriggerGroup', '0 0/3 * * * ? ', 'Asia/Shanghai');
+INSERT INTO `QRTZ_CRON_TRIGGERS` VALUES ('clusteredScheduler', 'UpdatePostPageRankTrigger', 'PostTriggerGroup', '0 0 3 * * ? ', 'Asia/Shanghai');
 COMMIT;
 
 -- ----------------------------
@@ -145,7 +146,7 @@ CREATE TABLE `QRTZ_SCHEDULER_STATE` (
 -- Records of QRTZ_SCHEDULER_STATE
 -- ----------------------------
 BEGIN;
-INSERT INTO `QRTZ_SCHEDULER_STATE` VALUES ('clusteredScheduler', 'NeilMacBookPro1576224543965', 1576225585987, 10000);
+INSERT INTO `QRTZ_SCHEDULER_STATE` VALUES ('clusteredScheduler', 'NeilMacBookPro1578473126182', 1578490778338, 10000);
 COMMIT;
 
 -- ----------------------------
@@ -227,7 +228,7 @@ CREATE TABLE `QRTZ_TRIGGERS` (
 -- Records of QRTZ_TRIGGERS
 -- ----------------------------
 BEGIN;
-INSERT INTO `QRTZ_TRIGGERS` VALUES ('clusteredScheduler', 'UpdatePostPageRankTrigger', 'PostTriggerGroup', 'UpdatePostPageRankJob', 'Post', NULL, 1576225620000, 1576225440000, 5, 'WAITING', 'CRON', 1575262409000, 0, NULL, 0, '');
+INSERT INTO `QRTZ_TRIGGERS` VALUES ('clusteredScheduler', 'UpdatePostPageRankTrigger', 'PostTriggerGroup', 'UpdatePostPageRankJob', 'Post', NULL, 1578490920000, 1578490740000, 5, 'WAITING', 'CRON', 1575262409000, 0, NULL, 0, '');
 COMMIT;
 
 -- ----------------------------
@@ -324,6 +325,25 @@ CREATE TABLE `t_comments` (
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
+-- Records of t_comments
+-- ----------------------------
+BEGIN;
+INSERT INTO `t_comments` VALUES (3, 1003283, 1, '测试名称3', 'lala@alala.af', 'http://www.www.www', '0:0:0:0:0:0:0:1', NULL, '2019-07-15 13:37:43', '这是评论内容', 0, NULL, 1);
+INSERT INTO `t_comments` VALUES (4, 1003283, 1, '测试名称4', 'lala@alala.af', 'http://www.www.www', '0:0:0:0:0:0:0:1', NULL, '2019-07-15 13:37:55', '这是评论内容', 0, 3, 1);
+INSERT INTO `t_comments` VALUES (5, 1003283, 1, '测试名称5', 'lala@alala.af', 'http://www.www.www', '0:0:0:0:0:0:0:1', NULL, '2019-07-15 13:38:04', '这是评论内容', 0, 4, 0);
+INSERT INTO `t_comments` VALUES (6, 1003283, 1, '测试名称6', 'lala@alala.af', 'http://www.www.www', '0:0:0:0:0:0:0:1', NULL, '2019-07-15 13:38:08', '这是评论内容', 0, 5, 0);
+INSERT INTO `t_comments` VALUES (7, 1003283, 1, '测试名称7', 'lala@alala.af', 'http://www.www.www', '0:0:0:0:0:0:0:1', NULL, '2019-07-15 13:38:10', '这是评论内容', 0, NULL, 0);
+INSERT INTO `t_comments` VALUES (8, 1003283, 1, '大丰港', 'gf@dfg', NULL, '0:0:0:0:0:0:0:1', NULL, '2019-07-15 16:00:31', '是东方航空法国红酒的放假的', 0, NULL, 0);
+INSERT INTO `t_comments` VALUES (9, 1003283, 1, 'fg', 'zfb', NULL, '0:0:0:0:0:0:0:1', NULL, '2019-07-15 16:00:45', 'zfdndaehaweg', 0, 4, 0);
+INSERT INTO `t_comments` VALUES (10, 1003283, 1, '吃', 'lala', 'ls', '0:0:0:0:0:0:0:1', NULL, '2019-07-26 19:33:37', '加上大公开', 0, NULL, 0);
+INSERT INTO `t_comments` VALUES (11, 1003283, 1, '测', 'g', 'adg', '0:0:0:0:0:0:0:1', NULL, '2019-07-27 10:46:53', 'adgfa日嘎阿萨德噶', 0, 10, 0);
+INSERT INTO `t_comments` VALUES (12, 1003283, 1, '发的', 'sdg', 'asdg', '0:0:0:0:0:0:0:1', NULL, '2019-07-27 10:53:43', '大风很大方式不', 0, 10, 0);
+INSERT INTO `t_comments` VALUES (13, 1003283, 1, '哈哈', 'aadf', 'https://www.baidu.com/', '0:0:0:0:0:0:0:1', NULL, '2019-07-27 11:03:32', 'https://www.baidu.com/', 0, 5, 0);
+INSERT INTO `t_comments` VALUES (14, 1003283, 3, '测试', 'er', NULL, '0:0:0:0:0:0:0:1', NULL, '2019-07-27 14:50:26', '视频测试', 0, NULL, 0);
+INSERT INTO `t_comments` VALUES (15, 1003283, 1, 'haha', '16076276@qq.com', NULL, '0:0:0:0:0:0:0:1', NULL, '2019-12-10 21:20:14', 'hahahahaha', 1, NULL, 0);
+COMMIT;
+
+-- ----------------------------
 -- Table structure for t_library
 -- ----------------------------
 DROP TABLE IF EXISTS `t_library`;
@@ -388,6 +408,10 @@ INSERT INTO `t_link` VALUES (6, '杜临风博客', 'http://www.linfeng.net/', 0,
 INSERT INTO `t_link` VALUES (7, '刘兴刚博客', 'https://www.liuxinggang.com/', 0, '2016-04-29 00:00:00', 1, 2, 'https://www.liuxinggang.com/links.html', '刘兴刚', '2367017122@qq.com', '2367017122', NULL, 7);
 INSERT INTO `t_link` VALUES (8, 'Qicents', 'http://qicent.net/', 0, '2015-07-26 00:00:00', 1, 1, '', '奇讯网', 'me@lzq.me', '875858719', NULL, 4);
 INSERT INTO `t_link` VALUES (9, '任霏博客', 'https://www.renfei.net/', 0, '2019-09-25 09:40:36', 1, 1, NULL, '任霏', 'i@renfei.net', '16076276', NULL, -1);
+INSERT INTO `t_link` VALUES (17, 'test', 'test', 0, '2019-12-09 17:08:56', 0, 1, NULL, 'test', '16076276@qq.com', '', '', 999);
+INSERT INTO `t_link` VALUES (18, 'test', 'test', 0, '2019-12-09 17:21:28', 0, 1, NULL, 'test', '16076276@qq.com', '', '', 999);
+INSERT INTO `t_link` VALUES (19, 'test', 'test', 0, '2019-12-09 17:23:56', 0, 1, NULL, 'test', '16076276@qq.com', '', '', 999);
+INSERT INTO `t_link` VALUES (20, 'test', 'test', 0, '2019-12-09 17:26:11', 0, 1, NULL, 'test', '16076276@qq.com', '', '', 999);
 COMMIT;
 
 -- ----------------------------
@@ -522,13 +546,22 @@ CREATE TABLE `t_permission` (
   UNIQUE KEY `unique_name` (`name`) USING BTREE,
   KEY `fk_permisssion_menu` (`menu_id`),
   CONSTRAINT `fk_permisssion_menu` FOREIGN KEY (`menu_id`) REFERENCES `t_sys_menu` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of t_permission
 -- ----------------------------
 BEGIN;
 INSERT INTO `t_permission` VALUES (1, '获取菜单列表', '获取菜单列表', '/api/menu', 'GET', 1);
+INSERT INTO `t_permission` VALUES (2, '上传图片', '上传图片', '/api/upload/image', 'POST', 1);
+INSERT INTO `t_permission` VALUES (3, '获取分类列表', '获取分类列表', '/api/cat', 'GET', 1);
+INSERT INTO `t_permission` VALUES (4, '获取标签云', '获取标签云', '/api/tags', 'GET', 1);
+INSERT INTO `t_permission` VALUES (5, '获取文章', '获取文章', '/api/posts', 'GET', 2);
+INSERT INTO `t_permission` VALUES (7, '根据目标ID获取标签', '根据目标ID获取标签', '/api/tags/bytargetid', 'GET', 1);
+INSERT INTO `t_permission` VALUES (8, '添加文章', '添加文章', '/api/posts', 'POST', 2);
+INSERT INTO `t_permission` VALUES (9, '修改文章', '修改文章', '/api/posts', 'PUT', 2);
+INSERT INTO `t_permission` VALUES (10, '删除文章', '删除文章', '/api/posts', 'DELETE', 2);
+INSERT INTO `t_permission` VALUES (11, '获取文章列表', '获取文章列表', '/api/posts/all', 'GET', 2);
 COMMIT;
 
 -- ----------------------------
@@ -544,13 +577,22 @@ CREATE TABLE `t_permission_role` (
   KEY `fk_permission_permission` (`permission_id`),
   CONSTRAINT `fk_permission_permission` FOREIGN KEY (`permission_id`) REFERENCES `t_permission` (`id`),
   CONSTRAINT `fk_permission_role` FOREIGN KEY (`role_id`) REFERENCES `t_role` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of t_permission_role
 -- ----------------------------
 BEGIN;
 INSERT INTO `t_permission_role` VALUES (1, 1, 1);
+INSERT INTO `t_permission_role` VALUES (2, 1, 2);
+INSERT INTO `t_permission_role` VALUES (3, 1, 3);
+INSERT INTO `t_permission_role` VALUES (4, 1, 4);
+INSERT INTO `t_permission_role` VALUES (5, 1, 5);
+INSERT INTO `t_permission_role` VALUES (7, 1, 7);
+INSERT INTO `t_permission_role` VALUES (8, 1, 8);
+INSERT INTO `t_permission_role` VALUES (9, 1, 9);
+INSERT INTO `t_permission_role` VALUES (10, 1, 10);
+INSERT INTO `t_permission_role` VALUES (11, 1, 11);
 COMMIT;
 
 -- ----------------------------
@@ -598,49 +640,6 @@ CREATE TABLE `t_photo_img` (
 BEGIN;
 INSERT INTO `t_photo_img` VALUES (1, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0881.JPG');
 INSERT INTO `t_photo_img` VALUES (2, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0172.JPG');
-INSERT INTO `t_photo_img` VALUES (3, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0173.JPG');
-INSERT INTO `t_photo_img` VALUES (4, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0214.JPG');
-INSERT INTO `t_photo_img` VALUES (5, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0217.JPG');
-INSERT INTO `t_photo_img` VALUES (6, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0219.JPG');
-INSERT INTO `t_photo_img` VALUES (7, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0221.JPG');
-INSERT INTO `t_photo_img` VALUES (8, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0225.JPG');
-INSERT INTO `t_photo_img` VALUES (9, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0228.JPG');
-INSERT INTO `t_photo_img` VALUES (10, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0234.JPG');
-INSERT INTO `t_photo_img` VALUES (11, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0235.JPG');
-INSERT INTO `t_photo_img` VALUES (12, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0236.JPG');
-INSERT INTO `t_photo_img` VALUES (13, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0253.JPG');
-INSERT INTO `t_photo_img` VALUES (14, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0254.JPG');
-INSERT INTO `t_photo_img` VALUES (15, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0255.JPG');
-INSERT INTO `t_photo_img` VALUES (16, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0256.JPG');
-INSERT INTO `t_photo_img` VALUES (17, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0261.JPG');
-INSERT INTO `t_photo_img` VALUES (18, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0267.JPG');
-INSERT INTO `t_photo_img` VALUES (19, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0268.JPG');
-INSERT INTO `t_photo_img` VALUES (20, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0272.JPG');
-INSERT INTO `t_photo_img` VALUES (21, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0274.JPG');
-INSERT INTO `t_photo_img` VALUES (22, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0276.JPG');
-INSERT INTO `t_photo_img` VALUES (23, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0278.JPG');
-INSERT INTO `t_photo_img` VALUES (24, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0683.JPG');
-INSERT INTO `t_photo_img` VALUES (25, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0688.JPG');
-INSERT INTO `t_photo_img` VALUES (26, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0743.JPG');
-INSERT INTO `t_photo_img` VALUES (27, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0746.JPG');
-INSERT INTO `t_photo_img` VALUES (28, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0748.JPG');
-INSERT INTO `t_photo_img` VALUES (29, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0753.JPG');
-INSERT INTO `t_photo_img` VALUES (30, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0754.JPG');
-INSERT INTO `t_photo_img` VALUES (31, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0874.JPG');
-INSERT INTO `t_photo_img` VALUES (32, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0875.JPG');
-INSERT INTO `t_photo_img` VALUES (33, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0880.JPG');
-INSERT INTO `t_photo_img` VALUES (34, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0882.JPG');
-INSERT INTO `t_photo_img` VALUES (35, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0884.JPG');
-INSERT INTO `t_photo_img` VALUES (36, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0885.JPG');
-INSERT INTO `t_photo_img` VALUES (37, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0887.JPG');
-INSERT INTO `t_photo_img` VALUES (38, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0888.JPG');
-INSERT INTO `t_photo_img` VALUES (39, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0889.JPG');
-INSERT INTO `t_photo_img` VALUES (40, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0891.JPG');
-INSERT INTO `t_photo_img` VALUES (41, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0898.JPG');
-INSERT INTO `t_photo_img` VALUES (42, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0899.JPG');
-INSERT INTO `t_photo_img` VALUES (43, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0900.JPG');
-INSERT INTO `t_photo_img` VALUES (44, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0973.JPG');
-INSERT INTO `t_photo_img` VALUES (45, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0974.JPG');
 COMMIT;
 
 -- ----------------------------
@@ -669,13 +668,13 @@ CREATE TABLE `t_posts` (
   KEY `fk_posts_category` (`category_id`) USING BTREE COMMENT '与类别的外键约束',
   FULLTEXT KEY `ft_index` (`title`,`content`) /*!50100 WITH PARSER `ngram` */ ,
   CONSTRAINT `fk_posts_category` FOREIGN KEY (`category_id`) REFERENCES `t_category` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1003284 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1003289 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of t_posts
 -- ----------------------------
 BEGIN;
-INSERT INTO `t_posts` VALUES (1, 1, 'https://cdn.neilren.com/neilren4j/upload/b8bfb737a838450ca2e373ad4dd264f7.jpeg', '你好！世界程序', '<h2><span class=\"ez-toc-section\" id=\"tocjs\">toc.js</span></h2>\n<p>这个就是那段神奇的代码</p>\n<pre class=\"lang:js decode:true\" title=\"toc.js\"><code class=\"js\">!function(a){a.fn.toc=function(b){var c,d=this,e=a.extend({},jQuery.fn.toc.defaults,b),f=a(e.container),g=a(e.selectors,f),h=[],i=e.prefix+\"-active\",j=function(b){for(var c=0,d=arguments.length;d&gt;c;c++){var e=arguments[c],f=a(e);if(f.scrollTop()&gt;0)return f;f.scrollTop(1);var g=f.scrollTop()&gt;0;if(f.scrollTop(0),g)return f}return[]},k=j(e.container,\"body\",\"html\"),l=function(b){if(e.smoothScrolling){b.preventDefault();var c=a(b.target).attr(\"href\"),f=a(c);k.animate({scrollTop:f.offset().top},400,\"swing\",function(){location.hash=c})}a(\"li\",d).removeClass(i),a(b.target).parent().addClass(i)},m=function(b){c&amp;&amp;clearTimeout(c),c=setTimeout(function(){for(var b,c=a(window).scrollTop(),f=0,g=h.length;g&gt;f;f++)if(h[f]&gt;=c){a(\"li\",d).removeClass(i),b=a(\"li:eq(\"+(f-1)+\")\",d).addClass(i),e.onHighlight(b);break}},50)};return e.highlightOnScroll&amp;&amp;(a(window).bind(\"scroll\",m),m()),this.each(function(){var b=a(this),c=a(\"&lt;ul/&gt;\");g.each(function(d,f){var g=a(f);h.push(g.offset().top-e.highlightOffset);var i=(a(\"&lt;span/&gt;\").attr(\"id\",e.anchorName(d,f,e.prefix)).insertBefore(g),a(\"&lt;a/&gt;\").text(e.headerText(d,f,g)).attr(\"href\",\"#\"+e.anchorName(d,f,e.prefix)).bind(\"click\",function(c){l(c),b.trigger(\"selected\",a(this).attr(\"href\"))})),j=a(\"&lt;li/&gt;\").addClass(e.itemClass(d,f,g,e.prefix)).append(i);c.append(j)}),b.html(c)})},jQuery.fn.toc.defaults={container:\"body\",selectors:\"h1,h2,h3\",smoothScrolling:!0,prefix:\"toc\",onHighlight:function(){},highlightOnScroll:!0,highlightOffset:100,anchorName:function(a,b,c){return c+a},headerText:function(a,b,c){return c.text()},itemClass:function(a,b,c,d){return d+\"-\"+c[0].tagName.toLowerCase()}}}(jQuery);</code></pre>\n<h2><span class=\"ez-toc-section\" id=\"i\">生成目录程序生成目录程序生成目录程序生成目录程序生成目录程序</span></h2>\n<p>下面这两段程序，第一段没明白是做什么的，第二段是用来生成目录的程序。</p>\n<pre class=\"php\"><code class=php>//这个程序没看到有什么作用，可能是考虑了固定导航栏的高度\njQuery(document).on(\"click\", \"#toc a\", function (a) {\n    // #wpadminbar 世界替换了原来的 header\n    $(\"#wpadminbar\").animate({marginBottom: 130}, 200).animate({marginBottom: 30}, 200)\n});\n//这一段是用来生成目录的\njQuery(document).ready(function () {\n    return 0 === $(\".article_content h2\").length ? ($(\"#toc\").remove(), 0) : (jQuery(\"#toc\").toc({\n         selectors: \"h2,h3,h4\",\n          container: \".article_content\"\n     }), jQuery(\"#toc\").before(\"&lt;h2&gt;目录&lt;/h2&gt;\"), \"参考链接\" === $.trim($(\".article_content h2:nth-last-of-type(1)\").text()) &amp;&amp; $(\".article_content h2:nth-last-of-type(1)\").addClass(\"reference\").next(\"ul\").addClass(\"reference-list\"), void $(\"#toc~h2\").wrap(\'&lt;div class=\"chapter\" /&gt;\'))\n});</code></pre>\n<h2><span class=\"ez-toc-section\" id=\"i-2\">美化</span></h2>\n<p>下面的css 就是本页面目录所使用的样式</p>\n<h3><span class=\"ez-toc-section\" id=\"i-2\">H3</span></h3>\n<pre class=\"php\" title=\"css\"><code class=\"php\">    &lt;style&gt;\n        #toc {\n            /*background-color: #111;\n            box-shadow: -5px 0 5px 0 #000 inset;\n            color: #fff;\n            font-family: Consolas,\"Courier New\",Courier,FreeMono,monospace;\n            font-weight: 700;*/\n            margin-bottom: 2em;\n            padding-top: 20px;\n        }\n        #toc ul {\n            /*list-style: outside none none;*/\n            list-style:none;\n            margin: 0;\n            padding: 0;\n        }\n        #toc li {\n            padding: 5px 10px;\n            list-style:none;\n        }\n        #toc a {\n            color: #a6e22e;\n            display: block;\n            text-decoration: none;\n        }\n        #toc li:hover {\n            background: #369 none repeat scroll 0 0;\n            /*box-shadow: -5px 0 10px -5px #000 inset;*/\n        }\n        #toc li a:hover{\n            border:none;\n        }\n        #toc .toc-h2 {\n            padding-left: 2em;\n        }\n        #toc .toc-h3 {\n            padding-left: 4em;\n        }\n        #toc .toc-h4 {\n            padding-left: 6em;\n        }\n    &lt;/style&gt;</code></pre>\n<p>写在最后吧：<br />\n后来，我找到了官方项目地址，就算一次快乐的旅行吧：<br />\nhttp://projects.jga.me/toc/<br />\nhttps://github.com/jgallen23/toc</p>', 1, NULL, NULL, 73, '2019-12-04 13:30:21', '2019-12-04 13:30:21', '这个是简介', NULL, 0, 1, 1.288888645172119, '2019-12-13 16:24:00');
+INSERT INTO `t_posts` VALUES (1, 1, 'https://cdn.neilren.com/neilren4j/upload/b8bfb737a838450ca2e373ad4dd264f7.jpeg', '你好！世界程序', '<h2><span class=\"ez-toc-section\" id=\"tocjs\">toc.js</span></h2>\n<p>这个就是那段神奇的代码</p>\n<pre class=\"lang:js decode:true\" title=\"toc.js\"><code class=\"js\">!function(a){a.fn.toc=function(b){var c,d=this,e=a.extend({},jQuery.fn.toc.defaults,b),f=a(e.container),g=a(e.selectors,f),h=[],i=e.prefix+\"-active\",j=function(b){for(var c=0,d=arguments.length;d&gt;c;c++){var e=arguments[c],f=a(e);if(f.scrollTop()&gt;0)return f;f.scrollTop(1);var g=f.scrollTop()&gt;0;if(f.scrollTop(0),g)return f}return[]},k=j(e.container,\"body\",\"html\"),l=function(b){if(e.smoothScrolling){b.preventDefault();var c=a(b.target).attr(\"href\"),f=a(c);k.animate({scrollTop:f.offset().top},400,\"swing\",function(){location.hash=c})}a(\"li\",d).removeClass(i),a(b.target).parent().addClass(i)},m=function(b){c&amp;&amp;clearTimeout(c),c=setTimeout(function(){for(var b,c=a(window).scrollTop(),f=0,g=h.length;g&gt;f;f++)if(h[f]&gt;=c){a(\"li\",d).removeClass(i),b=a(\"li:eq(\"+(f-1)+\")\",d).addClass(i),e.onHighlight(b);break}},50)};return e.highlightOnScroll&amp;&amp;(a(window).bind(\"scroll\",m),m()),this.each(function(){var b=a(this),c=a(\"&lt;ul/&gt;\");g.each(function(d,f){var g=a(f);h.push(g.offset().top-e.highlightOffset);var i=(a(\"&lt;span/&gt;\").attr(\"id\",e.anchorName(d,f,e.prefix)).insertBefore(g),a(\"&lt;a/&gt;\").text(e.headerText(d,f,g)).attr(\"href\",\"#\"+e.anchorName(d,f,e.prefix)).bind(\"click\",function(c){l(c),b.trigger(\"selected\",a(this).attr(\"href\"))})),j=a(\"&lt;li/&gt;\").addClass(e.itemClass(d,f,g,e.prefix)).append(i);c.append(j)}),b.html(c)})},jQuery.fn.toc.defaults={container:\"body\",selectors:\"h1,h2,h3\",smoothScrolling:!0,prefix:\"toc\",onHighlight:function(){},highlightOnScroll:!0,highlightOffset:100,anchorName:function(a,b,c){return c+a},headerText:function(a,b,c){return c.text()},itemClass:function(a,b,c,d){return d+\"-\"+c[0].tagName.toLowerCase()}}}(jQuery);</code></pre>\n<h2><span class=\"ez-toc-section\" id=\"i\">生成目录程序生成目录程序生成目录程序生成目录程序生成目录程序</span></h2>\n<p>下面这两段程序，第一段没明白是做什么的，第二段是用来生成目录的程序。</p>\n<pre class=\"php\"><code class=php>//这个程序没看到有什么作用，可能是考虑了固定导航栏的高度\njQuery(document).on(\"click\", \"#toc a\", function (a) {\n    // #wpadminbar 世界替换了原来的 header\n    $(\"#wpadminbar\").animate({marginBottom: 130}, 200).animate({marginBottom: 30}, 200)\n});\n//这一段是用来生成目录的\njQuery(document).ready(function () {\n    return 0 === $(\".article_content h2\").length ? ($(\"#toc\").remove(), 0) : (jQuery(\"#toc\").toc({\n         selectors: \"h2,h3,h4\",\n          container: \".article_content\"\n     }), jQuery(\"#toc\").before(\"&lt;h2&gt;目录&lt;/h2&gt;\"), \"参考链接\" === $.trim($(\".article_content h2:nth-last-of-type(1)\").text()) &amp;&amp; $(\".article_content h2:nth-last-of-type(1)\").addClass(\"reference\").next(\"ul\").addClass(\"reference-list\"), void $(\"#toc~h2\").wrap(\'&lt;div class=\"chapter\" /&gt;\'))\n});</code></pre>\n<h2><span class=\"ez-toc-section\" id=\"i-2\">美化</span></h2>\n<p>下面的css 就是本页面目录所使用的样式</p>\n<h3><span class=\"ez-toc-section\" id=\"i-2\">H3</span></h3>\n<pre class=\"php\" title=\"css\"><code class=\"php\">    &lt;style&gt;\n        #toc {\n            /*background-color: #111;\n            box-shadow: -5px 0 5px 0 #000 inset;\n            color: #fff;\n            font-family: Consolas,\"Courier New\",Courier,FreeMono,monospace;\n            font-weight: 700;*/\n            margin-bottom: 2em;\n            padding-top: 20px;\n        }\n        #toc ul {\n            /*list-style: outside none none;*/\n            list-style:none;\n            margin: 0;\n            padding: 0;\n        }\n        #toc li {\n            padding: 5px 10px;\n            list-style:none;\n        }\n        #toc a {\n            color: #a6e22e;\n            display: block;\n            text-decoration: none;\n        }\n        #toc li:hover {\n            background: #369 none repeat scroll 0 0;\n            /*box-shadow: -5px 0 10px -5px #000 inset;*/\n        }\n        #toc li a:hover{\n            border:none;\n        }\n        #toc .toc-h2 {\n            padding-left: 2em;\n        }\n        #toc .toc-h3 {\n            padding-left: 4em;\n        }\n        #toc .toc-h4 {\n            padding-left: 6em;\n        }\n    &lt;/style&gt;</code></pre>\n<p>写在最后吧：<br />\n后来，我找到了官方项目地址，就算一次快乐的旅行吧：<br />\nhttp://projects.jga.me/toc/<br />\nhttps://github.com/jgallen23/toc</p>', 1, NULL, NULL, 74, '2019-12-04 13:30:21', '2019-12-04 13:30:21', '这个是简介', NULL, 0, 1, -11.909285718202591, '2020-01-08 21:39:00');
 COMMIT;
 
 -- ----------------------------
@@ -740,7 +739,7 @@ CREATE TABLE `t_setting` (
   `values` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '值',
   `orders` int(10) unsigned DEFAULT NULL COMMENT '排序',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of t_setting
@@ -749,7 +748,7 @@ BEGIN;
 INSERT INTO `t_setting` VALUES (1, 'sitename', 'The RenFei Blog', NULL);
 INSERT INTO `t_setting` VALUES (2, 'domain', 'http://localhost:8091', NULL);
 INSERT INTO `t_setting` VALUES (3, 'highlight', '/font/highlight/highlight.pack.js', NULL);
-INSERT INTO `t_setting` VALUES (4, 'staticdomain', 'localhost:8091', NULL);
+INSERT INTO `t_setting` VALUES (4, 'staticdomain', 'cdn.renfei.net', NULL);
 INSERT INTO `t_setting` VALUES (5, 'css', '/font/font-awesome/4.7.0/css/font-awesome.min.css', 1);
 INSERT INTO `t_setting` VALUES (6, 'css', '/css/bootstrap.min.css', 5);
 INSERT INTO `t_setting` VALUES (7, 'jss', '/font/jquery/jquery-3.4.1.min.js', 1);
@@ -775,6 +774,7 @@ INSERT INTO `t_setting` VALUES (27, 'jss', '/js/lightbox.min.js', 7);
 INSERT INTO `t_setting` VALUES (28, 'jss', '/js/wow.min.js', 8);
 INSERT INTO `t_setting` VALUES (29, 'jss', '/js/main.js', 10);
 INSERT INTO `t_setting` VALUES (30, 'jss', '//res.wx.qq.com/open/js/jweixin-1.4.0.js', 9);
+INSERT INTO `t_setting` VALUES (31, 'global_ad', '1', NULL);
 COMMIT;
 
 -- ----------------------------
@@ -867,13 +867,13 @@ CREATE TABLE `t_tag_relation` (
   KEY `fk_tag_type` (`type_id`),
   CONSTRAINT `fk_tag` FOREIGN KEY (`tag_id`) REFERENCES `t_tag` (`id`),
   CONSTRAINT `fk_tag_type` FOREIGN KEY (`type_id`) REFERENCES `t_type` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=533 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=538 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of t_tag_relation
 -- ----------------------------
 BEGIN;
-INSERT INTO `t_tag_relation` VALUES (1, 1, 1, 1);
+INSERT INTO `t_tag_relation` VALUES (7, 7, 1, 1);
 COMMIT;
 
 -- ----------------------------
@@ -888,7 +888,7 @@ CREATE TABLE `t_token` (
   `expiration_time` datetime NOT NULL COMMENT '过期时间',
   `update_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Table structure for t_type
@@ -936,7 +936,7 @@ CREATE TABLE `t_video` (
 -- Records of t_video
 -- ----------------------------
 BEGIN;
-INSERT INTO `t_video` VALUES (1, 7, '大境门景区-第一次使用DJI OSMO Mobile 2', '//renfei.oncdn.cn/upload/image/a869a9a910f9451996347bac2b81932b.png', '大境门景区-第一次使用DJI OSMO Mobile 2', '2019-07-26 14:28:45', '2019-07-26 14:28:50', 0, 25, 1, '//video.renfei.oncdn.cn/2019/dajingmen-720p.mp4');
+INSERT INTO `t_video` VALUES (1, 7, '大境门景区-第一次使用DJI OSMO Mobile 2', '//renfei.oncdn.cn/upload/image/a869a9a910f9451996347bac2b81932b.png', '大境门景区-第一次使用DJI OSMO Mobile 2', '2019-07-26 14:28:45', '2019-07-26 14:28:50', 0, 27, 1, '//video.renfei.oncdn.cn/2019/dajingmen-720p.mp4');
 COMMIT;
 
 -- ----------------------------
@@ -1023,5 +1023,3 @@ CREATE TABLE `t_ipv6` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 SET FOREIGN_KEY_CHECKS = 1;
-
-select `t_category`.`type_id` AS `type_id`,`t_category`.`zh_name` AS `cat_name`,`t_category`.`en_name` AS `cat_ename`,`t_posts`.`category_id` AS `category_id`,`t_posts`.`id` AS `id`,`t_posts`.`title` AS `title`,`t_posts`.`featured_image` AS `featured_image`,`t_posts`.`describes` AS `describes`,`t_posts`.`release_time` AS `release_time` from (`t_category` join `t_posts` on((`t_category`.`id` = `t_posts`.`category_id`))) where ((`t_posts`.`is_delete` = 0) and (`t_posts`.`release_time` <= now())) union all select `t_category`.`type_id` AS `type_id`,`t_category`.`zh_name` AS `cat_name`,`t_category`.`en_name` AS `cat_ename`,`t_video`.`category_id` AS `category_id`,`t_video`.`id` AS `id`,`t_video`.`title` AS `title`,`t_video`.`featured_image` AS `featured_image`,`t_video`.`describes` AS `describes`,`t_video`.`release_time` AS `release_time` from (`t_category` join `t_video` on((`t_category`.`id` = `t_video`.`category_id`))) where ((`t_video`.`is_delete` = 0) and (`t_video`.`release_time` <= now())) union all select `t_category`.`type_id` AS `type_id`,`t_category`.`zh_name` AS `cat_name`,`t_category`.`en_name` AS `cat_ename`,`t_page`.`category_id` AS `category_id`,`t_page`.`id` AS `id`,`t_page`.`title` AS `title`,`t_page`.`featured_image` AS `featured_image`,`t_page`.`describes` AS `describes`,`t_page`.`release_time` AS `release_time` from (`t_category` join `t_page` on((`t_category`.`id` = `t_page`.`category_id`))) where ((`t_page`.`is_delete` = 0) and (`t_page`.`release_time` <= now())) union all select `t_category`.`type_id` AS `type_id`,`t_category`.`zh_name` AS `cat_name`,`t_category`.`en_name` AS `cat_ename`,`t_photo`.`category_id` AS `category_id`,`t_photo`.`id` AS `id`,`t_photo`.`title` AS `title`,`t_photo`.`featured_image` AS `featured_image`,`t_photo`.`describes` AS `describes`,`t_photo`.`release_time` AS `release_time` from (`t_category` join `t_photo` on((`t_category`.`id` = `t_photo`.`category_id`))) where ((`t_photo`.`is_delete` = 0) and (`t_photo`.`release_time` <= now()))

@@ -12,11 +12,11 @@
             return {
                 myConfig: {
                     // 如果需要上传功能,找后端小伙伴要服务器接口地址
-                    serverUrl: '/api/web/upload/ueditor',
+                    serverUrl: '/api/upload/ueditor',
                     // 你的UEditor资源存放的路径,相对于打包后的index.html
                     UEDITOR_HOME_URL: '/static/neditor/',
                     // 编辑器不自动被内容撑高
-                    autoHeightEnabled: false,
+                    autoHeightEnabled: true,
                     // 初始容器高度
                     initialFrameHeight: 240,
                     // 初始容器宽度

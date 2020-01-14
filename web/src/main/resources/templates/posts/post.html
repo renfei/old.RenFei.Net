@@ -32,7 +32,7 @@
                     <div class="col-md-12 col-sm-12">
                         <div class="single-blog blog-details two-column">
                             <div class="post-thumb" th:if="${postsVO.featuredImage!=null}">
-                                <a href="#"><img th:src="${postsVO.featuredImage}" class="img-responsive" alt=""></a>
+                                <a href="#"><img th:src="${postsVO.featuredImage}" class="img-responsive" th:alt="${postsVO.title}"></a>
                                 <div class="post-overlay">
                                     <span class="uppercase">
                                         <a th:utext="${#dates.format(postsVO.releaseTime,'d')}+'<br><small>'+${#dates.format(postsVO.releaseTime,'MMM')}+'</small>'"></a>
@@ -53,6 +53,9 @@
                                     <p th:utext="${postsVO.content}">
 
                                     </p>
+                                </div>
+                                <div>
+                                    <script th:if="${globalAD=='1'}" type="text/javascript" src="//window.renfei.net/production/vq_nr/common/y/production/y/source/imp.js"></script>
                                 </div>
                                 <div class="post-bottom overflow">
                                     <ul class="nav navbar-nav post-nav">

@@ -27,7 +27,7 @@
                         <div class="single-blog two-column">
                             <div class="post-thumb">
                                 <a th:href="${domain}+'/posts/'+${info.id}" target="_blank">
-                                    <img th:src="${info.featuredImage}" class="img-responsive" alt=""></a>
+                                    <img th:src="${info.featuredImage}" class="img-responsive" th:alt="${info.title}"></a>
                                 <div class="post-overlay">
                                     <span class="uppercase">
                                         <a th:href="${domain}+'/posts/'+${info.id}"  target="_blank"
@@ -55,6 +55,9 @@
                     </div>
                 </div>
                 <div class="clear"></div>
+                <div>
+                    <script th:if="${globalAD=='1'}" type="text/javascript" src="//window.renfei.net/production/vq_nr/common/y/production/y/source/imp.js"></script>
+                </div>
                 <div class="blog-pagination">
                     <div th:replace="layout/pagination::pagination(${pagination})"></div>
                 </div>

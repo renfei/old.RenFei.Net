@@ -21,28 +21,31 @@
 <section id="company-information" class="choose">
     <div class="container">
         <div class="row">
-            <div class="col-xs-1 col-sm-2 col-md-3"></div>
-            <div class="col-xs-10 col-sm-8 col-md-6">
-                <div class="form-group">
-                    <h2>Domain Name Dig+trace Information Query</h2>
-                    <div class="input-group">
-                        <input type="text" class="form-control" id="domain"
-                               placeholder="Domain Name">
-                        <div class="input-group-addon btn btn-primary" onclick="query()">Query</div>
+            <div class="col-sm-3 col-md-3">
+                <div th:replace="kitbox/menu::menu('network','digtools')"></div>
+            </div>
+            <div class="col-sm-9 col-md-9">
+                <div style="margin: auto;max-width: 600px;">
+                    <div class="form-group">
+                        <h2>Domain Name Dig+trace Information Query</h2>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="domain"
+                                   placeholder="Domain Name">
+                            <div class="input-group-addon btn btn-primary" onclick="query()">Query</div>
+                        </div>
+                    </div>
+                    <div>
+                        <textarea id="data" name="data" class="form-control" rows="8"></textarea>
+                    </div>
+                    <div>
+                        <blockquote style="font-size: 14px;">
+                            <p>IP查询接口服务已经开放。更多开放接口服务，请参考<a href="/swagger-ui.html" target="_blank">开放接口文档</a>。</p>
+                            <p th:text="${'此工具使用的接口是：'+domain+'/api/open/dns/dig/{domain}'}"></p>
+                            <footer>{domain} - 更换为需要查询的域名，使用 GET 请求。</footer>
+                        </blockquote>
                     </div>
                 </div>
-                <div>
-                    <textarea id="data" name="data" class="form-control" rows="8"></textarea>
-                </div>
-                <div>
-                    <blockquote style="font-size: 14px;">
-                        <p>IP查询接口服务已经开放。更多开放接口服务，请参考<a href="/swagger-ui.html" target="_blank">开放接口文档</a>。</p>
-                        <p th:text="${'此工具使用的接口是：'+domain+'/api/open/dns/dig/{domain}'}"></p>
-                        <footer>{domain} - 更换为需要查询的域名，使用 GET 请求。</footer>
-                    </blockquote>
-                </div>
             </div>
-            <div class="col-xs-1 col-sm-2 col-md-3"></div>
         </div>
     </div>
 </section>

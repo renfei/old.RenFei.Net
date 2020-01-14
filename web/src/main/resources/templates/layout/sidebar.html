@@ -6,11 +6,7 @@
                 <div th:replace="layout/github::mygithub"></div>
             </div>
             <div class="sidebar-item">
-                <div class="itellyou360">
-                    <a href="https://www.aliyun.com/acts/hi-group-buying?userCode=mqe0f1u0" target="_blank">
-                        <img src="/itellyou/aliyun300250.jpg" style="width: 100%">
-                    </a>
-                </div>
+                <script th:if="${globalAD=='1'}" type="text/javascript" src="//window.renfei.net/site/x_sp/static/ta/production/ako/openjs/u.js"></script>
             </div>
             <div class="sidebar-item categories">
                 <h3 th:if="${sidebar.categories!=null}">Categories</h3>
@@ -30,6 +26,9 @@
                         <a th:href="${domain+'/posts/tag/'+tag.enName}" th:text="${tag.zhName+'('+tag.quantity+')'}"></a>
                     </li>
                 </ul>
+            </div>
+            <div class="sidebar-item">
+                <script th:if="${globalAD=='1'}" type="text/javascript" src="//window.renfei.net/site/t/olpww/production/g/k_k.js"></script>
             </div>
             <div class="sidebar-item">
                 <div class="row">

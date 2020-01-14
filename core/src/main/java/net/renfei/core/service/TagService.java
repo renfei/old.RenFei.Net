@@ -4,6 +4,7 @@ import net.renfei.core.baseclass.BaseService;
 import net.renfei.dao.entity.*;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -21,6 +22,24 @@ public class TagService extends BaseService {
     public List<TagDO> getAllTag() {
         TagDOExample tagDOExample = new TagDOExample();
         tagDOExample.createCriteria();
+        return tagDOMapper.selectByExampleWithBLOBs(tagDOExample);
+    }
+
+    /**
+     * 根据目标获取全部标签
+     *
+     * @return
+     */
+    public List<TagDO> getTagByTargetId(long targetId) {
+        List<TagRelationDO> tagRelationDOS = getTagRelationByTargetId(targetId);
+        List<Long> longs = new ArrayList<>();
+        for (TagRelationDO tagre : tagRelationDOS
+        ) {
+            longs.add(tagre.getTagId());
+        }
+        TagDOExample tagDOExample = new TagDOExample();
+        tagDOExample.createCriteria()
+                .andIdIn(longs);
         return tagDOMapper.selectByExampleWithBLOBs(tagDOExample);
     }
 
@@ -105,5 +124,11 @@ public class TagService extends BaseService {
         tagRelationDO.setTargetId(targetId);
         tagRelationDO.setTypeId(typeId);
         return tagRelationDOMapper.insertSelective(tagRelationDO);
+    }
+
+    public int deleteTagRelationByTargetId(long targetId) {
+        TagRelationDOExample tagRelationDOExample = new TagRelationDOExample();
+        tagRelationDOExample.createCriteria().andTargetIdEqualTo(targetId);
+        return tagRelationDOMapper.deleteByExample(tagRelationDOExample);
     }
 }
