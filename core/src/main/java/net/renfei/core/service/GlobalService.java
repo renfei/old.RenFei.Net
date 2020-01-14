@@ -52,4 +52,6 @@ public class GlobalService extends BaseService {
     }
 
     public String getGlobalComment(){return systemService.getGlobalComment();}
+
+    public String getGlobalAD(){return systemService.getGlobalAD();}
 }

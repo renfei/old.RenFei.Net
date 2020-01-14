@@ -4,6 +4,11 @@
 </head>
 <body>
 <header th:replace="layout/header::header(${header})"></header>
+<style>
+    i.fa{
+        padding-right: 10px;
+    }
+</style>
 <section id="page-breadcrumb">
     <div class="vertical-center sun">
         <div class="container">
@@ -21,17 +26,124 @@
 <section id="company-information" class="choose">
     <div class="container">
         <div class="row">
-            <div th:if="${kitboxVOList!=null}" th:each="kit:${kitboxVOList}" class="col-xs-6 col-sm-4 col-md-3 col-lg-2"
+            <h2>网络类工具<small>Network Tools</small></h2>
+            <hr>
+        </div>
+        <div class="row">
+            <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2"
                  style="padding: 5px;">
                 <div style="border: 1px #eeeeee solid;padding: 5px;">
-                    <a th:href="${kit.link}" style="color: #000000;">
-                        <h5 th:utext="'<i class=\'fa '+${kit.icon}+'\'></i>'+${kit.title}"></h5>
+                    <a href="/kitbox/ip" style="color: #000000;">
+                        <h5><i class='fa fa-globe'></i>IP地址信息查询</h5>
                         <hr>
-                        <p th:text="${kit.text}"></p>
+                        <p>IP地址信息查询工具，开放服务接口实现IP信息查询</p>
                     </a>
                 </div>
             </div>
-
+            <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2"
+                 style="padding: 5px;">
+                <div style="border: 1px #eeeeee solid;padding: 5px;">
+                    <a href="/kitbox/digtrace" style="color: #000000;">
+                        <h5><i class='fa fa-globe'></i>Dig+trace命令工具</h5>
+                        <hr>
+                        <p>域名解析查询工具，开放服务接口实现dig+trace查询</p>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2"
+                 style="padding: 5px;">
+                <div style="border: 1px #eeeeee solid;padding: 5px;">
+                    <a href="/kitbox/getmyip" style="color: #000000;">
+                        <h5><i class='fa fa-globe'></i>公网IP获取工具</h5>
+                        <hr>
+                        <p>公网IP获取工具支持Linux、Windows、API</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <hr>
+            <h2>开发类工具<small>Development Tools</small></h2>
+            <hr>
+        </div>
+        <div class="row">
+            <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2"
+                 style="padding: 5px;">
+                <div style="border: 1px #eeeeee solid;padding: 5px;">
+                    <a href="/kitbox/uuid" style="color: #000000;">
+                        <h5><i class='fa fa-globe'></i>UUID/GUID生成工具</h5>
+                        <hr>
+                        <p>在线批量生成 UUID/GUID 工具，支持大小写连词符</p>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2"
+                 style="padding: 5px;">
+                <div style="border: 1px #eeeeee solid;padding: 5px;">
+                    <a href="/kitbox/freemarkerTest" style="color: #000000;">
+                        <h5><i class='fa fa-globe'></i>FreeMarker测试工具</h5>
+                        <hr>
+                        <p>FreeMarker在线测试工具，在线测试Ftl文件</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <hr>
+            <h2>加解密工具<small>Encryption and Decryption Tools</small></h2>
+            <hr>
+        </div>
+        <div class="row">
+            <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2"
+                 style="padding: 5px;">
+                <div style="border: 1px #eeeeee solid;padding: 5px;">
+                    <a href="/kitbox/md5" style="color: #000000;">
+                        <h5><i class='fa fa-globe'></i>MD5加密工具</h5>
+                        <hr>
+                        <p>MD5加密,对字符串进行MD5计算得出MD5加密字符串</p>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2"
+                 style="padding: 5px;">
+                <div style="border: 1px #eeeeee solid;padding: 5px;">
+                    <a href="/kitbox/sha1" style="color: #000000;">
+                        <h5><i class='fa fa-globe'></i>SHA-1加密工具</h5>
+                        <hr>
+                        <p>SHA-1加密,对字符串进行SHA-1计算加密字符串</p>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2"
+                 style="padding: 5px;">
+                <div style="border: 1px #eeeeee solid;padding: 5px;">
+                    <a href="/kitbox/sha256" style="color: #000000;">
+                        <h5><i class='fa fa-globe'></i>SHA-256加密工具</h5>
+                        <hr>
+                        <p>SHA-256加密,对字符串进行SHA-256计算加密字符串</p>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2"
+                  style="padding: 5px;">
+                <div style="border: 1px #eeeeee solid;padding: 5px;">
+                    <a href="/kitbox/sha512" style="color: #000000;">
+                        <h5><i class='fa fa-globe'></i>SHA-512加密工具</h5>
+                        <hr>
+                        <p>SHA-512加密,对字符串进行SHA-512计算加密字符串</p>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2"
+                 style="padding: 5px;">
+                <div style="border: 1px #eeeeee solid;padding: 5px;">
+                    <a href="/kitbox/url16" style="color: #000000;">
+                        <h5><i class='fa fa-globe'></i>URL网址16进制加密</h5>
+                        <hr>
+                        <p>URL网址16进制加密工具,对网址进行16进制编码</p>
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 </section>

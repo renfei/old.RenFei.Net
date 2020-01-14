@@ -32,11 +32,13 @@ public class BaseController extends BaseClass {
     protected static final String DOMAIN_KEY = "domain";
     protected static final String STATIC_DOMAIN_KEY = "staticdomain";
     protected static final String GLOBAL_COMMENT = "globalComment";
+    protected static final String GLOBAL_AD = "globalAD";
     protected String siteName;
     protected String siteLogo;
     protected String domain;
     protected String staticdomain;
     protected String globalComment;
+    protected String globalAD;
     protected PageHeadVO pageHeadVO;
     protected FooterVO footerVO;
     protected HeaderVO headerVO;
@@ -115,6 +117,7 @@ public class BaseController extends BaseClass {
         domain = globalService.getDomain();
         staticdomain = globalService.getStaticDomain();
         globalComment = globalService.getGlobalComment();
+        globalAD = globalService.getGlobalAD();
         response.setHeader("X-Frame-Options", "SAMEORIGIN");
         localRequest.set(request);
         localResponse.set(response);
@@ -163,6 +166,7 @@ public class BaseController extends BaseClass {
         mv.addObject(DOMAIN_KEY, domain);
         mv.addObject(STATIC_DOMAIN_KEY, staticdomain);
         mv.addObject(GLOBAL_COMMENT, globalComment);
+        mv.addObject(GLOBAL_AD, globalAD);
     }
 
     protected void setHead(ModelAndView mv, String title) {

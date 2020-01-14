@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="menu(menuname,btnname)">
+    <div class="panel-group" id="kitbox" role="tablist" aria-multiselectable="true">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="networkToolsHead">
+                <h4 class="panel-title">
+                    <a role="button" data-toggle="collapse" data-parent="#kitbox" href="#networkTools"
+                       taria-expanded="true" aria-controls="networkTools">
+                        网络类工具
+                    </a>
+                </h4>
+            </div>
+            <div id="networkTools" th:class="${menuname=='network'?'panel-collapse collapse in':'panel-collapse collapse'}" role="tabpanel"
+                 aria-labelledby="networkToolsHead">
+                <div class="panel-body">
+                    <a th:class="${btnname=='ipaddr'?'btn btn-primary btn-block':'btn btn-default btn-block'}" href="/kitbox/ip"
+                       role="button">IP地址信息查询工具</a>
+                    <a th:class="${btnname=='digtools'?'btn btn-primary btn-block':'btn btn-default btn-block'}" href="/kitbox/digtrace"
+                       role="button">域名解析Dig查询工具</a>
+                    <a th:class="${btnname=='getmyip'?'btn btn-primary btn-block':'btn btn-default btn-block'}" href="/kitbox/getmyip"
+                       role="button">公网IP获取工具</a>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="developHead">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#kitbox"
+                       href="#developTools" aria-expanded="true" aria-controls="developTools">
+                        开发类工具
+                    </a>
+                </h4>
+            </div>
+            <div id="developTools" th:class="${menuname=='develop'?'panel-collapse collapse in':'panel-collapse collapse'}" role="tabpanel"
+                 aria-labelledby="developHead">
+                <div class="panel-body">
+                    <a th:class="${btnname=='uuid'?'btn btn-primary btn-block':'btn btn-default btn-block'}" href="/kitbox/uuid"
+                       role="button">UUID/GUID在线生成工具</a>
+                    <a th:class="${btnname=='freemarker'?'btn btn-primary btn-block':'btn btn-default btn-block'}" href="/kitbox/freemarkerTest"
+                       role="button">FreeMarker在线测试工具</a>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="encryptHead">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#kitbox"
+                       href="#encryptTools" aria-expanded="true" aria-controls="encryptTools">
+                        加解密工具
+                    </a>
+                </h4>
+            </div>
+            <div id="encryptTools" th:class="${menuname=='encrypt'?'panel-collapse collapse in':'panel-collapse collapse'}" role="tabpanel"
+                 aria-labelledby="encryptHead">
+                <div class="panel-body">
+                    <a th:class="${btnname=='md5'?'btn btn-primary btn-block':'btn btn-default btn-block'}" href="/kitbox/md5"
+                       role="button">MD5加密工具</a>
+                    <a th:class="${btnname=='sha1'?'btn btn-primary btn-block':'btn btn-default btn-block'}" href="/kitbox/sha1"
+                       role="button">SHA-1加密工具</a>
+                    <a th:class="${btnname=='sha256'?'btn btn-primary btn-block':'btn btn-default btn-block'}" href="/kitbox/sha256"
+                       role="button">SHA-256加密工具</a>
+                    <a th:class="${btnname=='sha512'?'btn btn-primary btn-block':'btn btn-default btn-block'}" href="/kitbox/sha512"
+                       role="button">SHA-512加密工具</a>
+                    <a th:class="${btnname=='url16'?'btn btn-primary btn-block':'btn btn-default btn-block'}" href="/kitbox/url16"
+                       role="button">URL16进制加密</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

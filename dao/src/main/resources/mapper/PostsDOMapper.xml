@@ -135,7 +135,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="net.renfei.dao.entity.PostsDOWithBLOBs">
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="net.renfei.dao.entity.PostsDOWithBLOBs">
     insert into t_posts (id, category_id, is_original, 
       views, release_time, add_time, 
       is_delete, is_comment, page_rank, 
@@ -151,7 +151,7 @@
       #{sourceName,jdbcType=LONGVARCHAR}, #{describes,jdbcType=LONGVARCHAR}, #{keyword,jdbcType=LONGVARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="net.renfei.dao.entity.PostsDOWithBLOBs">
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="net.renfei.dao.entity.PostsDOWithBLOBs">
     insert into t_posts
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">

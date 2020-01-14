@@ -13,17 +13,14 @@ import com.aliyuncs.http.HttpResponse;
 import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
 import lombok.extern.slf4j.Slf4j;
-import net.renfei.core.config.RenFeiConfig;
-import org.springframework.beans.factory.annotation.Autowired;
+import net.renfei.core.baseclass.BaseClass;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 @Slf4j
 @Service
-public class AliyunGreen {
-    @Autowired
-    private RenFeiConfig renFeiConfig;
+public class AliyunGreen extends BaseClass {
     /**
      * ALIYUN_ACCESS_KEY_ID和ALIYUN_ACCESS_KEY_SECRET,请替换成您自己的aliyun ak.
      * 访问regionId支持: cn-shanghai, 其他区域暂不支持, 请勿使用

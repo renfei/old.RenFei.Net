@@ -1,9 +1,7 @@
 package net.renfei.web.baseclass;
 
-import net.renfei.core.service.AccountService;
-import net.renfei.core.service.JwtService;
-import net.renfei.core.service.SecretKeyService;
-import net.renfei.core.service.SysMenuService;
+import net.renfei.core.baseclass.BaseClass;
+import net.renfei.core.service.*;
 import net.renfei.dao.entity.AccountDO;
 import net.renfei.util.RSAUtils;
 import net.renfei.util.StringUtil;
@@ -18,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @RestController
-public class BaseRestController {
+public class BaseRestController extends BaseClass {
     @Autowired
     protected RSAUtils rsaUtils;
     @Autowired

@@ -28,6 +28,18 @@ public class PostsService extends BaseService {
     @Autowired
     private TagService tagService;
 
+    public int updatePost(PostsDOWithBLOBs postsDOWithBLOBs) {
+        return postsDOMapper.updateByPrimaryKeySelective(postsDOWithBLOBs);
+    }
+
+    public PostsDOWithBLOBs addPost(PostsDOWithBLOBs postsDOWithBLOBs) {
+        postsDOWithBLOBs.setAddTime(new Date());
+        postsDOWithBLOBs.setIsDelete(false);
+        postsDOWithBLOBs.setPageRank(10000D);
+        postsDOMapper.insertSelective(postsDOWithBLOBs);
+        return postsDOWithBLOBs;
+    }
+
     /**
      * 获取文章列表
      *
@@ -54,6 +66,23 @@ public class PostsService extends BaseService {
                 .createCriteria()
                 .andIsDeleteEqualTo(false)
                 .andReleaseTimeLessThanOrEqualTo(new Date());
+        return doSelect(postsDOExample, intPage, intRows);
+    }
+
+    /**
+     * 获取文章列表
+     *
+     * @param pages 页码
+     * @param rows  每页容量
+     * @return
+     */
+    public PostsListDTO getAdminPosts(String pages, String rows, String orderBy) {
+        int intPage = convertPage(pages), intRows = convertRows(rows);
+        PostsDOExample postsDOExample = new PostsDOExample();
+        postsDOExample.setOrderByClause(orderBy);
+        postsDOExample
+                .createCriteria()
+                .andIsDeleteEqualTo(false);
         return doSelect(postsDOExample, intPage, intRows);
     }
 
@@ -218,6 +247,10 @@ public class PostsService extends BaseService {
         } else {
             return null;
         }
+    }
+
+    public int deletePostById(Long id){
+        return postsDOMapper.deleteByPrimaryKey(id);
     }
 
     private PostsListDTO convert(List<PostsDOWithBLOBs> postsDOWithBLOBs, Long count) {
