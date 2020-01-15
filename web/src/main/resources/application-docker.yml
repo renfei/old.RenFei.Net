@@ -55,6 +55,8 @@ renfei:
   ALIYUN_ACCESS_KEY_SECRET: XXXXX
   ALIYUN_OSS_ENDPOINT: http://oss-cn-beijing.aliyuncs.com
   ALIYUN_OSS_BUCKENAME: renfei
+  ALIYUN_OSS_DOWNLOAD_BUCKENAME: download-renfei
+  ALIYUN_OSS_DOWNLOAD_HOST: https://download.renfei.net
   BAIDU_ZIYUAN_SITE: https://www.renfei.net
   BAIDU_ZIYUAN_TOKEN: token
   BAIDU_ZIYUAN_MOBILE_APPID: appid
