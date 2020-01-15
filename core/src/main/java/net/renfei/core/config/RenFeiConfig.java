@@ -21,4 +21,7 @@ public class RenFeiConfig {
     private String BAIDU_ZIYUAN_TOKEN;
     private String BAIDU_ZIYUAN_MOBILE_APPID;
     private String BAIDU_ZIYUAN_MOBILE_TOKEN;
+    private String WECHAT_APP_ID;
+    private String WECHAT_APP_SECRET;
+    private String WECHAT_TOKEN;
 }

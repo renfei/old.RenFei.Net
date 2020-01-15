@@ -59,3 +59,7 @@ renfei:
   BAIDU_ZIYUAN_TOKEN: token
   BAIDU_ZIYUAN_MOBILE_APPID: appid
   BAIDU_ZIYUAN_MOBILE_TOKEN: token
+  WECHAT_APP_ID: test
+  WECHAT_APP_SECRET: test
+  WECHAT_TOKEN: test
+  WECHAT_EncodingAESKey: test
