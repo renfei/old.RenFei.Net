@@ -65,5 +65,6 @@
         <!--<table tableName="t_library" domainObjectName="LibraryDO"></table>-->
         <!--<table tableName="t_library_details" domainObjectName="LibraryDetailsDO"></table>-->
         <!--<table tableName="t_movie" domainObjectName="MovieDO"></table>-->
+        <!--<table tableName="t_log" domainObjectName="LogDO"></table>-->
     </context>
 </generatorConfiguration>
