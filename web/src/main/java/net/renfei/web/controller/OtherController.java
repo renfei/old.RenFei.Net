@@ -1,23 +1,33 @@
 package net.renfei.web.controller;
 
+import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
+import net.renfei.core.service.aliyun.AliyunOSS;
 import net.renfei.core.task.UpdatePostPageRankJob;
+import net.renfei.dao.entity.DownloadDO;
 import net.renfei.dao.entity.LinkDOWithBLOBs;
 import net.renfei.web.baseclass.BaseController;
 import net.renfei.web.entity.APIResult;
 import net.renfei.web.entity.FriendLinkVO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Base64;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Slf4j
 @Controller
 @RequestMapping("/other")
 public class OtherController extends BaseController {
+    @Autowired
+    private AliyunOSS aliyunOSS;
 
     /**
      * 链接重定向（注意地址需要Base64编码以后传入）
@@ -72,6 +82,47 @@ public class OtherController extends BaseController {
         APIResult apiResult = ejbGenerator.convert(linkService.addFriendLink(ejbGenerator.convert(friendLinkVO, LinkDOWithBLOBs.class)), APIResult.class);
         if (apiResult.getSuccess()) {
             linkService.sendNotify(ejbGenerator.convert(friendLinkVO, LinkDOWithBLOBs.class));
+        }
+        return apiResult;
+    }
+
+    /**
+     * 获取极速下载链接
+     *
+     * @param code 从微信里返回的授权码
+     * @return
+     */
+    @GetMapping("JiSuDownloadLink")
+    @ResponseBody
+    public APIResult getJiSuDownloadLink(String code) {
+        APIResult apiResult = APIResult.fillResult(false);
+        String json = cacheService.get(code);
+        if (json != null && json.length() > 0) {
+            try {
+                DownloadDO downloadDO = JSON.parseObject(json, DownloadDO.class);
+                if (downloadDO != null) {
+                    String link = "";
+                    Date expires = new Date(new Date().getTime() + 21600000); //有效期6个小时，6时(h)=21600000毫秒(ms)
+                    if ("https://download.renfei.net".equals(downloadDO.getBucket())) {
+                        //阿里云的储存
+                        link = aliyunOSS.getPresignedUrl(downloadDO.getFilePath(), expires);
+                    }
+                    Map<String, String> map = new HashMap<>();
+                    map.put("jisulink", link);
+                    map.put("expires", dateUtil.format(expires,"yyyy-MM-dd HH:mm:ss"));
+                    apiResult.setSuccess(true);
+                    apiResult.setData(map);
+                } else {
+                    apiResult.setSuccess(false);
+                    apiResult.setMessage("授权码不存在或者已过期，请重新获取");
+                }
+            } catch (Exception ex) {
+                apiResult.setSuccess(false);
+                apiResult.setMessage("授权码不存在或者已过期，请重新获取");
+            }
+        } else {
+            apiResult.setSuccess(false);
+            apiResult.setMessage("授权码不存在或者已过期，请重新获取");
         }
         return apiResult;
     }

@@ -1,13 +1,17 @@
 package net.renfei.core.service;
 
 import lombok.extern.slf4j.Slf4j;
+import net.renfei.common.EJBGenerator;
 import net.renfei.core.baseclass.BaseService;
 import net.renfei.core.entity.IPDTO;
 import net.renfei.dao.entity.IPV4DO;
 import net.renfei.dao.entity.IPV4DOExample;
 import net.renfei.dao.entity.IPV6DO;
 import net.renfei.dao.entity.IPV6DOExample;
+import net.renfei.dao.persistences.IPV4DOMapper;
+import net.renfei.dao.persistences.IPV6DOMapper;
 import net.renfei.util.StringUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +23,13 @@ import java.util.Map;
 
 @Slf4j
 @Service
-public class IpService extends BaseService {
+public class IpService {
+    @Autowired
+    private IPV4DOMapper ipv4DOMapper;
+    @Autowired
+    private IPV6DOMapper ipv6DOMapper;
+    @Autowired
+    private EJBGenerator ejbGenerator = new EJBGenerator();
     private StringUtil stringUtil = new StringUtil();
 
     /**

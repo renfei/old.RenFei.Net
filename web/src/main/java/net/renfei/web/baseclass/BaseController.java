@@ -83,6 +83,8 @@ public class BaseController extends BaseClass {
     protected TagService tagService;
     @Autowired
     protected QuartzService quartzService;
+    @Autowired
+    protected CacheService cacheService;
 
     /**
      * 线程绑定Request对象

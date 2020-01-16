@@ -121,7 +121,7 @@
   }
 
   .padding-top{
-    padding-top: 90px;
+    padding-top: 30px;
   }
 
   .padding-right{
@@ -166,7 +166,7 @@
 
 #header{
   margin-bottom: 0;
-  padding: 30px 0 60px 0;
+  padding: 30px 0 30px 0;
 }
 
 #header .navbar-inverse .container{
@@ -2750,3 +2750,25 @@ span.stButton_gradient,
   font-size: 14px;
 }
 .flink li a{}
+.wechatcard {
+  padding: 15px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, .02);
+  border-left: 8px #52a938 solid;
+}
+
+.wechatcard_title {
+  font-size: 16px;
+  padding-bottom: 5px;
+}
+
+.wechatcard_red {
+  font-weight: 800;
+  color: red;
+}
+
+.wecharcolor {
+  color: #44B549;
+}

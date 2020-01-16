@@ -1,10 +1,10 @@
 package net.renfei.core.service;
 
 import lombok.extern.slf4j.Slf4j;
-import net.renfei.core.baseclass.BaseService;
 import net.renfei.core.entity.LogINOUT;
 import net.renfei.core.entity.LogLevel;
 import net.renfei.dao.entity.LogDO;
+import net.renfei.dao.persistences.LogDOMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -16,17 +16,24 @@ import java.util.UUID;
 
 @Slf4j
 @Service
-public class LogDBService extends BaseService {
+public class LogDBService {
+    @Autowired
+    private LogDOMapper logDOMapper;
     @Autowired
     private IpService ipService;
 
     @Async
-    public void insertLogDB(LogLevel level,LogINOUT inout,String value){
+    public void insertLogDB(LogLevel level, LogINOUT inout, String user, String value) {
         LogDO logDO = new LogDO();
         logDO.setLogValue(value);
         logDO.setLevel(level.getLevel());
         logDO.setInorout(inout.getInOut());
         insertLogDB(logDO);
+    }
+
+    @Async
+    public void insertLogDB(LogLevel level, LogINOUT inout, String value) {
+        insertLogDB(level, inout, null, value);
     }
 
     /**

@@ -66,5 +66,9 @@
         <!--<table tableName="t_library_details" domainObjectName="LibraryDetailsDO"></table>-->
         <!--<table tableName="t_movie" domainObjectName="MovieDO"></table>-->
         <!--<table tableName="t_log" domainObjectName="LogDO"></table>-->
+        <!--<table tableName="t_cache" domainObjectName="CacheDO"></table>-->
+        <!--<table tableName="t_wechat_keyword" domainObjectName="WeChatKeywordDO"></table>-->
+        <!--<table tableName="t_download" domainObjectName="DownloadDO"></table>-->
+        <!--<table tableName="t_posts_extra" domainObjectName="PostsExtraDO"></table>-->
     </context>
 </generatorConfiguration>

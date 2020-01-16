@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <body>
+        <div th:fragment="download(downloadfile)" th:if="${downloadfile!=null}">
+            <h2 class="post-title bold">
+                <a th:text="${downloadfile.name==null?'暂无':downloadfile.name}"></a>
+            </h2>
+            <h3 class="post-author">
+                <a th:text="${(downloadfile.created==null?'Unknown':#dates.format(downloadfile.created,'yyyy-MM-dd HH:mm:ss'))}"></a>
+            </h3>
+            <div class="row">
+                <div class="col-md-3 col-sm-5">
+                    <img th:src="${downloadfile.icon}" class="img-responsive" th:alt="${downloadfile.name}">
+                </div>
+                <div class="col-md-9 col-sm-7">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Name</label>
+                            <div class="col-sm-10">
+                                <label class="control-label" style="font-weight: 300;"
+                                       th:text="${downloadfile.name==null?'暂无':downloadfile.name}"></label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Size</label>
+                            <div class="col-sm-10">
+                                <label class="control-label" style="font-weight: 300;"
+                                       th:text="${downloadfile.size==null?'暂无':downloadfile.size}"></label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Hash</label>
+                            <div class="col-sm-10">
+                                <label class="control-label" style="font-weight: 300;"
+                                       th:text="${downloadfile.hash==null?'暂无':downloadfile.hash}"></label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Files</label>
+                            <div class="col-sm-10">
+                                <label class="control-label" style="font-weight: 300;"
+                                       th:text="${downloadfile.fileName==null?'暂无':downloadfile.fileName}"></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">下载服务
+                        <small>Download Service</small>
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">百度云盘</label>
+                            <div class="col-sm-10">
+                                <label class="control-label" style="font-weight: 300;">
+                                    <a target="_blank"
+                                       th:href="${downloadfile.baiduYunPanUrl==null?'JavaScript:void(0)':downloadfile.baiduYunPanUrl}"
+                                       th:text="${downloadfile.baiduYunPanUrl==null?'暂无':downloadfile.baiduYunPanUrl}">
+                                        http://
+                                    </a>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">提取码</label>
+                            <div class="col-sm-10">
+                                <label class="control-label" style="font-weight: 300;"
+                                       th:text="${downloadfile.baiduYunPanCode==null?'暂无':downloadfile.baiduYunPanCode}"></label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">极速下载</label>
+                            <div class="col-sm-10">
+                                <label class="control-label" style="font-weight: 300;text-align:left;">
+                                    <a id="downloadfile_jisu_link" href="JavaScript:void(0)" target="_blank">
+                                        请扫描二维码关注微信公众号获得授权码
+                                    </a>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">极速期限</label>
+                            <div class="col-sm-10">
+                                <label class="control-label" style="font-weight: 300;" id="downloadfile_jisu_exp">--
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">极速授权码</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" id="downloadfile_jisu_code">
+                            </div>
+                            <div class="col-sm-7">
+                                <button type="submit" class="btn btn-primary" id="downloadfile_jisu_btn"
+                                        onclick="getJiSuDownloadLink()">获取极速下载连接
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-10">
+                                <div class="alert alert-warning" role="alert">
+                                    <strong>注意！</strong>
+                                    获取极速下载链接后请勿刷新页面，页面刷新需要重新获取
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" style="padding: 5px;">
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-10">
+                                <div class="row wechatcard">
+                                    <div class="col-xs-4 col-sm-3" style="padding: 0;">
+                                        <img
+                                                src="https://cdn.renfei.net/images/wechat.jpg"
+                                                width="100%">
+                                    </div>
+                                    <div class="col-xs-8 col-sm-9" style="font-size: 14px;">
+                                        <div class="wechatcard_title"><strong class="wecharcolor">
+                                            微信订阅号：</strong>RenFeiNet
+                                        </div>
+                                        <div>
+                                            使用微信扫描二维码关注公众号，回复【
+                                            <span
+                                                    class="wechatcard_red"
+                                                    th:text="${downloadfile.id==null?'':'极速下载'+downloadfile.id}">
+                                                10023
+                                            </span>
+                                            】，获得极速下载授权码。
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

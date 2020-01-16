@@ -2,6 +2,8 @@ package net.renfei.core.service.wechat;
 
 import lombok.extern.slf4j.Slf4j;
 import net.renfei.core.baseclass.BaseService;
+import net.renfei.core.entity.LogINOUT;
+import net.renfei.core.entity.LogLevel;
 import net.renfei.core.entity.wechat.TextMessage;
 import net.renfei.core.entity.wechat.WeChatMessage;
 import net.renfei.util.EncryptionUtil;
@@ -10,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.Map;
 
 @Slf4j
@@ -19,7 +20,7 @@ public class WeChatService extends BaseService {
     @Autowired
     private WeChatMessageService weChatMessageService;
     @Autowired
-    private WeChatMessage weChatMessage;
+    private WeChatKeywordService weChatKeywordService;
 
     public boolean checkWeChat(HttpServletRequest request) {
         /**
@@ -58,112 +59,73 @@ public class WeChatService extends BaseService {
         String respMessage = null;
         try {
 
-            // 默认返回的文本消息内容  
+            // 默认返回的文本消息内容
             String respContent = null;
             // xml分析
             // 调用消息工具类MessageUtil解析微信发来的xml格式的消息，解析的结果放在HashMap里；
             Map<String, String> map = weChatMessageService.parseXml(request);
-            // 发送方账号
-            String fromUserName = map.get("FromUserName");
-            weChatMessage.setFromUserName(fromUserName);
-            // 接受方账号（公众号）
-            String toUserName = map.get("ToUserName");
-            weChatMessage.setToUserName(toUserName);
-            // 消息类型
-            String msgType = map.get("MsgType");
-            weChatMessage.setMessageType(msgType);
+            WeChatMessage weChatMessage = new WeChatMessage(map);
+            logDBService.insertLogDB(LogLevel.WECHAT, LogINOUT.IN, weChatMessage.getFromUserName(), weChatMessage.getMessage());
             // 默认回复文本消息
-            TextMessage textMessage = new TextMessage();
-            textMessage.setToUserName(fromUserName);
-            textMessage.setFromUserName(toUserName);
-            textMessage.setCreateTime(new Date().getTime());
-            textMessage.setMsgType(WeChatMessageService.RESP_MESSAGE_TYPE_TEXT);
+            TextMessage textMessage = new TextMessage(weChatMessage);
             //验证消息来自微信官方
             if (!checkWeChat(request)) {
                 textMessage.setContent("您的消息似乎不是来自微信官方服务器，所以未被处理。");
                 return weChatMessageService.textMessageToXml(textMessage);
             }
 
-            String msg = "";
-
             // 分析用户发送的消息类型，并作出相应的处理
-            switch (msgType) {
-                case WeChatMessageService.REQ_MESSAGE_TYPE_TEXT:
-                    return textMessageProcessor(map.get("Content"), textMessage);
-                case WeChatMessageService.REQ_MESSAGE_TYPE_IMAGE:
-                    msg = map.get("PicUrl");
-                    respContent = "我们已经收到您发送的图片：" + msg + "，但「RENFEI.NET」暂时还无法理解其中的含义，请您尝试发送文本消息。";
+            switch (weChatMessage.getMessageType()) {
+                case TEXT:
+                    respMessage = textMessageProcessor(weChatMessage, textMessage);
+                    break;
+                case IMAGE:
+                    respContent = "我们已经收到您发送的图片：" + weChatMessage.getMessage() + "，但「RENFEI.NET」暂时还无法理解其中的含义，请您尝试发送文本消息。";
                     textMessage.setContent(respContent);
                     respMessage = weChatMessageService.textMessageToXml(textMessage);
                     break;
-                case WeChatMessageService.REQ_MESSAGE_TYPE_VOICE:
-                    msg = map.get("Recognition");
-                    respContent = "我们已经收到您发送的语音消息：\"" + msg + "\"，但「RENFEI.NET」暂时还无法理解其中的含义，请您尝试发送文本消息。";
-                    textMessage.setContent(respContent);
-                    respMessage = weChatMessageService.textMessageToXml(textMessage);
-                    break;
-                case WeChatMessageService.REQ_MESSAGE_TYPE_VIDEO:
+                case VOICE:
+                    return textMessageProcessor(weChatMessage, textMessage);
+                case VIDEO:
                     respContent = "我们已经收到您发送的视频消息，但「RENFEI.NET」暂时还无法理解其中的含义，请您尝试发送文本消息。";
                     textMessage.setContent(respContent);
                     respMessage = weChatMessageService.textMessageToXml(textMessage);
                     break;
-                case WeChatMessageService.REQ_MESSAGE_TYPE_LOCATION:
-                    msg = map.get("Label");
-                    respContent = "我们已经收到您发送的位置信息：" + msg + "，但「RENFEI.NET」暂时还无法理解其中的含义，请您尝试发送文本消息。";
+                case LOCATION:
+                    respContent = "我们已经收到您发送的位置信息：" + weChatMessage.getMessage() + "，但「RENFEI.NET」暂时还无法理解其中的含义，请您尝试发送文本消息。";
                     textMessage.setContent(respContent);
                     respMessage = weChatMessageService.textMessageToXml(textMessage);
                     break;
-                case WeChatMessageService.REQ_MESSAGE_TYPE_LINK:
-                    msg = map.get("Url");
-                    respContent = "我们已经收到您发送的网页信息：" + msg + "，但「RENFEI.NET」暂时还无法理解其中的含义，请您尝试发送文本消息。";
-                    textMessage.setContent(respContent);
+                case LINK:
+                    respContent = "我们已经收到您发送的网页信息：" + weChatMessage.getMessage() + "，但「RENFEI.NET」暂时还无法理解其中的含义，请您尝试发送文本消息。";
                     textMessage.setContent(respContent);
                     respMessage = weChatMessageService.textMessageToXml(textMessage);
                     break;
-                case WeChatMessageService.REQ_MESSAGE_TYPE_EVENT:
-                    // 事件推送(当用户主动点击菜单，或者扫面二维码等事件)
-                    // 事件类型
-                    String eventType = map.get("Event");
-                    log.info("eventType------>" + eventType);
-                    switch (eventType) {
-                        case WeChatMessageService.EVENT_TYPE_SUBSCRIBE:
-                            log.info("关注");
-                            break;
-                        case WeChatMessageService.EVENT_TYPE_UNSUBSCRIBE:
-                            log.info("取消关注");
-                            break;
-                        case WeChatMessageService.EVENT_TYPE_SCAN:
-                            log.info("扫描带参数二维码");
-                            break;
-                        case WeChatMessageService.EVENT_TYPE_LOCATION:
-                            log.info("上报地理位置");
-                            break;
-                        case WeChatMessageService.EVENT_TYPE_CLICK:
-                            // 事件KEY值，与创建自定义菜单时指定的KEY值对应
-                            String eventKey = map.get("EventKey");
-                            log.info("eventKey------->" + eventKey);
-                            break;
-                        case WeChatMessageService.EVENT_TYPE_VIEW:
-                            log.info("处理自定义菜单URI视图");
-                            break;
-                    }
+                case EVENT:
                     break;
             }
+            logDBService.insertLogDB(LogLevel.WECHAT, LogINOUT.OUT, weChatMessage.getFromUserName(), respMessage);
         } catch (Exception e) {
             log.error(e.getMessage(), e);
+            logDBService.insertLogDB(LogLevel.ERROR, LogINOUT.IN, e.getMessage());
             respMessage = null;
         }
         return respMessage;
     }
 
-    private String textMessageProcessor(String message, TextMessage textMessage) {
-        if ("【收到不支持的消息类型，暂无法显示】".equals(message)) {
+    /**
+     * 文字类处理
+     *
+     * @param weChatMessage
+     * @param textMessage
+     * @return
+     */
+    private String textMessageProcessor(WeChatMessage weChatMessage, TextMessage textMessage) {
+        if ("【收到不支持的消息类型，暂无法显示】".equals(weChatMessage.getMessage())) {
             textMessage.setContent("我们已经收到您发送的消息，但「RENFEI.NET」暂时还无法理解其中的含义，请您尝试发送文本消息。");
             return weChatMessageService.textMessageToXml(textMessage);
         } else {
-            //[TODO]此处根据情况改变返回类型，默认是文字消息
-            textMessage.setContent("你发送的消息是：" + message);
-            return weChatMessageService.textMessageToXml(textMessage);
+            return weChatKeywordService.talk(weChatMessage);
         }
     }
 }
