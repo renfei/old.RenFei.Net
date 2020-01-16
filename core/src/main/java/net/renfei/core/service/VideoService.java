@@ -63,7 +63,7 @@ public class VideoService extends BaseService {
      * @param id 视频ID
      * @return
      */
-    public VideoDTO getVideoByID(String id) {
+    public VideoDTO getVideoByID(String id, boolean updateView) {
         Long ID = 0L;
         if (!stringUtil.isEmpty(id)) {
             try {
@@ -79,7 +79,9 @@ public class VideoService extends BaseService {
                     videoDTO = ejbGenerator.convert(videoDOWithBLOBsList.get(0), VideoDTO.class);
                     videoDTO.setVideoSource(getvideoSourceByVideoId(videoDTO.getId()));
                     videoDTO.setVideoTrack(getVideoTrackByVideoId(videoDTO.getId()));
-                    updateView(videoDOWithBLOBsList.get(0));
+                    if (updateView) {
+                        updateView(videoDOWithBLOBsList.get(0));
+                    }
                     return videoDTO;
                 } else {
                     return null;
@@ -90,6 +92,16 @@ public class VideoService extends BaseService {
         } else {
             return null;
         }
+    }
+
+    /**
+     * 根据ID获取视频
+     *
+     * @param id 视频ID
+     * @return
+     */
+    public VideoDTO getVideoByID(String id) {
+        return getVideoByID(id, true);
     }
 
     public List<VideoSourceDOWithBLOBs> getvideoSourceByVideoId(Long videoId) {

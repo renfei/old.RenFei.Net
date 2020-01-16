@@ -1,5 +1,7 @@
 package net.renfei.core.baseclass;
 
+import net.renfei.core.service.CacheService;
+import net.renfei.core.service.LogDBService;
 import net.renfei.dao.entity.LibraryDO;
 import net.renfei.dao.entity.MovieDOWithBLOBs;
 import net.renfei.dao.entity.PostsDOWithBLOBs;
@@ -19,6 +21,10 @@ public class BaseService extends BaseClass {
     protected static int DEFAULT_PAGE = 1;
     protected static int DEFAULT_ROWS = 10;
 
+    @Autowired
+    protected CacheService cacheService;
+    @Autowired
+    protected LogDBService logDBService;
     @Autowired
     protected MD5Util md5Util;
     @Autowired
@@ -81,6 +87,12 @@ public class BaseService extends BaseClass {
     protected TagDOMapper tagDOMapper;
     @Autowired
     protected TagRelationDOMapper tagRelationDOMapper;
+    @Autowired
+    protected WeChatKeywordDOMapper weChatKeywordDOMapper;
+    @Autowired
+    protected DownloadDOMapper downloadDOMapper;
+    @Autowired
+    protected PostsExtraDOMapper postsExtraDOMapper;
 
     protected int convertPage(String page) {
         return stringUtil.convertInt(page, DEFAULT_PAGE);

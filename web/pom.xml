@@ -78,44 +78,44 @@
             <!--
             npm打包：注意这里配置的是Linux的npm命令，如果是Windows需要修改命令
             -->
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <executions>
+            <!--<plugin>-->
+                <!--<groupId>org.codehaus.mojo</groupId>-->
+                <!--<artifactId>exec-maven-plugin</artifactId>-->
+                <!--<executions>-->
 
-                    <execution>
-                        <id>exec-npm-install</id>
-                        <phase>prepare-package</phase>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                        <configuration>
-                            <executable>npm</executable>
-                            <arguments>
-                                <argument>install</argument>
-                            </arguments>
-                            <workingDirectory>${basedir}/src/main/console</workingDirectory>
-                        </configuration>
-                    </execution>
+                    <!--<execution>-->
+                        <!--<id>exec-npm-install</id>-->
+                        <!--<phase>prepare-package</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>exec</goal>-->
+                        <!--</goals>-->
+                        <!--<configuration>-->
+                            <!--<executable>npm</executable>-->
+                            <!--<arguments>-->
+                                <!--<argument>install</argument>-->
+                            <!--</arguments>-->
+                            <!--<workingDirectory>${basedir}/src/main/console</workingDirectory>-->
+                        <!--</configuration>-->
+                    <!--</execution>-->
 
-                    <execution>
-                        <id>exec-npm-run-build</id>
-                        <phase>prepare-package</phase>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                        <configuration>
-                            <executable>npm</executable>
-                            <arguments>
-                                <argument>run</argument>
-                                <argument>build</argument>
-                            </arguments>
-                            <workingDirectory>${basedir}/src/main/console</workingDirectory>
-                        </configuration>
-                    </execution>
+                    <!--<execution>-->
+                        <!--<id>exec-npm-run-build</id>-->
+                        <!--<phase>prepare-package</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>exec</goal>-->
+                        <!--</goals>-->
+                        <!--<configuration>-->
+                            <!--<executable>npm</executable>-->
+                            <!--<arguments>-->
+                                <!--<argument>run</argument>-->
+                                <!--<argument>build</argument>-->
+                            <!--</arguments>-->
+                            <!--<workingDirectory>${basedir}/src/main/console</workingDirectory>-->
+                        <!--</configuration>-->
+                    <!--</execution>-->
 
-                </executions>
-            </plugin>
+                <!--</executions>-->
+            <!--</plugin>-->
             <!--将npm打包的结果复制到项目中-->
             <!--<plugin>-->
                 <!--<groupId>org.apache.maven.plugins</groupId>-->

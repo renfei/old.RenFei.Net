@@ -17,8 +17,13 @@ public class RenFeiConfig {
     private String ALIYUN_ACCESS_KEY_SECRET;
     private String ALIYUN_OSS_ENDPOINT;
     private String ALIYUN_OSS_BUCKENAME;
+    private String ALIYUN_OSS_DOWNLOAD_BUCKENAME;
+    private String ALIYUN_OSS_DOWNLOAD_HOST;
     private String BAIDU_ZIYUAN_SITE;
     private String BAIDU_ZIYUAN_TOKEN;
     private String BAIDU_ZIYUAN_MOBILE_APPID;
     private String BAIDU_ZIYUAN_MOBILE_TOKEN;
+    private String WECHAT_APP_ID;
+    private String WECHAT_APP_SECRET;
+    private String WECHAT_TOKEN;
 }

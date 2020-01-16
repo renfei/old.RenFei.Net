@@ -5,13 +5,11 @@ import com.github.pagehelper.PageHelper;
 import net.renfei.core.baseclass.BaseService;
 import net.renfei.core.entity.PostsDTO;
 import net.renfei.core.entity.PostsListDTO;
-import net.renfei.dao.entity.PostsDO;
-import net.renfei.dao.entity.PostsDOExample;
-import net.renfei.dao.entity.PostsDOWithBLOBs;
-import net.renfei.dao.entity.TagRelationDO;
+import net.renfei.dao.entity.*;
 import net.renfei.util.PageRankUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -27,6 +25,8 @@ public class PostsService extends BaseService {
     private static final Double Commenthted = 5D;
     @Autowired
     private TagService tagService;
+    @Autowired
+    private DownloadService downloadService;
 
     public int updatePost(PostsDOWithBLOBs postsDOWithBLOBs) {
         return postsDOMapper.updateByPrimaryKeySelective(postsDOWithBLOBs);
@@ -249,7 +249,38 @@ public class PostsService extends BaseService {
         }
     }
 
-    public int deletePostById(Long id){
+    /**
+     * 获取文章扩展信息
+     *
+     * @param id 文章ID
+     * @param mv 视图对象
+     */
+    public void getPostsExtraByID(String id, ModelAndView mv) {
+        Long ID = 0L;
+        if (!stringUtil.isEmpty(id)) {
+            try {
+                ID = Long.valueOf(id);
+                PostsExtraDOExample postsExtraDOExample = new PostsExtraDOExample();
+                postsExtraDOExample.createCriteria()
+                        .andPostIdEqualTo(ID);
+                List<PostsExtraDO> postsExtraDOS = postsExtraDOMapper.selectByExampleWithBLOBs(postsExtraDOExample);
+                if (postsExtraDOS != null && postsExtraDOS.size() > 0) {
+                    for (PostsExtraDO postsExtra : postsExtraDOS
+                    ) {
+                        if ("download".equals(postsExtra.getExtraType())) {
+                            //文章扩展下载服务
+                            DownloadDO downloadDO = downloadService.getDownloadInfoById(postsExtra.getExtraValue());
+                            mv.addObject("downloadDO", downloadDO);
+                        }
+                        //....可以扩展其他类型
+                    }
+                }
+            } catch (NumberFormatException nfe) {
+            }
+        }
+    }
+
+    public int deletePostById(Long id) {
         return postsDOMapper.deleteByPrimaryKey(id);
     }
 

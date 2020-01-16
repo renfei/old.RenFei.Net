@@ -1023,3 +1023,95 @@ CREATE TABLE `t_ipv6` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+-- ----------------------------
+-- Table structure for t_log
+-- ----------------------------
+DROP TABLE IF EXISTS `t_log`;
+CREATE TABLE `t_log` (
+                       `uuid` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+                       `datetime` datetime NOT NULL,
+                       `level` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'ACCESS;DEBUG;INFO;WARN;ERROR;FATAL;信息等级',
+                       `inorout` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'input/output，系统输入还是输出',
+                       `log_value` longtext COLLATE utf8mb4_unicode_ci COMMENT '日志内容',
+                       `remote_ip` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '客户端IP',
+                       `remote_user` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '客户端用户名',
+                       `remote_agent` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '客户端浏览器相关信息',
+                       `request_url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '访问地址',
+                       `request_method` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '访问方法',
+                       `status_code` int(11) DEFAULT NULL COMMENT '响应状态码',
+                       PRIMARY KEY (`uuid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Table structure for t_wechat_keyword
+-- ----------------------------
+DROP TABLE IF EXISTS `t_wechat_keyword`;
+CREATE TABLE `t_wechat_keyword` (
+                                  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+                                  `keyword` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '关键字',
+                                  `key_typw` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '类型，文本还是关联内部系统',
+                                  `key_value` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '内容',
+                                  PRIMARY KEY (`id`),
+                                  UNIQUE KEY `keyword_unique` (`keyword`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Records of t_wechat_keyword
+-- ----------------------------
+BEGIN;
+INSERT INTO `t_wechat_keyword` VALUES (1, '你好', 'TEXT', '你好！感谢您的关注。');
+INSERT INTO `t_wechat_keyword` VALUES (3, '你好！', 'TEXT', '你好！感谢您的关注。');
+COMMIT;
+
+-- ----------------------------
+-- Table structure for t_cache
+-- ----------------------------
+DROP TABLE IF EXISTS `t_cache`;
+CREATE TABLE `t_cache` (
+                         `uuid` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+                         `cache_key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+                         `cache_value` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+                         `expires` datetime NOT NULL,
+                         PRIMARY KEY (`uuid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Table structure for t_posts_extra
+-- ----------------------------
+DROP TABLE IF EXISTS `t_posts_extra`;
+CREATE TABLE `t_posts_extra` (
+                               `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+                               `post_id` bigint(20) unsigned NOT NULL,
+                               `extra_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+                               `extra_value` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+                               PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='文章扩展信息';
+
+-- ----------------------------
+-- Table structure for t_download
+-- ----------------------------
+DROP TABLE IF EXISTS `t_download`;
+CREATE TABLE `t_download` (
+                            `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '文件编号',
+                            `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '名称',
+                            `icon` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '图标地址',
+                            `size` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '文件大小',
+                            `created` datetime NOT NULL COMMENT '创建时间',
+                            `hash` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '哈希值',
+                            `file_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '文件名',
+                            `bucket` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '储存在哪里',
+                            `file_path` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '存储路径',
+                            `baidu_yun_pan_url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '百度云盘下载',
+                            `baidu_yun_pan_code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '百度云盘授权码',
+                            PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Records of t_download
+-- ----------------------------
+BEGIN;
+INSERT INTO `t_download` VALUES (1000, 'Navicat Premium 15.0.7', 'https://cdn.renfei.net/upload/image/2020/20200116112250.png', '142.8 MB', '2020-01-16 11:03:41', '8e6f1f02c97a2f650835eca9cdb64e356e0b8cb0', 'Navicat Premium 15.0.7 [TNT].dmg', 'https://download.renfei.net', 'software/developer-tools/macos/Navicat Premium 15.0.7 [TNT].dmg', 'https://pan.baidu.com/s/1V2BrAeCiiXJCOgVKb0eCbA', '36pa');
+COMMIT;
+
+SET FOREIGN_KEY_CHECKS = 1;

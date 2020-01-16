@@ -142,6 +142,8 @@ public class PostsController extends BaseController {
             setSidebarByPost(mv, postsDTO.getId().toString());
             //获得相关文章
             mv.addObject("related", postsService.getRelated(id));
+            //获取文章扩展服务
+            postsService.getPostsExtraByID(id, mv);
         } else {
             throwNoHandlerFoundException();
         }

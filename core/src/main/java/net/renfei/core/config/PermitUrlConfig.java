@@ -8,7 +8,8 @@ public class PermitUrlConfig {
             "/api/comments",
             "/api/open/",
             "/api/security/secretkey",
-            "/api/auth/signin"
+            "/api/auth/signin",
+            "/api/wechat"
     };
 
     public boolean permit(String url) {

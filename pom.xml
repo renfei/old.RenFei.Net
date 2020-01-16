@@ -37,6 +37,8 @@
         <jasypt-spring-boot-starter.version>2.1.1</jasypt-spring-boot-starter.version>
         <fastjson.version>1.2.58</fastjson.version>
         <commons-codec.version>1.12</commons-codec.version>
+        <dom4j.version>1.6.1</dom4j.version>
+        <xstream.version>1.4.10</xstream.version>
     </properties>
 
     <dependencies>

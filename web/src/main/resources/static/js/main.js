@@ -1,9 +1,10 @@
-jQuery(function($) {'use strict';
+jQuery(function ($) {
+    'use strict';
 
     //Responsive Nav
-    $('li.dropdown').find('.fa-angle-down').each(function(){
-        $(this).on('click', function(){
-            if( $(window).width() < 768 ) {
+    $('li.dropdown').find('.fa-angle-down').each(function () {
+        $(this).on('click', function () {
+            if ($(window).width() < 768) {
                 $(this).parent().next().slideToggle();
             }
             return false;
@@ -11,7 +12,7 @@ jQuery(function($) {'use strict';
     });
 
     //Fit Vids
-    if( $('#video-container').length ) {
+    if ($('#video-container').length) {
         $("#video-container").fitVids();
     }
 
@@ -19,31 +20,31 @@ jQuery(function($) {'use strict';
     new WOW().init();
 
     // portfolio filter
-    $(window).on('load',function(){
+    $(window).on('load', function () {
 
         $('.main-slider').addClass('animate-in');
         $('.preloader').remove();
         //End Preloader
 
-        if( $('.masonery_area').length ) {
+        if ($('.masonery_area').length) {
             $('.masonery_area').masonry();//Masonry
         }
 
         var $portfolio_selectors = $('.portfolio-filter >li>a');
 
-        if($portfolio_selectors.length) {
+        if ($portfolio_selectors.length) {
 
             var $portfolio = $('.portfolio-items');
             $portfolio.isotope({
-                itemSelector : '.portfolio-item',
-                layoutMode : 'fitRows'
+                itemSelector: '.portfolio-item',
+                layoutMode: 'fitRows'
             });
 
-            $portfolio_selectors.on('click', function(){
+            $portfolio_selectors.on('click', function () {
                 $portfolio_selectors.removeClass('active');
                 $(this).addClass('active');
                 var selector = $(this).attr('data-filter');
-                $portfolio.isotope({ filter: selector });
+                $portfolio.isotope({filter: selector});
                 return false;
             });
         }
@@ -52,6 +53,7 @@ jQuery(function($) {'use strict';
 
 
     $('.timer').each(count);
+
     function count(options) {
         var $this = $(this);
         options = $.extend({}, options || {}, $this.data('countToOptions') || {});
@@ -59,7 +61,7 @@ jQuery(function($) {'use strict';
     }
 
     // Search
-    $('.fa-search').on('click', function() {
+    $('.fa-search').on('click', function () {
         $('.field-toggle').fadeToggle(200);
     });
 
@@ -79,22 +81,22 @@ jQuery(function($) {'use strict';
     // });
 
     // Progress Bar
-    $.each($('div.progress-bar'),function(){
-        $(this).css('width', $(this).attr('data-transition')+'%');
+    $.each($('div.progress-bar'), function () {
+        $(this).css('width', $(this).attr('data-transition') + '%');
     });
 
-    if( $('#gmap').length ) {
+    if ($('#gmap').length) {
         var map;
 
         map = new GMaps({
             el: '#gmap',
             lat: 43.04446,
             lng: -76.130791,
-            scrollwheel:false,
+            scrollwheel: false,
             zoom: 16,
-            zoomControl : false,
-            panControl : false,
-            streetViewControl : false,
+            zoomControl: false,
+            panControl: false,
+            streetViewControl: false,
             mapTypeControl: false,
             overviewMapControl: false,
             clickable: false
@@ -112,8 +114,8 @@ jQuery(function($) {'use strict';
 
 });
 
-console.log("\n %c RENFEI.NET %c 你知道的太多了 %c \n","color: #fff; background: #3274ff; padding:5px 0; border: 1px solid #3274ff;","color: #3274ff; background: #fff; padding:5px 0; border: 1px solid #3274ff;","");
-console.log("\n %c 开发交流QQ群 %c 130832168 %c \n","color: #fff; background: #eb0; padding:5px 0; border: 1px solid #eb0;","color: #eb0; background: #fff; padding:5px 0; border: 1px solid #eb0;","");
+console.log("\n %c RENFEI.NET %c 你知道的太多了 %c \n", "color: #fff; background: #3274ff; padding:5px 0; border: 1px solid #3274ff;", "color: #3274ff; background: #fff; padding:5px 0; border: 1px solid #3274ff;", "");
+console.log("\n %c 开发交流QQ群 %c 130832168 %c \n", "color: #fff; background: #eb0; padding:5px 0; border: 1px solid #eb0;", "color: #eb0; background: #fff; padding:5px 0; border: 1px solid #eb0;", "");
 
 function cancelReply() {
     $("#reply").val(undefined);
@@ -215,5 +217,42 @@ function notice(title, content) {
         delayOnHover: true,
         showCountdown: true,
         closeButton: true
+    });
+}
+
+function getJiSuDownloadLink() {
+    var downloadfile_jisu_btn = $("#downloadfile_jisu_btn").html();
+    var downloadfile_jisu_code = $("#downloadfile_jisu_code").val();
+    if (downloadfile_jisu_code === "") {
+        notice("Fail - 失败", "请扫描二维码关注微信公众号获得授权码");
+        $("#downloadfile_jisu_btn").html(downloadfile_jisu_btn);
+        return;
+    }
+    $("#downloadfile_jisu_btn").html("正在获取请稍后");
+    $.ajax({
+        url: '/other/JiSuDownloadLink',
+        type: 'GET', //GET
+        async: true,    //或false,是否异步
+        data: {
+            code: downloadfile_jisu_code
+        },
+        timeout: 5000,    //超时时间
+        dataType: 'json',
+        success: function (data, textStatus, jqXHR) {
+            if (data.success) {
+                $('#downloadfile_jisu_link').attr('href',data.data.jisulink);
+                $('#downloadfile_jisu_link').html(data.data.jisulink);
+                $('#downloadfile_jisu_exp').html(data.data.expires);
+            } else {
+                $("#downloadfile_jisu_link").html("极速下载链接获取失败！" + data.message);
+                notice("Fail - 失败", data.message);
+            }
+            $("#downloadfile_jisu_btn").html(downloadfile_jisu_btn);
+        },
+        error: function (xhr, textStatus) {
+            $("#downloadfile_jisu_btn").html(downloadfile_jisu_btn);
+            $("#downloadfile_jisu_link").html("极速下载链接获取失败，网络错误！");
+            notice("Error - 错误:" + textStatus, xhr.responseText);
+        }
     });
 }
