@@ -20,6 +20,7 @@ public class WeChatMessage implements Serializable {
     private WeChatMessageType messageType;            // 消息类型
     private String message;                // 消息
     private String msgId;
+    private WeChatMessageType event;
 
     public WeChatMessage() {
     }
@@ -29,6 +30,7 @@ public class WeChatMessage implements Serializable {
         this.toUserName = map.get("ToUserName");
         this.messageType = valueOf(map.get("MsgType").toUpperCase());
         this.msgId = map.get("MsgId");
+        this.event = map.get("Event") == null ? null : valueOf(map.get("Event").toUpperCase());
         this.message = getMessage(map);
     }
 

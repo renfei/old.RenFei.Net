@@ -102,6 +102,14 @@ public class WeChatService extends BaseService {
                     respMessage = weChatMessageService.textMessageToXml(textMessage);
                     break;
                 case EVENT:
+                    switch (weChatMessage.getEvent()) {
+                        case SUBSCRIBE:
+                            logDBService.insertLogDB(LogLevel.WECHAT, LogINOUT.IN, weChatMessage.getFromUserName(), "订阅事件");
+                            break;
+                        case UNSUBSCRIBE:
+                            logDBService.insertLogDB(LogLevel.WECHAT, LogINOUT.IN, weChatMessage.getFromUserName(), "取消订阅事件");
+                            break;
+                    }
                     break;
             }
             logDBService.insertLogDB(LogLevel.WECHAT, LogINOUT.OUT, weChatMessage.getFromUserName(), respMessage);
