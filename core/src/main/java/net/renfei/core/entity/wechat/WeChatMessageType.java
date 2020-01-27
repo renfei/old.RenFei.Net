@@ -5,7 +5,8 @@ public enum WeChatMessageType {
     VIDEO("video"), LINK("link"), LOCATION("location"),
     SHORTVIDEO("shortvideo"), EVENT("event"), MUSIC("music"),
     NEWS("news"), SUBSCRIBE("subscribe"), UNSUBSCRIBE("unsubscribe"),
-    SCAN("scan"), CLICK("CLICK"), VIEW("VIEW"), TEMPLATESENDJOBFINISH("TEMPLATESENDJOBFINISH");
+    SCAN("scan"), CLICK("CLICK"), VIEW("VIEW"),
+    TEMPLATESENDJOBFINISH("TEMPLATESENDJOBFINISH"),MASSSENDJOBFINISH("MASSSENDJOBFINISH");
     private String type;
 
     WeChatMessageType(String type) {

@@ -103,11 +103,14 @@ public class WeChatService extends BaseService {
                     break;
                 case EVENT:
                     switch (weChatMessage.getEvent()) {
-                        case SUBSCRIBE:
+                        case SUBSCRIBE://订阅
                             logDBService.insertLogDB(LogLevel.WECHAT, LogINOUT.IN, weChatMessage.getFromUserName(), "订阅事件");
                             break;
-                        case UNSUBSCRIBE:
+                        case UNSUBSCRIBE://取消订阅
                             logDBService.insertLogDB(LogLevel.WECHAT, LogINOUT.IN, weChatMessage.getFromUserName(), "取消订阅事件");
+                            break;
+                        case MASSSENDJOBFINISH://事件推送群发结果
+                            logDBService.insertLogDB(LogLevel.WECHAT, LogINOUT.IN, weChatMessage.getFromUserName(), "事件推送群发结果");
                             break;
                     }
                     break;
