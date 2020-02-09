@@ -148,9 +148,11 @@
                         <li>
                             <a href="/other/friendlink" target="_blank">友情链接申请</a>
                         </li>
+                        <!--此处的rel不是nofollow，请勿惊慌。这是noopener-->
                         <li th:if="${linkDTO!=null}" th:each="link:${linkDTO.links}">
-                            <a th:href="${link.sitelink}" th:text="${link.sitename}" target="_blank"></a>
+                            <a th:if="${link.linkType==1}" th:href="${link.sitelink}" th:text="${link.sitename}" target="_blank" rel="noopener"></a>
                         </li>
+                        <!--此处的rel不是nofollow，请勿惊慌。这是noopener-->
                     </ul>
                 </div>
             </div>

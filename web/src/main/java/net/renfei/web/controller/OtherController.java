@@ -2,6 +2,7 @@ package net.renfei.web.controller;
 
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
+import net.renfei.core.entity.LinkDTO;
 import net.renfei.core.service.aliyun.AliyunOSS;
 import net.renfei.core.task.UpdatePostPageRankJob;
 import net.renfei.dao.entity.DownloadDO;
@@ -72,6 +73,8 @@ public class OtherController extends BaseController {
         setHead(mv, "友情链接申请",
                 "为了与更多建站伙伴互相提高权重和品牌,特开放友情链接申请。您可以使用友情链接申请功能向我们提交友情链接交换的请求,我们会立即审核您的申请。",
                 "友情链接,友情,链接,在线,申请");
+        LinkDTO linkDTO = linkService.getLinks();
+        mv.addObject("linkDTO", linkDTO);
         mv.setViewName("other/friendlink");
         return mv;
     }

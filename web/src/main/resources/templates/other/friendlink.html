@@ -72,6 +72,34 @@
                                 class="fa fa-angle-right"></i> 您需要填写真实的邮箱地址，当我站发生变动时会及时通知到您。
                         </li>
                     </ul>
+                    <h3 class="post-author">对等互换和交叉互换的区别</h3>
+                    <ul class="elements">
+                        <li class="wow fadeInUp" data-wow-duration="900ms" data-wow-delay="100ms"><i
+                                class="fa fa-angle-right"></i> 对等互换：我站的友情链接只出现在首页，这里权重最高，如果您的友情链接也是在首页，那么就是对等互换。
+                        </li>
+                        <li class="wow fadeInUp" data-wow-duration="800ms" data-wow-delay="200ms"><i
+                                class="fa fa-angle-right"></i> 交叉互换：如果您的友情链接不在首页，而是在"友情链接"内页上，那么我站也只会在此友情链接页面上做展示，不会出现在首页，这就是内页的交叉互换。
+                        </li>
+                    </ul>
+                </div>
+                <h2 class="page-header">友情链接展示</h2>
+                <div class="post-content overflow">
+                    <h3 class="post-author">对等互换的站友</h3>
+                    <div class="clients-logo wow fadeIn" data-wow-duration="1000ms" data-wow-delay="600ms">
+                        <ul class="flink">
+                            <li th:if="${linkDTO!=null}" th:each="link:${linkDTO.links}">
+                                <a th:if="${link.linkType==1}" th:href="${link.sitelink}" th:text="${link.sitename}" target="_blank" rel="noopener"></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <h3 class="post-author">交叉互换的站友</h3>
+                    <div class="clients-logo wow fadeIn" data-wow-duration="1000ms" data-wow-delay="600ms">
+                        <ul class="flink">
+                            <li th:if="${linkDTO!=null}" th:each="link:${linkDTO.links}">
+                                <a th:if="${link.linkType==2}" th:href="${link.sitelink}" th:text="${link.sitename}" target="_blank" rel="noopener"></a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
             <div class="col-md-4 col-sm-12">
