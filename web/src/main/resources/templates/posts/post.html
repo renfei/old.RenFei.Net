@@ -47,8 +47,8 @@
                                 <h3 class="post-author">
                                     <a th:utext="'<i class=\'fa fa-calendar\'></i> '+${(postsVO.releaseTime==null?'Unknown':#dates.format(postsVO.releaseTime,'yyyy-MM-dd HH:mm:ss'))}"></a>
                                     <a th:utext="'<i class=\'fa fa-eye\'></i> '+${(postsVO.views==null?'Unknown':postsVO.views)}"></a>
-                                    <a th:utext="'<i class=\'fa fa-user\'></i> '+${(postsVO.isOriginal?'原创':postsVO.sourceName)}"
-                                       th:href="${postsVO.isOriginal?'javascript:void(0)':postsVO.sourceUrl}"></a>
+                                    <a th:utext="'<i class=\'fa fa-user\'></i> '+${postsVO.sourceName==null?'Unknown':postsVO.sourceName}"
+                                       th:href="${postsVO.isOriginal?domain:postsVO.sourceUrl}" target="_blank" rel="noopener"></a>
                                 </h3>
                                 <div class="renfei-content">
                                     <div th:if="${downloadDO!=null}"
@@ -57,8 +57,12 @@
 
                                     </p>
                                 </div>
-                                <div>
-                                    <script th:if="${globalAD=='1'}" type="text/javascript"
+                                <div th:if="${globalAD=='1'}">
+                                    <div class="cpu-feeds-block" data-site-id="275420327" data-block-id="54146"></div>
+                                    <script>
+                                        (function(){var url="//cpu.baidu.com";var getEntry=function(){var script=document.createElement("script");script.id="cpu-block-entry";script.src=url+"/js/cb.js";var scriptTag=document.getElementsByTagName("script")[0];scriptTag.parentNode.insertBefore(script,scriptTag)};var sentMsg=function(e){var msg={msg:e.toString()||"no err msg",line:e.lineno||-1};var img=document.createElement("img");img.src=url+"/msg?m=block&e="+encodeURIComponent(JSON.stringify(msg))};try{window.feedsbycpu=window.feedsbycpu||[];window.feedsbycpu.push({siteId:"275420327",blockId:"54146",display:"auto"});document.getElementById("cpu-block-entry")||getEntry()}catch(e){sentMsg(e)}})();
+                                    </script>
+                                    <script type="text/javascript"
                                             src="//window.renfei.net/production/vq_nr/common/y/production/y/source/imp.js"></script>
                                 </div>
                                 <div class="post-bottom overflow">
@@ -116,6 +120,8 @@
         </div>
     </div>
 </section>
+<script type="application/ld+json" th:utext="${jsonld}">
+</script>
 <footer th:replace="layout/footer::footer(${footer},${performance})"></footer>
 <script>
     $(function () {

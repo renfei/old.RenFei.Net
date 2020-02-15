@@ -6,8 +6,23 @@
         <title th:text="${head.sitename}"></title>
         <meta name="description" th:if="${head.description!=null}" th:content="${head.description}">
         <meta name="keywords" th:if="${head.keywords!=null}" th:content="${head.keywords}">
-        <meta name="og:title" th:content="${head.sitename}">
-        <meta name="og:description" th:content="${head.description}">
+        <meta name="author" content="任霏,i@renfei.net"/>
+        <meta name="copyright" content="CopyRight RENFEI.NET, All Rights Reserved."/>
+        <meta name="generator" content="IntelliJ IDEA 2018.3 (Ultimate Edition)"/>
+        <meta http-equiv="Content-Language" content="zh-CN"/>
+        <meta name="renderer" content="webkit">
+        <meta property="og:title" th:if="${head.opg!=null&&head.opg.title!=null}" th:content="${head.opg.title}"/>
+        <meta property="og:description" th:if="${head.opg!=null&&head.opg.description!=null}" th:content="${head.opg.description}"/>
+        <meta property="og:type" th:if="${head.opg!=null&&head.opg.type!=null}" th:content="${head.opg.type}"/>
+        <meta property="og:image" th:if="${head.opg!=null&&head.opg.image!=null}" th:content="${head.opg.image}"/>
+        <meta property="og:url" th:if="${head.opg!=null&&head.opg.url!=null}" th:content="${head.opg.url}"/>
+        <meta property="og:release_date" th:if="${head.opg!=null&&head.opg.releaseDate!=null}" th:content="${#dates.format(head.opg.releaseDate, 'yyyy-MM-dd')+'T'+#dates.format(head.opg.releaseDate, 'HH:mm:ss')+'Z'}"/>
+        <meta property="og:author" th:if="${head.opg!=null&&head.opg.author!=null}" th:content="${head.opg.author}"/>
+        <meta property="og:locale" th:if="${head.opg!=null&&head.opg.locale!=null}" th:content="${head.opg.locale}"/>
+        <meta property="og:site_name" th:if="${head.opg!=null&&head.opg.siteName!=null}" th:content="${head.opg.siteName}"/>
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:site" content="@renfeii" />
+        <meta name="twitter:creator" content="@renfeii" />
         <meta name="twitter:title" th:content="${head.sitename}">
         <meta name="twitter:description" th:content="${head.description}">
         <link th:each="cs:${head.css}" rel="stylesheet" type="text/css" th:href="${cs}"/>

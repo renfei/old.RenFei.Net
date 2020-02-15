@@ -180,10 +180,15 @@ public class BaseController extends BaseClass {
     }
 
     protected void setHead(ModelAndView mv, String title, String description, String keywords) {
+        setHead(mv, title, description, keywords, null);
+    }
+
+    protected void setHead(ModelAndView mv, String title, String description, String keywords, OGprotocol opg) {
         PageHeadVO pageHeadVO = getHead(mv);
         pageHeadVO.setSitename(title + " - " + siteName);
         pageHeadVO.setDescription(description);
         pageHeadVO.setKeywords(keywords);
+        pageHeadVO.setOpg(opg);
         mv.addObject(HEAD_KEY, pageHeadVO);
     }
 
@@ -250,6 +255,16 @@ public class BaseController extends BaseClass {
             pageHeadVO = (PageHeadVO) obj;
         }
         return pageHeadVO;
+    }
+
+    private FooterVO getFoot(ModelAndView mv) {
+        Map<String, Object> map = mv.getModel();
+        FooterVO footerVO = new FooterVO();
+        Object obj = map.get(FOOTER_KEY);
+        if (obj instanceof FooterVO) {
+            footerVO = (FooterVO) obj;
+        }
+        return footerVO;
     }
 
     protected Object getObjFromMV(ModelAndView mv, String key) {

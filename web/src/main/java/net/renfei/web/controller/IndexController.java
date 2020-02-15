@@ -5,6 +5,7 @@ import net.renfei.dao.entity.VAllInfoWithBLOBs;
 import net.renfei.web.baseclass.BaseController;
 import net.renfei.web.entity.AllInfoVO;
 import net.renfei.web.entity.CategoryVO;
+import net.renfei.web.entity.OGprotocol;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -64,9 +66,19 @@ public class IndexController extends BaseController {
         mv.addObject("linkDTO", linkDTO);
         mv.addObject("page", intPage);
         mv.addObject("homebanner", globalService.getHomeBanner());
+        OGprotocol opg = new OGprotocol();
+        opg.setType("blog");
+        opg.setAuthor("任霏");
+        opg.setDescription("这是 任霏 的个人网站与博客，一个程序员自己写的网站，不仅仅是文章内容，还包括网站程序的代码。 对新鲜事物都十分感兴趣，利用这个站点向大家分享自己的所见所得，同时这个站点也是我的实验室。");
+        opg.setImage("https://cdn.renfei.net/logo/ogimage.png");
+        opg.setLocale("zh-CN");
+        opg.setReleaseDate(new Date());
+        opg.setSiteName("RenFei.Net");
+        opg.setTitle("任霏博客 - The RenFei Blog");
+        opg.setUrl("https://www.renfei.net");
         setHead(mv, "任霏博客",
                 "这是 任霏 的个人网站与博客，一个程序员自己写的网站，不仅仅是文章内容，还包括网站程序的代码。 对新鲜事物都十分感兴趣，利用这个站点向大家分享自己的所见所得，同时这个站点也是我的实验室。",
-                "任霏,RenFei,NeilRen,博客,开发者,程序猿,程序媛,极客,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,技术,blog");
+                "任霏,RenFei,NeilRen,博客,开发者,程序猿,程序媛,极客,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,技术,blog", opg);
         mv.setViewName("index");
         return mv;
     }

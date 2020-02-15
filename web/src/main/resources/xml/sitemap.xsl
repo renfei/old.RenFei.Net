@@ -63,7 +63,7 @@
         <body>
         <xsl:apply-templates></xsl:apply-templates>
         <div id="footer">
-            Copyright © 2012-2019 RENFEI.NET All rights reserved.
+            Copyright 2012-2020 RENFEI.NET All rights reserved.
         </div>
         </body>
         </html>
