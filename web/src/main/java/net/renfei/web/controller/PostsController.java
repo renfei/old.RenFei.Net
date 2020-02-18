@@ -113,11 +113,11 @@ public class PostsController extends BaseController {
             setInfo(postsVO);
             mv.addObject("postsVO", postsVO);
             OGprotocol opg = new OGprotocol();
-            opg.setType("blog");
+            opg.setType("article");
             opg.setAuthor(postsVO.getSourceName());
             opg.setDescription(postsVO.getDescribes());
             opg.setImage(postsVO.getFeaturedImage());
-            opg.setLocale("zh-CN");
+            opg.setLocale("zh_CN");
             opg.setReleaseDate(postsVO.getReleaseTime());
             opg.setSiteName("RenFei.Net");
             opg.setTitle(postsVO.getTitle() + " - Posts");
@@ -152,6 +152,12 @@ public class PostsController extends BaseController {
             mv.addObject("related", postsService.getRelated(id));
             //获取文章扩展服务
             postsService.getPostsExtraByID(id, mv);
+            ShareVO shareVO = new ShareVO();
+            shareVO.setTitle(postsVO.getTitle());
+            shareVO.setUrl(domain + "/posts/" + postsVO.getId());
+            shareVO.setDescribes(postsVO.getDescribes());
+            shareVO.setPics(postsVO.getFeaturedImage());
+            mv.addObject("sharevo", shareVO);
         } else {
             throwNoHandlerFoundException();
         }

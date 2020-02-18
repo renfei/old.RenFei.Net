@@ -134,7 +134,7 @@ public class BaseController extends BaseClass {
             footerVO = new FooterVO();
         }
         pageHeadVO.setCss(globalService.getGlobalCSSList());
-        pageHeadVO.setJss(globalService.getGlobalJSsList());
+        pageHeadVO.setJss(globalService.getGlobalJSsList(true));
         pageHeadVO.setScript(globalService.getScript());
         pageHeadVO.setDescription(globalService.getDescription());
         pageHeadVO.setSitename(siteName);
@@ -160,6 +160,7 @@ public class BaseController extends BaseClass {
         footerVO.setAnalyticsCode(globalService.getAnalyticsCode());
         footerVO.setFooterMenu(ejbGenerator.convert(menuService.getAllFooterMenu(), MenuVO.class));
         footerVO.setCopyList(ejbGenerator.convert(menuService.getAllFooterCopyMenu(), MenuVO.class));
+        footerVO.setJss(globalService.getGlobalJSsList(false));
         //全局侧边栏
         sidebarVO = new SidebarVO();
         mv.addObject(FOOTER_KEY, footerVO);

@@ -66,7 +66,8 @@
                                             th:utext="'<i class=\'fa fa-eye\'></i> '+${(video.views==null?'Unknown':video.views)}"></button>
                                 </h3>
                                 <p th:utext="${video.describes}"></p>
-                                <div class="post-bottom overflow">
+                                <div th:replace="layout/share::share(${sharevo})"></div>
+                                <div class="post-bottom overflow" style="margin-top:10px;margin-bottom: 20px;">
                                     <ul class="nav navbar-nav post-nav">
                                         <li>
                                             <a th:href="${domain}+'/cat/'+${video.categoryTypeName}+'/'+${video.categoryEnName}"
@@ -79,7 +80,6 @@
                                         </li>
                                     </ul>
                                 </div>
-                                <div th:replace="layout/share::share"></div>
                                 <div th:if="${globalComment=='1'&&video.isComment}">
                                     <div th:replace="layout/comments::comments(${commentTypeId},${commentObjId},${commentVO})"></div>
                                 </div>

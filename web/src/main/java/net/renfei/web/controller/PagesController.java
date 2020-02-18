@@ -3,6 +3,7 @@ package net.renfei.web.controller;
 import net.renfei.core.entity.PageDTO;
 import net.renfei.web.baseclass.BaseController;
 import net.renfei.web.entity.PageVO;
+import net.renfei.web.entity.ShareVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +21,12 @@ public class PagesController extends BaseController {
             PageVO pageVO = ejbGenerator.convert(pageDTO, PageVO.class);
             mv.addObject("pageVO", pageVO);
             setHead(mv, pageVO.getTitle(), pageVO.getDescribes());
+            ShareVO shareVO = new ShareVO();
+            shareVO.setTitle(pageVO.getTitle());
+            shareVO.setUrl(domain + "/page/" + pageVO.getId());
+            shareVO.setDescribes(pageVO.getDescribes());
+            shareVO.setPics("https://cdn.renfei.net/logo/ogimage.png");
+            mv.addObject("sharevo", shareVO);
         } else {
             throwNoHandlerFoundException();
         }

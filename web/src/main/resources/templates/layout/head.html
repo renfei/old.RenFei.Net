@@ -20,11 +20,22 @@
         <meta property="og:author" th:if="${head.opg!=null&&head.opg.author!=null}" th:content="${head.opg.author}"/>
         <meta property="og:locale" th:if="${head.opg!=null&&head.opg.locale!=null}" th:content="${head.opg.locale}"/>
         <meta property="og:site_name" th:if="${head.opg!=null&&head.opg.siteName!=null}" th:content="${head.opg.siteName}"/>
-        <meta name="twitter:card" content="summary" />
+        <meta property="fb:app_id" content="205704373959112"/>
+        <meta property="fb:pages" content="108842630700746"/>
+        <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@renfeii" />
         <meta name="twitter:creator" content="@renfeii" />
         <meta name="twitter:title" th:content="${head.sitename}">
         <meta name="twitter:description" th:content="${head.description}">
+        <meta name="twitter:domain" content="www.renfei.net">
+        <meta name="twitter:image:src" th:if="${head.opg!=null&&head.opg.image!=null}" th:content="${head.opg.image}">
+        <meta name="og:image:alt" th:if="${head.opg!=null&&head.opg.image!=null}" th:content="${'RenFei 任霏'}">
+        <link rel="apple-touch-icon-precomposed" sizes="57x57"    href="https://cdn.renfei.net/logo/apple-touch-icon-57x57-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72"    href="https://cdn.renfei.net/logo/apple-touch-icon-72x72-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114"  href="https://cdn.renfei.net/logo/apple-touch-icon-114x114-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="144x144"  href="https://cdn.renfei.net/logo/apple-touch-icon.png">
+        <link rel="apple-touch-icon" href="https://cdn.renfei.net/logo/apple-touch-icon.png">
+        <link rel="apple-touch-startup-image" href="https://cdn.renfei.net/logo/web-app-launch-icon.png">
         <link th:each="cs:${head.css}" rel="stylesheet" type="text/css" th:href="${cs}"/>
         <script>
             var staticdomain = '[[${staticdomain}]]';

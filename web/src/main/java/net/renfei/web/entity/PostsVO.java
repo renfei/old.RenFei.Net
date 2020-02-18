@@ -23,4 +23,11 @@ public class PostsVO {
     private String sourceName;
     private String describes;
     private String keyword;
+
+    public String getDescribes() {
+        if (describes != null && describes.length() > 120) {
+            return describes.substring(0, 119);
+        }
+        return describes;
+    }
 }

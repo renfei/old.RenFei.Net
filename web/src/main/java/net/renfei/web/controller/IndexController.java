@@ -121,7 +121,7 @@ public class IndexController extends BaseController {
         return resxml.toString();
     }
 
-    @RequestMapping(value = "sitemap.xsl", produces = "application/octet-stream;charset=UTF-8")
+    @RequestMapping(value = "sitemap.xsl")
     @ResponseBody
     public String getSiteMapXsl(HttpServletResponse response) throws IOException {
         String sitemapxsl = IOUtils.toString(sitemapxslXml.getInputStream());

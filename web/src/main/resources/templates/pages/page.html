@@ -26,6 +26,7 @@
                     <div class="col-md-12 col-sm-12">
                         <div class="single-blog blog-details two-column" th:utext="${pageVO.content}">
                         </div>
+                        <div th:replace="layout/share::share(${sharevo})"></div>
                     </div>
                 </div>
             </div>

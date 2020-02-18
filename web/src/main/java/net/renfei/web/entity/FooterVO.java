@@ -14,4 +14,5 @@ public class FooterVO {
     private String footerCopy;
     private List<MenuVO> copyList;
     private String analyticsCode;
+    private List<String> jss;
 }

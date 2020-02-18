@@ -1,6 +1,7 @@
 package net.renfei.core.service;
 
 import net.renfei.core.baseclass.BaseService;
+import net.renfei.dao.entity.SettingDOExample;
 import net.renfei.dao.persistences.SettingDOMapper;
 import net.renfei.dao.entity.SettingDOWithBLOBs;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,11 +58,11 @@ public class SystemService extends BaseService {
     }
 
     public List<String> getCss() {
-        return getCJss(GLOBALCSS);
+        return getCss(GLOBALCSS);
     }
 
-    public List<String> getJss() {
-        return getCJss(GLOBALJSS);
+    public List<String> getJss(boolean isHead) {
+        return getCJss(GLOBALJSS, isHead);
     }
 
     public String getGlobalComment() {
@@ -72,7 +73,25 @@ public class SystemService extends BaseService {
         return getValue(GLOBALAD);
     }
 
-    private List<String> getCJss(String key) {
+    private List<String> getCJss(String key, boolean isHead) {
+        List<SettingDOWithBLOBs> settingDOWithBLOBs = getSetting(key, isHead ? "1" : null);
+        if (settingDOWithBLOBs != null && settingDOWithBLOBs.size() > 0) {
+            String staticDomain = getStaticDomain();
+            List<String> jss = new ArrayList<>();
+            for (SettingDOWithBLOBs setting : settingDOWithBLOBs) {
+                if (setting.getValues().startsWith("//") || setting.getValues().startsWith("http")) {
+                    jss.add(setting.getValues());
+                } else {
+                    jss.add("//" + staticDomain + setting.getValues());
+                }
+            }
+            return jss;
+        } else {
+            return null;
+        }
+    }
+
+    private List<String> getCss(String key) {
         List<SettingDOWithBLOBs> settingDOWithBLOBs = getSetting(key);
         if (settingDOWithBLOBs != null && settingDOWithBLOBs.size() > 0) {
             String staticDomain = getStaticDomain();
@@ -115,6 +134,18 @@ public class SystemService extends BaseService {
     public List<SettingDOWithBLOBs> getSetting(String key) {
         if (!stringUtil.isEmpty(key)) {
             return settingDOMapper.selectByKeys(key);
+        } else {
+            return null;
+        }
+    }
+
+    public List<SettingDOWithBLOBs> getSetting(String key, String extend) {
+        if (!stringUtil.isEmpty(key)) {
+            if (extend == null) {
+                return settingDOMapper.selectByKeysAndExtendNull(key);
+            } else {
+                return settingDOMapper.selectByKeysAndExtend(key, extend);
+            }
         } else {
             return null;
         }

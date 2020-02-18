@@ -1,15 +1,20 @@
 package net.renfei.web.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
 import lombok.extern.slf4j.Slf4j;
 import net.renfei.core.entity.LinkDTO;
 import net.renfei.core.service.aliyun.AliyunOSS;
-import net.renfei.core.task.UpdatePostPageRankJob;
 import net.renfei.dao.entity.DownloadDO;
 import net.renfei.dao.entity.LinkDOWithBLOBs;
 import net.renfei.web.baseclass.BaseController;
 import net.renfei.web.entity.APIResult;
 import net.renfei.web.entity.FriendLinkVO;
+import net.renfei.web.service.QRCodeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.ServletOutputStream;
 import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
@@ -112,7 +118,7 @@ public class OtherController extends BaseController {
                     }
                     Map<String, String> map = new HashMap<>();
                     map.put("jisulink", link);
-                    map.put("expires", dateUtil.format(expires,"yyyy-MM-dd HH:mm:ss"));
+                    map.put("expires", dateUtil.format(expires, "yyyy-MM-dd HH:mm:ss"));
                     apiResult.setSuccess(true);
                     apiResult.setData(map);
                 } else {
@@ -128,5 +134,22 @@ public class OtherController extends BaseController {
             apiResult.setMessage("授权码不存在或者已过期，请重新获取");
         }
         return apiResult;
+    }
+
+    @GetMapping("qrcode")
+    public void qrcode(String content) throws Exception {
+        ServletOutputStream stream = null;
+        try {
+            stream = localResponse.get().getOutputStream();
+            //使用工具类生成二维码
+            QRCodeService.encode(content, stream);
+        } catch (Exception e) {
+            e.getStackTrace();
+        } finally {
+            if (stream != null) {
+                stream.flush();
+                stream.close();
+            }
+        }
     }
 }
