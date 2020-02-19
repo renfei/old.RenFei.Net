@@ -57,6 +57,10 @@
 
                                     </p>
                                 </div>
+                                <div th:if="${globalAD=='1'}">
+                                    <script type="text/javascript"
+                                            src="//window.renfei.net/production/vq_nr/common/y/production/y/source/imp.js"></script>
+                                </div>
                                 <div th:replace="layout/share::share(${sharevo})"></div>
                                 <div class="post-bottom overflow" style="margin-top:10px;margin-bottom: 20px;">
                                     <ul class="nav navbar-nav post-nav">
@@ -103,8 +107,6 @@
                                     <script>
                                         (function(){var url="//cpu.baidu.com";var getEntry=function(){var script=document.createElement("script");script.id="cpu-block-entry";script.src=url+"/js/cb.js";var scriptTag=document.getElementsByTagName("script")[0];scriptTag.parentNode.insertBefore(script,scriptTag)};var sentMsg=function(e){var msg={msg:e.toString()||"no err msg",line:e.lineno||-1};var img=document.createElement("img");img.src=url+"/msg?m=block&e="+encodeURIComponent(JSON.stringify(msg))};try{window.feedsbycpu=window.feedsbycpu||[];window.feedsbycpu.push({siteId:"275420327",blockId:"54146",display:"auto"});document.getElementById("cpu-block-entry")||getEntry()}catch(e){sentMsg(e)}})();
                                     </script>
-                                    <script type="text/javascript"
-                                            src="//window.renfei.net/production/vq_nr/common/y/production/y/source/imp.js"></script>
                                 </div>
                                 <div th:if="${globalComment=='1'&&postsVO.isComment}" style="padding-top: 10px;">
                                     <div th:replace="layout/comments::comments(${commentTypeId},${commentObjId},${commentVO})"></div>

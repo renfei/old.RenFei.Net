@@ -15,16 +15,29 @@ import java.io.OutputStream;
 import java.util.Hashtable;
 
 public class QRCodeService {
-    private static final String CHARSET = "utf-8";
-    private static final String FORMAT_NAME = "JPG";
-    // 二维码尺寸
-    private static final int QRCODE_SIZE = 300;
-    // LOGO宽度
-    private static final int WIDTH = 60;
-    // LOGO高度
-    private static final int HEIGHT = 60;
+    private final String CHARSET = "utf-8";
+    private final String FORMAT_NAME = "JPG";
+    /**
+     * 二维码尺寸
+     */
+    private int QRCODE_SIZE = 300;
+    /**
+     * LOGO宽度
+     */
+    private int WIDTH = 60;
+    /**
+     * LOGO高度
+     */
+    private int HEIGHT = 60;
 
-    private static BufferedImage createImage(String content, String imgPath, boolean needCompress) throws Exception {
+    public QRCodeService() {
+    }
+
+    public QRCodeService(int QRCODE_SIZE) {
+        this.QRCODE_SIZE = QRCODE_SIZE;
+    }
+
+    private BufferedImage createImage(String content, String imgPath, boolean needCompress) throws Exception {
         Hashtable hints = new Hashtable();
         hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
         hints.put(EncodeHintType.CHARACTER_SET, CHARSET);
@@ -43,11 +56,11 @@ public class QRCodeService {
             return image;
         }
         // 插入图片
-        QRCodeService.insertImage(image, imgPath, needCompress);
+        this.insertImage(image, imgPath, needCompress);
         return image;
     }
 
-    private static void insertImage(BufferedImage source, String imgPath, boolean needCompress) throws Exception {
+    private void insertImage(BufferedImage source, String imgPath, boolean needCompress) throws Exception {
         File file = new File(imgPath);
         if (!file.exists()) {
             System.err.println("" + imgPath + "   该文件不存在！");
@@ -81,18 +94,18 @@ public class QRCodeService {
         graph.dispose();
     }
 
-    public static void encode(String content, String imgPath, String destPath, boolean needCompress) throws Exception {
-        BufferedImage image = QRCodeService.createImage(content, imgPath, needCompress);
+    public void encode(String content, String imgPath, String destPath, boolean needCompress) throws Exception {
+        BufferedImage image = this.createImage(content, imgPath, needCompress);
         mkdirs(destPath);
         ImageIO.write(image, FORMAT_NAME, new File(destPath));
     }
 
-    public static BufferedImage encode(String content, String imgPath, boolean needCompress) throws Exception {
-        BufferedImage image = QRCodeService.createImage(content, imgPath, needCompress);
+    public BufferedImage encode(String content, String imgPath, boolean needCompress) throws Exception {
+        BufferedImage image = this.createImage(content, imgPath, needCompress);
         return image;
     }
 
-    public static void mkdirs(String destPath) {
+    public void mkdirs(String destPath) {
         File file = new File(destPath);
         // 当文件夹不存在时，mkdirs会自动创建多层目录，区别于mkdir．(mkdir如果父目录不存在则会抛出异常)
         if (!file.exists() && !file.isDirectory()) {
@@ -100,13 +113,13 @@ public class QRCodeService {
         }
     }
 
-    public static void encode(String content, String imgPath, OutputStream output, boolean needCompress)
+    public void encode(String content, String imgPath, OutputStream output, boolean needCompress)
             throws Exception {
-        BufferedImage image = QRCodeService.createImage(content, imgPath, needCompress);
+        BufferedImage image = this.createImage(content, imgPath, needCompress);
         ImageIO.write(image, FORMAT_NAME, output);
     }
 
-    public static void encode(String content, OutputStream output) throws Exception {
-        QRCodeService.encode(content, null, output, false);
+    public void encode(String content, OutputStream output) throws Exception {
+        this.encode(content, null, output, false);
     }
 }

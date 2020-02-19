@@ -17,10 +17,8 @@ import net.renfei.web.entity.FriendLinkVO;
 import net.renfei.web.service.QRCodeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.util.ObjectUtils;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.ServletOutputStream;
@@ -111,7 +109,7 @@ public class OtherController extends BaseController {
                 DownloadDO downloadDO = JSON.parseObject(json, DownloadDO.class);
                 if (downloadDO != null) {
                     String link = "";
-                    Date expires = new Date(new Date().getTime() + 21600000); //有效期6个小时，6时(h)=21600000毫秒(ms)
+                    Date expires = new Date(System.currentTimeMillis() + 21600000); //有效期6个小时，6时(h)=21600000毫秒(ms)
                     if ("https://download.renfei.net".equals(downloadDO.getBucket())) {
                         //阿里云的储存
                         link = aliyunOSS.getPresignedUrl(downloadDO.getFilePath(), expires);
@@ -137,12 +135,24 @@ public class OtherController extends BaseController {
     }
 
     @GetMapping("qrcode")
-    public void qrcode(String content) throws Exception {
+    public void qrcode(String content, @PathVariable(value = "size", required = false) String size) throws Exception {
         ServletOutputStream stream = null;
+        QRCodeService qrCodeService;
+        if (!ObjectUtils.isEmpty(size)) {
+            int qrCodeSize;
+            try {
+                qrCodeSize = Integer.valueOf(size);
+                qrCodeService = new QRCodeService(qrCodeSize);
+            } catch (NumberFormatException nfe) {
+                qrCodeService = new QRCodeService();
+            }
+        } else {
+            qrCodeService = new QRCodeService();
+        }
         try {
             stream = localResponse.get().getOutputStream();
             //使用工具类生成二维码
-            QRCodeService.encode(content, stream);
+            qrCodeService.encode(content, stream);
         } catch (Exception e) {
             e.getStackTrace();
         } finally {

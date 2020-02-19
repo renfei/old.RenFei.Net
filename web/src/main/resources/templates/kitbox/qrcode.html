@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/head::head(${head})">
+</head>
+<body>
+<header th:replace="layout/header::header(${header})"></header>
+<section id="page-breadcrumb">
+    <div class="vertical-center sun">
+        <div class="container">
+            <div class="row">
+                <div class="action">
+                    <div class="col-sm-12">
+                        <h1 class="title">Online Generation Tool Of QRCode</h1>
+                        <p>二维码在线生成工具</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="company-information" class="choose">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3 col-md-3">
+                <div th:replace="kitbox/menu::menu('other','qrcode')"></div>
+            </div>
+            <div class="col-sm-9 col-md-9">
+                <div class="" style="margin: auto;">
+                    <div class="row">
+                        <div class="col-xs-7">
+                            <div class="form-group">
+                                <label>输入内容</label>
+                                <textarea id="qrtext" name="qrtext" class="form-control" rows="8"></textarea>
+                                <label>生成图片的链接</label>
+                                <input onclick="qrlinkonclick()" type="text" disabled id="qrlink" name="qrtext" class="form-control" value="https://www.renfei.net/other/qrcode?content=https://www.renfei.net/kitbox/qrcode"></input>
+                            </div>
+                        </div>
+                        <div class="col-xs-5">
+                            <div class="form-group">
+                                <label style="display: block;">实时生成结果</label>
+                                <img id="qrcode_show" width="100%"
+                                     src="/other/qrcode?content=https://www.renfei.net/kitbox/qrcode"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <blockquote style="font-size: 14px;">
+                            <p>如果您想在您的网页上动态的生成二维码，您可以这样在您网页上声明一个图片：<br>
+                                <pre><code class="html">&lt;img src=&quot;https://www.renfei.net/other/qrcode?content=youtext&quot; /&gt;</code></pre>
+                            其中「content=」后面跟的就是二维码的内容。
+                            </p>
+                            <footer>推荐内容控制在150字内，过多的内容可能会模糊不清。</footer>
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    $(function () {
+
+    });
+
+    function qrlinkonclick(){
+        window.open($("#qrlink").val());
+    }
+
+    $('#qrtext').bind('input propertychange', function () {
+        var redeemCode_text = $("#qrtext").val();
+        if (redeemCode_text === "") {
+            $("#qrcode_show").attr('src', "/other/qrcode?content=https://www.renfei.net/kitbox/qrcode");
+            $("#qrlink").val("https://www.renfei.net//other/qrcode?content=https://www.renfei.net/kitbox/qrcode");
+        }else {
+            $("#qrcode_show").attr('src', "/other/qrcode?content=" + redeemCode_text);
+            $("#qrlink").val("https://www.renfei.net//other/qrcode?content=" + redeemCode_text);
+        }
+    });
+
+    function test() {
+        var ftl = $("#ftl").val();
+        var json = $("#json").val();
+        if (ftl == "") {
+            $("#data").val("Error: FreeMarker Code is empty!\n错误：FreeMarker Code是空！");
+            notice("Error", "Error: FreeMarker Code is empty!\n错误：FreeMarker Code是空！");
+            return;
+        }
+        if (json == "") {
+            $("#data").val("Error: JavaBean Code is empty!\n错误：JavaBean Code是空！");
+            notice("Error", "Error: JavaBean Code is empty!\n错误：JavaBean Code是空！");
+            return;
+        }
+        $.ajax({
+            url: '/kitbox/freemarkerTest/post',
+            type: 'POST', //GET
+            async: true,
+            data: {
+                ftl: ftl,
+                beanJson: json
+            },
+            timeout: 60000,
+            dataType: 'json',
+            success: function (data, textStatus, jqXHR) {
+                if (data.success) {
+                    $("#data").val(data.data);
+                } else {
+                    $("#data").val("Error.\n" + data.message);
+                    notice("Error", data.message);
+                }
+            },
+            error: function (xhr, textStatus) {
+                $("#data").val("Error.\n" + xhr.responseText);
+                notice("Error", xhr.responseText);
+            }
+        })
+    }
+</script>
+<footer th:replace="layout/footer::footer(${footer},${performance})"></footer>
+</body>
+</html>
