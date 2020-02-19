@@ -13,7 +13,7 @@
                 <p>该网站不属于<span th:text="${siteName}"></span>，我们无法确认该网页是否安全，它可能包含未知的安全隐患。</p>
                 <p>The site is not a <span th:text="${siteName}"></span>, we can not confirm whether the page is secure,
                     it may contain unknown security risks.</p>
-                <a class="btn" th:href="${url}" rel="nofollow"
+                <a class="btn" th:href="${url}" rel="nofollow noopener"
                    style="color:#ffffff;background-color: #238aca;border: 1px solid #238aca;background-image: none;">继续(Continue)</a>
                 <span class="btn" onclick="closePage()">关闭(Close)</span>
             </div>

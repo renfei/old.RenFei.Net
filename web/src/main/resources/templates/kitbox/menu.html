@@ -68,6 +68,23 @@
                 </div>
             </div>
         </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="otherHead">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#kitbox"
+                       href="#encryptTools" aria-expanded="true" aria-controls="encryptTools">
+                        其他类工具
+                    </a>
+                </h4>
+            </div>
+            <div id="otherTools" th:class="${menuname=='other'?'panel-collapse collapse in':'panel-collapse collapse'}" role="tabpanel"
+                 aria-labelledby="otherHead">
+                <div class="panel-body">
+                    <a th:class="${btnname=='qrcode'?'btn btn-primary btn-block':'btn btn-default btn-block'}" href="/kitbox/qrcode"
+                       role="button">二维码生成工具</a>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 </body>

@@ -5,6 +5,7 @@ import net.renfei.core.entity.VideoDTO;
 import net.renfei.core.entity.VideoListDTO;
 import net.renfei.dao.entity.VideoDOWithBLOBs;
 import net.renfei.web.baseclass.BaseController;
+import net.renfei.web.entity.ShareVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,6 +49,12 @@ public class VideoController extends BaseController {
             setHead(mv, videoDTO.getTitle()+" - Video", videoDTO.getTitle());
             setComment(mv, 3L, videoDTO.getId());
             setSidebarByVideo(mv, id);
+            ShareVO shareVO = new ShareVO();
+            shareVO.setTitle(videoDTO.getTitle());
+            shareVO.setUrl(domain + "/video/" + videoDTO.getId());
+            shareVO.setDescribes(videoDTO.getDescribes());
+            shareVO.setPics(videoDTO.getFeaturedImage());
+            mv.addObject("sharevo", shareVO);
             mv.setViewName("video/play");
         } else {
             throwNoHandlerFoundException();

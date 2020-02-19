@@ -10,10 +10,7 @@ import net.renfei.dao.entity.TagRelationDO;
 import net.renfei.web.baseclass.BaseController;
 import net.renfei.core.entity.PostsDTO;
 import net.renfei.core.entity.PostsListDTO;
-import net.renfei.web.entity.CategoryVO;
-import net.renfei.web.entity.CommentVO;
-import net.renfei.web.entity.PageHeadVO;
-import net.renfei.web.entity.PostsVO;
+import net.renfei.web.entity.*;
 import net.renfei.core.service.PostsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -114,8 +112,18 @@ public class PostsController extends BaseController {
             PostsVO postsVO = ejbGenerator.convert(postsDTO, PostsVO.class);
             setInfo(postsVO);
             mv.addObject("postsVO", postsVO);
+            OGprotocol opg = new OGprotocol();
+            opg.setType("article");
+            opg.setAuthor(postsVO.getSourceName());
+            opg.setDescription(postsVO.getDescribes());
+            opg.setImage(postsVO.getFeaturedImage());
+            opg.setLocale("zh_CN");
+            opg.setReleaseDate(postsVO.getReleaseTime());
+            opg.setSiteName("RenFei.Net");
+            opg.setTitle(postsVO.getTitle() + " - Posts");
+            opg.setUrl(domain + "/posts/" + postsVO.getId());
             setHead(mv, postsVO.getTitle() + " - Posts", postsVO.getDescribes(),
-                    postsVO.getKeyword());
+                    postsVO.getKeyword(), opg);
             if (postsVO.getContent().indexOf("code class=") != -1) {
                 //检测到有代码显示，需要增加代码高亮插件
                 setHighlightJS(mv);
@@ -144,10 +152,17 @@ public class PostsController extends BaseController {
             mv.addObject("related", postsService.getRelated(id));
             //获取文章扩展服务
             postsService.getPostsExtraByID(id, mv);
+            ShareVO shareVO = new ShareVO();
+            shareVO.setTitle(postsVO.getTitle());
+            shareVO.setUrl(domain + "/posts/" + postsVO.getId());
+            shareVO.setDescribes(postsVO.getDescribes());
+            shareVO.setPics(postsVO.getFeaturedImage());
+            mv.addObject("sharevo", shareVO);
         } else {
             throwNoHandlerFoundException();
         }
         mv.setViewName("posts/post");
+        mv.addObject("jsonld", postsService.getJsonld(postsDTO));
         return mv;
     }
 

@@ -8,7 +8,7 @@
                         <div class="social-icons pull-right">
                             <ul class="nav nav-pills">
                                 <li th:if="${header.topNavVOS!=null}" th:each="menu:${header.topNavVOS}">
-                                    <a th:href="${menu.menuLink}" th:target="${menu.isNewWin?'_blank':'_self'}">
+                                    <a th:href="${menu.menuLink}" th:target="${menu.isNewWin?'_blank':'_self'}" rel="nofollow noopener">
                                         <i th:class="${menu.menuText}"></i>
                                     </a>
                                 </li>

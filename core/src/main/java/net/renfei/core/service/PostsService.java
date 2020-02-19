@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -27,6 +28,8 @@ public class PostsService extends BaseService {
     private TagService tagService;
     @Autowired
     private DownloadService downloadService;
+    @Autowired
+    protected GlobalService globalService;
 
     public int updatePost(PostsDOWithBLOBs postsDOWithBLOBs) {
         return postsDOMapper.updateByPrimaryKeySelective(postsDOWithBLOBs);
@@ -247,6 +250,40 @@ public class PostsService extends BaseService {
         } else {
             return null;
         }
+    }
+
+    public String getJsonld(PostsDTO postsDTO) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'+08:00'");
+        StringBuilder sb = new StringBuilder();
+        sb.append("{\n");
+        sb.append("    \"@type\": \"Article\",\n");
+        sb.append("    \"dateModified\":\"" + sdf.format(postsDTO.getReleaseTime()) + "\",\n");
+        sb.append("    \"datePublished\":\"" + sdf.format(postsDTO.getReleaseTime()) + "\",\n");
+        sb.append("    \"headline\":\"" + postsDTO.getTitle() + "\",\n");
+        sb.append("    \"image\":\"" + (postsDTO.getFeaturedImage() == null ? "https://cdn.renfei.net/logo/ogimage.png" : postsDTO.getFeaturedImage()) + "\",\n");
+        sb.append("    \"author\":{\n");
+        sb.append("        \"@type\": \"Person\",\n");
+        sb.append("        \"@name\": \"" + (postsDTO.getSourceName() == null ? "任霏" : postsDTO.getSourceName()) + "\"\n");
+        sb.append("    },\n");
+        sb.append("    \"publisher\":{\n");
+        sb.append("        \"@type\": \"Organization\",\n");
+        sb.append("        \"name\": \"任霏博客\",\n");
+        sb.append("        \"logo\": {\n");
+        sb.append("            \"@type\": \"ImageObject\",\n");
+        sb.append("            \"url\": \"https://cdn.renfei.net/logo/RF.svg\"\n");
+        sb.append("        }\n");
+        sb.append("    },\n");
+        sb.append("    \"description\": \"" + postsDTO.getDescribes() + "\",\n");
+        sb.append("    \"mainEntityOfPage\": \"" + globalService.getDomain() + "/posts/" + postsDTO.getId() + "\",\n");
+        sb.append("    \"speakable\": {\n");
+        sb.append("        \"@type\": \"SpeakableSpecification\",\n");
+        sb.append("        \"xpath\": [\n");
+        sb.append("            \"/html/head/title\",\n");
+        sb.append("            \"/html/head/meta[@name='description']/@content\"\n");
+        sb.append("        ]\n");
+        sb.append("    }\n");
+        sb.append("}");
+        return sb.toString();
     }
 
     /**

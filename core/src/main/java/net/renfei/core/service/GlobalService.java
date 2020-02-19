@@ -47,8 +47,8 @@ public class GlobalService extends BaseService {
         return systemService.getCss();
     }
 
-    public List<String> getGlobalJSsList() {
-        return systemService.getJss();
+    public List<String> getGlobalJSsList(boolean isHead) {
+        return systemService.getJss(isHead);
     }
 
     public String getGlobalComment(){return systemService.getGlobalComment();}

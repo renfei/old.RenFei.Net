@@ -28,6 +28,7 @@ public class LogDBService {
         logDO.setLogValue(value);
         logDO.setLevel(level.getLevel());
         logDO.setInorout(inout.getInOut());
+        logDO.setRemoteUser(user);
         insertLogDB(logDO);
     }
 

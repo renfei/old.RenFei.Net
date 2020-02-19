@@ -134,7 +134,7 @@ public class BaseController extends BaseClass {
             footerVO = new FooterVO();
         }
         pageHeadVO.setCss(globalService.getGlobalCSSList());
-        pageHeadVO.setJss(globalService.getGlobalJSsList());
+        pageHeadVO.setJss(globalService.getGlobalJSsList(true));
         pageHeadVO.setScript(globalService.getScript());
         pageHeadVO.setDescription(globalService.getDescription());
         pageHeadVO.setSitename(siteName);
@@ -160,6 +160,7 @@ public class BaseController extends BaseClass {
         footerVO.setAnalyticsCode(globalService.getAnalyticsCode());
         footerVO.setFooterMenu(ejbGenerator.convert(menuService.getAllFooterMenu(), MenuVO.class));
         footerVO.setCopyList(ejbGenerator.convert(menuService.getAllFooterCopyMenu(), MenuVO.class));
+        footerVO.setJss(globalService.getGlobalJSsList(false));
         //全局侧边栏
         sidebarVO = new SidebarVO();
         mv.addObject(FOOTER_KEY, footerVO);
@@ -180,10 +181,15 @@ public class BaseController extends BaseClass {
     }
 
     protected void setHead(ModelAndView mv, String title, String description, String keywords) {
+        setHead(mv, title, description, keywords, null);
+    }
+
+    protected void setHead(ModelAndView mv, String title, String description, String keywords, OGprotocol opg) {
         PageHeadVO pageHeadVO = getHead(mv);
         pageHeadVO.setSitename(title + " - " + siteName);
         pageHeadVO.setDescription(description);
         pageHeadVO.setKeywords(keywords);
+        pageHeadVO.setOpg(opg);
         mv.addObject(HEAD_KEY, pageHeadVO);
     }
 
@@ -250,6 +256,16 @@ public class BaseController extends BaseClass {
             pageHeadVO = (PageHeadVO) obj;
         }
         return pageHeadVO;
+    }
+
+    private FooterVO getFoot(ModelAndView mv) {
+        Map<String, Object> map = mv.getModel();
+        FooterVO footerVO = new FooterVO();
+        Object obj = map.get(FOOTER_KEY);
+        if (obj instanceof FooterVO) {
+            footerVO = (FooterVO) obj;
+        }
+        return footerVO;
     }
 
     protected Object getObjFromMV(ModelAndView mv, String key) {

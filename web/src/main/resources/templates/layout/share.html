@@ -1,7 +1,62 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<body>
-    <div th:fragment="share" style="padding: 10px 0;">
-    </div>
-</body>
+    <body>
+        <div th:fragment="share(sharevo)">
+            <div th:if="${sharevo!=null}" style="padding: 10px 0;text-align: right;">
+                <style>
+                    .wechat-share {
+                        display: none;
+                        position: absolute;
+                        z-index: 99999;
+                        width: 152px;
+                        height: 152px;
+                        border: 1px #609700 solid;
+                        left: 0;
+                        top: -160px;
+                    }
+
+                    #wechat-share-box {
+                        position: relative;
+                    }
+
+                    #wechat-share-box:hover .wechat-share {
+                        display: block;
+                    }
+                </style>
+                <h4>分享此页面</h4>
+                <a id="wechat-share-box" type="button" class="btn btn-default" aria-label="Left Align"
+                   href="javascript:void(0)">
+                    <i class="fa fa-weixin" aria-hidden="true" style="color: #609700;"></i>
+                    <div class="wechat-share" th:url="${sharevo.url}">
+                        <img th:src="${'/other/qrcode?content='+sharevo.url}" width="150">
+                    </div>
+                </a>
+                <a type="button" class="btn btn-default" aria-label="Left Align"
+                   th:href="${'http://connect.qq.com/widget/shareqq/index.html?url='+sharevo.url+'&title='+sharevo.title+'&source=RENFEI.NET&desc='+sharevo.describes+'&pics='+sharevo.pics+'&summary='+sharevo.title}"
+                   target="_blank" rel="nofollow noopener">
+                    <i class="fa fa-qq" aria-hidden="true"></i>
+                </a>
+                <a type="button" class="btn btn-default" aria-label="Left Align"
+                   th:href="${'http://www.facebook.com/dialog/feed?app_id='+sharevo.fb_appid+'&redirect_uri='+sharevo.url+'&link='+sharevo.url+'&display=popup'}"
+                   target="_blank" rel="nofollow noopener">
+                    <i class="fa fa-facebook-official" aria-hidden="true" style="color: #4267b2;"></i>
+                </a>
+                <a type="button" class="btn btn-default" aria-label="Left Align"
+                   th:href="${'https://twitter.com/intent/tweet?text='+sharevo.title+'&url='+sharevo.url}"
+                   target="_blank" rel="nofollow noopener">
+                    <i class="fa fa-twitter-square" aria-hidden="true" style="color: #4aa1ec;"></i>
+                </a>
+                <a type="button" class="btn btn-default" aria-label="Left Align"
+                   th:href="${'http://service.weibo.com/share/share.php?url='+sharevo.url+'&title='+sharevo.title}"
+                   target="_blank" rel="nofollow noopener">
+                    <i class="fa fa-weibo" aria-hidden="true" style="color: #eb834c;"></i>
+                </a>
+                <a type="button" class="btn btn-default" aria-label="Left Align"
+                   th:href="${'https://www.linkedin.com/shareArticle?mini=true&url='+sharevo.url+'&title='+sharevo.title+'&source=RENFEI.NET'}"
+                   target="_blank" rel="nofollow noopener">
+                    <i class="fa fa-linkedin-square" aria-hidden="true" style="color: #2f73ab;"></i>
+                </a>
+            </div>
+        </div>
+    </body>
 </html>

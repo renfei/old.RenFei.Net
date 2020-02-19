@@ -20,6 +20,7 @@ public class WeChatMessage implements Serializable {
     private WeChatMessageType messageType;            // 消息类型
     private String message;                // 消息
     private String msgId;
+    private WeChatMessageType event;
 
     public WeChatMessage() {
     }
@@ -29,6 +30,7 @@ public class WeChatMessage implements Serializable {
         this.toUserName = map.get("ToUserName");
         this.messageType = valueOf(map.get("MsgType").toUpperCase());
         this.msgId = map.get("MsgId");
+        this.event = map.get("Event") == null ? null : valueOf(map.get("Event").toUpperCase());
         this.message = getMessage(map);
     }
 
@@ -47,30 +49,6 @@ public class WeChatMessage implements Serializable {
             case LINK:
                 return map.get("Url");
             case EVENT:
-                // 事件推送(当用户主动点击菜单，或者扫面二维码等事件)
-                // 事件类型
-                switch (WeChatMessageType.valueOf(map.get("Event"))) {
-                    case SUBSCRIBE:
-//                        log.info("关注");
-                        break;
-                    case UNSUBSCRIBE:
-//                        log.info("取消关注");
-                        break;
-                    case SCAN:
-//                        log.info("扫描带参数二维码");
-                        break;
-                    case LOCATION:
-//                        log.info("上报地理位置");
-                        break;
-                    case CLICK:
-                        // 事件KEY值，与创建自定义菜单时指定的KEY值对应
-//                        String eventKey = map.get("EventKey");
-//                        log.info("eventKey------->" + eventKey);
-                        break;
-                    case VIEW:
-//                        log.info("处理自定义菜单URI视图");
-                        break;
-                }
                 return "";
             default:
                 return "";

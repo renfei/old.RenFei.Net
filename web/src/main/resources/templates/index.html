@@ -139,7 +139,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="clients text-center wow fadeInUp" data-wow-duration="500ms" data-wow-delay="300ms">
-                    <p><img src="/images/home/clients.png" class="img-responsive" alt=""></p>
+                    <p><img th:src="'//'+${staticdomain}+'/images/home/clients.png'" class="img-responsive" alt=""></p>
                     <h1 class="title">Friendship Links</h1>
                     <p>访问我们朋友的站点也十分精彩，不妨去看看。<br> 我们不对友站中内容负责，请注意甄别 </p>
                 </div>
@@ -148,15 +148,51 @@
                         <li>
                             <a href="/other/friendlink" target="_blank">友情链接申请</a>
                         </li>
+                        <!--此处的rel不是nofollow，请勿惊慌。这是noopener-->
                         <li th:if="${linkDTO!=null}" th:each="link:${linkDTO.links}">
-                            <a th:href="${link.sitelink}" th:text="${link.sitename}" target="_blank"></a>
+                            <a th:if="${link.linkType==1}" th:href="${link.sitelink}" th:text="${link.sitename}"
+                               target="_blank" rel="noopener"></a>
                         </li>
+                        <!--此处的rel不是nofollow，请勿惊慌。这是noopener-->
                     </ul>
                 </div>
             </div>
         </div>
     </div>
 </section>
+<script type="application/ld+json">
+    {
+        "@context": "http://schema.org/",
+        "@graph": [
+            {
+                "@type": "Organization",
+                "logo": "https://cdn.renfei.net/logo/logo_112.png",
+                "url": "https://www.renfei.net"
+            },
+            {
+                "@type": "WebSite",
+                "url": "https://www.renfei.net",
+                "potentialAction": {
+                    "@type": "SearchAction",
+                    //targe指定的域名必须是站点域名，不能用第三方搜索
+                    "target": "https://www.renfei.net/search/?q={search_term_string}",
+                    "query-input": "required name=search_term_string"
+                }
+            },
+            {
+                "@type": "Person",
+                "name": "任霏",
+                "url": "https://www.renfei.net",
+                "sameAs": [
+                    "https://github.com/NeilRen",
+                    "https://www.facebook.com/renfeii",
+                    "https://twitter.com/renfeii",
+                    "https://www.youtube.com/channel/UCPsjiVvFMS7piLgC-RHBWxg"
+                ]
+            }
+        ]
+    }
+</script>
 <footer th:replace="layout/footer::footer(${footer},${performance})"></footer>
 <script th:inline="javascript">
     var domain = [[${domain}]];

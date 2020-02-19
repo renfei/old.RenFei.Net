@@ -76,8 +76,11 @@
                             <label class="col-sm-2 control-label">极速下载</label>
                             <div class="col-sm-10">
                                 <label class="control-label" style="font-weight: 300;text-align:left;">
-                                    <a id="downloadfile_jisu_link" href="JavaScript:void(0)" target="_blank">
+                                    <a th:if="${downloadfile.filePath!=null}" id="downloadfile_jisu_link" href="JavaScript:void(0)" target="_blank">
                                         请扫描二维码关注微信公众号获得授权码
+                                    </a>
+                                    <a th:if="${downloadfile.filePath==null}" href="JavaScript:void(0)">
+                                        抱歉，该文件暂不提供极速下载。
                                     </a>
                                 </label>
                             </div>
@@ -92,10 +95,11 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">极速授权码</label>
                             <div class="col-sm-3">
-                                <input type="text" class="form-control" id="downloadfile_jisu_code">
+                                <input th:if="${downloadfile.filePath!=null}" type="text" class="form-control" id="downloadfile_jisu_code">
+                                <div th:if="${downloadfile.filePath==null}">抱歉，该文件暂不提供极速下载。</div>
                             </div>
                             <div class="col-sm-7">
-                                <button type="submit" class="btn btn-primary" id="downloadfile_jisu_btn"
+                                <button th:if="${downloadfile.filePath!=null}" type="submit" class="btn btn-primary" id="downloadfile_jisu_btn"
                                         onclick="getJiSuDownloadLink()">获取极速下载连接
                                 </button>
                             </div>
@@ -122,7 +126,7 @@
                                         <div class="wechatcard_title"><strong class="wecharcolor">
                                             微信订阅号：</strong>RenFeiNet
                                         </div>
-                                        <div>
+                                        <div th:if="${downloadfile.filePath!=null}">
                                             使用微信扫描二维码关注公众号，回复【
                                             <span
                                                     class="wechatcard_red"
@@ -130,6 +134,9 @@
                                                 10023
                                             </span>
                                             】，获得极速下载授权码。
+                                        </div>
+                                        <div th:if="${downloadfile.filePath==null}">
+                                            抱歉，该文件暂不提供极速下载。使用微信扫描二维码关注公众号，获得更多信息推送。
                                         </div>
                                     </div>
                                 </div>

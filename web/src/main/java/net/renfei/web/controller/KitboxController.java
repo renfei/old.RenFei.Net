@@ -119,6 +119,15 @@ public class KitboxController extends BaseController {
         return mv;
     }
 
+    @RequestMapping({"qrcode", "QRCode"})
+    public ModelAndView qrCode(ModelAndView mv) {
+        setHead(mv, "二维码在线生成工具 - 开发者工具箱 - Kitbox",
+                "二维码在线生成工具",
+                "二维码,qrcode,在线,生成,工具");
+        mv.setViewName("kitbox/qrcode");
+        return mv;
+    }
+
     @ResponseBody
     @PostMapping("freemarkerTest/post")
     public APIResult getContentByFreeMarkerAndBean(String ftl, String beanJson) {

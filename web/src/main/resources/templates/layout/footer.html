@@ -5,7 +5,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-sm-12 text-center bottom-separator">
-                        <img src="/images/home/under.png" class="img-responsive inline" alt="">
+                        <img src="https://cdn.renfei.net/images/home/under.png" class="img-responsive inline" alt="">
                     </div>
                     <div th:if="${footer.footerMenu!=null}"
                          th:each="menu:${footer.footerMenu}" class="col-md-3 col-sm-6 footerMenu">
@@ -15,7 +15,8 @@
                                 <li th:each="cm:${menu.child}" class="mb-3">
                                     <a th:href="${cm.menuLink}" class="link-gray"
                                        th:text="${cm.menuText}"
-                                       th:target="${cm.isNewWin?'_blank':'_self'}"></a>
+                                       th:target="${cm.isNewWin?'_blank':'_self'}"
+                                       rel="nofollow noopener"></a>
                                 </li>
                             </ul>
                         </div>
@@ -27,10 +28,10 @@
                             <div class="tar py-3">
                                 <uL class="copyList">
                                     <li th:if="${footer.copyList!=null}" th:each="menu:${footer.copyList}" style="font-size: 13px;">
-                                        <a th:href="${menu.menuLink}" th:target="${menu.isNewWin?'_blank':'_self'}"
+                                        <a th:href="${menu.menuLink}" th:target="${menu.isNewWin?'_blank':'_self'}" rel="nofollow noopener"
                                            th:text="${menu.menuText}" style="color: #fff;"></a>
                                     </li>
-                                    <li style="font-size: 13px;">Designed by <a target="_blank" style="color: #fff;" href="http://www.themeum.com">Themeum</a></li>
+                                    <li style="font-size: 13px;">Designed by <a target="_blank" style="color: #fff;" href="http://www.themeum.com" rel="nofollow noopener">Themeum</a></li>
                                 </uL>
                             </div>
                             <div class="clear"></div>
@@ -44,6 +45,7 @@
                 </div>
             </div>
             <div th:utext="${footer.analyticsCode}"></div>
+            <script type='text/javascript' charset="UTF-8" th:each="js:${footer.jss}" th:src="${js}" async></script>
         </footer>
     </body>
 </html>
