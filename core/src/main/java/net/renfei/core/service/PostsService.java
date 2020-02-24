@@ -256,6 +256,7 @@ public class PostsService extends BaseService {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'+08:00'");
         StringBuilder sb = new StringBuilder();
         sb.append("{\n");
+        sb.append("    \"@context\": \"https://schema.org\",\n");
         sb.append("    \"@type\": \"Article\",\n");
         sb.append("    \"dateModified\":\"" + sdf.format(postsDTO.getReleaseTime()) + "\",\n");
         sb.append("    \"datePublished\":\"" + sdf.format(postsDTO.getReleaseTime()) + "\",\n");
@@ -263,14 +264,14 @@ public class PostsService extends BaseService {
         sb.append("    \"image\":\"" + (postsDTO.getFeaturedImage() == null ? "https://cdn.renfei.net/logo/ogimage.png" : postsDTO.getFeaturedImage()) + "\",\n");
         sb.append("    \"author\":{\n");
         sb.append("        \"@type\": \"Person\",\n");
-        sb.append("        \"@name\": \"" + (postsDTO.getSourceName() == null ? "任霏" : postsDTO.getSourceName()) + "\"\n");
+        sb.append("        \"name\": \"" + (postsDTO.getSourceName() == null ? "任霏" : postsDTO.getSourceName()) + "\"\n");
         sb.append("    },\n");
         sb.append("    \"publisher\":{\n");
         sb.append("        \"@type\": \"Organization\",\n");
         sb.append("        \"name\": \"任霏博客\",\n");
         sb.append("        \"logo\": {\n");
         sb.append("            \"@type\": \"ImageObject\",\n");
-        sb.append("            \"url\": \"https://cdn.renfei.net/logo/RF.svg\"\n");
+        sb.append("            \"url\": \"https://cdn.renfei.net/logo/logo_112.png\"\n");
         sb.append("        }\n");
         sb.append("    },\n");
         sb.append("    \"description\": \"" + postsDTO.getDescribes() + "\",\n");
