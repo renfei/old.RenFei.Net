@@ -112,8 +112,7 @@ public class IndexController extends BaseController {
         StringBuffer resxml = new StringBuffer();
         resxml.append("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n");
         resxml.append("<?xml-stylesheet type=\"text/xsl\" href=\"" + domain + "/sitemap.xsl\"?>\n");
-        resxml.append("<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\"\n");
-        resxml.append("    xmlns:mobile=\"http://www.google.com/schemas/sitemap-mobile/1.0\">\n");
+        resxml.append("<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n");
         for (SiteMapXml s : siteMapXmls) {
             resxml.append(String.format(xml, s.getLoc(), s.getChangefreq(), s.getPriority(), s.getLastmod()));
         }

@@ -287,7 +287,7 @@ public class PostsService extends BaseService {
         sb.append("\"@type\": \"NewsArticle\",");
         sb.append("\"dateModified\":\"" + sdf.format(postsDTO.getReleaseTime()) + "\",");
         sb.append("\"datePublished\":\"" + sdf.format(postsDTO.getReleaseTime()) + "\",");
-        sb.append("\"headline\":\"" + postsDTO.getTitle() + "\",");
+        sb.append("\"headline\":\"" + postsDTO.getTitle().replace("\"","") + "\",");
         sb.append("\"image\":\"" + (postsDTO.getFeaturedImage() == null ? "https://cdn.renfei.net/logo/ogimage.png" : postsDTO.getFeaturedImage()) + "\",");
         sb.append("\"author\":{");
         sb.append("\"@type\": \"Person\",");
