@@ -111,11 +111,31 @@ jQuery(function ($) {
             backgroundColor: '#3e8bff',
         });
     }
-
+    checkad();
 });
 
 console.log("\n %c RENFEI.NET %c 你知道的太多了 %c \n", "color: #fff; background: #3274ff; padding:5px 0; border: 1px solid #3274ff;", "color: #3274ff; background: #fff; padding:5px 0; border: 1px solid #3274ff;", "");
 console.log("\n %c 开发交流QQ群 %c 130832168 %c \n", "color: #fff; background: #eb0; padding:5px 0; border: 1px solid #eb0;", "color: #eb0; background: #fff; padding:5px 0; border: 1px solid #eb0;", "");
+
+function checkad() {
+    $.ajax({
+        url: "https://cdn.renfei.net/js/ads.js",
+        dataType: "script"
+    }).fail(function () {
+        var fab = $("#fab");
+        if (fab != undefined) {
+            fab.show();
+        }
+        var cont = $('.blog-details');
+        if (cont != undefined) {
+            var heig = cont.height();
+            cont.height(heig);
+            cont.html("");
+        }
+
+        console.log("Ads.js not loaded");
+    });
+}
 
 function cancelReply() {
     $("#reply").val(undefined);
@@ -240,7 +260,7 @@ function getJiSuDownloadLink() {
         dataType: 'json',
         success: function (data, textStatus, jqXHR) {
             if (data.success) {
-                $('#downloadfile_jisu_link').attr('href',data.data.jisulink);
+                $('#downloadfile_jisu_link').attr('href', data.data.jisulink);
                 $('#downloadfile_jisu_link').html(data.data.jisulink);
                 $('#downloadfile_jisu_exp').html(data.data.expires);
             } else {

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.apache.commons.io.IOUtils;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -97,6 +98,17 @@ public class IndexController extends BaseController {
                 "\n" +
                 "Sitemap: " + domain + "/sitemap.xml";
         return robots;
+    }
+
+    @RequestMapping(value = "ads.txt", produces = "text/plain")
+    @ResponseBody
+    public String getGoogleAds() throws NoHandlerFoundException {
+        String ads;
+        ads = renFeiConfig.getGOOGLE_ADS();
+        if (ads == null || ads.length() == 0) {
+            throwNoHandlerFoundException();
+        }
+        return ads;
     }
 
     @RequestMapping(value = "sitemap.xml", produces = "text/xml;charset=UTF-8")

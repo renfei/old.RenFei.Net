@@ -26,4 +26,5 @@ public class RenFeiConfig {
     private String WECHAT_APP_ID;
     private String WECHAT_APP_SECRET;
     private String WECHAT_TOKEN;
+    private String GOOGLE_ADS;
 }

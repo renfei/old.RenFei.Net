@@ -109,6 +109,7 @@ public class PostsController extends BaseController {
     public ModelAndView getPostsByID(@PathVariable("id") String id, ModelAndView mv) throws NoHandlerFoundException {
         PostsDTO postsDTO = postsService.getPostsByID(id, true);
         if (postsDTO != null) {
+            postsService.addAds(postsDTO);
             PostsVO postsVO = ejbGenerator.convert(postsDTO, PostsVO.class);
             setInfo(postsVO);
             mv.addObject("postsVO", postsVO);

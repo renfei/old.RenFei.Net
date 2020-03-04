@@ -65,3 +65,4 @@ renfei:
   WECHAT_APP_SECRET: test
   WECHAT_TOKEN: test
   WECHAT_EncodingAESKey: test
+  GOOGLE_ADS:

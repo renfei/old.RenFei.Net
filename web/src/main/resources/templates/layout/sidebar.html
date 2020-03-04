@@ -3,10 +3,17 @@
     <body>
         <div th:fragment="sidebar(sidebar)" class="sidebar blog-sidebar">
             <div class="sidebar-item">
-                <div th:replace="layout/github::mygithub"></div>
-            </div>
-            <div class="sidebar-item">
-                <script th:if="${globalAD=='1'}" type="text/javascript" src="//window.renfei.net/site/x_sp/static/ta/production/ako/openjs/u.js"></script>
+                <!--<div th:replace="layout/github::mygithub"></div>-->
+                <!-- sidebar_正方形 -->
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-8859756463807757"
+                     data-ad-slot="4995060553"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
             </div>
             <div class="sidebar-item categories">
                 <h3 th:if="${sidebar.categories!=null}">Categories</h3>
@@ -19,16 +26,26 @@
                     </li>
                 </ul>
             </div>
+            <div class="sidebar-item" th:if="${globalAD=='1'}">
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-8859756463807757"
+                     data-ad-slot="6567996671"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+            </div>
             <div class="sidebar-item tag-cloud" th:if="${sidebar.tags!=null}">
                 <h3>Tag Cloud</h3>
                 <ul class="nav nav-pills">
                     <li th:if="${sidebar.tags!=null}" th:each="tag:${sidebar.tags}">
-                        <a th:href="${domain+'/posts/tag/'+tag.enName}" th:text="${tag.zhName+'('+tag.quantity+')'}"></a>
+                        <a th:href="${domain+'/posts/tag/'+tag.enName}"
+                           th:text="${tag.zhName+'('+tag.quantity+')'}"></a>
                     </li>
                 </ul>
             </div>
-            <div class="sidebar-item">
-                <script th:if="${globalAD=='1'}" type="text/javascript" src="//window.renfei.net/common/up_m/static/r/source/ov/common/qxq.js"></script>
+            <div class="sidebar-item" th:if="${globalAD=='1'}">
+                <script type="text/javascript" src="//window.renfei.net/source/u_pmr/production/ov/openjs/qxq.js"></script>
             </div>
             <div class="sidebar-item">
                 <div class="row">
