@@ -14,6 +14,7 @@ import net.renfei.dao.entity.LinkDOWithBLOBs;
 import net.renfei.web.baseclass.BaseController;
 import net.renfei.web.entity.APIResult;
 import net.renfei.web.entity.FriendLinkVO;
+import net.renfei.web.entity.ThumbsVO;
 import net.renfei.web.service.QRCodeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -150,6 +151,7 @@ public class OtherController extends BaseController {
             qrCodeService = new QRCodeService();
         }
         try {
+            localResponse.get().setHeader("Content-Type", "image/jpg");
             stream = localResponse.get().getOutputStream();
             //使用工具类生成二维码
             qrCodeService.encode(content, stream);
@@ -161,5 +163,12 @@ public class OtherController extends BaseController {
                 stream.close();
             }
         }
+    }
+
+    @PostMapping("thumbs")
+    @ResponseBody
+    public APIResult thumbs(ThumbsVO thumbsVO) {
+        thumbsService.thumbs(thumbsVO.getSystem(), thumbsVO.getType(), thumbsVO.getId());
+        return APIResult.fillResult(true);
     }
 }

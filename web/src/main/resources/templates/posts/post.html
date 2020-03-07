@@ -51,13 +51,6 @@
                                        th:href="${postsVO.isOriginal?domain:postsVO.sourceUrl}" target="_blank" rel="noopener"></a>
                                 </h3>
                                 <div class="renfei-content">
-                                    <!--<ins class="adsbygoogle"-->
-                                         <!--style="display:block"-->
-                                         <!--data-ad-client="ca-pub-8859756463807757"-->
-                                         <!--data-ad-slot="6116570539"-->
-                                         <!--data-ad-format="auto"-->
-                                         <!--data-full-width-responsive="true"></ins>-->
-                                    <!--<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>-->
                                     <div th:if="${downloadDO!=null}"
                                          th:replace="layout/download::download(${downloadDO})"></div>
                                     <p th:utext="${postsVO.content}">
@@ -66,26 +59,20 @@
                                     <div th:if="${globalAD=='1'}">
                                         <!--文章内容底部-->
                                         <script type="text/javascript" src="//window.renfei.net/source/vqnr/openjs/yy/common/i_m/static/p.js"></script>
-                                        <ins class="adsbygoogle"
-                                             style="display:block"
-                                             data-ad-client="ca-pub-8859756463807757"
-                                             data-ad-slot="3646319863"
-                                             data-ad-format="auto"
-                                             data-full-width-responsive="true"></ins>
-                                        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+                                        <div th:replace="ads/ads::ads('3646319863')"></div>
                                     </div>
                                 </div>
                                 <div th:replace="layout/share::share(${sharevo})"></div>
                                 <div class="post-bottom overflow" style="margin-top:10px;margin-bottom: 20px;">
                                     <ul class="nav navbar-nav post-nav">
+                                        <li><a th:utext="'<i class=\'fa fa-eye\'></i>'+${postsVO.views}"></a>
+                                        </li>
+                                        <li><a th:utext="'<i class=\'fa fa-thumbs-o-up\'></i><span>'+${postsVO.thumbsUp}+'</span>'" href="JavaScript:void(0)" th:onclick="'thumbsService(this,\'up\',1,'+${postsVO.id}+')'"></a></li>
+                                        <li><a th:utext="'<i class=\'fa fa-thumbs-o-down\'></i><span>'+${postsVO.thumbsDown}+'</span>'" href="JavaScript:void(0)" th:onclick="'thumbsService(this,\'down\',1,'+${postsVO.id}+')'"></a></li>
+                                        <li><a th:utext="'<i class=\'fa fa-comments\'></i>'+${postsVO.comments}"></a></li>
                                         <li>
                                             <a th:href="${domain}+'/cat/'+${postsVO.categoryTypeName}+'/'+${postsVO.categoryEnName}"
                                                th:utext="'<i class=\'fa fa-tag\'></i>'+${postsVO.categoryZhName}"></a>
-                                        </li>
-                                        <li><a th:utext="'<i class=\'fa fa-eye\'></i>'+${postsVO.views}+' Views'"></a>
-                                        </li>
-                                        <li>
-                                            <a th:utext="'<i class=\'fa fa-comments\'></i>'+${postsVO.comments}+' Comments'"></a>
                                         </li>
                                     </ul>
                                 </div>

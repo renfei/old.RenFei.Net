@@ -6,11 +6,14 @@ import net.renfei.core.baseclass.BaseService;
 import net.renfei.core.entity.SearchDTO;
 import net.renfei.dao.entity.FullTextIndexDO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@CacheConfig(cacheNames = "SearchService")
 public class SearchService extends BaseService {
     @Autowired
     private WordService wordService;
@@ -23,6 +26,7 @@ public class SearchService extends BaseService {
         return search(word, pages, "10");
     }
 
+    @Cacheable(key = "targetClass+'_'+methodName+'_'+#p0+'_'+#p1+'_'+#p2", condition = "#p0!=null&&#p1!=null&&#p2!=null")
     public SearchDTO search(String word, String pages, String rows) {
         if (stringUtil.isEmpty(word)) {
             return null;

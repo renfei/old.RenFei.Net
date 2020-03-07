@@ -8,6 +8,8 @@ import net.renfei.core.entity.PostsListDTO;
 import net.renfei.dao.entity.*;
 import net.renfei.util.PageRankUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -20,6 +22,7 @@ import java.util.List;
  * 文章服务
  */
 @Service
+@CacheConfig(cacheNames = "posts")
 public class PostsService extends BaseService {
     private static final Double DateWeighted = 37.5D;
     private static final Double ViewWeighted = 57.5D;
@@ -44,6 +47,36 @@ public class PostsService extends BaseService {
     }
 
     /**
+     * 点赞
+     *
+     * @param id
+     */
+    public void thumbsUp(String id) {
+        PostsDO postsDO = getPostsByID(id, false);
+        if (postsDO != null) {
+            PostsDOWithBLOBs postsDOWithBLOBs = new PostsDOWithBLOBs();
+            postsDOWithBLOBs.setId(postsDO.getId());
+            postsDOWithBLOBs.setThumbsUp(postsDO.getThumbsUp() + 1);
+            updatePost(postsDOWithBLOBs);
+        }
+    }
+
+    /**
+     * 点踩
+     *
+     * @param id
+     */
+    public void thumbsDown(String id) {
+        PostsDO postsDO = getPostsByID(id, false);
+        if (postsDO != null) {
+            PostsDOWithBLOBs postsDOWithBLOBs = new PostsDOWithBLOBs();
+            postsDOWithBLOBs.setId(postsDO.getId());
+            postsDOWithBLOBs.setThumbsDown(postsDO.getThumbsDown() + 1);
+            updatePost(postsDOWithBLOBs);
+        }
+    }
+
+    /**
      * 获取文章列表
      *
      * @param pages 页码
@@ -61,6 +94,7 @@ public class PostsService extends BaseService {
      * @param rows  每页容量
      * @return
      */
+    @Cacheable(key = "targetClass+'_'+methodName+'_'+#p0+'_'+#p1+'_'+#p2", condition = "#p0!=null&&#p1!=null&&#p2!=null")
     public PostsListDTO getAllPosts(String pages, String rows, String orderBy) {
         int intPage = convertPage(pages), intRows = convertRows(rows);
         PostsDOExample postsDOExample = new PostsDOExample();
@@ -97,7 +131,9 @@ public class PostsService extends BaseService {
      * @param tagEnName 标签
      * @return
      */
+    @Cacheable(key = "targetClass+'_'+methodName+'_'+#p0+'_'+#p1+'_'+#p2", condition = "#p0!=null&&#p1!=null&&#p2!=null")
     public PostsListDTO getAllPostsByTag(String pages, String rows, String tagEnName) {
+        int intPage = convertPage(pages), intRows = convertRows(rows);
         List<TagRelationDO> tagRelationDOS = tagService.getTagRelationByEnName(tagEnName, 1L);
         if (tagRelationDOS != null && tagRelationDOS.size() > 0) {
             List<Long> ids = new ArrayList<>();
@@ -105,7 +141,7 @@ public class PostsService extends BaseService {
             ) {
                 ids.add(tag.getTargetId());
             }
-            int intPage = convertPage(pages), intRows = convertRows(rows);
+
             PostsDOExample postsDOExample = new PostsDOExample();
             postsDOExample.setOrderByClause("page_rank DESC,release_time DESC");
             postsDOExample
@@ -114,9 +150,8 @@ public class PostsService extends BaseService {
                     .andReleaseTimeLessThanOrEqualTo(new Date())
                     .andIdIn(ids);
             return doSelect(postsDOExample, intPage, intRows);
-        } else {
-            return null;
         }
+        return null;
     }
 
     /**
@@ -124,6 +159,7 @@ public class PostsService extends BaseService {
      *
      * @return
      */
+    @Cacheable(key = "targetClass+'_'+methodName+'_'+#p0", condition = "#p0!=null")
     public PostsListDTO getRelated(String id) {
         Long ID = 0L;
         if (!stringUtil.isEmpty(id)) {
@@ -164,12 +200,9 @@ public class PostsService extends BaseService {
                         .andIdNotEqualTo(ID)
                         .andReleaseTimeLessThanOrEqualTo(new Date());
                 return doSelect(postsDOExample, 1, 10);
-            } else {
-                return null;
             }
-        } else {
-            return null;
         }
+        return null;
     }
 
     /**
@@ -192,6 +225,7 @@ public class PostsService extends BaseService {
         return convert(postsDOWithBLOBs, page.getTotal());
     }
 
+    @Cacheable(key = "targetClass+'_'+methodName+'_'+#p0+'_'+#p1+'_'+#p2", condition = "#p0!=null&&#p1!=null&&#p2!=null")
     public PostsListDTO getAllPostsByCatID(Long catID, String pages, String rows) {
         int intPage = convertPage(pages), intRows = convertRows(rows);
         PostsDOExample postsDOExample = new PostsDOExample();
@@ -241,9 +275,8 @@ public class PostsService extends BaseService {
                         updateView(postsDOWithBLOBs1);
                     }
                     return ejbGenerator.convert(postsDOWithBLOBs1, PostsDTO.class);
-                } else {
-                    return null;
                 }
+                return null;
             } catch (NumberFormatException nfe) {
                 return null;
             }
@@ -252,71 +285,25 @@ public class PostsService extends BaseService {
         }
     }
 
-    public String getJsonld(PostsDTO postsDTO) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'+08:00'");
-        StringBuilder sb = new StringBuilder();
-        sb.append("{");
-        sb.append("\"@context\": \"http://schema.org/\",");
-        sb.append("\"@graph\": [");
-        sb.append("{");
-        sb.append("\"@type\": \"Organization\",");
-        sb.append("\"logo\": \"https://cdn.renfei.net/logo/logo_112.png\",");
-        sb.append("\"url\": \"https://www.renfei.net\"");
-        sb.append("},");
-        sb.append("{");
-        sb.append("\"@type\": \"WebSite\",");
-        sb.append("\"url\": \"https://www.renfei.net\",");
-        sb.append("\"potentialAction\": {");
-        sb.append("\"@type\": \"SearchAction\",");
-        sb.append("\"target\": \"https://www.renfei.net/search/?q={search_term_string}\",");
-        sb.append("\"query-input\": \"required name=search_term_string\"");
-        sb.append("}");
-        sb.append("},");
-        sb.append("{");
-        sb.append("\"@type\": \"Person\",");
-        sb.append("\"name\": \"任霏\",");
-        sb.append("\"url\": \"https://www.renfei.net\",");
-        sb.append("\"sameAs\": [");
-        sb.append("\"https://github.com/NeilRen\",");
-        sb.append("\"https://www.facebook.com/renfeii\",");
-        sb.append("\"https://twitter.com/renfeii\",");
-        sb.append("\"https://www.youtube.com/channel/UCPsjiVvFMS7piLgC-RHBWxg\"");
-        sb.append("]");
-        sb.append("},");
-        sb.append("{");
-        sb.append("\"@type\": \"NewsArticle\",");
-        sb.append("\"dateModified\":\"" + sdf.format(postsDTO.getReleaseTime()) + "\",");
-        sb.append("\"datePublished\":\"" + sdf.format(postsDTO.getReleaseTime()) + "\",");
-        sb.append("\"headline\":\"" + postsDTO.getTitle().replace("\"","") + "\",");
-        sb.append("\"image\":\"" + (postsDTO.getFeaturedImage() == null ? "https://cdn.renfei.net/logo/ogimage.png" : postsDTO.getFeaturedImage()) + "\",");
-        sb.append("\"author\":{");
-        sb.append("\"@type\": \"Person\",");
-        sb.append("\"name\": \"" + (postsDTO.getSourceName() == null ? "任霏" : postsDTO.getSourceName()) + "\"");
-        sb.append("},");
-        sb.append("\"publisher\":{");
-        sb.append("\"@type\": \"Organization\",");
-        sb.append("\"name\": \"任霏博客\",");
-        sb.append("\"logo\": {");
-        sb.append("\"@type\": \"ImageObject\",");
-        sb.append("\"url\": \"https://cdn.renfei.net/logo/logo_112.png\"");
-        sb.append("}");
-        sb.append("},");
-        sb.append("\"description\": \"" + postsDTO.getDescribes() + "\",");
-        sb.append("\"mainEntityOfPage\": {");
-        sb.append("\"@type\":\"WebPage\",");
-        sb.append("\"@id\":\"" + globalService.getDomain() + "/posts/" + postsDTO.getId() + "\"");
-        sb.append("},");
-        sb.append("\"speakable\": {");
-        sb.append("\"@type\": \"SpeakableSpecification\",");
-        sb.append("\"xpath\": [");
-        sb.append("\"/html/head/title\",");
-        sb.append("\"/html/head/meta[@name='description']/@content\"");
-        sb.append("]");
-        sb.append("}");
-        sb.append("}");
-        sb.append("]");
-        sb.append("}");
-        return sb.toString();
+    public void addAds(PostsDTO postsDTO) {
+        String[] conts = postsDTO.getContent().split("</p>");
+        if (conts.length > 5) {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < conts.length; i++) {
+                if (i == 4) {
+                    sb.append("<ins class=\"adsbygoogle\"\n");
+                    sb.append("     style=\"display:block; text-align:center;\"\n");
+                    sb.append("     data-ad-layout=\"in-article\"\n");
+                    sb.append("     data-ad-format=\"fluid\"\n");
+                    sb.append("     data-ad-client=\"ca-pub-8859756463807757\"\n");
+                    sb.append("     data-ad-slot=\"4815931302\"></ins>\n");
+                    sb.append("<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>");
+                }
+                sb.append(conts[i]);
+                sb.append("</p>");
+            }
+            postsDTO.setContent(sb.toString());
+        }
     }
 
     /**

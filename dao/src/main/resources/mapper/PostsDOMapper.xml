@@ -6,6 +6,8 @@
     <result column="category_id" jdbcType="BIGINT" property="categoryId" />
     <result column="is_original" jdbcType="BIT" property="isOriginal" />
     <result column="views" jdbcType="BIGINT" property="views" />
+    <result column="thumbs_up" jdbcType="BIGINT" property="thumbsUp" />
+    <result column="thumbs_down" jdbcType="BIGINT" property="thumbsDown" />
     <result column="release_time" jdbcType="TIMESTAMP" property="releaseTime" />
     <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
     <result column="is_delete" jdbcType="BIT" property="isDelete" />
@@ -81,8 +83,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, category_id, is_original, views, release_time, add_time, is_delete, is_comment, 
-    page_rank, page_rank_update_time
+    id, category_id, is_original, views, thumbs_up, thumbs_down, release_time, add_time, 
+    is_delete, is_comment, page_rank, page_rank_update_time
   </sql>
   <sql id="Blob_Column_List">
     featured_image, title, content, source_url, source_name, describes, keyword
@@ -135,23 +137,23 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="net.renfei.dao.entity.PostsDOWithBLOBs">
+  <insert id="insert" parameterType="net.renfei.dao.entity.PostsDOWithBLOBs">
     insert into t_posts (id, category_id, is_original, 
-      views, release_time, add_time, 
-      is_delete, is_comment, page_rank, 
-      page_rank_update_time, featured_image, 
-      title, content, source_url, 
-      source_name, describes, keyword
-      )
+      views, thumbs_up, thumbs_down, 
+      release_time, add_time, is_delete, 
+      is_comment, page_rank, page_rank_update_time, 
+      featured_image, title, content, 
+      source_url, source_name, describes, 
+      keyword)
     values (#{id,jdbcType=BIGINT}, #{categoryId,jdbcType=BIGINT}, #{isOriginal,jdbcType=BIT}, 
-      #{views,jdbcType=BIGINT}, #{releaseTime,jdbcType=TIMESTAMP}, #{addTime,jdbcType=TIMESTAMP}, 
-      #{isDelete,jdbcType=BIT}, #{isComment,jdbcType=BIT}, #{pageRank,jdbcType=DOUBLE}, 
-      #{pageRankUpdateTime,jdbcType=TIMESTAMP}, #{featuredImage,jdbcType=LONGVARCHAR}, 
-      #{title,jdbcType=LONGVARCHAR}, #{content,jdbcType=LONGVARCHAR}, #{sourceUrl,jdbcType=LONGVARCHAR}, 
-      #{sourceName,jdbcType=LONGVARCHAR}, #{describes,jdbcType=LONGVARCHAR}, #{keyword,jdbcType=LONGVARCHAR}
-      )
+      #{views,jdbcType=BIGINT}, #{thumbsUp,jdbcType=BIGINT}, #{thumbsDown,jdbcType=BIGINT}, 
+      #{releaseTime,jdbcType=TIMESTAMP}, #{addTime,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=BIT}, 
+      #{isComment,jdbcType=BIT}, #{pageRank,jdbcType=DOUBLE}, #{pageRankUpdateTime,jdbcType=TIMESTAMP}, 
+      #{featuredImage,jdbcType=LONGVARCHAR}, #{title,jdbcType=LONGVARCHAR}, #{content,jdbcType=LONGVARCHAR}, 
+      #{sourceUrl,jdbcType=LONGVARCHAR}, #{sourceName,jdbcType=LONGVARCHAR}, #{describes,jdbcType=LONGVARCHAR}, 
+      #{keyword,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="net.renfei.dao.entity.PostsDOWithBLOBs">
+  <insert id="insertSelective" parameterType="net.renfei.dao.entity.PostsDOWithBLOBs">
     insert into t_posts
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -165,6 +167,12 @@
       </if>
       <if test="views != null">
         views,
+      </if>
+      <if test="thumbsUp != null">
+        thumbs_up,
+      </if>
+      <if test="thumbsDown != null">
+        thumbs_down,
       </if>
       <if test="releaseTime != null">
         release_time,
@@ -218,6 +226,12 @@
       </if>
       <if test="views != null">
         #{views,jdbcType=BIGINT},
+      </if>
+      <if test="thumbsUp != null">
+        #{thumbsUp,jdbcType=BIGINT},
+      </if>
+      <if test="thumbsDown != null">
+        #{thumbsDown,jdbcType=BIGINT},
       </if>
       <if test="releaseTime != null">
         #{releaseTime,jdbcType=TIMESTAMP},
@@ -281,6 +295,12 @@
       <if test="record.views != null">
         views = #{record.views,jdbcType=BIGINT},
       </if>
+      <if test="record.thumbsUp != null">
+        thumbs_up = #{record.thumbsUp,jdbcType=BIGINT},
+      </if>
+      <if test="record.thumbsDown != null">
+        thumbs_down = #{record.thumbsDown,jdbcType=BIGINT},
+      </if>
       <if test="record.releaseTime != null">
         release_time = #{record.releaseTime,jdbcType=TIMESTAMP},
       </if>
@@ -331,6 +351,8 @@
       category_id = #{record.categoryId,jdbcType=BIGINT},
       is_original = #{record.isOriginal,jdbcType=BIT},
       views = #{record.views,jdbcType=BIGINT},
+      thumbs_up = #{record.thumbsUp,jdbcType=BIGINT},
+      thumbs_down = #{record.thumbsDown,jdbcType=BIGINT},
       release_time = #{record.releaseTime,jdbcType=TIMESTAMP},
       add_time = #{record.addTime,jdbcType=TIMESTAMP},
       is_delete = #{record.isDelete,jdbcType=BIT},
@@ -354,6 +376,8 @@
       category_id = #{record.categoryId,jdbcType=BIGINT},
       is_original = #{record.isOriginal,jdbcType=BIT},
       views = #{record.views,jdbcType=BIGINT},
+      thumbs_up = #{record.thumbsUp,jdbcType=BIGINT},
+      thumbs_down = #{record.thumbsDown,jdbcType=BIGINT},
       release_time = #{record.releaseTime,jdbcType=TIMESTAMP},
       add_time = #{record.addTime,jdbcType=TIMESTAMP},
       is_delete = #{record.isDelete,jdbcType=BIT},
@@ -375,6 +399,12 @@
       </if>
       <if test="views != null">
         views = #{views,jdbcType=BIGINT},
+      </if>
+      <if test="thumbsUp != null">
+        thumbs_up = #{thumbsUp,jdbcType=BIGINT},
+      </if>
+      <if test="thumbsDown != null">
+        thumbs_down = #{thumbsDown,jdbcType=BIGINT},
       </if>
       <if test="releaseTime != null">
         release_time = #{releaseTime,jdbcType=TIMESTAMP},
@@ -423,6 +453,8 @@
     set category_id = #{categoryId,jdbcType=BIGINT},
       is_original = #{isOriginal,jdbcType=BIT},
       views = #{views,jdbcType=BIGINT},
+      thumbs_up = #{thumbsUp,jdbcType=BIGINT},
+      thumbs_down = #{thumbsDown,jdbcType=BIGINT},
       release_time = #{releaseTime,jdbcType=TIMESTAMP},
       add_time = #{addTime,jdbcType=TIMESTAMP},
       is_delete = #{isDelete,jdbcType=BIT},
@@ -443,6 +475,8 @@
     set category_id = #{categoryId,jdbcType=BIGINT},
       is_original = #{isOriginal,jdbcType=BIT},
       views = #{views,jdbcType=BIGINT},
+      thumbs_up = #{thumbsUp,jdbcType=BIGINT},
+      thumbs_down = #{thumbsDown,jdbcType=BIGINT},
       release_time = #{releaseTime,jdbcType=TIMESTAMP},
       add_time = #{addTime,jdbcType=TIMESTAMP},
       is_delete = #{isDelete,jdbcType=BIT},

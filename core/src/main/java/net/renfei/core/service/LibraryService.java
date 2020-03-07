@@ -7,16 +7,20 @@ import net.renfei.dao.entity.LibraryDOExample;
 import net.renfei.dao.entity.LibraryDetailsDOExample;
 import net.renfei.dao.entity.LibraryDetailsDOWithBLOBs;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@CacheConfig(cacheNames = "LibraryService")
 public class LibraryService extends BaseService {
     @Autowired
     private MenuService menuService;
 
+    @Cacheable(key = "targetClass+'_'+methodName+'_'+#p0", condition = "#p0!=null")
     public List<LibraryDetailsDOWithBLOBs> getLibraryDetails(Long libraryid) {
         LibraryDetailsDOExample libraryDetailsDOExample = new LibraryDetailsDOExample();
         libraryDetailsDOExample.createCriteria()
@@ -24,6 +28,7 @@ public class LibraryService extends BaseService {
         return libraryDetailsDOMapper.selectByExampleWithBLOBs(libraryDetailsDOExample);
     }
 
+    @Cacheable(key = "targetClass+'_'+methodName+'_'+#p0", condition = "#p0!=null")
     public LibraryDO getLibraryByName(String name) {
         LibraryDOExample libraryDOExample = new LibraryDOExample();
         libraryDOExample.createCriteria()
@@ -35,6 +40,7 @@ public class LibraryService extends BaseService {
         return null;
     }
 
+    @Cacheable(key = "targetClass+'_'+methodName")
     public List<MenuDTO> getLibraryDirectoryJson() {
         List<MenuDTO> menuDTOS = menuService.getMenuByPid(0L, 10);
         addLib(menuDTOS);

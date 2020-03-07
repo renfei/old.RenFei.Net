@@ -22,41 +22,38 @@
     <div class="container">
         <div class="row">
             <div class="col-md-9 col-sm-7">
-                <div th:if="${globalAD=='1'}" style="padding: 0 10px 10px 0;">
-                    <ins class="adsbygoogle"
-                         style="display:block"
-                         data-ad-client="ca-pub-8859756463807757"
-                         data-ad-slot="6116570539"
-                         data-ad-format="auto"
-                         data-full-width-responsive="true"></ins>
-                    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+                <div th:if="${globalAD=='1'}" th:replace="ads/ads::ads('6116570539')" style="padding: 0 10px 10px 0;">
                 </div>
                 <div class="row">
-                    <div th:if="${postsVOList!=null}" th:each="info:${postsVOList}" class="col-md-6 col-sm-12 blog-padding-right">
+                    <div th:if="${postsVOList!=null}" th:each="info:${postsVOList}"
+                         class="col-md-6 col-sm-12 blog-padding-right">
                         <div class="single-blog two-column">
-                            <div class="post-thumb">
+                            <div class="post-thumb weibo_radius">
                                 <a th:href="${domain}+'/posts/'+${info.id}" target="_blank">
-                                    <img th:src="${info.featuredImage}" class="img-responsive" th:alt="${info.title}"></a>
-                                <div class="post-overlay">
-                                    <span class="uppercase">
-                                        <a th:href="${domain}+'/posts/'+${info.id}"  target="_blank"
-                                                               th:utext="${#dates.format(info.releaseTime,'d')}+
-                                                               '<br><small>'+${#dates.format(info.releaseTime,'MMM')}+
-                                                               '</small>'"></a></span>
-                                </div>
+                                    <img th:src="${info.featuredImage}" class="img-responsive"
+                                         th:alt="${info.title}">
+                                </a>
                             </div>
                             <div class="post-content overflow">
-                                <h2 class="post-title bold">
-                                    <a th:href="${domain}+'/posts/'+${info.id}"  target="_blank" th:text="${info.title}">Advanced business cards design</a>
-                                </h2>
-                                <h3 class="post-author"><a href="#" th:text="${#dates.format(info.releaseTime,'yyyy-MM-dd HH:mm:ss')}"></a></h3>
-                                <p th:text="${#strings.abbreviate(info.describes,150)}" style="height: 100px;"></p>
-                                <a th:href="${domain}+'/posts/'+${info.id}"  target="_blank">View More</a>
+                                <a th:href="${domain}+'/posts/'+${info.id}" target="_blank">
+                                    <h2 class="post-title bold" th:text="${info.title}"></h2>
+                                </a>
+                                <h3 class="post-author">
+                                    <a th:text="${#dates.format(info.releaseTime,'yyyy-MM-dd HH:mm:ss')}"></a>
+                                </h3>
+                                <p th:text="${#strings.abbreviate(info.describes,150)}"
+                                   style="height: 100px;line-height:130%;"></p>
                                 <div class="post-bottom overflow">
                                     <ul class="nav nav-justified post-nav">
-                                        <li><a th:href="${domain}+'/cat/'+${info.categoryTypeName}+'/'+${info.categoryEnName}" th:utext="'<i class=\'fa fa-tag\'></i>'+${info.categoryZhName}"></a></li>
-                                        <li><a th:utext="'<i class=\'fa fa-eye\'></i>'+${info.views}+'Views'"></a></li>
-                                        <li><a th:utext="'<i class=\'fa fa-comments\'></i>'+${info.comments}+' Comments'"></a></li>
+                                        <li><a th:utext="'<i class=\'fa fa-eye\'></i>'+${info.views}"></a></li>
+                                        <li>
+                                            <a th:utext="'<i class=\'fa fa-thumbs-o-up\'></i><span>'+${info.thumbsUp}+'</span>'"
+                                               href="JavaScript:void(0)"
+                                               th:onclick="'thumbsService(this,\'up\',1,'+${info.id}+')'"></a></li>
+                                        <li><a th:utext="'<i class=\'fa fa-comments\'></i>'+${info.comments}"></a></li>
+                                        <li>
+                                            <a th:href="${domain}+'/cat/'+${info.categoryTypeName}+'/'+${info.categoryEnName}"
+                                               th:utext="'<i class=\'fa fa-tag\'></i>'+${info.categoryZhName}"></a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -64,15 +61,7 @@
                     </div>
                 </div>
                 <div class="clear"></div>
-                <div th:if="${globalAD=='1'}">
-                    <ins class="adsbygoogle"
-                         style="display:block"
-                         data-ad-client="ca-pub-8859756463807757"
-                         data-ad-slot="3646319863"
-                         data-ad-format="auto"
-                         data-full-width-responsive="true"></ins>
-                    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-                </div>
+                <div th:if="${globalAD=='1'}" th:replace="ads/ads::ads('3646319863')"></div>
                 <div class="blog-pagination">
                     <div th:replace="layout/pagination::pagination(${pagination})"></div>
                 </div>

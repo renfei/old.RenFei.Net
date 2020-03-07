@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/head::head(${head})">
+</head>
+<body>
+<header th:replace="layout/header::header(${header})"></header>
+<section id="page-breadcrumb">
+    <div class="vertical-center sun">
+        <div class="container">
+            <div class="row">
+                <div class="action">
+                    <div class="col-sm-12">
+                        <h1 class="title">Online Generation Tool Of ShortURL</h1>
+                        <p>短网址在线生成工具</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="company-information" class="choose">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3 col-md-3">
+                <div th:replace="kitbox/menu::menu('other','ShortURL')"></div>
+            </div>
+            <div class="col-sm-9 col-md-9">
+                <div class="" style="margin: auto;">
+                    <div class="row">
+                        <div class="col-xs-7">
+                            <div class="form-group">
+                                <label>输入原网址</label>
+                                <input id="url" name="url" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" onclick="return ok()" class="btn btn-primary btn-lg btn-block">
+                                    OK
+                                </button>
+                            </div>
+                            <div class="form-group">
+                                <label>生成的短网址</label>
+                                <input type="text" disabled id="short" style="background-color: #fff;" name="short" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-xs-5">
+                            <div class="form-group">
+                                <label style="display: block;">短网址二维码</label>
+                                <img id="qrcode_show" width="100%" style="display: none;"
+                                     src="/other/qrcode?content=https://www.renfei.net/kitbox/qrcode"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div th:replace="ads/ads::ads('3646319863')"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    $(function () {
+
+    });
+
+    function copy() {
+        window.clipboardData.setData("Text",$("#short").val());
+        notice("Success", "成功复制到剪切板");
+        return false;
+    }
+
+    function ok() {
+        var url = $("#url").val();
+        if (url === "") {
+            notice("Error", "原始 Url 必须填写！");
+        } else {
+            $.ajax({
+                url: '/kitbox/ShortURL/do',
+                type: 'POST', //GET
+                async: true,
+                data: {
+                    url: url
+                },
+                timeout: 60000,
+                dataType: 'json',
+                success: function (data, textStatus, jqXHR) {
+                    if (data.success) {
+                        $("#short").val(data.data.shortUrl);
+                        $("#qrcode_show").attr('src', "/other/qrcode?content=" + data.data.shortUrl);
+                        $("#qrcode_show").show();
+                    } else {
+                        notice("Error", data.message);
+                    }
+                },
+                error: function (xhr, textStatus) {
+                    $("#data").val("Error.\n" + xhr.responseText);
+                    notice("Error", xhr.responseText);
+                }
+            });
+        }
+        return false;
+    }
+</script>
+<footer th:replace="layout/footer::footer(${footer},${performance})"></footer>
+</body>
+</html>

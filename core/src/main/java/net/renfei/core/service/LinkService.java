@@ -7,6 +7,8 @@ import net.renfei.core.entity.LinkDTO;
 import net.renfei.dao.entity.LinkDOExample;
 import net.renfei.dao.entity.LinkDOWithBLOBs;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
@@ -17,10 +19,12 @@ import java.util.List;
 
 @Slf4j
 @Service
+@CacheConfig(cacheNames = "LinkService")
 public class LinkService extends BaseService {
     @Autowired
     private MailService mailService;
 
+    @Cacheable(key = "targetClass+'_'+methodName")
     public LinkDTO getLinks() {
         LinkDOExample linkDOExample = new LinkDOExample();
         linkDOExample.setOrderByClause("order_id ASC");

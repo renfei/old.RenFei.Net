@@ -41,6 +41,27 @@ spring:
             threadsInheritContextClassLoaderOfInitializingThread: true
     #数据库方式
     job-store-type: jdbc
+  redis:
+    #redis数据库索引(默认为0)
+    database: 0
+    #redis服务器地址
+    host: localhost
+    #redis服务器连接端口
+    port: 6379
+    #redis连接密码
+    password:
+    #redis连接池设置
+    pool:
+      #最大空闲连接
+      max-idle: 100
+      #最小空闲连接
+      min-idle: 1
+      #最大连接数(负数表示没有限制)
+      max-active: 1000
+      #最大阻塞等待时间(负数表示没有限制)
+      max-wait: -1
+      #连接超时时间(毫秒)
+      timeout: 0
 #jasypt加密的密匙
 jasypt:
   encryptor:

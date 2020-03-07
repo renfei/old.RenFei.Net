@@ -12,6 +12,8 @@ import net.renfei.dao.persistences.IPV4DOMapper;
 import net.renfei.dao.persistences.IPV6DOMapper;
 import net.renfei.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +25,7 @@ import java.util.Map;
 
 @Slf4j
 @Service
+@CacheConfig(cacheNames = "IpService")
 public class IpService {
     @Autowired
     private IPV4DOMapper ipv4DOMapper;
@@ -73,6 +76,7 @@ public class IpService {
      * @param ip
      * @return
      */
+    @Cacheable(key = "targetClass+'_'+methodName+'_'+#p0", condition = "#p0!=null")
     public IPDTO getIPInfor(String ip) {
         IPDTO ipdto = new IPDTO();
         BigInteger bIp;

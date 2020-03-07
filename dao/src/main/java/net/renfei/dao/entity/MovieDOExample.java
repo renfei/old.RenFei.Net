@@ -625,6 +625,126 @@ public class MovieDOExample {
             return (Criteria) this;
         }
 
+        public Criteria andThumbsUpIsNull() {
+            addCriterion("thumbs_up is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andThumbsUpIsNotNull() {
+            addCriterion("thumbs_up is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andThumbsUpEqualTo(Long value) {
+            addCriterion("thumbs_up =", value, "thumbsUp");
+            return (Criteria) this;
+        }
+
+        public Criteria andThumbsUpNotEqualTo(Long value) {
+            addCriterion("thumbs_up <>", value, "thumbsUp");
+            return (Criteria) this;
+        }
+
+        public Criteria andThumbsUpGreaterThan(Long value) {
+            addCriterion("thumbs_up >", value, "thumbsUp");
+            return (Criteria) this;
+        }
+
+        public Criteria andThumbsUpGreaterThanOrEqualTo(Long value) {
+            addCriterion("thumbs_up >=", value, "thumbsUp");
+            return (Criteria) this;
+        }
+
+        public Criteria andThumbsUpLessThan(Long value) {
+            addCriterion("thumbs_up <", value, "thumbsUp");
+            return (Criteria) this;
+        }
+
+        public Criteria andThumbsUpLessThanOrEqualTo(Long value) {
+            addCriterion("thumbs_up <=", value, "thumbsUp");
+            return (Criteria) this;
+        }
+
+        public Criteria andThumbsUpIn(List<Long> values) {
+            addCriterion("thumbs_up in", values, "thumbsUp");
+            return (Criteria) this;
+        }
+
+        public Criteria andThumbsUpNotIn(List<Long> values) {
+            addCriterion("thumbs_up not in", values, "thumbsUp");
+            return (Criteria) this;
+        }
+
+        public Criteria andThumbsUpBetween(Long value1, Long value2) {
+            addCriterion("thumbs_up between", value1, value2, "thumbsUp");
+            return (Criteria) this;
+        }
+
+        public Criteria andThumbsUpNotBetween(Long value1, Long value2) {
+            addCriterion("thumbs_up not between", value1, value2, "thumbsUp");
+            return (Criteria) this;
+        }
+
+        public Criteria andThumbsDownIsNull() {
+            addCriterion("thumbs_down is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andThumbsDownIsNotNull() {
+            addCriterion("thumbs_down is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andThumbsDownEqualTo(Long value) {
+            addCriterion("thumbs_down =", value, "thumbsDown");
+            return (Criteria) this;
+        }
+
+        public Criteria andThumbsDownNotEqualTo(Long value) {
+            addCriterion("thumbs_down <>", value, "thumbsDown");
+            return (Criteria) this;
+        }
+
+        public Criteria andThumbsDownGreaterThan(Long value) {
+            addCriterion("thumbs_down >", value, "thumbsDown");
+            return (Criteria) this;
+        }
+
+        public Criteria andThumbsDownGreaterThanOrEqualTo(Long value) {
+            addCriterion("thumbs_down >=", value, "thumbsDown");
+            return (Criteria) this;
+        }
+
+        public Criteria andThumbsDownLessThan(Long value) {
+            addCriterion("thumbs_down <", value, "thumbsDown");
+            return (Criteria) this;
+        }
+
+        public Criteria andThumbsDownLessThanOrEqualTo(Long value) {
+            addCriterion("thumbs_down <=", value, "thumbsDown");
+            return (Criteria) this;
+        }
+
+        public Criteria andThumbsDownIn(List<Long> values) {
+            addCriterion("thumbs_down in", values, "thumbsDown");
+            return (Criteria) this;
+        }
+
+        public Criteria andThumbsDownNotIn(List<Long> values) {
+            addCriterion("thumbs_down not in", values, "thumbsDown");
+            return (Criteria) this;
+        }
+
+        public Criteria andThumbsDownBetween(Long value1, Long value2) {
+            addCriterion("thumbs_down between", value1, value2, "thumbsDown");
+            return (Criteria) this;
+        }
+
+        public Criteria andThumbsDownNotBetween(Long value1, Long value2) {
+            addCriterion("thumbs_down not between", value1, value2, "thumbsDown");
+            return (Criteria) this;
+        }
+
         public Criteria andScoreIsNull() {
             addCriterion("score is null");
             return (Criteria) this;

@@ -25,7 +25,7 @@
                 <div class="row">
                     <div th:if="${videoDTOList!=null}" th:each="info:${videoDTOList}" class="col-md-6 col-sm-12 blog-padding-right">
                         <div class="single-blog two-column">
-                            <div class="post-thumb">
+                            <div class="post-thumb weibo_radius">
                                 <a th:href="${domain}+'/video/'+${info.id}">
                                     <img th:src="${info.featuredImage}" class="img-responsive" alt=""></a>
                                 <div class="post-overlay">
@@ -43,9 +43,9 @@
                                 <a th:href="${domain}+'/video/'+${info.id}">View More</a>
                                 <div class="post-bottom overflow">
                                     <ul class="nav nav-justified post-nav">
-                                        <li><a th:href="${domain}+'/cat/'+${info.categoryTypeName}+'/'+${info.categoryEnName}" th:utext="'<i class=\'fa fa-tag\'></i>'+${info.categoryZhName}"></a></li>
-                                        <li><a th:utext="'<i class=\'fa fa-eye\'></i>'+${info.views}+'Views'"></a></li>
-                                        <li><a th:utext="'<i class=\'fa fa-comments\'></i>'+${info.comments}+' Comments'"></a></li>
+                                        <li><a th:utext="'<i class=\'fa fa-eye\'></i>'+${info.views}"></a></li>
+                                        <li><a th:utext="'<i class=\'fa fa-thumbs-o-up\'></i><span>'+${info.thumbsUp}+'</span>'" href="JavaScript:void(0)" th:onclick="'thumbsService(this,\'up\',3,'+${info.id}+')'"></a></li>
+                                        <li><a th:utext="'<i class=\'fa fa-comments\'></i>'+${info.comments}"></a></li>
                                     </ul>
                                 </div>
                             </div>

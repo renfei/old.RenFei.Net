@@ -7,12 +7,15 @@ import net.renfei.core.entity.MovieClassificationDTO;
 import net.renfei.core.entity.MoviesListDTO;
 import net.renfei.dao.entity.*;
 import net.renfei.util.StringUtil;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@CacheConfig(cacheNames = "MoviesService")
 public class MoviesService extends BaseService {
 
     /**
@@ -22,6 +25,7 @@ public class MoviesService extends BaseService {
      * @param rows
      * @return
      */
+    @Cacheable(key = "targetClass+'_'+methodName+'_'+#p0+'_'+#p1", condition = "#p0!=null&&#p1!=null")
     public MoviesListDTO getAllMovies(String pages, String rows) {
         int intPage = convertPage(pages), intRows = convertRows(rows);
         MovieDOExample movieDOExample = new MovieDOExample();
@@ -31,6 +35,7 @@ public class MoviesService extends BaseService {
         return convert(movieDOMapper.selectByExampleWithBLOBs(movieDOExample), page.getTotal());
     }
 
+    @Cacheable(key = "targetClass+'_'+methodName+'_'+#p0+'_'+#p1+'_'+#p2", condition = "#p0!=null&&#p1!=null&&#p2!=null")
     public MoviesListDTO getMoviesListByCat(String catname, String pages, String rows) {
         if (stringUtil.isEmpty(catname)) {
             return null;
@@ -83,6 +88,36 @@ public class MoviesService extends BaseService {
     }
 
     /**
+     * 点赞
+     *
+     * @param id
+     */
+    public void thumbsUp(String id) {
+        MovieDOWithBLOBs movieDOWithBLOBs = getMovieById(id, false);
+        if (movieDOWithBLOBs != null) {
+            movieDOWithBLOBs.setThumbsUp(movieDOWithBLOBs.getThumbsUp() + 1);
+            update(movieDOWithBLOBs);
+        }
+    }
+
+    /**
+     * 点踩
+     *
+     * @param id
+     */
+    public void thumbsDown(String id) {
+        MovieDOWithBLOBs movieDOWithBLOBs = getMovieById(id, false);
+        if (movieDOWithBLOBs != null) {
+            movieDOWithBLOBs.setThumbsDown(movieDOWithBLOBs.getThumbsDown() + 1);
+            update(movieDOWithBLOBs);
+        }
+    }
+
+    public int update(MovieDOWithBLOBs movieDOWithBLOBs) {
+        return movieDOMapper.updateByPrimaryKeySelective(movieDOWithBLOBs);
+    }
+
+    /**
      * 根据ID获取电影详情
      *
      * @param id
@@ -106,7 +141,7 @@ public class MoviesService extends BaseService {
             return null;
         }
     }
-
+    @Cacheable(key = "targetClass+'_'+methodName")
     public List<MovieClassificationDTO> getAllMovieClassification() {
         TypeDOExample typeDOExample = new TypeDOExample();
         typeDOExample.createCriteria().andTypeNameEqualTo("Movie");

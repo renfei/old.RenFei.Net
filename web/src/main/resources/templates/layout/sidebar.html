@@ -2,18 +2,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <body>
         <div th:fragment="sidebar(sidebar)" class="sidebar blog-sidebar">
-            <div class="sidebar-item">
+            <div class="sidebar-item" th:if="${globalAD=='1'}">
                 <!--<div th:replace="layout/github::mygithub"></div>-->
                 <!-- sidebar_正方形 -->
-                <ins class="adsbygoogle"
-                     style="display:block"
-                     data-ad-client="ca-pub-8859756463807757"
-                     data-ad-slot="4995060553"
-                     data-ad-format="auto"
-                     data-full-width-responsive="true"></ins>
-                <script>
-                    (adsbygoogle = window.adsbygoogle || []).push({});
-                </script>
+                <div th:replace="ads/ads::ads('4995060553')"></div>
             </div>
             <div class="sidebar-item categories">
                 <h3 th:if="${sidebar.categories!=null}">Categories</h3>
@@ -27,13 +19,7 @@
                 </ul>
             </div>
             <div class="sidebar-item" th:if="${globalAD=='1'}">
-                <ins class="adsbygoogle"
-                     style="display:block"
-                     data-ad-client="ca-pub-8859756463807757"
-                     data-ad-slot="6567996671"
-                     data-ad-format="auto"
-                     data-full-width-responsive="true"></ins>
-                <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+                <div th:replace="ads/ads::ads('6567996671')"></div>
             </div>
             <div class="sidebar-item tag-cloud" th:if="${sidebar.tags!=null}">
                 <h3>Tag Cloud</h3>

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SystemService extends BaseService {
@@ -24,6 +25,7 @@ public class SystemService extends BaseService {
     private static String ANALYTICSCODE = "analyticscode";
     private static String GLOBALCOMMENT = "global_comment";
     private static String GLOBALAD = "global_ad";
+    private static String STATICVERSION = "staticversion";
 
     public String getSiteName() {
         return getValue(SITENAME);
@@ -73,16 +75,21 @@ public class SystemService extends BaseService {
         return getValue(GLOBALAD);
     }
 
+    public String getStaticVersion() {
+        return Optional.ofNullable(getValue(STATICVERSION)).orElse("");
+    }
+
     private List<String> getCJss(String key, boolean isHead) {
         List<SettingDOWithBLOBs> settingDOWithBLOBs = getSetting(key, isHead ? "1" : null);
         if (settingDOWithBLOBs != null && settingDOWithBLOBs.size() > 0) {
+            String staticVersion = getStaticVersion();
             String staticDomain = getStaticDomain();
             List<String> jss = new ArrayList<>();
             for (SettingDOWithBLOBs setting : settingDOWithBLOBs) {
                 if (setting.getValues().startsWith("//") || setting.getValues().startsWith("http")) {
-                    jss.add(setting.getValues());
+                    jss.add(setting.getValues() + staticVersion);
                 } else {
-                    jss.add("//" + staticDomain + setting.getValues());
+                    jss.add("//" + staticDomain + setting.getValues() + staticVersion);
                 }
             }
             return jss;
@@ -94,13 +101,14 @@ public class SystemService extends BaseService {
     private List<String> getCss(String key) {
         List<SettingDOWithBLOBs> settingDOWithBLOBs = getSetting(key);
         if (settingDOWithBLOBs != null && settingDOWithBLOBs.size() > 0) {
+            String staticVersion = getStaticVersion();
             String staticDomain = getStaticDomain();
             List<String> css = new ArrayList<>();
             for (SettingDOWithBLOBs setting : settingDOWithBLOBs) {
                 if (setting.getValues().startsWith("//") || setting.getValues().startsWith("http")) {
-                    css.add(setting.getValues());
+                    css.add(setting.getValues() + staticVersion);
                 } else {
-                    css.add("//" + staticDomain + setting.getValues());
+                    css.add("//" + staticDomain + setting.getValues() + staticVersion);
                 }
             }
             return css;

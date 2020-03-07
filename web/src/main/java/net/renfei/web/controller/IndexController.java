@@ -7,6 +7,8 @@ import net.renfei.web.entity.AllInfoVO;
 import net.renfei.web.entity.CategoryVO;
 import net.renfei.web.entity.OGprotocol;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +27,7 @@ import java.util.List;
 
 
 @Controller
+@CacheConfig(cacheNames = "index")
 public class IndexController extends BaseController {
     @Value("classpath:xml/sitemap.xsl")
     private Resource sitemapxslXml;
@@ -86,6 +89,7 @@ public class IndexController extends BaseController {
 
     @RequestMapping(value = "robots.txt", produces = "text/plain")
     @ResponseBody
+    @Cacheable(key = "'robots.txt'")
     public String getRobotsTxt() {
         String robots = "#\n" +
                 "# robots.txt for RENFEI.NET\n" +
@@ -102,6 +106,7 @@ public class IndexController extends BaseController {
 
     @RequestMapping(value = "ads.txt", produces = "text/plain")
     @ResponseBody
+    @Cacheable(key = "'ads.txt'")
     public String getGoogleAds() throws NoHandlerFoundException {
         String ads;
         ads = renFeiConfig.getGOOGLE_ADS();
@@ -113,9 +118,10 @@ public class IndexController extends BaseController {
 
     @RequestMapping(value = "sitemap.xml", produces = "text/xml;charset=UTF-8")
     @ResponseBody
+    @Cacheable(key = "'sitemap.xml'")
     public String getSiteMapXml() throws ParseException {
         List<SiteMapXml> siteMapXmls = siteMapService.getSiteMaps();
-        String xml = "    <url>\n" +
+        String xmlTemplate = "    <url>\n" +
                 "        <loc>%s</loc>\n" +
                 "        <changefreq>%s</changefreq>\n" +
                 "        <priority>%s</priority>\n" +
@@ -126,7 +132,7 @@ public class IndexController extends BaseController {
         resxml.append("<?xml-stylesheet type=\"text/xsl\" href=\"" + domain + "/sitemap.xsl\"?>\n");
         resxml.append("<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n");
         for (SiteMapXml s : siteMapXmls) {
-            resxml.append(String.format(xml, s.getLoc(), s.getChangefreq(), s.getPriority(), s.getLastmod()));
+            resxml.append(String.format(xmlTemplate, s.getLoc(), s.getChangefreq(), s.getPriority(), s.getLastmod()));
         }
         resxml.append("</urlset>\n");
         return resxml.toString();
@@ -134,6 +140,7 @@ public class IndexController extends BaseController {
 
     @RequestMapping(value = "sitemap.xsl")
     @ResponseBody
+    @Cacheable(key = "'sitemap.xsl'")
     public String getSiteMapXsl(HttpServletResponse response) throws IOException {
         String sitemapxsl = IOUtils.toString(sitemapxslXml.getInputStream());
         response.setHeader("content-type", "application/octet-stream;charset=UTF-8");

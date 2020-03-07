@@ -14,6 +14,8 @@ public class PostsVO {
     private Boolean isOriginal;
     private Boolean isComment;
     private Long views;
+    private Long thumbsUp;
+    private Long thumbsDown;
     private Long comments;
     private Date releaseTime;
     private String title;
