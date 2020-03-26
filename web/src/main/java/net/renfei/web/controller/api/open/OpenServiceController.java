@@ -3,6 +3,7 @@ package net.renfei.web.controller.api.open;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import net.renfei.core.entity.IPDTO;
+//import net.renfei.core.service.CurlService;
 import net.renfei.core.service.DomainNameService;
 import net.renfei.core.service.IpService;
 import net.renfei.web.baseclass.BaseRestController;
@@ -22,6 +23,8 @@ public class OpenServiceController extends BaseRestController {
     private IpService ipService;
     @Autowired
     private DomainNameService domainNameService;
+//    @Autowired
+//    private CurlService curlService;
 
     @GetMapping("ipinfo/{ip}")
     @ApiOperation(
@@ -91,5 +94,16 @@ public class OpenServiceController extends BaseRestController {
             stringUUID.add(uuid);
         }
         return APIResult.fillResult(true, "", stringUUID);
+    }
+
+    @GetMapping("/curl")
+    @ApiOperation(
+            value = "Curl接口",
+            notes = "Curl执行接口",
+            tags = "Open API Service"
+    )
+    public APIResult curl(@RequestParam(value = "url") String url,
+                          @RequestParam(value = "ssl", required = false) Boolean ssh) {
+        return APIResult.fillResult(false);
     }
 }

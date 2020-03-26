@@ -26,9 +26,6 @@ public class VideoDOWithBLOBs extends VideoDO {
     }
 
     public String getDescribes() {
-        if (describes != null && describes.length() > 120) {
-            return describes.substring(0, 119);
-        }
         return describes;
     }
 

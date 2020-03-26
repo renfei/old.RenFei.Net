@@ -85,6 +85,12 @@ public class BaseController extends BaseClass {
     protected QuartzService quartzService;
     @Autowired
     protected CacheService cacheService;
+    @Autowired
+    protected ShortUrlService shortUrlService;
+    @Autowired
+    protected ThumbsService thumbsService;
+    @Autowired
+    protected WeiboService weiboService;
 
     /**
      * 线程绑定Request对象
@@ -163,6 +169,7 @@ public class BaseController extends BaseClass {
         footerVO.setJss(globalService.getGlobalJSsList(false));
         //全局侧边栏
         sidebarVO = new SidebarVO();
+        sidebarVO.setStaticdomain(staticdomain);
         mv.addObject(FOOTER_KEY, footerVO);
         mv.addObject(SIDEBAR_KEY, sidebarVO);
         mv.addObject(SITE_NAME_KEY, siteName);

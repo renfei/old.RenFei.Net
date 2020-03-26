@@ -1,3 +1,18 @@
+/*
+ Navicat Premium Data Transfer
+
+ Source Server         : localhost
+ Source Server Type    : MySQL
+ Source Server Version : 50717
+ Source Host           : localhost:3306
+ Source Schema         : renfei
+
+ Target Server Type    : MySQL
+ Target Server Version : 50717
+ File Encoding         : 65001
+
+ Date: 26/03/2020 12:50:13
+*/
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
@@ -146,7 +161,7 @@ CREATE TABLE `QRTZ_SCHEDULER_STATE` (
 -- Records of QRTZ_SCHEDULER_STATE
 -- ----------------------------
 BEGIN;
-INSERT INTO `QRTZ_SCHEDULER_STATE` VALUES ('clusteredScheduler', 'NeilMacBookPro1578473126182', 1578490778338, 10000);
+INSERT INTO `QRTZ_SCHEDULER_STATE` VALUES ('clusteredScheduler', 'NeilMacBookPro1583564066608', 1583564359315, 10000);
 COMMIT;
 
 -- ----------------------------
@@ -228,7 +243,7 @@ CREATE TABLE `QRTZ_TRIGGERS` (
 -- Records of QRTZ_TRIGGERS
 -- ----------------------------
 BEGIN;
-INSERT INTO `QRTZ_TRIGGERS` VALUES ('clusteredScheduler', 'UpdatePostPageRankTrigger', 'PostTriggerGroup', 'UpdatePostPageRankJob', 'Post', NULL, 1578490920000, 1578490740000, 5, 'WAITING', 'CRON', 1575262409000, 0, NULL, 0, '');
+INSERT INTO `QRTZ_TRIGGERS` VALUES ('clusteredScheduler', 'UpdatePostPageRankTrigger', 'PostTriggerGroup', 'UpdatePostPageRankJob', 'Post', NULL, 1583607600000, 1583552327656, 5, 'WAITING', 'CRON', 1575262409000, 0, NULL, 0, '');
 COMMIT;
 
 -- ----------------------------
@@ -255,6 +270,18 @@ CREATE TABLE `t_account` (
 BEGIN;
 INSERT INTO `t_account` VALUES (1, 'renfei', 'sha1:64000:18:rZNN9/MlvYHaiVoKioG7G0E7h1gbqUj/:NI4eEfylEvrElpkKIq8Atf9g', 'EV3RYRYEKY7RD4PZ', 0, 1, '2019-07-11 19:29:08', 0, '2019-08-10 13:14:43');
 COMMIT;
+
+-- ----------------------------
+-- Table structure for t_cache
+-- ----------------------------
+DROP TABLE IF EXISTS `t_cache`;
+CREATE TABLE `t_cache` (
+  `uuid` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cache_key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cache_value` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `expires` datetime NOT NULL,
+  PRIMARY KEY (`uuid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Table structure for t_category
@@ -322,7 +349,7 @@ CREATE TABLE `t_comments` (
   KEY `fk_comments` (`parent_id`),
   CONSTRAINT `fk_comment_type` FOREIGN KEY (`type_id`) REFERENCES `t_type` (`id`),
   CONSTRAINT `fk_comments` FOREIGN KEY (`parent_id`) REFERENCES `t_comments` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of t_comments
@@ -341,6 +368,34 @@ INSERT INTO `t_comments` VALUES (12, 1003283, 1, '发的', 'sdg', 'asdg', '0:0:0
 INSERT INTO `t_comments` VALUES (13, 1003283, 1, '哈哈', 'aadf', 'https://www.baidu.com/', '0:0:0:0:0:0:0:1', NULL, '2019-07-27 11:03:32', 'https://www.baidu.com/', 0, 5, 0);
 INSERT INTO `t_comments` VALUES (14, 1003283, 3, '测试', 'er', NULL, '0:0:0:0:0:0:0:1', NULL, '2019-07-27 14:50:26', '视频测试', 0, NULL, 0);
 INSERT INTO `t_comments` VALUES (15, 1003283, 1, 'haha', '16076276@qq.com', NULL, '0:0:0:0:0:0:0:1', NULL, '2019-12-10 21:20:14', 'hahahahaha', 1, NULL, 0);
+INSERT INTO `t_comments` VALUES (16, 10000, 6, 'ce', 'ce', 'ce', '0:0:0:0:0:0:0:1', NULL, '2020-03-06 17:12:29', 'ce', 0, NULL, 0);
+COMMIT;
+
+-- ----------------------------
+-- Table structure for t_download
+-- ----------------------------
+DROP TABLE IF EXISTS `t_download`;
+CREATE TABLE `t_download` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '文件编号',
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '名称',
+  `icon` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '图标地址',
+  `size` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '文件大小',
+  `created` datetime NOT NULL COMMENT '创建时间',
+  `hash` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '哈希值',
+  `file_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '文件名',
+  `bucket` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '储存在哪里',
+  `file_path` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '存储路径',
+  `baidu_yun_pan_url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '百度云盘下载',
+  `baidu_yun_pan_code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '百度云盘授权码',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1002 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Records of t_download
+-- ----------------------------
+BEGIN;
+INSERT INTO `t_download` VALUES (1000, 'Navicat Premium 15.0.7', 'https://cdn.renfei.net/upload/image/2020/20200116112250.png', '142.8 MB', '2020-01-16 11:03:41', '8e6f1f02c97a2f650835eca9cdb64e356e0b8cb0', 'Navicat Premium 15.0.7 [TNT].dmg', 'https://download.renfei.net', 'software/developer-tools/macos/Navicat Premium 15.0.7 [TNT].dmg', 'https://pan.baidu.com/s/1V2BrAeCiiXJCOgVKb0eCbA', '36pa');
+INSERT INTO `t_download` VALUES (1001, 'Test', 'https://cdn.renfei.net/upload/image/2020/20200116112250.png', 'Test', '2020-01-22 17:24:23', 'Test', 'Test', NULL, NULL, 'Test', 'Test');
 COMMIT;
 
 -- ----------------------------
@@ -373,6 +428,7 @@ CREATE TABLE `t_library_details` (
   KEY `fk_library_details` (`library_id`),
   CONSTRAINT `fk_library_details` FOREIGN KEY (`library_id`) REFERENCES `t_library` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2106 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 
 -- ----------------------------
 -- Table structure for t_link
@@ -413,6 +469,25 @@ INSERT INTO `t_link` VALUES (18, 'test', 'test', 0, '2019-12-09 17:21:28', 0, 1,
 INSERT INTO `t_link` VALUES (19, 'test', 'test', 0, '2019-12-09 17:23:56', 0, 1, NULL, 'test', '16076276@qq.com', '', '', 999);
 INSERT INTO `t_link` VALUES (20, 'test', 'test', 0, '2019-12-09 17:26:11', 0, 1, NULL, 'test', '16076276@qq.com', '', '', 999);
 COMMIT;
+
+-- ----------------------------
+-- Table structure for t_log
+-- ----------------------------
+DROP TABLE IF EXISTS `t_log`;
+CREATE TABLE `t_log` (
+  `uuid` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `datetime` datetime NOT NULL,
+  `level` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'ACCESS;DEBUG;INFO;WARN;ERROR;FATAL;信息等级',
+  `inorout` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'input/output，系统输入还是输出',
+  `log_value` longtext COLLATE utf8mb4_unicode_ci COMMENT '日志内容',
+  `remote_ip` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '客户端IP',
+  `remote_user` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '客户端用户名',
+  `remote_agent` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '客户端浏览器相关信息',
+  `request_url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '访问地址',
+  `request_method` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '访问方法',
+  `status_code` int(11) DEFAULT NULL COMMENT '响应状态码',
+  PRIMARY KEY (`uuid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Table structure for t_menu
@@ -483,6 +558,8 @@ CREATE TABLE `t_movie` (
   `lead` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '主演',
   `synopsis` text COLLATE utf8mb4_unicode_ci COMMENT '简介',
   `views` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '浏览量',
+  `thumbs_up` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '点赞',
+  `thumbs_down` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '点踩',
   `score` double DEFAULT NULL COMMENT '评分',
   `resource` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '资源地址',
   `update_time` datetime NOT NULL COMMENT '更新时间',
@@ -495,9 +572,9 @@ CREATE TABLE `t_movie` (
 -- Records of t_movie
 -- ----------------------------
 BEGIN;
-INSERT INTO `t_movie` VALUES (1, 9, '//cdn.renfei.net/movie/cover/2kbug5e3cec5wjr.jpg', '恐怖蜡像馆', '美国', 2005, '佐米·希尔拉', '伊丽莎·库斯伯特,查德·迈克尔·墨瑞,布莱恩·范·霍尔特,帕丽斯·希尔顿,贾德·帕达里克', '几个好友结伴前往观看美国大学美式足球冠军赛，他们在前往比赛地时决定顺便在野外进行一次野营。于是，卡莉（伊丽莎•库斯伯特 Elisha Cuthbert 饰）、佩兹（帕丽斯•希尔顿 Paris Hilton 饰）等几个年轻人在了野外一处荒地扎了营。他们的恐怖经历就此展开。 　　首先，一名神秘的司机和这群年轻人起了争执，令大家游玩的兴致全无；接着第二天他们起床后发现，他们的汽车被人动了手脚发动不了了。在一名当地人的指引下，他们只能徒步前往附近的偏僻小镇安布罗斯找人帮忙。安布罗斯由于太过偏远，以至地图上根本没有标出它的所在。一行人来到小镇，发现这里人迹罕至。好奇心下，他们走进了镇上的杜蒂蜡像馆，这里的蜡像做得栩栩如生。原来，这是一个杀人狂魔将镇上的人杀了用真人做到蜡像！此时那杀人狂魔正在暗处幽幽的盯着他们……', 82, 6.9, 'https://v.qq.com/txp/iframe/player.html?vid=p0022bw2oxy', '2019-11-20 22:13:39');
-INSERT INTO `t_movie` VALUES (2, 9, '//cdn.renfei.net/movie/cover/0516000051FF714A675839534907BAE4.jpeg', '我的恐怖女友', '韩国', 2006, '孙在坤', '崔江熙,朴勇宇,曹恩智', '尽管大学老师黄大宇（朴勇宇 饰）仪表堂堂，满腹经纶，堪称好男人的典范，但仿佛命中注定缺少女人缘似的，他一辈子一次正正经经的恋爱都没有谈过。眼看着自己的年龄即将跨越三十大关，依旧形单影只的他只能在心里暗暗的着急。一次偶然中，黄大宇结识了美丽知性的新邻居李美娜（崔江熙 饰），他鼓起勇气提出了约会，没想到李美娜兴然应允。 　　一来二往之间，黄大宇和李美娜之间的距离越来越近，也就在这期间，黄大宇开始觉得李美娜的身份变得刻意起来，自称文学艺术爱好者的她竟然连《罪与罚》和蒙德里安都不知道，甚至连“李美娜”这个名字都是捏造而成的。这个突然出现的女人究竟是谁？她接近黄大宇又到底有何目的呢？', 23, 5.8, 'http://open.iqiyi.com/developer/player_js/coopPlayerIndex.html?vid=b68e1579a4944903cd3de4b9a61d0296&tvId=338005700&accessToken=2.f22860a2479ad60d8da7697274de9346&appKey=3955c3425820435e86d0f4cdfe56f5e7&appId=1368&height=100%&width=100%', '2019-11-20 22:16:40');
-INSERT INTO `t_movie` VALUES (3, 9, '//cdn.renfei.net/movie/cover/WX20191121-224535@2x.png', '僵尸先生', '中国', 1985, '刘观伟', '林正英,许冠英,钱小豪,李赛凤,楼南光', '富贵乡绅任发先父当年威逼利诱求得一块风水宝地，经风水先生指点，其父下葬二十年后起坟迁葬，以利子孙。然九叔察看墓穴得知，当年风水先生与任家私怨在身，在墓穴中做下手脚，二十年后任老太爷尸体已生恶变。九叔提议就地火化，在任老爷请求下才将尸骨移往义庄。虽经小心看护，但任老太爷仍化作僵尸，将其子任发杀害。九叔断定任老太爷和任发的僵尸将再次出现，于是命令徒弟秋生和文才小心应付……', 2, 8.2, 'http://open.iqiyi.com/developer/player_js/coopPlayerIndex.html?vid=fe6320eefc141536d534af5e7f8c47bd&tvId=730261500&accessToken=2.f22860a2479ad60d8da7697274de9346&appKey=3955c3425820435e86d0f4cdfe56f5e7&appId=1368&height=100%&width=100%', '2019-11-21 22:47:28');
+INSERT INTO `t_movie` VALUES (1, 9, '//cdn.renfei.net/movie/cover/2kbug5e3cec5wjr.jpg', '恐怖蜡像馆', '美国', 2005, '佐米·希尔拉', '伊丽莎·库斯伯特,查德·迈克尔·墨瑞,布莱恩·范·霍尔特,帕丽斯·希尔顿,贾德·帕达里克', '几个好友结伴前往观看美国大学美式足球冠军赛，他们在前往比赛地时决定顺便在野外进行一次野营。于是，卡莉（伊丽莎•库斯伯特 Elisha Cuthbert 饰）、佩兹（帕丽斯•希尔顿 Paris Hilton 饰）等几个年轻人在了野外一处荒地扎了营。他们的恐怖经历就此展开。 　　首先，一名神秘的司机和这群年轻人起了争执，令大家游玩的兴致全无；接着第二天他们起床后发现，他们的汽车被人动了手脚发动不了了。在一名当地人的指引下，他们只能徒步前往附近的偏僻小镇安布罗斯找人帮忙。安布罗斯由于太过偏远，以至地图上根本没有标出它的所在。一行人来到小镇，发现这里人迹罕至。好奇心下，他们走进了镇上的杜蒂蜡像馆，这里的蜡像做得栩栩如生。原来，这是一个杀人狂魔将镇上的人杀了用真人做到蜡像！此时那杀人狂魔正在暗处幽幽的盯着他们……', 82, 0, 0, 6.9, 'https://v.qq.com/txp/iframe/player.html?vid=p0022bw2oxy', '2019-11-20 22:13:39');
+INSERT INTO `t_movie` VALUES (2, 9, '//cdn.renfei.net/movie/cover/0516000051FF714A675839534907BAE4.jpeg', '我的恐怖女友', '韩国', 2006, '孙在坤', '崔江熙,朴勇宇,曹恩智', '尽管大学老师黄大宇（朴勇宇 饰）仪表堂堂，满腹经纶，堪称好男人的典范，但仿佛命中注定缺少女人缘似的，他一辈子一次正正经经的恋爱都没有谈过。眼看着自己的年龄即将跨越三十大关，依旧形单影只的他只能在心里暗暗的着急。一次偶然中，黄大宇结识了美丽知性的新邻居李美娜（崔江熙 饰），他鼓起勇气提出了约会，没想到李美娜兴然应允。 　　一来二往之间，黄大宇和李美娜之间的距离越来越近，也就在这期间，黄大宇开始觉得李美娜的身份变得刻意起来，自称文学艺术爱好者的她竟然连《罪与罚》和蒙德里安都不知道，甚至连“李美娜”这个名字都是捏造而成的。这个突然出现的女人究竟是谁？她接近黄大宇又到底有何目的呢？', 24, 0, 0, 5.8, 'http://open.iqiyi.com/developer/player_js/coopPlayerIndex.html?vid=b68e1579a4944903cd3de4b9a61d0296&tvId=338005700&accessToken=2.f22860a2479ad60d8da7697274de9346&appKey=3955c3425820435e86d0f4cdfe56f5e7&appId=1368&height=100%&width=100%', '2019-11-20 22:16:40');
+INSERT INTO `t_movie` VALUES (3, 9, '//cdn.renfei.net/movie/cover/WX20191121-224535@2x.png', '僵尸先生', '中国', 1985, '刘观伟', '林正英,许冠英,钱小豪,李赛凤,楼南光', '富贵乡绅任发先父当年威逼利诱求得一块风水宝地，经风水先生指点，其父下葬二十年后起坟迁葬，以利子孙。然九叔察看墓穴得知，当年风水先生与任家私怨在身，在墓穴中做下手脚，二十年后任老太爷尸体已生恶变。九叔提议就地火化，在任老爷请求下才将尸骨移往义庄。虽经小心看护，但任老太爷仍化作僵尸，将其子任发杀害。九叔断定任老太爷和任发的僵尸将再次出现，于是命令徒弟秋生和文才小心应付……', 2, 0, 0, 8.2, 'http://open.iqiyi.com/developer/player_js/coopPlayerIndex.html?vid=fe6320eefc141536d534af5e7f8c47bd&tvId=730261500&accessToken=2.f22860a2479ad60d8da7697274de9346&appKey=3955c3425820435e86d0f4cdfe56f5e7&appId=1368&height=100%&width=100%', '2019-11-21 22:47:28');
 COMMIT;
 
 -- ----------------------------
@@ -511,6 +588,8 @@ CREATE TABLE `t_page` (
   `featured_image` text COLLATE utf8mb4_unicode_ci COMMENT '特色图像',
   `content` longtext COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '页面内容',
   `views` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '浏览量',
+  `thumbs_up` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '点赞',
+  `thumbs_down` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '点踩',
   `release_time` datetime NOT NULL COMMENT '发布时间',
   `add_time` datetime NOT NULL COMMENT '添加时间',
   `describes` text COLLATE utf8mb4_unicode_ci COMMENT '简介用于SEO',
@@ -526,9 +605,9 @@ CREATE TABLE `t_page` (
 -- Records of t_page
 -- ----------------------------
 BEGIN;
-INSERT INTO `t_page` VALUES (1, 6, '隐私声明和 Cookie', 'https://cdn.neilren.com/neilren4j/upload/b8bfb737a838450ca2e373ad4dd264f7.jpeg', '            <article class=\"d-flex\">\n                <div class=\"row content d-flex\">\n                    <div class=\"col-md-3 px-3\" style=\"font-size: 12px;\">\n                        <div>\n                            <ul style=\"list-style: none;font-size: 14px;\">\n                                <li><a href=\"#1\">我们收集的个人数据</a></li>\n                                <li><a href=\"#2\">我们如何使用个人数据</a></li>\n                                <li><a href=\"#3\">Cookie 和类似技术</a></li>\n                                <li><a href=\"#4\">搜索和人工智能</a></li>\n                            </ul>\n                        </div>\n                        <div style=\"margin-top: 40px;\">\n                            <h4>Cookie</h4>\n                            <p>\n                                大多数 RENFEI.NET 站点使用 Cookie - Cookie 是放置在设备上的小文本文件，域中放置 Cookie 的 Web\n                                服务器稍后可以检索这些小文本文件。 我们使用 Cookie 来存储你的首选项和设置、帮助登录、提供定向广告，以及分析站点运行。\n                            </p>\n                        </div>\n                    </div>\n                    <div class=\"col-md-7 px-3\">\n                        <h2 style=\"margin-bottom: 20px;\" id=\"1\">我们收集的个人数据</h2>\n                        <div class=\"gray-bar\" style=\"margin-bottom: 20px;\"></div>\n                        <p>\n                            我们会收集你的数据作为分析来源，其中包括但不限于：你的设备信息、IP地址、访问行为信息。我们收集的数据取决于你与 RENFEI.NET 互动的环境、你所做的选择。\n                        </p>\n                        <p>\n                            在你使用 RENFEI.NET 提供的服务时，将默认为您已经阅读并同意了我们的隐私条款。\n                        </p>\n                        <h2 style=\"margin-bottom: 20px;\" id=\"2\">我们如何使用个人数据</h2>\n                        <div class=\"gray-bar\" style=\"margin-bottom: 20px;\"></div>\n                        <p>\n                            RENFEI.NET 使用我们收集的数据为你提供丰富的交互式体验。给您提供更有价值的信息。\n                        </p>\n                        <p>\n                            我们还有可能根据您的信息进行广告推荐、性能分析调查。\n                        </p>\n                        <p></p>\n                        <h2 style=\"margin-bottom: 20px;\" id=\"3\">Cookie 和类似技术</h2>\n                        <div class=\"gray-bar\" style=\"margin-bottom: 20px;\"></div>\n                        <p>\n                            Cookie 是放置在设备上的小型文本文件，用于存储数据，域中放置 Cookie 的 Web 服务器可以调用这些数据。 我们使用 Cookie\n                            和类似技术来存储和遵守你的偏好和设置、使你能够登录、提供基于兴趣的广告、打击欺诈行为、分析我们服务的性能以及实现其他合法目的。\n                        </p>\n                        <p>我们也使用“Web 信号”帮助提供 Cookie 和收集用法和性能数据。 我们的网站可能包含来自第三方服务提供商的 Web 信号、Cookie 或类似技术。</p>\n                        <p>\n                            你有各种用于控制 Cookie、Web 信号和类似技术所收集的数据的工具。 例如，你可以使用 Internet 浏览器中的控件来限制你所访问的网站可如何使用\n                            Cookie，并通过清除或阻止 Cookie 来撤消同意。\n                        </p>\n                        <h2 style=\"margin-bottom: 20px;\" id=\"4\">搜索和人工智能</h2>\n                        <div class=\"gray-bar\" style=\"margin-bottom: 20px;\"></div>\n                        <p>搜索和人工智能产品会将你与信息联系起来，并智能地感知、处理和处置信息—随着时间的推移进行学习和适应。</p>\n                    </div>\n                </div>\n            </article>', 0, '2019-06-15 22:32:51', '2019-06-15 22:32:56', '我们十分重视你的隐私。 本隐私声明阐述了 RENFEI.NET 处理的个人数据以及 RENFEI.NET 处理个人数据的方式和目的。', NULL, 0);
-INSERT INTO `t_page` VALUES (2, 6, '使用条款', 'https://cdn.neilren.com/neilren4j/upload/b8bfb737a838450ca2e373ad4dd264f7.jpeg', '<article>\n        <div class=\"row content\">\n            <div class=\"col-md-3\" style=\"font-size: 12px;\">\n                <div>\n                    <ul style=\"list-style: none;font-size: 14px;\">\n                        <li><a href=\"#1\">服务说明</a></li>\n                        <li><a href=\"#2\">个人和非商业用途限制</a></li>\n                        <li><a href=\"#3\">隐私和个人信息保护</a></li>\n                        <li><a href=\"#4\">有关本网站提供的服务/软件的声明</a></li>\n                        <li><a href=\"#5\">有关本网站提供的软件、文档和服务的声明</a></li>\n                        <li><a href=\"#6\">成员帐户、密码和安全性</a></li>\n                        <li><a href=\"#7\">不得用于非法或禁止的用途</a></li>\n                        <li><a href=\"#8\">到第三方站点的链接</a></li>\n                    </ul>\n                </div>\n                <div style=\"margin-top: 40px;\">\n                    <h4>接受条款</h4>\n                    <p>\n                        RENFEI.NET为您提供的服务须受以下使用条款（“TOU”）的约束。RENFEI.NET保留随时更新 TOU 的权利，恕不另行通知。单击网页底部的“使用条款”超文本链接，可查看最新版本的 TOU。\n                    </p>\n                </div>\n            </div>\n            <div class=\"col-md-7\">\n                <h2 style=\"margin-bottom: 20px;\" id=\"1\">服务说明</h2>\n                <div class=\"gray-bar\" style=\"margin-bottom: 20px;\"></div>\n                <p>\n                    通过其 Web 资产网络，RENFEI.NET允许您访问各种资源，包括文章资讯区域、下载区域、交流论坛和服务信息（以下统称为“服务”）。服务（包括任何更新、增强、新功能和/或增加任何新 Web 资产）都须受 TOU 约束。\n                </p>\n                <h2 style=\"margin-bottom: 20px;\" id=\"2\">个人和非商业用途限制</h2>\n                <div class=\"gray-bar\" style=\"margin-bottom: 20px;\"></div>\n                <p>\n                    除非另有说明，服务只适用于个人与非商业用途。对于从服务取得的任何信息、软件、产品或服务，您不得对其修改、复制、分发、传送、显示、执行、复制、公布、许可、转让、销售或基于以上内容创建衍生作品。\n                </p>\n                <h2 style=\"margin-bottom: 20px;\" id=\"3\">隐私和个人信息保护</h2>\n                <div class=\"gray-bar\" style=\"margin-bottom: 20px;\"></div>\n                <p>\n                    请参见<a href=\"/page/1\" target=\"_blank\">隐私声明</a>，了解有关收集和使用个人信息的披露规则。\n                </p>\n                <h2 style=\"margin-bottom: 20px;\" id=\"4\">有关本网站提供的服务/软件的声明</h2>\n                <div class=\"gray-bar\" style=\"margin-bottom: 20px;\"></div>\n                <p>从服务（以下简称“软件”）下载使用的任何软件如未标注开源许可均是RENFEI.NET和/或其供应商的版权作品。软件的使用受限于软件随附或包含的最终用户许可协议（以下简称“许可协议”）条款（如果有的话）。如果最终用户没有事先同意许可协议条款，则最终用户将无法安装随附或包括许可协议的任何软件。链接到本网站或通过本网站引用的第三方脚本或代码由拥有此类代码的第三方而不是RENFEI.NET向您授予许可。</p>\n                <p>软件只能由最终用户根据许可协议下载并使用。法律明确禁止用户违反许可协议对软件进行任何复制或再分发的行为，这种行为可能导致严重的民事和刑事处罚。违约者将受到最大可能的起诉。</p>\n                <p>在不影响前述规定的情况下，严禁将软件复制到任何其他服务器或位置以便进一步复制或再分发，但软件随附的许可协议明确允许进行此类复制或再分发的情况除外。</p>\n                <p>软件的保证（如果有的话）仅依照许可协议条款提供。除了许可协议上的保证，RENFEI.NET拒绝承担有关软件的所有其他明示、默示或法定的保证和为了方便起见，RENFEI.NET可能作为服务的一部分或在其软件产品内提供各种工具和实用程序，供用户使用和/或下载。RENFEI.NET不能保证使用此类工具和实用程序所获得的结果或输出的准确性。在使用服务或RENFEI.NET软件产品提供的工具和实用程序时，请尊重其他人的知识产权。</p>\n                <h2 style=\"margin-bottom: 20px;\" id=\"5\">有关本网站提供的软件、文档和服务的声明</h2>\n                <div class=\"gray-bar\" style=\"margin-bottom: 20px;\"></div>\n                <p>\n                    对于因使用或执行软件、文档、提供或未能提供服务，或者服务提供的信息引起的或与其相关的使用中断、数据或利润损失，无论是由合同行为、过失或其他侵权行为导致，RENFEI.NET和/或其供应商对由此造成的任何特别的、间接的、后果性损害或任何其他损害概不负责。\n                </p>\n                <h2 style=\"margin-bottom: 20px;\" id=\"6\">成员帐户、密码和安全性</h2>\n                <div class=\"gray-bar\" style=\"margin-bottom: 20px;\"></div>\n                <p>\n                    如果任何服务要求您开设帐户，您必须根据相应注册表上的说明，向我们提供最新的、完整的、准确的相关信息，以便完成注册过程。您还要选择一个密码和用户名。您必须对维护密码和帐户的机密性承担全部责任。此外，您需要对帐户中发生的所有活动承担全部责任。您同意，一旦发现帐户存在未经授权的使用或任何其他不安全的行为，马上向RENFEI.NET通知相关情况。如果其他人在您知情或不知情的情况下使用您的密码或帐户，RENFEI.NET对您因此可能蒙受的任何损失不承担任何责任。然而，如RENFEI.NET或第三方因其他人使用您的帐户或密码而蒙受损失，您则应承担相应责任。在任何时候，未经帐户持有人的同意，您都不得使用其他人的帐户。\n                </p>\n                <h2 style=\"margin-bottom: 20px;\" id=\"7\">不得用于非法或禁止的用途</h2>\n                <div class=\"gray-bar\" style=\"margin-bottom: 20px;\"></div>\n                <p>\n                    您在使用服务时，不得将服务用于任何非法用途或这些条款、条件和声明禁止的用途。在使用服务时，不得以任何方式损坏、禁用、过载或妨碍任何RENFEI.NET服务器或连接到任何RENFEI.NET服务器的网络，也不得干扰任何其他用户使用和享有任何服务。您不得尝试通过入侵、密码盗取或任何其他手段擅自使用任何服务、其他帐户、计算机系统或连接到任何RENFEI.NET服务器或任何服务的网络。您不得通过任何手段获取或尝试获取服务未明确提供的任何资料或信息。\n                </p>\n                <h2 style=\"margin-bottom: 20px;\" id=\"8\">到第三方站点的链接</h2>\n                <div class=\"gray-bar\" style=\"margin-bottom: 20px;\"></div>\n                <p>\n                    此处的一些链接可能会引导您离开RENFEI.NET站点。链接的站点不在RENFEI.NET的控制之内，RENFEI.NET不对任何链接站点的内容、链接站点中包含的任何链接或此类站点的任何更改或更新负责。RENFEI.NET不对源自任何链接站点的RENFEI.NET仅为了提供便利的目的而向您提供这些链接，并且包括任何链接的并不暗示RENFEI.NET认可相应的第三方站点。\n                </p>\n            </div>\n        </div>\n    </article>', 0, '2019-07-27 16:28:04', '2019-07-27 16:28:09', 'RENFEI.NET为您提供的服务须受以下使用条款（“TOU”）的约束。RENFEI.NET保留随时更新 TOU 的权利，恕不另行通知。单击网页底部的“使用条款”超文本链接，可查看最新版本的 TOU。', NULL, 0);
-INSERT INTO `t_page` VALUES (3, 6, 'About', NULL, '<section id=\"company-information\" class=\"padding-top\">\n        <div class=\"container\">\n            <div class=\"row\">\n                <div class=\"about-us\">\n                    <div class=\"col-sm-7 wow fadeInLeft\" data-wow-duration=\"1000ms\" data-wow-delay=\"300ms\">\n                        <h2 class=\"bold\">About Author</h2>\n                        <div class=\"row\">\n                            <div class=\"col-sm-5\">\n                                <img src=\"https://renfei.oncdn.cn/images/neilren.jpg\" class=\"img-responsive\" alt=\"\" width=\"300\">\n                            </div>\n                            <div class=\"col-sm-7\">\n                                <h3 class=\"top-zero\">任霏</h3>\n                                <p>90后程序猿，总喜欢尝试新鲜事物，对新奇的东西充满了好奇。很幸运在我年轻的时候赶上了中国计算机的普及浪潮。 <br> <br>\n                                    小学有了微机课，初中有了网吧，高中有了自己的PC，开启了建站之旅，大学选择了喜欢的计算机专业，开始了我的故事...<br> <br>\n                                    大学是 C#.NET 专业毕业，后自学 Java 进行技术转型。目前计划使用 Scala 向大数据方向转型。  \n                                </p>\n                            </div>\n                        </div>\n                    </div>\n                    <div class=\"col-sm-5 wow fadeInRight\" data-wow-duration=\"1000ms\" data-wow-delay=\"300ms\">\n                        <div class=\"our-skills\">\n                            <h2>Contacts</h2>\n                            <address>\n                                <br>\n                            E-mail: <a href=\"mailto:i@renfei.net\">i@renfei.net</a> <br> \n                            GitHub:<a href=\"https://github.com/NeilRen\" target=\"_blank\">GitHub</a> <br> \n                            Facebook:<a href=\"https://www.facebook.com/renfeii\" target=\"_blank\">任霏</a> <br> \n                            Twitter:<a href=\"https://twitter.com/renfeii\" target=\"_blank\">@renfeii</a> <br> \n                            Sina Weibo:<a href=\"https://weibo.com/renfeii\" target=\"_blank\">@霏总驾到</a> <br> \n                            QQ Group：<a\n                                href=\"https://shang.qq.com/wpa/qunwpa?idkey=bfbde7e5dec79fd3cdb23c7cf590ca698e3da8b48a71369139ed6aa52f9a7513\"\n                                target=\"_blank\">130832168</a><br> \n                            Telegram:<a href=\"https://t.me/neilren\" target=\"_blank\">NeilRen</a>\n                            Tel:+86 13082843041\n                            </address>\n                            <address>\n                            Zhangjiakou - Hebei - China\n                            </address>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </section>\n\n    <section id=\"team\">\n        <div class=\"container\">\n            <div class=\"row\">\n                <h1 class=\"title text-center wow fadeInDown\" data-wow-duration=\"500ms\" data-wow-delay=\"300ms\">Timeline</h1>\n                <p class=\"text-center wow fadeInDown\" data-wow-duration=\"400ms\" data-wow-delay=\"400ms\">\n                    时间流逝，那些需要纪念的关键转折点\n                </p>\n                <div class=\"row\">\n                <div class=\"timeline-blog overflow padding-top\">\n                    <div class=\"timeline-date text-center\">\n                        <a href=\"#\" class=\"btn btn-common uppercase\">2019</a>\n                    </div>\n                    <div class=\"timeline-divider overflow padding-bottom\">\n                        <div class=\"col-sm-6 padding-right arrow-right wow fadeInLeft\" data-wow-duration=\"1000ms\" data-wow-delay=\"300ms\">\n                            <div class=\"single-blog timeline\">\n                                <div class=\"post-content overflow\">\n                                    <h2 class=\"post-title bold\"><a href=\"blogdetails.html#\">使用前后端分离</a></h2>\n                                    <h3 class=\"post-author\"><a href=\"https://github.com/neilren/RenFei.Net\" target=\"_blank\">RenFei.Net</a></h3>\n                                    <p>使用 SpringBoot 和 Vue.Js 重写网站，开始尝试前后端分离</p>\n                                    <div class=\"post-bottom overflow\">\n                                        <span class=\"post-date pull-left\">2019-5-28</span>\n                                    </div>\n                                </div>\n                            </div>\n                        </div>\n                        <div class=\"col-sm-6 padding-left padding-top arrow-left wow fadeInRight\" data-wow-duration=\"1000ms\" data-wow-delay=\"300ms\">\n                            <div class=\"single-blog timeline\">\n                                <div class=\"post-content overflow\">\n                                    <h2 class=\"post-title bold\"><a href=\"blogdetails.html\">收购 RENFEI.NET 域名</a></h2>\n                                    <h3 class=\"post-author\"><a href=\"https://github.com/neilren/NEILREN4J\" target=\"_blank\">NEILREN4J</a></h3>\n                                    <p>收购 RENFEI.NET 域名</p>\n                                    <div class=\"post-bottom overflow\">\n                                        <span class=\"post-date pull-left\">2019-1-4</span>\n                                    </div>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"timeline-blog overflow\">\n                    <div class=\"timeline-date text-center\">\n                        <a href=\"#\" class=\"btn btn-common uppercase\">2018</a>\n                    </div>\n                    <div class=\"timeline-divider overflow padding-bottom\">\n                        <div class=\"col-sm-6 padding-right arrow-right wow fadeInLeft\" data-wow-duration=\"1000ms\" data-wow-delay=\"300ms\">\n                            <div class=\"single-blog timeline\">\n                                <div class=\"post-content overflow\">\n                                    <h2 class=\"post-title bold\"><a href=\"blogdetails.html\">功能新增</a></h2>\n                                    <h3 class=\"post-author\"><a href=\"https://github.com/neilren/NEILREN4J\" target=\"_blank\">NEILREN4J</a></h3>\n                                    <p>功能新增：工具箱小工具-弱密码检测接口，并开放接口调用，新增弱密码数据库</p>\n                                    <div class=\"post-bottom overflow\">\n                                        <span class=\"post-date pull-left\">2018-08-21</span>\n                                    </div>\n                                </div>\n                            </div>\n                        </div>\n                        <div class=\"col-sm-6 padding-left padding-top arrow-left wow fadeInRight\" data-wow-duration=\"1000ms\" data-wow-delay=\"300ms\">\n                            <div class=\"single-blog timeline\">\n                                <div class=\"post-content overflow\">\n                                    <h2 class=\"post-title bold\"><a href=\"blogdetails.html\">功能新增</a></h2>\n                                    <h3 class=\"post-author\"><a href=\"https://github.com/neilren/NEILREN4J\" target=\"_blank\">NEILREN4J</a></h3>\n                                    <p>功能新增：利用AOP切面统计执行时间和执行方法数量，对执行时间过长的方法进行日志记录</p>\n                                    <div class=\"post-bottom overflow\">\n                                        <span class=\"post-date pull-left\">2018-8-1</span>\n                                    </div>\n                                </div>\n                            </div>\n                        </div>\n                        <div class=\"col-sm-6 padding-right arrow-right wow fadeInLeft\" data-wow-duration=\"1000ms\" data-wow-delay=\"300ms\">\n                            <div class=\"single-blog timeline\">\n                                <div class=\"post-content overflow\">\n                                    <h2 class=\"post-title bold\"><a href=\"blogdetails.html\">功能新增</a></h2>\n                                    <h3 class=\"post-author\"><a href=\"https://github.com/neilren/NEILREN4J\" target=\"_blank\">NEILREN4J</a></h3>\n                                    <p>功能新增：网页头部节日主题装扮</p>\n                                    <div class=\"post-bottom overflow\">\n                                        <span class=\"post-date pull-left\">2018-7-28</span>\n                                    </div>\n                                </div>\n                            </div>\n                        </div>\n                        <div class=\"col-sm-6 padding-left padding-top arrow-left wow fadeInRight\" data-wow-duration=\"1000ms\" data-wow-delay=\"300ms\">\n                            <div class=\"single-blog timeline\">\n                                <div class=\"post-content overflow\">\n                                    <h2 class=\"post-title bold\"><a href=\"blogdetails.html\">技术转型Java开发</a></h2>\n                                    <h3 class=\"post-author\"><a href=\"https://github.com/neilren/NEILREN4J\" target=\"_blank\">NEILREN4J</a></h3>\n                                    <p>使用SpringBoot重新构建，项目代号 NEILREN4J</p>\n                                    <div class=\"post-bottom overflow\">\n                                        <span class=\"post-date pull-left\">2018-07-16</span>\n                                    </div>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"timeline-blog overflow\">\n                    <div class=\"timeline-date text-center\">\n                        <a href=\"\" class=\"btn btn-common uppercase\">2017</a>\n                    </div>\n                    <div class=\"timeline-divider overflow padding-bottom\">\n                        <div class=\"col-sm-6 padding-right arrow-right wow fadeInLeft\" data-wow-duration=\"1000ms\" data-wow-delay=\"300ms\">\n                            <div class=\"single-blog timeline\">\n                                <div class=\"post-content overflow\">\n                                    <h2 class=\"post-title bold\"><a href=\"blogdetails.html\">开启开源之旅</a></h2>\n                                    <h3 class=\"post-author\"><a href=\"https://github.com/neilren/NEILREN4J\" target=\"_blank\">NEILREN4J</a></h3>\n                                    <p>计划上Github开源管理代码</p>\n                                    <div class=\"post-bottom overflow\">\n                                        <span class=\"post-date pull-left\">2017-06-00</span>\n                                    </div>\n                                </div>\n                            </div>\n                        </div>\n                        <div class=\"col-sm-6 padding-left padding-top arrow-left wow fadeInRight\" data-wow-duration=\"1000ms\" data-wow-delay=\"300ms\">\n                            <div class=\"single-blog timeline\">\n                                <div class=\"post-content overflow\">\n                                    <h2 class=\"post-title bold\"><a href=\"blogdetails.html\">技术转型Java开发</a></h2>\n                                    <h3 class=\"post-author\"><a href=\"https://github.com/neilren/NEILREN4J\" target=\"_blank\">NEILREN4J</a></h3>\n                                    <p>开始Java版开发，项目代号 NEILREN4J</p>\n                                    <div class=\"post-bottom overflow\">\n                                        <span class=\"post-date pull-left\">2017-05-00</span>\n                                    </div>\n                                </div>\n                            </div>\n                        </div>\n                        <div class=\"col-sm-6 padding-right arrow-right wow fadeInLeft\" data-wow-duration=\"1000ms\" data-wow-delay=\"300ms\">\n                            <div class=\"single-blog timeline\">\n                                <div class=\"post-content overflow\">\n                                    <h2 class=\"post-title bold\"><a href=\"blogdetails.html\">计划技术转型Java开发</a></h2>\n                                    <h3 class=\"post-author\"><a href=\"https://github.com/neilren/NeilNT\" target=\"_blank\">NeilNT</a></h3>\n                                    <p>购买搭建Linux服务器</p>\n                                    <div class=\"post-bottom overflow\">\n                                        <span class=\"post-date pull-left\">2017-04-00</span>\n                                    </div>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"timeline-blog overflow\">\n                    <div class=\"timeline-date text-center\">\n                        <a href=\"\" class=\"btn btn-common uppercase\">2016</a>\n                    </div>\n                    <div class=\"timeline-divider overflow padding-bottom\">\n                        <div class=\"col-sm-6 padding-right arrow-right wow fadeInLeft\" data-wow-duration=\"1000ms\" data-wow-delay=\"300ms\">\n                            <div class=\"single-blog timeline\">\n                                <div class=\"post-content overflow\">\n                                    <h2 class=\"post-title bold\"><a href=\"blogdetails.html\">计划技术转型Java开发</a></h2>\n                                    <h3 class=\"post-author\"><a href=\"https://github.com/neilren/NeilNT\" target=\"_blank\">NeilNT</a></h3>\n                                    <p>尝试使用 SSM 框架构建新的Java版网站</p>\n                                    <div class=\"post-bottom overflow\">\n                                        <span class=\"post-date pull-left\">2016-12-00</span>\n                                    </div>\n                                </div>\n                            </div>\n                        </div>\n                        <div class=\"col-sm-6 padding-left padding-top arrow-left wow fadeInRight\" data-wow-duration=\"1000ms\" data-wow-delay=\"300ms\">\n                            <div class=\"single-blog timeline\">\n                                <div class=\"post-content overflow\">\n                                    <h2 class=\"post-title bold\"><a href=\"blogdetails.html\">计划技术转型Java开发</a></h2>\n                                    <h3 class=\"post-author\"><a href=\"https://github.com/neilren/NeilNT\" target=\"_blank\">NeilNT</a></h3>\n                                    <p>计划转Java技术，开始筹备Java知识和Linux知识</p>\n                                    <div class=\"post-bottom overflow\">\n                                        <span class=\"post-date pull-left\">2016-10-00</span>\n                                    </div>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"timeline-blog overflow\">\n                    <div class=\"timeline-date text-center\">\n                        <a href=\"\" class=\"btn btn-common uppercase\">2015</a>\n                    </div>\n                    <div class=\"timeline-divider overflow padding-bottom\">\n                        <div class=\"col-sm-6 padding-right arrow-right wow fadeInLeft\" data-wow-duration=\"1000ms\" data-wow-delay=\"300ms\">\n                            <div class=\"single-blog timeline\">\n                                <div class=\"post-content overflow\">\n                                    <h2 class=\"post-title bold\"><a href=\"blogdetails.html\">自主独立开发网站，告别开源建站</a></h2>\n                                    <h3 class=\"post-author\"><a href=\"https://github.com/neilren/NeilNT\" target=\"_blank\">NeilNT</a></h3>\n                                    <p>NEILREN.COM上线，使用 ASP.NET MVC 独立开发程序，项目代号 NeilNT</p>\n                                    <div class=\"post-bottom overflow\">\n                                        <span class=\"post-date pull-left\">2015-8-1</span>\n                                    </div>\n                                </div>\n                            </div>\n                        </div>\n                        <div class=\"col-sm-6 padding-left padding-top arrow-left wow fadeInRight\" data-wow-duration=\"1000ms\" data-wow-delay=\"300ms\">\n                            <div class=\"single-blog timeline\">\n                                <div class=\"post-content overflow\">\n                                    <h2 class=\"post-title bold\"><a href=\"blogdetails.html\">数据库迁移准备搬家到自己的程序上</a></h2>\n                                    <h3 class=\"post-author\"><a href=\"https://wordpress.org/\" target=\"_blank\">WordPress</a></h3>\n                                    <p> 数据库迁移，从MySQL迁移到SQL Server</p>\n                                    <a href=\"#\" class=\"read-more\">View More</a>\n                                    <div class=\"post-bottom overflow\">\n                                        <span class=\"post-date pull-left\">2015-7-6</span>\n                                    </div>\n                                </div>\n                            </div>\n                        </div>\n                        <div class=\"col-sm-6 padding-right arrow-right wow fadeInLeft\" data-wow-duration=\"1000ms\" data-wow-delay=\"300ms\">\n                            <div class=\"single-blog timeline\">\n                                <div class=\"post-content overflow\">\n                                    <h2 class=\"post-title bold\"><a href=\"blogdetails.html\">计划自主开发自己的网站程序</a></h2>\n                                    <h3 class=\"post-author\"><a href=\"https://wordpress.org/\" target=\"_blank\">WordPress</a></h3>\n                                    <p>MVC  配置新服务器，新购阿里云服务器</p>\n                                    <div class=\"post-bottom overflow\">\n                                        <span class=\"post-date pull-left\">2015-6-27</span>\n                                    </div>\n                                </div>\n                            </div>\n                        </div>\n                        <div class=\"col-sm-6 padding-left padding-top arrow-left wow fadeInRight\" data-wow-duration=\"1000ms\" data-wow-delay=\"300ms\">\n                            <div class=\"single-blog timeline\">\n                                <div class=\"post-content overflow\">\n                                    <h2 class=\"post-title bold\"><a href=\"blogdetails.html\">大学毕业啦</a></h2>\n                                    <h3 class=\"post-author\"><a href=\"https://wordpress.org/\" target=\"_blank\">WordPress</a></h3>\n                                    <p>大学毕业，在企业实习中，计划独立开发网站程序</p>\n                                    <div class=\"post-bottom overflow\">\n                                        <span class=\"post-date pull-left\">2015-6-21</span>\n                                    </div>\n                                </div>\n                            </div>\n                        </div>\n                        <div class=\"col-sm-6 padding-right arrow-right wow fadeInLeft\" data-wow-duration=\"1000ms\" data-wow-delay=\"300ms\">\n                            <div class=\"single-blog timeline\">\n                                <div class=\"post-content overflow\">\n                                    <h2 class=\"post-title bold\"><a href=\"blogdetails.html\">注册neil.ren域名</a></h2>\n                                    <h3 class=\"post-author\"><a href=\"https://wordpress.org/\" target=\"_blank\">WordPress</a></h3>\n                                    <p>注册neil.ren域名/p>\n                                    <div class=\"post-bottom overflow\">\n                                        <span class=\"post-date pull-left\">2015-1-5</span>\n                                    </div>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"timeline-blog overflow\">\n                    <div class=\"timeline-date text-center\">\n                        <a href=\"\" class=\"btn btn-common uppercase\">2013</a>\n                    </div>\n                    <div class=\"timeline-divider overflow padding-bottom\">\n                        <div class=\"col-sm-6 padding-right arrow-right wow fadeInLeft\" data-wow-duration=\"1000ms\" data-wow-delay=\"300ms\">\n                            <div class=\"single-blog timeline\">\n                                <div class=\"post-content overflow\">\n                                    <h2 class=\"post-title bold\"><a href=\"blogdetails.html\">更换域名</a></h2>\n                                    <h3 class=\"post-author\"><a href=\"https://wordpress.org/\" target=\"_blank\">WordPress</a></h3>\n                                    <p>注册ren-fei.com 域名更改为ren-fei.com</p>\n                                    <div class=\"post-bottom overflow\">\n                                        <span class=\"post-date pull-left\">2013-03-01</span>\n                                    </div>\n                                </div>\n                            </div>\n                        </div>\n                        <div class=\"col-sm-6 padding-left padding-top arrow-left wow fadeInRight\" data-wow-duration=\"1000ms\" data-wow-delay=\"300ms\">\n                            <div class=\"single-blog timeline\">\n                                <div class=\"post-content overflow\">\n                                    <h2 class=\"post-title bold\"><a href=\"blogdetails.html\">更换域名</a></h2>\n                                    <h3 class=\"post-author\"><a href=\"https://wordpress.org/\" target=\"_blank\">WordPress</a></h3>\n                                    <p>注册neilren.com，20岁的生日，更换域名</p>\n                                    <div class=\"post-bottom overflow\">\n                                        <span class=\"post-date pull-left\">2013-11-06</span>\n                                    </div>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"timeline-blog overflow\">\n                    <div class=\"timeline-date text-center\">\n                        <a href=\"\" class=\"btn btn-common uppercase\">2012</a>\n                    </div>\n                    <div class=\"timeline-divider overflow padding-bottom\">\n                        <div class=\"col-sm-6 padding-right arrow-right wow fadeInLeft\" data-wow-duration=\"1000ms\" data-wow-delay=\"300ms\">\n                            <div class=\"single-blog timeline\">\n                                <div class=\"post-content overflow\">\n                                    <h2 class=\"post-title bold\"><a href=\"blogdetails.html\">开启建站之旅</a></h2>\n                                    <h3 class=\"post-author\"><a href=\"https://wordpress.org/\" target=\"_blank\">WordPress</a></h3>\n                                    <p>注册 任霏.中国，中文域名</p>\n                                    <div class=\"post-bottom overflow\">\n                                        <span class=\"post-date pull-left\">2012-06-04</span>\n                                    </div>\n                                </div>\n                            </div>\n                        </div>\n                        <div class=\"col-sm-6 padding-left padding-top arrow-left wow fadeInRight\" data-wow-duration=\"1000ms\" data-wow-delay=\"300ms\">\n                            <div class=\"single-blog timeline\">\n                                <div class=\"post-content overflow\">\n                                    <h2 class=\"post-title bold\"><a href=\"blogdetails.html\">开启建站之旅</a></h2>\n                                    <h3 class=\"post-author\"><a href=\"https://wordpress.org/\" target=\"_blank\">WordPress</a></h3>\n                                    <p>使用WordPress搭建了独立的个人博客网站bennett-ren.com</p>\n                                    <div class=\"post-bottom overflow\">\n                                        <span class=\"post-date pull-left\">2012-04-08</span>\n                                    </div>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                </div>\n\n\n            </div>\n            </div>\n        </div>\n    </section> ', 0, '2019-07-27 16:31:47', '2019-07-27 16:31:51', 'More information about us.', NULL, 0);
+INSERT INTO `t_page` VALUES (1, 6, '隐私声明和 Cookie', 'https://cdn.neilren.com/neilren4j/upload/b8bfb737a838450ca2e373ad4dd264f7.jpeg', '            <article class=\"d-flex\">\n                <div class=\"row content d-flex\">\n                    <div class=\"col-md-3 px-3\" style=\"font-size: 12px;\">\n                        <div>\n                            <ul style=\"list-style: none;font-size: 14px;\">\n                                <li><a href=\"#1\">我们收集的个人数据</a></li>\n                                <li><a href=\"#2\">我们如何使用个人数据</a></li>\n                                <li><a href=\"#3\">Cookie 和类似技术</a></li>\n                                <li><a href=\"#4\">搜索和人工智能</a></li>\n                            </ul>\n                        </div>\n                        <div style=\"margin-top: 40px;\">\n                            <h4>Cookie</h4>\n                            <p>\n                                大多数 RENFEI.NET 站点使用 Cookie - Cookie 是放置在设备上的小文本文件，域中放置 Cookie 的 Web\n                                服务器稍后可以检索这些小文本文件。 我们使用 Cookie 来存储你的首选项和设置、帮助登录、提供定向广告，以及分析站点运行。\n                            </p>\n                        </div>\n                    </div>\n                    <div class=\"col-md-7 px-3\">\n                        <h2 style=\"margin-bottom: 20px;\" id=\"1\">我们收集的个人数据</h2>\n                        <div class=\"gray-bar\" style=\"margin-bottom: 20px;\"></div>\n                        <p>\n                            我们会收集你的数据作为分析来源，其中包括但不限于：你的设备信息、IP地址、访问行为信息。我们收集的数据取决于你与 RENFEI.NET 互动的环境、你所做的选择。\n                        </p>\n                        <p>\n                            在你使用 RENFEI.NET 提供的服务时，将默认为您已经阅读并同意了我们的隐私条款。\n                        </p>\n                        <h2 style=\"margin-bottom: 20px;\" id=\"2\">我们如何使用个人数据</h2>\n                        <div class=\"gray-bar\" style=\"margin-bottom: 20px;\"></div>\n                        <p>\n                            RENFEI.NET 使用我们收集的数据为你提供丰富的交互式体验。给您提供更有价值的信息。\n                        </p>\n                        <p>\n                            我们还有可能根据您的信息进行广告推荐、性能分析调查。\n                        </p>\n                        <p></p>\n                        <h2 style=\"margin-bottom: 20px;\" id=\"3\">Cookie 和类似技术</h2>\n                        <div class=\"gray-bar\" style=\"margin-bottom: 20px;\"></div>\n                        <p>\n                            Cookie 是放置在设备上的小型文本文件，用于存储数据，域中放置 Cookie 的 Web 服务器可以调用这些数据。 我们使用 Cookie\n                            和类似技术来存储和遵守你的偏好和设置、使你能够登录、提供基于兴趣的广告、打击欺诈行为、分析我们服务的性能以及实现其他合法目的。\n                        </p>\n                        <p>我们也使用“Web 信号”帮助提供 Cookie 和收集用法和性能数据。 我们的网站可能包含来自第三方服务提供商的 Web 信号、Cookie 或类似技术。</p>\n                        <p>\n                            你有各种用于控制 Cookie、Web 信号和类似技术所收集的数据的工具。 例如，你可以使用 Internet 浏览器中的控件来限制你所访问的网站可如何使用\n                            Cookie，并通过清除或阻止 Cookie 来撤消同意。\n                        </p>\n                        <h2 style=\"margin-bottom: 20px;\" id=\"4\">搜索和人工智能</h2>\n                        <div class=\"gray-bar\" style=\"margin-bottom: 20px;\"></div>\n                        <p>搜索和人工智能产品会将你与信息联系起来，并智能地感知、处理和处置信息—随着时间的推移进行学习和适应。</p>\n                    </div>\n                </div>\n            </article>', 0, 0, 0, '2019-06-15 22:32:51', '2019-06-15 22:32:56', '我们十分重视你的隐私。 本隐私声明阐述了 RENFEI.NET 处理的个人数据以及 RENFEI.NET 处理个人数据的方式和目的。', NULL, 0);
+INSERT INTO `t_page` VALUES (2, 6, '使用条款', 'https://cdn.neilren.com/neilren4j/upload/b8bfb737a838450ca2e373ad4dd264f7.jpeg', '<article>\n        <div class=\"row content\">\n            <div class=\"col-md-3\" style=\"font-size: 12px;\">\n                <div>\n                    <ul style=\"list-style: none;font-size: 14px;\">\n                        <li><a href=\"#1\">服务说明</a></li>\n                        <li><a href=\"#2\">个人和非商业用途限制</a></li>\n                        <li><a href=\"#3\">隐私和个人信息保护</a></li>\n                        <li><a href=\"#4\">有关本网站提供的服务/软件的声明</a></li>\n                        <li><a href=\"#5\">有关本网站提供的软件、文档和服务的声明</a></li>\n                        <li><a href=\"#6\">成员帐户、密码和安全性</a></li>\n                        <li><a href=\"#7\">不得用于非法或禁止的用途</a></li>\n                        <li><a href=\"#8\">到第三方站点的链接</a></li>\n                    </ul>\n                </div>\n                <div style=\"margin-top: 40px;\">\n                    <h4>接受条款</h4>\n                    <p>\n                        RENFEI.NET为您提供的服务须受以下使用条款（“TOU”）的约束。RENFEI.NET保留随时更新 TOU 的权利，恕不另行通知。单击网页底部的“使用条款”超文本链接，可查看最新版本的 TOU。\n                    </p>\n                </div>\n            </div>\n            <div class=\"col-md-7\">\n                <h2 style=\"margin-bottom: 20px;\" id=\"1\">服务说明</h2>\n                <div class=\"gray-bar\" style=\"margin-bottom: 20px;\"></div>\n                <p>\n                    通过其 Web 资产网络，RENFEI.NET允许您访问各种资源，包括文章资讯区域、下载区域、交流论坛和服务信息（以下统称为“服务”）。服务（包括任何更新、增强、新功能和/或增加任何新 Web 资产）都须受 TOU 约束。\n                </p>\n                <h2 style=\"margin-bottom: 20px;\" id=\"2\">个人和非商业用途限制</h2>\n                <div class=\"gray-bar\" style=\"margin-bottom: 20px;\"></div>\n                <p>\n                    除非另有说明，服务只适用于个人与非商业用途。对于从服务取得的任何信息、软件、产品或服务，您不得对其修改、复制、分发、传送、显示、执行、复制、公布、许可、转让、销售或基于以上内容创建衍生作品。\n                </p>\n                <h2 style=\"margin-bottom: 20px;\" id=\"3\">隐私和个人信息保护</h2>\n                <div class=\"gray-bar\" style=\"margin-bottom: 20px;\"></div>\n                <p>\n                    请参见<a href=\"/page/1\" target=\"_blank\">隐私声明</a>，了解有关收集和使用个人信息的披露规则。\n                </p>\n                <h2 style=\"margin-bottom: 20px;\" id=\"4\">有关本网站提供的服务/软件的声明</h2>\n                <div class=\"gray-bar\" style=\"margin-bottom: 20px;\"></div>\n                <p>从服务（以下简称“软件”）下载使用的任何软件如未标注开源许可均是RENFEI.NET和/或其供应商的版权作品。软件的使用受限于软件随附或包含的最终用户许可协议（以下简称“许可协议”）条款（如果有的话）。如果最终用户没有事先同意许可协议条款，则最终用户将无法安装随附或包括许可协议的任何软件。链接到本网站或通过本网站引用的第三方脚本或代码由拥有此类代码的第三方而不是RENFEI.NET向您授予许可。</p>\n                <p>软件只能由最终用户根据许可协议下载并使用。法律明确禁止用户违反许可协议对软件进行任何复制或再分发的行为，这种行为可能导致严重的民事和刑事处罚。违约者将受到最大可能的起诉。</p>\n                <p>在不影响前述规定的情况下，严禁将软件复制到任何其他服务器或位置以便进一步复制或再分发，但软件随附的许可协议明确允许进行此类复制或再分发的情况除外。</p>\n                <p>软件的保证（如果有的话）仅依照许可协议条款提供。除了许可协议上的保证，RENFEI.NET拒绝承担有关软件的所有其他明示、默示或法定的保证和为了方便起见，RENFEI.NET可能作为服务的一部分或在其软件产品内提供各种工具和实用程序，供用户使用和/或下载。RENFEI.NET不能保证使用此类工具和实用程序所获得的结果或输出的准确性。在使用服务或RENFEI.NET软件产品提供的工具和实用程序时，请尊重其他人的知识产权。</p>\n                <h2 style=\"margin-bottom: 20px;\" id=\"5\">有关本网站提供的软件、文档和服务的声明</h2>\n                <div class=\"gray-bar\" style=\"margin-bottom: 20px;\"></div>\n                <p>\n                    对于因使用或执行软件、文档、提供或未能提供服务，或者服务提供的信息引起的或与其相关的使用中断、数据或利润损失，无论是由合同行为、过失或其他侵权行为导致，RENFEI.NET和/或其供应商对由此造成的任何特别的、间接的、后果性损害或任何其他损害概不负责。\n                </p>\n                <h2 style=\"margin-bottom: 20px;\" id=\"6\">成员帐户、密码和安全性</h2>\n                <div class=\"gray-bar\" style=\"margin-bottom: 20px;\"></div>\n                <p>\n                    如果任何服务要求您开设帐户，您必须根据相应注册表上的说明，向我们提供最新的、完整的、准确的相关信息，以便完成注册过程。您还要选择一个密码和用户名。您必须对维护密码和帐户的机密性承担全部责任。此外，您需要对帐户中发生的所有活动承担全部责任。您同意，一旦发现帐户存在未经授权的使用或任何其他不安全的行为，马上向RENFEI.NET通知相关情况。如果其他人在您知情或不知情的情况下使用您的密码或帐户，RENFEI.NET对您因此可能蒙受的任何损失不承担任何责任。然而，如RENFEI.NET或第三方因其他人使用您的帐户或密码而蒙受损失，您则应承担相应责任。在任何时候，未经帐户持有人的同意，您都不得使用其他人的帐户。\n                </p>\n                <h2 style=\"margin-bottom: 20px;\" id=\"7\">不得用于非法或禁止的用途</h2>\n                <div class=\"gray-bar\" style=\"margin-bottom: 20px;\"></div>\n                <p>\n                    您在使用服务时，不得将服务用于任何非法用途或这些条款、条件和声明禁止的用途。在使用服务时，不得以任何方式损坏、禁用、过载或妨碍任何RENFEI.NET服务器或连接到任何RENFEI.NET服务器的网络，也不得干扰任何其他用户使用和享有任何服务。您不得尝试通过入侵、密码盗取或任何其他手段擅自使用任何服务、其他帐户、计算机系统或连接到任何RENFEI.NET服务器或任何服务的网络。您不得通过任何手段获取或尝试获取服务未明确提供的任何资料或信息。\n                </p>\n                <h2 style=\"margin-bottom: 20px;\" id=\"8\">到第三方站点的链接</h2>\n                <div class=\"gray-bar\" style=\"margin-bottom: 20px;\"></div>\n                <p>\n                    此处的一些链接可能会引导您离开RENFEI.NET站点。链接的站点不在RENFEI.NET的控制之内，RENFEI.NET不对任何链接站点的内容、链接站点中包含的任何链接或此类站点的任何更改或更新负责。RENFEI.NET不对源自任何链接站点的RENFEI.NET仅为了提供便利的目的而向您提供这些链接，并且包括任何链接的并不暗示RENFEI.NET认可相应的第三方站点。\n                </p>\n            </div>\n        </div>\n    </article>', 0, 0, 0, '2019-07-27 16:28:04', '2019-07-27 16:28:09', 'RENFEI.NET为您提供的服务须受以下使用条款（“TOU”）的约束。RENFEI.NET保留随时更新 TOU 的权利，恕不另行通知。单击网页底部的“使用条款”超文本链接，可查看最新版本的 TOU。', NULL, 0);
+INSERT INTO `t_page` VALUES (3, 6, 'About', NULL, '<section id=\"company-information\" class=\"padding-top\">\n        <div class=\"container\">\n            <div class=\"row\">\n                <div class=\"about-us\">\n                    <div class=\"col-sm-7 wow fadeInLeft\" data-wow-duration=\"1000ms\" data-wow-delay=\"300ms\">\n                        <h2 class=\"bold\">About Author</h2>\n                        <div class=\"row\">\n                            <div class=\"col-sm-5\">\n                                <img src=\"https://renfei.oncdn.cn/images/neilren.jpg\" class=\"img-responsive\" alt=\"\" width=\"300\">\n                            </div>\n                            <div class=\"col-sm-7\">\n                                <h3 class=\"top-zero\">任霏</h3>\n                                <p>90后程序猿，总喜欢尝试新鲜事物，对新奇的东西充满了好奇。很幸运在我年轻的时候赶上了中国计算机的普及浪潮。 <br> <br>\n                                    小学有了微机课，初中有了网吧，高中有了自己的PC，开启了建站之旅，大学选择了喜欢的计算机专业，开始了我的故事...<br> <br>\n                                    大学是 C#.NET 专业毕业，后自学 Java 进行技术转型。目前计划使用 Scala 向大数据方向转型。  \n                                </p>\n                            </div>\n                        </div>\n                    </div>\n                    <div class=\"col-sm-5 wow fadeInRight\" data-wow-duration=\"1000ms\" data-wow-delay=\"300ms\">\n                        <div class=\"our-skills\">\n                            <h2>Contacts</h2>\n                            <address>\n                                <br>\n                            E-mail: <a href=\"mailto:i@renfei.net\">i@renfei.net</a> <br> \n                            GitHub:<a href=\"https://github.com/NeilRen\" target=\"_blank\">GitHub</a> <br> \n                            Facebook:<a href=\"https://www.facebook.com/renfeii\" target=\"_blank\">任霏</a> <br> \n                            Twitter:<a href=\"https://twitter.com/renfeii\" target=\"_blank\">@renfeii</a> <br> \n                            Sina Weibo:<a href=\"https://weibo.com/renfeii\" target=\"_blank\">@霏总驾到</a> <br> \n                            QQ Group：<a\n                                href=\"https://shang.qq.com/wpa/qunwpa?idkey=bfbde7e5dec79fd3cdb23c7cf590ca698e3da8b48a71369139ed6aa52f9a7513\"\n                                target=\"_blank\">130832168</a><br> \n                            Telegram:<a href=\"https://t.me/neilren\" target=\"_blank\">NeilRen</a>\n                            Tel:+86 13082843041\n                            </address>\n                            <address>\n                            Zhangjiakou - Hebei - China\n                            </address>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </section>\n\n    <section id=\"team\">\n        <div class=\"container\">\n            <div class=\"row\">\n                <h1 class=\"title text-center wow fadeInDown\" data-wow-duration=\"500ms\" data-wow-delay=\"300ms\">Timeline</h1>\n                <p class=\"text-center wow fadeInDown\" data-wow-duration=\"400ms\" data-wow-delay=\"400ms\">\n                    时间流逝，那些需要纪念的关键转折点\n                </p>\n                <div class=\"row\">\n                <div class=\"timeline-blog overflow padding-top\">\n                    <div class=\"timeline-date text-center\">\n                        <a href=\"#\" class=\"btn btn-common uppercase\">2019</a>\n                    </div>\n                    <div class=\"timeline-divider overflow padding-bottom\">\n                        <div class=\"col-sm-6 padding-right arrow-right wow fadeInLeft\" data-wow-duration=\"1000ms\" data-wow-delay=\"300ms\">\n                            <div class=\"single-blog timeline\">\n                                <div class=\"post-content overflow\">\n                                    <h2 class=\"post-title bold\"><a href=\"blogdetails.html#\">使用前后端分离</a></h2>\n                                    <h3 class=\"post-author\"><a href=\"https://github.com/neilren/RenFei.Net\" target=\"_blank\">RenFei.Net</a></h3>\n                                    <p>使用 SpringBoot 和 Vue.Js 重写网站，开始尝试前后端分离</p>\n                                    <div class=\"post-bottom overflow\">\n                                        <span class=\"post-date pull-left\">2019-5-28</span>\n                                    </div>\n                                </div>\n                            </div>\n                        </div>\n                        <div class=\"col-sm-6 padding-left padding-top arrow-left wow fadeInRight\" data-wow-duration=\"1000ms\" data-wow-delay=\"300ms\">\n                            <div class=\"single-blog timeline\">\n                                <div class=\"post-content overflow\">\n                                    <h2 class=\"post-title bold\"><a href=\"blogdetails.html\">收购 RENFEI.NET 域名</a></h2>\n                                    <h3 class=\"post-author\"><a href=\"https://github.com/neilren/NEILREN4J\" target=\"_blank\">NEILREN4J</a></h3>\n                                    <p>收购 RENFEI.NET 域名</p>\n                                    <div class=\"post-bottom overflow\">\n                                        <span class=\"post-date pull-left\">2019-1-4</span>\n                                    </div>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"timeline-blog overflow\">\n                    <div class=\"timeline-date text-center\">\n                        <a href=\"#\" class=\"btn btn-common uppercase\">2018</a>\n                    </div>\n                    <div class=\"timeline-divider overflow padding-bottom\">\n                        <div class=\"col-sm-6 padding-right arrow-right wow fadeInLeft\" data-wow-duration=\"1000ms\" data-wow-delay=\"300ms\">\n                            <div class=\"single-blog timeline\">\n                                <div class=\"post-content overflow\">\n                                    <h2 class=\"post-title bold\"><a href=\"blogdetails.html\">功能新增</a></h2>\n                                    <h3 class=\"post-author\"><a href=\"https://github.com/neilren/NEILREN4J\" target=\"_blank\">NEILREN4J</a></h3>\n                                    <p>功能新增：工具箱小工具-弱密码检测接口，并开放接口调用，新增弱密码数据库</p>\n                                    <div class=\"post-bottom overflow\">\n                                        <span class=\"post-date pull-left\">2018-08-21</span>\n                                    </div>\n                                </div>\n                            </div>\n                        </div>\n                        <div class=\"col-sm-6 padding-left padding-top arrow-left wow fadeInRight\" data-wow-duration=\"1000ms\" data-wow-delay=\"300ms\">\n                            <div class=\"single-blog timeline\">\n                                <div class=\"post-content overflow\">\n                                    <h2 class=\"post-title bold\"><a href=\"blogdetails.html\">功能新增</a></h2>\n                                    <h3 class=\"post-author\"><a href=\"https://github.com/neilren/NEILREN4J\" target=\"_blank\">NEILREN4J</a></h3>\n                                    <p>功能新增：利用AOP切面统计执行时间和执行方法数量，对执行时间过长的方法进行日志记录</p>\n                                    <div class=\"post-bottom overflow\">\n                                        <span class=\"post-date pull-left\">2018-8-1</span>\n                                    </div>\n                                </div>\n                            </div>\n                        </div>\n                        <div class=\"col-sm-6 padding-right arrow-right wow fadeInLeft\" data-wow-duration=\"1000ms\" data-wow-delay=\"300ms\">\n                            <div class=\"single-blog timeline\">\n                                <div class=\"post-content overflow\">\n                                    <h2 class=\"post-title bold\"><a href=\"blogdetails.html\">功能新增</a></h2>\n                                    <h3 class=\"post-author\"><a href=\"https://github.com/neilren/NEILREN4J\" target=\"_blank\">NEILREN4J</a></h3>\n                                    <p>功能新增：网页头部节日主题装扮</p>\n                                    <div class=\"post-bottom overflow\">\n                                        <span class=\"post-date pull-left\">2018-7-28</span>\n                                    </div>\n                                </div>\n                            </div>\n                        </div>\n                        <div class=\"col-sm-6 padding-left padding-top arrow-left wow fadeInRight\" data-wow-duration=\"1000ms\" data-wow-delay=\"300ms\">\n                            <div class=\"single-blog timeline\">\n                                <div class=\"post-content overflow\">\n                                    <h2 class=\"post-title bold\"><a href=\"blogdetails.html\">技术转型Java开发</a></h2>\n                                    <h3 class=\"post-author\"><a href=\"https://github.com/neilren/NEILREN4J\" target=\"_blank\">NEILREN4J</a></h3>\n                                    <p>使用SpringBoot重新构建，项目代号 NEILREN4J</p>\n                                    <div class=\"post-bottom overflow\">\n                                        <span class=\"post-date pull-left\">2018-07-16</span>\n                                    </div>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"timeline-blog overflow\">\n                    <div class=\"timeline-date text-center\">\n                        <a href=\"\" class=\"btn btn-common uppercase\">2017</a>\n                    </div>\n                    <div class=\"timeline-divider overflow padding-bottom\">\n                        <div class=\"col-sm-6 padding-right arrow-right wow fadeInLeft\" data-wow-duration=\"1000ms\" data-wow-delay=\"300ms\">\n                            <div class=\"single-blog timeline\">\n                                <div class=\"post-content overflow\">\n                                    <h2 class=\"post-title bold\"><a href=\"blogdetails.html\">开启开源之旅</a></h2>\n                                    <h3 class=\"post-author\"><a href=\"https://github.com/neilren/NEILREN4J\" target=\"_blank\">NEILREN4J</a></h3>\n                                    <p>计划上Github开源管理代码</p>\n                                    <div class=\"post-bottom overflow\">\n                                        <span class=\"post-date pull-left\">2017-06-00</span>\n                                    </div>\n                                </div>\n                            </div>\n                        </div>\n                        <div class=\"col-sm-6 padding-left padding-top arrow-left wow fadeInRight\" data-wow-duration=\"1000ms\" data-wow-delay=\"300ms\">\n                            <div class=\"single-blog timeline\">\n                                <div class=\"post-content overflow\">\n                                    <h2 class=\"post-title bold\"><a href=\"blogdetails.html\">技术转型Java开发</a></h2>\n                                    <h3 class=\"post-author\"><a href=\"https://github.com/neilren/NEILREN4J\" target=\"_blank\">NEILREN4J</a></h3>\n                                    <p>开始Java版开发，项目代号 NEILREN4J</p>\n                                    <div class=\"post-bottom overflow\">\n                                        <span class=\"post-date pull-left\">2017-05-00</span>\n                                    </div>\n                                </div>\n                            </div>\n                        </div>\n                        <div class=\"col-sm-6 padding-right arrow-right wow fadeInLeft\" data-wow-duration=\"1000ms\" data-wow-delay=\"300ms\">\n                            <div class=\"single-blog timeline\">\n                                <div class=\"post-content overflow\">\n                                    <h2 class=\"post-title bold\"><a href=\"blogdetails.html\">计划技术转型Java开发</a></h2>\n                                    <h3 class=\"post-author\"><a href=\"https://github.com/neilren/NeilNT\" target=\"_blank\">NeilNT</a></h3>\n                                    <p>购买搭建Linux服务器</p>\n                                    <div class=\"post-bottom overflow\">\n                                        <span class=\"post-date pull-left\">2017-04-00</span>\n                                    </div>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"timeline-blog overflow\">\n                    <div class=\"timeline-date text-center\">\n                        <a href=\"\" class=\"btn btn-common uppercase\">2016</a>\n                    </div>\n                    <div class=\"timeline-divider overflow padding-bottom\">\n                        <div class=\"col-sm-6 padding-right arrow-right wow fadeInLeft\" data-wow-duration=\"1000ms\" data-wow-delay=\"300ms\">\n                            <div class=\"single-blog timeline\">\n                                <div class=\"post-content overflow\">\n                                    <h2 class=\"post-title bold\"><a href=\"blogdetails.html\">计划技术转型Java开发</a></h2>\n                                    <h3 class=\"post-author\"><a href=\"https://github.com/neilren/NeilNT\" target=\"_blank\">NeilNT</a></h3>\n                                    <p>尝试使用 SSM 框架构建新的Java版网站</p>\n                                    <div class=\"post-bottom overflow\">\n                                        <span class=\"post-date pull-left\">2016-12-00</span>\n                                    </div>\n                                </div>\n                            </div>\n                        </div>\n                        <div class=\"col-sm-6 padding-left padding-top arrow-left wow fadeInRight\" data-wow-duration=\"1000ms\" data-wow-delay=\"300ms\">\n                            <div class=\"single-blog timeline\">\n                                <div class=\"post-content overflow\">\n                                    <h2 class=\"post-title bold\"><a href=\"blogdetails.html\">计划技术转型Java开发</a></h2>\n                                    <h3 class=\"post-author\"><a href=\"https://github.com/neilren/NeilNT\" target=\"_blank\">NeilNT</a></h3>\n                                    <p>计划转Java技术，开始筹备Java知识和Linux知识</p>\n                                    <div class=\"post-bottom overflow\">\n                                        <span class=\"post-date pull-left\">2016-10-00</span>\n                                    </div>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"timeline-blog overflow\">\n                    <div class=\"timeline-date text-center\">\n                        <a href=\"\" class=\"btn btn-common uppercase\">2015</a>\n                    </div>\n                    <div class=\"timeline-divider overflow padding-bottom\">\n                        <div class=\"col-sm-6 padding-right arrow-right wow fadeInLeft\" data-wow-duration=\"1000ms\" data-wow-delay=\"300ms\">\n                            <div class=\"single-blog timeline\">\n                                <div class=\"post-content overflow\">\n                                    <h2 class=\"post-title bold\"><a href=\"blogdetails.html\">自主独立开发网站，告别开源建站</a></h2>\n                                    <h3 class=\"post-author\"><a href=\"https://github.com/neilren/NeilNT\" target=\"_blank\">NeilNT</a></h3>\n                                    <p>NEILREN.COM上线，使用 ASP.NET MVC 独立开发程序，项目代号 NeilNT</p>\n                                    <div class=\"post-bottom overflow\">\n                                        <span class=\"post-date pull-left\">2015-8-1</span>\n                                    </div>\n                                </div>\n                            </div>\n                        </div>\n                        <div class=\"col-sm-6 padding-left padding-top arrow-left wow fadeInRight\" data-wow-duration=\"1000ms\" data-wow-delay=\"300ms\">\n                            <div class=\"single-blog timeline\">\n                                <div class=\"post-content overflow\">\n                                    <h2 class=\"post-title bold\"><a href=\"blogdetails.html\">数据库迁移准备搬家到自己的程序上</a></h2>\n                                    <h3 class=\"post-author\"><a href=\"https://wordpress.org/\" target=\"_blank\">WordPress</a></h3>\n                                    <p> 数据库迁移，从MySQL迁移到SQL Server</p>\n                                    <a href=\"#\" class=\"read-more\">View More</a>\n                                    <div class=\"post-bottom overflow\">\n                                        <span class=\"post-date pull-left\">2015-7-6</span>\n                                    </div>\n                                </div>\n                            </div>\n                        </div>\n                        <div class=\"col-sm-6 padding-right arrow-right wow fadeInLeft\" data-wow-duration=\"1000ms\" data-wow-delay=\"300ms\">\n                            <div class=\"single-blog timeline\">\n                                <div class=\"post-content overflow\">\n                                    <h2 class=\"post-title bold\"><a href=\"blogdetails.html\">计划自主开发自己的网站程序</a></h2>\n                                    <h3 class=\"post-author\"><a href=\"https://wordpress.org/\" target=\"_blank\">WordPress</a></h3>\n                                    <p>MVC  配置新服务器，新购阿里云服务器</p>\n                                    <div class=\"post-bottom overflow\">\n                                        <span class=\"post-date pull-left\">2015-6-27</span>\n                                    </div>\n                                </div>\n                            </div>\n                        </div>\n                        <div class=\"col-sm-6 padding-left padding-top arrow-left wow fadeInRight\" data-wow-duration=\"1000ms\" data-wow-delay=\"300ms\">\n                            <div class=\"single-blog timeline\">\n                                <div class=\"post-content overflow\">\n                                    <h2 class=\"post-title bold\"><a href=\"blogdetails.html\">大学毕业啦</a></h2>\n                                    <h3 class=\"post-author\"><a href=\"https://wordpress.org/\" target=\"_blank\">WordPress</a></h3>\n                                    <p>大学毕业，在企业实习中，计划独立开发网站程序</p>\n                                    <div class=\"post-bottom overflow\">\n                                        <span class=\"post-date pull-left\">2015-6-21</span>\n                                    </div>\n                                </div>\n                            </div>\n                        </div>\n                        <div class=\"col-sm-6 padding-right arrow-right wow fadeInLeft\" data-wow-duration=\"1000ms\" data-wow-delay=\"300ms\">\n                            <div class=\"single-blog timeline\">\n                                <div class=\"post-content overflow\">\n                                    <h2 class=\"post-title bold\"><a href=\"blogdetails.html\">注册neil.ren域名</a></h2>\n                                    <h3 class=\"post-author\"><a href=\"https://wordpress.org/\" target=\"_blank\">WordPress</a></h3>\n                                    <p>注册neil.ren域名/p>\n                                    <div class=\"post-bottom overflow\">\n                                        <span class=\"post-date pull-left\">2015-1-5</span>\n                                    </div>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"timeline-blog overflow\">\n                    <div class=\"timeline-date text-center\">\n                        <a href=\"\" class=\"btn btn-common uppercase\">2013</a>\n                    </div>\n                    <div class=\"timeline-divider overflow padding-bottom\">\n                        <div class=\"col-sm-6 padding-right arrow-right wow fadeInLeft\" data-wow-duration=\"1000ms\" data-wow-delay=\"300ms\">\n                            <div class=\"single-blog timeline\">\n                                <div class=\"post-content overflow\">\n                                    <h2 class=\"post-title bold\"><a href=\"blogdetails.html\">更换域名</a></h2>\n                                    <h3 class=\"post-author\"><a href=\"https://wordpress.org/\" target=\"_blank\">WordPress</a></h3>\n                                    <p>注册ren-fei.com 域名更改为ren-fei.com</p>\n                                    <div class=\"post-bottom overflow\">\n                                        <span class=\"post-date pull-left\">2013-03-01</span>\n                                    </div>\n                                </div>\n                            </div>\n                        </div>\n                        <div class=\"col-sm-6 padding-left padding-top arrow-left wow fadeInRight\" data-wow-duration=\"1000ms\" data-wow-delay=\"300ms\">\n                            <div class=\"single-blog timeline\">\n                                <div class=\"post-content overflow\">\n                                    <h2 class=\"post-title bold\"><a href=\"blogdetails.html\">更换域名</a></h2>\n                                    <h3 class=\"post-author\"><a href=\"https://wordpress.org/\" target=\"_blank\">WordPress</a></h3>\n                                    <p>注册neilren.com，20岁的生日，更换域名</p>\n                                    <div class=\"post-bottom overflow\">\n                                        <span class=\"post-date pull-left\">2013-11-06</span>\n                                    </div>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"timeline-blog overflow\">\n                    <div class=\"timeline-date text-center\">\n                        <a href=\"\" class=\"btn btn-common uppercase\">2012</a>\n                    </div>\n                    <div class=\"timeline-divider overflow padding-bottom\">\n                        <div class=\"col-sm-6 padding-right arrow-right wow fadeInLeft\" data-wow-duration=\"1000ms\" data-wow-delay=\"300ms\">\n                            <div class=\"single-blog timeline\">\n                                <div class=\"post-content overflow\">\n                                    <h2 class=\"post-title bold\"><a href=\"blogdetails.html\">开启建站之旅</a></h2>\n                                    <h3 class=\"post-author\"><a href=\"https://wordpress.org/\" target=\"_blank\">WordPress</a></h3>\n                                    <p>注册 任霏.中国，中文域名</p>\n                                    <div class=\"post-bottom overflow\">\n                                        <span class=\"post-date pull-left\">2012-06-04</span>\n                                    </div>\n                                </div>\n                            </div>\n                        </div>\n                        <div class=\"col-sm-6 padding-left padding-top arrow-left wow fadeInRight\" data-wow-duration=\"1000ms\" data-wow-delay=\"300ms\">\n                            <div class=\"single-blog timeline\">\n                                <div class=\"post-content overflow\">\n                                    <h2 class=\"post-title bold\"><a href=\"blogdetails.html\">开启建站之旅</a></h2>\n                                    <h3 class=\"post-author\"><a href=\"https://wordpress.org/\" target=\"_blank\">WordPress</a></h3>\n                                    <p>使用WordPress搭建了独立的个人博客网站bennett-ren.com</p>\n                                    <div class=\"post-bottom overflow\">\n                                        <span class=\"post-date pull-left\">2012-04-08</span>\n                                    </div>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                </div>\n\n\n            </div>\n            </div>\n        </div>\n    </section> ', 0, 0, 0, '2019-07-27 16:31:47', '2019-07-27 16:31:51', 'More information about us.', NULL, 0);
 COMMIT;
 
 -- ----------------------------
@@ -618,6 +697,7 @@ CREATE TABLE `t_photo` (
 -- Records of t_photo
 -- ----------------------------
 BEGIN;
+INSERT INTO `t_photo` VALUES (0, 8, '微博相册', 'https://cdn.renfei.net/images/default_posts.jpg', '在微博中发表的图片', '2020-03-06 12:32:25', '2020-03-06 12:32:23', 0);
 INSERT INTO `t_photo` VALUES (1, 8, '我家猫主子', 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0881.JPG', '我家猫主子是在2018年年底捡到的，2019年过年的时候要出去，结果就再也没回来。', '2019-07-29 16:56:21', '2019-07-29 16:56:21', 0);
 COMMIT;
 
@@ -632,7 +712,7 @@ CREATE TABLE `t_photo_img` (
   PRIMARY KEY (`id`),
   KEY `fk_photo_img` (`photo_id`),
   CONSTRAINT `fk_photo_img` FOREIGN KEY (`photo_id`) REFERENCES `t_photo` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of t_photo_img
@@ -640,6 +720,50 @@ CREATE TABLE `t_photo_img` (
 BEGIN;
 INSERT INTO `t_photo_img` VALUES (1, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0881.JPG');
 INSERT INTO `t_photo_img` VALUES (2, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0172.JPG');
+INSERT INTO `t_photo_img` VALUES (3, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0173.JPG');
+INSERT INTO `t_photo_img` VALUES (4, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0214.JPG');
+INSERT INTO `t_photo_img` VALUES (5, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0217.JPG');
+INSERT INTO `t_photo_img` VALUES (6, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0219.JPG');
+INSERT INTO `t_photo_img` VALUES (7, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0221.JPG');
+INSERT INTO `t_photo_img` VALUES (8, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0225.JPG');
+INSERT INTO `t_photo_img` VALUES (9, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0228.JPG');
+INSERT INTO `t_photo_img` VALUES (10, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0234.JPG');
+INSERT INTO `t_photo_img` VALUES (11, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0235.JPG');
+INSERT INTO `t_photo_img` VALUES (12, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0236.JPG');
+INSERT INTO `t_photo_img` VALUES (13, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0253.JPG');
+INSERT INTO `t_photo_img` VALUES (14, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0254.JPG');
+INSERT INTO `t_photo_img` VALUES (15, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0255.JPG');
+INSERT INTO `t_photo_img` VALUES (16, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0256.JPG');
+INSERT INTO `t_photo_img` VALUES (17, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0261.JPG');
+INSERT INTO `t_photo_img` VALUES (18, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0267.JPG');
+INSERT INTO `t_photo_img` VALUES (19, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0268.JPG');
+INSERT INTO `t_photo_img` VALUES (20, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0272.JPG');
+INSERT INTO `t_photo_img` VALUES (21, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0274.JPG');
+INSERT INTO `t_photo_img` VALUES (22, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0276.JPG');
+INSERT INTO `t_photo_img` VALUES (23, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0278.JPG');
+INSERT INTO `t_photo_img` VALUES (24, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0683.JPG');
+INSERT INTO `t_photo_img` VALUES (25, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0688.JPG');
+INSERT INTO `t_photo_img` VALUES (26, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0743.JPG');
+INSERT INTO `t_photo_img` VALUES (27, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0746.JPG');
+INSERT INTO `t_photo_img` VALUES (28, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0748.JPG');
+INSERT INTO `t_photo_img` VALUES (29, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0753.JPG');
+INSERT INTO `t_photo_img` VALUES (30, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0754.JPG');
+INSERT INTO `t_photo_img` VALUES (31, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0874.JPG');
+INSERT INTO `t_photo_img` VALUES (32, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0875.JPG');
+INSERT INTO `t_photo_img` VALUES (33, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0880.JPG');
+INSERT INTO `t_photo_img` VALUES (34, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0882.JPG');
+INSERT INTO `t_photo_img` VALUES (35, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0884.JPG');
+INSERT INTO `t_photo_img` VALUES (36, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0885.JPG');
+INSERT INTO `t_photo_img` VALUES (37, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0887.JPG');
+INSERT INTO `t_photo_img` VALUES (38, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0888.JPG');
+INSERT INTO `t_photo_img` VALUES (39, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0889.JPG');
+INSERT INTO `t_photo_img` VALUES (40, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0891.JPG');
+INSERT INTO `t_photo_img` VALUES (41, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0898.JPG');
+INSERT INTO `t_photo_img` VALUES (42, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0899.JPG');
+INSERT INTO `t_photo_img` VALUES (43, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0900.JPG');
+INSERT INTO `t_photo_img` VALUES (44, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0973.JPG');
+INSERT INTO `t_photo_img` VALUES (45, 1, 'https://renfei.oncdn.cn/upload/photo/2019/IMG_0974.JPG');
+INSERT INTO `t_photo_img` VALUES (46, 0, 'https://cdn.renfei.net/images/default_posts.jpg');
 COMMIT;
 
 -- ----------------------------
@@ -656,6 +780,8 @@ CREATE TABLE `t_posts` (
   `source_url` text COLLATE utf8mb4_unicode_ci COMMENT '原文链接',
   `source_name` text COLLATE utf8mb4_unicode_ci COMMENT '文章来源名称',
   `views` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '浏览量',
+  `thumbs_up` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '点赞',
+  `thumbs_down` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '点踩',
   `release_time` datetime NOT NULL COMMENT '发布时间',
   `add_time` datetime NOT NULL COMMENT '添加时间',
   `describes` text COLLATE utf8mb4_unicode_ci COMMENT '文章简介用于SEO',
@@ -674,7 +800,26 @@ CREATE TABLE `t_posts` (
 -- Records of t_posts
 -- ----------------------------
 BEGIN;
-INSERT INTO `t_posts` VALUES (1, 1, 'https://cdn.neilren.com/neilren4j/upload/b8bfb737a838450ca2e373ad4dd264f7.jpeg', '你好！世界程序', '<h2><span class=\"ez-toc-section\" id=\"tocjs\">toc.js</span></h2>\n<p>这个就是那段神奇的代码</p>\n<pre class=\"lang:js decode:true\" title=\"toc.js\"><code class=\"js\">!function(a){a.fn.toc=function(b){var c,d=this,e=a.extend({},jQuery.fn.toc.defaults,b),f=a(e.container),g=a(e.selectors,f),h=[],i=e.prefix+\"-active\",j=function(b){for(var c=0,d=arguments.length;d&gt;c;c++){var e=arguments[c],f=a(e);if(f.scrollTop()&gt;0)return f;f.scrollTop(1);var g=f.scrollTop()&gt;0;if(f.scrollTop(0),g)return f}return[]},k=j(e.container,\"body\",\"html\"),l=function(b){if(e.smoothScrolling){b.preventDefault();var c=a(b.target).attr(\"href\"),f=a(c);k.animate({scrollTop:f.offset().top},400,\"swing\",function(){location.hash=c})}a(\"li\",d).removeClass(i),a(b.target).parent().addClass(i)},m=function(b){c&amp;&amp;clearTimeout(c),c=setTimeout(function(){for(var b,c=a(window).scrollTop(),f=0,g=h.length;g&gt;f;f++)if(h[f]&gt;=c){a(\"li\",d).removeClass(i),b=a(\"li:eq(\"+(f-1)+\")\",d).addClass(i),e.onHighlight(b);break}},50)};return e.highlightOnScroll&amp;&amp;(a(window).bind(\"scroll\",m),m()),this.each(function(){var b=a(this),c=a(\"&lt;ul/&gt;\");g.each(function(d,f){var g=a(f);h.push(g.offset().top-e.highlightOffset);var i=(a(\"&lt;span/&gt;\").attr(\"id\",e.anchorName(d,f,e.prefix)).insertBefore(g),a(\"&lt;a/&gt;\").text(e.headerText(d,f,g)).attr(\"href\",\"#\"+e.anchorName(d,f,e.prefix)).bind(\"click\",function(c){l(c),b.trigger(\"selected\",a(this).attr(\"href\"))})),j=a(\"&lt;li/&gt;\").addClass(e.itemClass(d,f,g,e.prefix)).append(i);c.append(j)}),b.html(c)})},jQuery.fn.toc.defaults={container:\"body\",selectors:\"h1,h2,h3\",smoothScrolling:!0,prefix:\"toc\",onHighlight:function(){},highlightOnScroll:!0,highlightOffset:100,anchorName:function(a,b,c){return c+a},headerText:function(a,b,c){return c.text()},itemClass:function(a,b,c,d){return d+\"-\"+c[0].tagName.toLowerCase()}}}(jQuery);</code></pre>\n<h2><span class=\"ez-toc-section\" id=\"i\">生成目录程序生成目录程序生成目录程序生成目录程序生成目录程序</span></h2>\n<p>下面这两段程序，第一段没明白是做什么的，第二段是用来生成目录的程序。</p>\n<pre class=\"php\"><code class=php>//这个程序没看到有什么作用，可能是考虑了固定导航栏的高度\njQuery(document).on(\"click\", \"#toc a\", function (a) {\n    // #wpadminbar 世界替换了原来的 header\n    $(\"#wpadminbar\").animate({marginBottom: 130}, 200).animate({marginBottom: 30}, 200)\n});\n//这一段是用来生成目录的\njQuery(document).ready(function () {\n    return 0 === $(\".article_content h2\").length ? ($(\"#toc\").remove(), 0) : (jQuery(\"#toc\").toc({\n         selectors: \"h2,h3,h4\",\n          container: \".article_content\"\n     }), jQuery(\"#toc\").before(\"&lt;h2&gt;目录&lt;/h2&gt;\"), \"参考链接\" === $.trim($(\".article_content h2:nth-last-of-type(1)\").text()) &amp;&amp; $(\".article_content h2:nth-last-of-type(1)\").addClass(\"reference\").next(\"ul\").addClass(\"reference-list\"), void $(\"#toc~h2\").wrap(\'&lt;div class=\"chapter\" /&gt;\'))\n});</code></pre>\n<h2><span class=\"ez-toc-section\" id=\"i-2\">美化</span></h2>\n<p>下面的css 就是本页面目录所使用的样式</p>\n<h3><span class=\"ez-toc-section\" id=\"i-2\">H3</span></h3>\n<pre class=\"php\" title=\"css\"><code class=\"php\">    &lt;style&gt;\n        #toc {\n            /*background-color: #111;\n            box-shadow: -5px 0 5px 0 #000 inset;\n            color: #fff;\n            font-family: Consolas,\"Courier New\",Courier,FreeMono,monospace;\n            font-weight: 700;*/\n            margin-bottom: 2em;\n            padding-top: 20px;\n        }\n        #toc ul {\n            /*list-style: outside none none;*/\n            list-style:none;\n            margin: 0;\n            padding: 0;\n        }\n        #toc li {\n            padding: 5px 10px;\n            list-style:none;\n        }\n        #toc a {\n            color: #a6e22e;\n            display: block;\n            text-decoration: none;\n        }\n        #toc li:hover {\n            background: #369 none repeat scroll 0 0;\n            /*box-shadow: -5px 0 10px -5px #000 inset;*/\n        }\n        #toc li a:hover{\n            border:none;\n        }\n        #toc .toc-h2 {\n            padding-left: 2em;\n        }\n        #toc .toc-h3 {\n            padding-left: 4em;\n        }\n        #toc .toc-h4 {\n            padding-left: 6em;\n        }\n    &lt;/style&gt;</code></pre>\n<p>写在最后吧：<br />\n后来，我找到了官方项目地址，就算一次快乐的旅行吧：<br />\nhttp://projects.jga.me/toc/<br />\nhttps://github.com/jgallen23/toc</p>', 1, NULL, NULL, 74, '2019-12-04 13:30:21', '2019-12-04 13:30:21', '这个是简介', NULL, 0, 1, -11.909285718202591, '2020-01-08 21:39:00');
+INSERT INTO `t_posts` VALUES (1003288, 1, '', '新增测试', '<p>新增测试</p>', 1, '', '', 0, 0, 0, '2019-12-27 16:13:34', '2019-12-27 16:19:09', '', '', 1, 1, -26.25, '2020-03-07 11:38:48');
+COMMIT;
+
+-- ----------------------------
+-- Table structure for t_posts_extra
+-- ----------------------------
+DROP TABLE IF EXISTS `t_posts_extra`;
+CREATE TABLE `t_posts_extra` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `post_id` bigint(20) unsigned NOT NULL,
+  `extra_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `extra_value` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='文章扩展信息';
+
+-- ----------------------------
+-- Records of t_posts_extra
+-- ----------------------------
+BEGIN;
+INSERT INTO `t_posts_extra` VALUES (1, 1003281, 'download', '1001');
 COMMIT;
 
 -- ----------------------------
@@ -738,6 +883,7 @@ CREATE TABLE `t_setting` (
   `keys` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '键',
   `values` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '值',
   `orders` int(10) unsigned DEFAULT NULL COMMENT '排序',
+  `extend` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '扩展',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -745,36 +891,68 @@ CREATE TABLE `t_setting` (
 -- Records of t_setting
 -- ----------------------------
 BEGIN;
-INSERT INTO `t_setting` VALUES (1, 'sitename', 'The RenFei Blog', NULL);
-INSERT INTO `t_setting` VALUES (2, 'domain', 'http://localhost:8091', NULL);
-INSERT INTO `t_setting` VALUES (3, 'highlight', '/font/highlight/highlight.pack.js', NULL);
-INSERT INTO `t_setting` VALUES (4, 'staticdomain', 'cdn.renfei.net', NULL);
-INSERT INTO `t_setting` VALUES (5, 'css', '/font/font-awesome/4.7.0/css/font-awesome.min.css', 1);
-INSERT INTO `t_setting` VALUES (6, 'css', '/css/bootstrap.min.css', 5);
-INSERT INTO `t_setting` VALUES (7, 'jss', '/font/jquery/jquery-3.4.1.min.js', 1);
-INSERT INTO `t_setting` VALUES (8, 'description', ' ', NULL);
-INSERT INTO `t_setting` VALUES (9, 'script', ' ', NULL);
-INSERT INTO `t_setting` VALUES (10, 'analyticscode', '<script>\nvar _hmt = _hmt || [];\n(function() {\n  var hm = document.createElement(\"script\");\n  hm.src = \"https://hm.baidu.com/hm.js?ee1f1987ccfc9bcd61a1d220f5ae41e1\";\n  var s = document.getElementsByTagName(\"script\")[0]; \n  s.parentNode.insertBefore(hm, s);\n})();\n</script>\n<script async src=\"https://www.googletagmanager.com/gtag/js?id=UA-141370164-1\"></script>\n<script>\n    window.dataLayer = window.dataLayer || [];\n    function gtag(){dataLayer.push(arguments);}\n    gtag(\'js\', new Date());\n\n    gtag(\'config\', \'UA-141370164-1\');\n</script>', NULL);
-INSERT INTO `t_setting` VALUES (11, 'footermenu', '测试|#', NULL);
-INSERT INTO `t_setting` VALUES (13, 'homebanner', '/img/banner/home_banner.jpg', NULL);
-INSERT INTO `t_setting` VALUES (14, 'jss', '//qzonestyle.gtimg.cn/qzone/v6/portal/gy/404/data.js', 3);
-INSERT INTO `t_setting` VALUES (15, 'sitelogo', '/logo/RF.svg', NULL);
-INSERT INTO `t_setting` VALUES (16, 'jss', '/js/bootstrap.min.js', 6);
-INSERT INTO `t_setting` VALUES (17, 'css', '/font/jBox/jBox.css', 2);
-INSERT INTO `t_setting` VALUES (18, 'css', '/font/jBox/plugins/Notice/jBox.Notice.css', 3);
-INSERT INTO `t_setting` VALUES (19, 'css', '/font/jBox/themes/NoticeFancy.css', 4);
-INSERT INTO `t_setting` VALUES (20, 'jss', '/font/jBox/jBox.js', 4);
-INSERT INTO `t_setting` VALUES (21, 'jss', '/font/jBox/plugins/Notice/jBox.Notice.js', 5);
-INSERT INTO `t_setting` VALUES (22, 'global_comment', '1', NULL);
-INSERT INTO `t_setting` VALUES (23, 'css', '/css/animate.min.css', 6);
-INSERT INTO `t_setting` VALUES (24, 'css', '/css/lightbox.css', 7);
-INSERT INTO `t_setting` VALUES (25, 'css', '/css/main.css', 8);
-INSERT INTO `t_setting` VALUES (26, 'css', '/css/responsive.css', 9);
-INSERT INTO `t_setting` VALUES (27, 'jss', '/js/lightbox.min.js', 7);
-INSERT INTO `t_setting` VALUES (28, 'jss', '/js/wow.min.js', 8);
-INSERT INTO `t_setting` VALUES (29, 'jss', '/js/main.js', 10);
-INSERT INTO `t_setting` VALUES (30, 'jss', '//res.wx.qq.com/open/js/jweixin-1.4.0.js', 9);
-INSERT INTO `t_setting` VALUES (31, 'global_ad', '1', NULL);
+INSERT INTO `t_setting` VALUES (1, 'sitename', 'The RenFei Blog', NULL, NULL);
+INSERT INTO `t_setting` VALUES (2, 'domain', 'http://localhost:8091', NULL, NULL);
+INSERT INTO `t_setting` VALUES (3, 'highlight', '/font/highlight/highlight.pack.js', NULL, NULL);
+INSERT INTO `t_setting` VALUES (4, 'staticdomain', 'cdn.renfei.net', NULL, NULL);
+INSERT INTO `t_setting` VALUES (5, 'css', '/font/font-awesome/4.7.0/css/font-awesome.min.css', 1, NULL);
+INSERT INTO `t_setting` VALUES (6, 'css', '/css/bootstrap.min.css', 5, NULL);
+INSERT INTO `t_setting` VALUES (7, 'jss', '/font/jquery/jquery-3.4.1.min.js', 1, '1');
+INSERT INTO `t_setting` VALUES (8, 'description', ' ', NULL, NULL);
+INSERT INTO `t_setting` VALUES (9, 'script', ' ', NULL, NULL);
+INSERT INTO `t_setting` VALUES (10, 'analyticscode', '<script>\nvar _hmt = _hmt || [];\n(function() {\n  var hm = document.createElement(\"script\");\n  hm.src = \"https://hm.baidu.com/hm.js?ee1f1987ccfc9bcd61a1d220f5ae41e1\";\n  var s = document.getElementsByTagName(\"script\")[0]; \n  s.parentNode.insertBefore(hm, s);\n})();\n</script>\n<script async src=\"https://www.googletagmanager.com/gtag/js?id=UA-141370164-1\"></script>\n<script>\n    window.dataLayer = window.dataLayer || [];\n    function gtag(){dataLayer.push(arguments);}\n    gtag(\'js\', new Date());\n\n    gtag(\'config\', \'UA-141370164-1\');\n</script>', NULL, NULL);
+INSERT INTO `t_setting` VALUES (11, 'footermenu', '测试|#', NULL, NULL);
+INSERT INTO `t_setting` VALUES (13, 'homebanner', '/img/banner/home_banner.jpg', NULL, NULL);
+INSERT INTO `t_setting` VALUES (14, 'jss', '//qzonestyle.gtimg.cn/qzone/v6/portal/gy/404/data.js', 3, NULL);
+INSERT INTO `t_setting` VALUES (15, 'sitelogo', '/logo/RF.svg', NULL, NULL);
+INSERT INTO `t_setting` VALUES (16, 'jss', '/js/bootstrap.min.js', 6, NULL);
+INSERT INTO `t_setting` VALUES (17, 'css', '/font/jBox/jBox.css', 2, NULL);
+INSERT INTO `t_setting` VALUES (18, 'css', '/font/jBox/plugins/Notice/jBox.Notice.css', 3, NULL);
+INSERT INTO `t_setting` VALUES (19, 'css', '/font/jBox/themes/NoticeFancy.css', 4, NULL);
+INSERT INTO `t_setting` VALUES (20, 'jss', '/font/jBox/jBox.js', 4, NULL);
+INSERT INTO `t_setting` VALUES (21, 'jss', '/font/jBox/plugins/Notice/jBox.Notice.js', 5, NULL);
+INSERT INTO `t_setting` VALUES (22, 'global_comment', '1', NULL, NULL);
+INSERT INTO `t_setting` VALUES (23, 'css', '/css/animate.min.css', 6, NULL);
+INSERT INTO `t_setting` VALUES (24, 'css', '/css/lightbox.css', 7, NULL);
+INSERT INTO `t_setting` VALUES (25, 'css', '/css/main.css', 8, NULL);
+INSERT INTO `t_setting` VALUES (26, 'css', '/css/responsive.css', 9, NULL);
+INSERT INTO `t_setting` VALUES (27, 'jss', '/js/lightbox.min.js', 7, NULL);
+INSERT INTO `t_setting` VALUES (28, 'jss', '/js/wow.min.js', 8, NULL);
+INSERT INTO `t_setting` VALUES (29, 'jss', '/js/main.js', 10, NULL);
+INSERT INTO `t_setting` VALUES (30, 'jss', '//res.wx.qq.com/open/js/jweixin-1.4.0.js', 9, NULL);
+INSERT INTO `t_setting` VALUES (31, 'global_ad', '1', NULL, NULL);
+COMMIT;
+
+-- ----------------------------
+-- Table structure for t_short_url
+-- ----------------------------
+DROP TABLE IF EXISTS `t_short_url`;
+CREATE TABLE `t_short_url` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `short_url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '短网址编号',
+  `url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '长网址',
+  `add_time` datetime NOT NULL COMMENT '添加时间',
+  `views` bigint(255) unsigned NOT NULL DEFAULT '0' COMMENT '访问量',
+  `state_code` int(11) NOT NULL DEFAULT '1' COMMENT '状态',
+  `add_user` bigint(20) DEFAULT NULL COMMENT '添加用户',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10012 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Records of t_short_url
+-- ----------------------------
+BEGIN;
+INSERT INTO `t_short_url` VALUES (10001, '89Ch', 'http://localhost:8091/kitbox/ShortURL', '2020-03-05 17:05:04', 0, 1, NULL);
+INSERT INTO `t_short_url` VALUES (10002, 'Qa8k', 'http://localhost:8091/kitbox/ShortURL', '2020-03-05 17:05:10', 1, 1, NULL);
+INSERT INTO `t_short_url` VALUES (10003, 'divK', 'http://localhost:8091/kitbox/ShortURL', '2020-03-05 17:05:12', 0, 1, NULL);
+INSERT INTO `t_short_url` VALUES (10004, 'qIFG', 'http://localhost:8091/kitbox/ShortURL', '2020-03-05 17:05:12', 0, 1, NULL);
+INSERT INTO `t_short_url` VALUES (10005, 'Y2SR', 'http://localhost:8091/kitbox/ShortURL', '2020-03-05 20:55:35', 0, 1, NULL);
+INSERT INTO `t_short_url` VALUES (10006, '5e4L', 'http://localhost:8091/kitbox/ShortURL', '2020-03-05 20:59:17', 0, 1, NULL);
+INSERT INTO `t_short_url` VALUES (10007, 'm3OJ', 'http://localhost:8091/kitbox/ShortURL', '2020-03-05 20:59:27', 0, 1, NULL);
+INSERT INTO `t_short_url` VALUES (10008, '2Nqi', 'https://www.renfei.net', '2020-03-05 21:02:16', 0, 1, NULL);
+INSERT INTO `t_short_url` VALUES (10009, 'PmAH', 'https://www.renfei.net', '2020-03-05 21:20:18', 0, 1, NULL);
+INSERT INTO `t_short_url` VALUES (10010, 'L40K', 'https://www.renfei.net', '2020-03-05 21:20:20', 0, 1, NULL);
+INSERT INTO `t_short_url` VALUES (10011, 'ftMH', 'https://www.renfei.net', '2020-03-05 21:20:21', 0, 1, NULL);
 COMMIT;
 
 -- ----------------------------
@@ -873,7 +1051,7 @@ CREATE TABLE `t_tag_relation` (
 -- Records of t_tag_relation
 -- ----------------------------
 BEGIN;
-INSERT INTO `t_tag_relation` VALUES (7, 7, 1, 1);
+INSERT INTO `t_tag_relation` VALUES (7, 1, 1, 1);
 COMMIT;
 
 -- ----------------------------
@@ -899,7 +1077,7 @@ CREATE TABLE `t_type` (
   `type_name` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL,
   `uri_path` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of t_type
@@ -910,6 +1088,7 @@ INSERT INTO `t_type` VALUES (2, 'Pages', '/page');
 INSERT INTO `t_type` VALUES (3, 'Video', '/video');
 INSERT INTO `t_type` VALUES (4, 'Photo', '/photo');
 INSERT INTO `t_type` VALUES (5, 'Movie', '/movie');
+INSERT INTO `t_type` VALUES (6, 'Weibo', '/weibo');
 COMMIT;
 
 -- ----------------------------
@@ -926,6 +1105,8 @@ CREATE TABLE `t_video` (
   `add_time` datetime NOT NULL COMMENT '添加时间',
   `is_delete` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '删除标志',
   `views` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '浏览量',
+  `thumbs_up` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '点赞',
+  `thumbs_down` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '点踩',
   `is_comment` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '是否允许评论',
   `download` text COLLATE utf8mb4_unicode_ci COMMENT '下载链接',
   PRIMARY KEY (`id`),
@@ -936,7 +1117,7 @@ CREATE TABLE `t_video` (
 -- Records of t_video
 -- ----------------------------
 BEGIN;
-INSERT INTO `t_video` VALUES (1, 7, '大境门景区-第一次使用DJI OSMO Mobile 2', '//renfei.oncdn.cn/upload/image/a869a9a910f9451996347bac2b81932b.png', '大境门景区-第一次使用DJI OSMO Mobile 2', '2019-07-26 14:28:45', '2019-07-26 14:28:50', 0, 27, 1, '//video.renfei.oncdn.cn/2019/dajingmen-720p.mp4');
+INSERT INTO `t_video` VALUES (1, 7, '大境门景区-第一次使用DJI OSMO Mobile 2', '//renfei.oncdn.cn/upload/image/a869a9a910f9451996347bac2b81932b.png', '大境门景区-第一次使用DJI OSMO Mobile 2', '2019-07-26 14:28:45', '2019-07-26 14:28:50', 0, 37, 0, 0, 1, '//video.renfei.oncdn.cn/2019/dajingmen-720p.mp4');
 COMMIT;
 
 -- ----------------------------
@@ -980,6 +1161,51 @@ CREATE TABLE `t_video_track` (
   CONSTRAINT `fk_video_track` FOREIGN KEY (`video_id`) REFERENCES `t_video` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- ----------------------------
+-- Table structure for t_wechat_keyword
+-- ----------------------------
+DROP TABLE IF EXISTS `t_wechat_keyword`;
+CREATE TABLE `t_wechat_keyword` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `keyword` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '关键字',
+  `key_typw` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '类型，文本还是关联内部系统',
+  `key_value` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '内容',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `keyword_unique` (`keyword`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Records of t_wechat_keyword
+-- ----------------------------
+BEGIN;
+INSERT INTO `t_wechat_keyword` VALUES (1, '你好', 'TEXT', '你好！感谢您的关注。');
+INSERT INTO `t_wechat_keyword` VALUES (3, '你好！', 'TEXT', '你好！感谢您的关注。');
+COMMIT;
+
+-- ----------------------------
+-- Table structure for t_weibo
+-- ----------------------------
+DROP TABLE IF EXISTS `t_weibo`;
+CREATE TABLE `t_weibo` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `content` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '内容',
+  `img_id` bigint(20) unsigned DEFAULT NULL COMMENT '引用图片ID',
+  `release_time` datetime NOT NULL COMMENT '发布时间',
+  `views` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '浏览量',
+  `thumbs_up` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '点赞量',
+  `thumbs_down` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '点踩量',
+  PRIMARY KEY (`id`),
+  KEY `fk_weibo_photo` (`img_id`),
+  CONSTRAINT `fk_weibo_photo` FOREIGN KEY (`img_id`) REFERENCES `t_photo_img` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10001 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Records of t_weibo
+-- ----------------------------
+BEGIN;
+INSERT INTO `t_weibo` VALUES (10000, '今日添加了微博模块', 46, '2020-03-06 16:00:06', 64, 1, 0);
+COMMIT;
+
 SET FOREIGN_KEY_CHECKS = 1;
 
 -- ----------------------------
@@ -1021,97 +1247,5 @@ CREATE TABLE `t_ipv6` (
   KEY `idx_ip_to` (`ip_to`),
   KEY `idx_ip_from_to` (`ip_from`,`ip_to`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-SET FOREIGN_KEY_CHECKS = 1;
-
--- ----------------------------
--- Table structure for t_log
--- ----------------------------
-DROP TABLE IF EXISTS `t_log`;
-CREATE TABLE `t_log` (
-                       `uuid` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
-                       `datetime` datetime NOT NULL,
-                       `level` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'ACCESS;DEBUG;INFO;WARN;ERROR;FATAL;信息等级',
-                       `inorout` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'input/output，系统输入还是输出',
-                       `log_value` longtext COLLATE utf8mb4_unicode_ci COMMENT '日志内容',
-                       `remote_ip` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '客户端IP',
-                       `remote_user` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '客户端用户名',
-                       `remote_agent` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '客户端浏览器相关信息',
-                       `request_url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '访问地址',
-                       `request_method` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '访问方法',
-                       `status_code` int(11) DEFAULT NULL COMMENT '响应状态码',
-                       PRIMARY KEY (`uuid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- ----------------------------
--- Table structure for t_wechat_keyword
--- ----------------------------
-DROP TABLE IF EXISTS `t_wechat_keyword`;
-CREATE TABLE `t_wechat_keyword` (
-                                  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-                                  `keyword` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '关键字',
-                                  `key_typw` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '类型，文本还是关联内部系统',
-                                  `key_value` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '内容',
-                                  PRIMARY KEY (`id`),
-                                  UNIQUE KEY `keyword_unique` (`keyword`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- ----------------------------
--- Records of t_wechat_keyword
--- ----------------------------
-BEGIN;
-INSERT INTO `t_wechat_keyword` VALUES (1, '你好', 'TEXT', '你好！感谢您的关注。');
-INSERT INTO `t_wechat_keyword` VALUES (3, '你好！', 'TEXT', '你好！感谢您的关注。');
-COMMIT;
-
--- ----------------------------
--- Table structure for t_cache
--- ----------------------------
-DROP TABLE IF EXISTS `t_cache`;
-CREATE TABLE `t_cache` (
-                         `uuid` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
-                         `cache_key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-                         `cache_value` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-                         `expires` datetime NOT NULL,
-                         PRIMARY KEY (`uuid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- ----------------------------
--- Table structure for t_posts_extra
--- ----------------------------
-DROP TABLE IF EXISTS `t_posts_extra`;
-CREATE TABLE `t_posts_extra` (
-                               `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-                               `post_id` bigint(20) unsigned NOT NULL,
-                               `extra_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-                               `extra_value` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-                               PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='文章扩展信息';
-
--- ----------------------------
--- Table structure for t_download
--- ----------------------------
-DROP TABLE IF EXISTS `t_download`;
-CREATE TABLE `t_download` (
-                            `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '文件编号',
-                            `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '名称',
-                            `icon` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '图标地址',
-                            `size` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '文件大小',
-                            `created` datetime NOT NULL COMMENT '创建时间',
-                            `hash` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '哈希值',
-                            `file_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '文件名',
-                            `bucket` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '储存在哪里',
-                            `file_path` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '存储路径',
-                            `baidu_yun_pan_url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '百度云盘下载',
-                            `baidu_yun_pan_code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '百度云盘授权码',
-                            PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- ----------------------------
--- Records of t_download
--- ----------------------------
-BEGIN;
-INSERT INTO `t_download` VALUES (1000, 'Navicat Premium 15.0.7', 'https://cdn.renfei.net/upload/image/2020/20200116112250.png', '142.8 MB', '2020-01-16 11:03:41', '8e6f1f02c97a2f650835eca9cdb64e356e0b8cb0', 'Navicat Premium 15.0.7 [TNT].dmg', 'https://download.renfei.net', 'software/developer-tools/macos/Navicat Premium 15.0.7 [TNT].dmg', 'https://pan.baidu.com/s/1V2BrAeCiiXJCOgVKb0eCbA', '36pa');
-COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;

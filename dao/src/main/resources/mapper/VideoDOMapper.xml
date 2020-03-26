@@ -8,6 +8,8 @@
     <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
     <result column="is_delete" jdbcType="BIT" property="isDelete" />
     <result column="views" jdbcType="BIGINT" property="views" />
+    <result column="thumbs_up" jdbcType="BIGINT" property="thumbsUp" />
+    <result column="thumbs_down" jdbcType="BIGINT" property="thumbsDown" />
     <result column="is_comment" jdbcType="BIT" property="isComment" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="net.renfei.dao.entity.VideoDOWithBLOBs">
@@ -75,7 +77,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, category_id, release_time, add_time, is_delete, views, is_comment
+    id, category_id, release_time, add_time, is_delete, views, thumbs_up, thumbs_down, 
+    is_comment
   </sql>
   <sql id="Blob_Column_List">
     title, featured_image, describes, download
@@ -131,12 +134,14 @@
   <insert id="insert" parameterType="net.renfei.dao.entity.VideoDOWithBLOBs">
     insert into t_video (id, category_id, release_time, 
       add_time, is_delete, views, 
-      is_comment, title, featured_image, 
-      describes, download)
+      thumbs_up, thumbs_down, is_comment, 
+      title, featured_image, describes, 
+      download)
     values (#{id,jdbcType=BIGINT}, #{categoryId,jdbcType=BIGINT}, #{releaseTime,jdbcType=TIMESTAMP}, 
       #{addTime,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=BIT}, #{views,jdbcType=BIGINT}, 
-      #{isComment,jdbcType=BIT}, #{title,jdbcType=LONGVARCHAR}, #{featuredImage,jdbcType=LONGVARCHAR}, 
-      #{describes,jdbcType=LONGVARCHAR}, #{download,jdbcType=LONGVARCHAR})
+      #{thumbsUp,jdbcType=BIGINT}, #{thumbsDown,jdbcType=BIGINT}, #{isComment,jdbcType=BIT}, 
+      #{title,jdbcType=LONGVARCHAR}, #{featuredImage,jdbcType=LONGVARCHAR}, #{describes,jdbcType=LONGVARCHAR}, 
+      #{download,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="net.renfei.dao.entity.VideoDOWithBLOBs">
     insert into t_video
@@ -158,6 +163,12 @@
       </if>
       <if test="views != null">
         views,
+      </if>
+      <if test="thumbsUp != null">
+        thumbs_up,
+      </if>
+      <if test="thumbsDown != null">
+        thumbs_down,
       </if>
       <if test="isComment != null">
         is_comment,
@@ -193,6 +204,12 @@
       </if>
       <if test="views != null">
         #{views,jdbcType=BIGINT},
+      </if>
+      <if test="thumbsUp != null">
+        #{thumbsUp,jdbcType=BIGINT},
+      </if>
+      <if test="thumbsDown != null">
+        #{thumbsDown,jdbcType=BIGINT},
       </if>
       <if test="isComment != null">
         #{isComment,jdbcType=BIT},
@@ -238,6 +255,12 @@
       <if test="record.views != null">
         views = #{record.views,jdbcType=BIGINT},
       </if>
+      <if test="record.thumbsUp != null">
+        thumbs_up = #{record.thumbsUp,jdbcType=BIGINT},
+      </if>
+      <if test="record.thumbsDown != null">
+        thumbs_down = #{record.thumbsDown,jdbcType=BIGINT},
+      </if>
       <if test="record.isComment != null">
         is_comment = #{record.isComment,jdbcType=BIT},
       </if>
@@ -266,6 +289,8 @@
       add_time = #{record.addTime,jdbcType=TIMESTAMP},
       is_delete = #{record.isDelete,jdbcType=BIT},
       views = #{record.views,jdbcType=BIGINT},
+      thumbs_up = #{record.thumbsUp,jdbcType=BIGINT},
+      thumbs_down = #{record.thumbsDown,jdbcType=BIGINT},
       is_comment = #{record.isComment,jdbcType=BIT},
       title = #{record.title,jdbcType=LONGVARCHAR},
       featured_image = #{record.featuredImage,jdbcType=LONGVARCHAR},
@@ -283,6 +308,8 @@
       add_time = #{record.addTime,jdbcType=TIMESTAMP},
       is_delete = #{record.isDelete,jdbcType=BIT},
       views = #{record.views,jdbcType=BIGINT},
+      thumbs_up = #{record.thumbsUp,jdbcType=BIGINT},
+      thumbs_down = #{record.thumbsDown,jdbcType=BIGINT},
       is_comment = #{record.isComment,jdbcType=BIT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -305,6 +332,12 @@
       </if>
       <if test="views != null">
         views = #{views,jdbcType=BIGINT},
+      </if>
+      <if test="thumbsUp != null">
+        thumbs_up = #{thumbsUp,jdbcType=BIGINT},
+      </if>
+      <if test="thumbsDown != null">
+        thumbs_down = #{thumbsDown,jdbcType=BIGINT},
       </if>
       <if test="isComment != null">
         is_comment = #{isComment,jdbcType=BIT},
@@ -331,6 +364,8 @@
       add_time = #{addTime,jdbcType=TIMESTAMP},
       is_delete = #{isDelete,jdbcType=BIT},
       views = #{views,jdbcType=BIGINT},
+      thumbs_up = #{thumbsUp,jdbcType=BIGINT},
+      thumbs_down = #{thumbsDown,jdbcType=BIGINT},
       is_comment = #{isComment,jdbcType=BIT},
       title = #{title,jdbcType=LONGVARCHAR},
       featured_image = #{featuredImage,jdbcType=LONGVARCHAR},
@@ -345,6 +380,8 @@
       add_time = #{addTime,jdbcType=TIMESTAMP},
       is_delete = #{isDelete,jdbcType=BIT},
       views = #{views,jdbcType=BIGINT},
+      thumbs_up = #{thumbsUp,jdbcType=BIGINT},
+      thumbs_down = #{thumbsDown,jdbcType=BIGINT},
       is_comment = #{isComment,jdbcType=BIT}
     where id = #{id,jdbcType=BIGINT}
   </update>

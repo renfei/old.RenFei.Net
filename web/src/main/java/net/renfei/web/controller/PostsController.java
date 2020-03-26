@@ -4,6 +4,7 @@ import net.renfei.core.entity.CategoryDTO;
 import net.renfei.core.entity.CommentDTO;
 import net.renfei.core.service.CategorService;
 import net.renfei.core.service.CommentsService;
+import net.renfei.core.service.JsonLdService;
 import net.renfei.dao.entity.PostsDOWithBLOBs;
 import net.renfei.dao.entity.TagDO;
 import net.renfei.dao.entity.TagRelationDO;
@@ -31,7 +32,8 @@ import java.util.Map;
 @Controller
 @RequestMapping("/posts")
 public class PostsController extends BaseController {
-
+    @Autowired
+    private JsonLdService jsonLdService;
 
     /**
      * 获取所有文章列表
@@ -109,6 +111,7 @@ public class PostsController extends BaseController {
     public ModelAndView getPostsByID(@PathVariable("id") String id, ModelAndView mv) throws NoHandlerFoundException {
         PostsDTO postsDTO = postsService.getPostsByID(id, true);
         if (postsDTO != null) {
+            postsService.addAds(postsDTO);
             PostsVO postsVO = ejbGenerator.convert(postsDTO, PostsVO.class);
             setInfo(postsVO);
             mv.addObject("postsVO", postsVO);
@@ -162,7 +165,7 @@ public class PostsController extends BaseController {
             throwNoHandlerFoundException();
         }
         mv.setViewName("posts/post");
-        mv.addObject("jsonld", postsService.getJsonld(postsDTO));
+        mv.addObject("jsonld", jsonLdService.getJsonld(postsDTO));
         return mv;
     }
 

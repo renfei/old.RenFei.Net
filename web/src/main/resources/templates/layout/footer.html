@@ -46,6 +46,18 @@
             </div>
             <div th:utext="${footer.analyticsCode}"></div>
             <script type='text/javascript' charset="UTF-8" th:each="js:${footer.jss}" th:src="${js}" async></script>
+            <div id="fab" style="display: none;">
+                <div id="fab-over">
+                    <h1 style="color:red">ADBLOCK DETECTED!</h1>
+                    您正在运行<b><span style="color:red">Ad Block</span>插件</b>或者在浏览器中启用了<b><span style="color:red">Ad Block</span> 设置</b>。<br>
+                    如果要继续，请<b>禁用</b>此网站的AdBlock。
+                    <br><br>
+                    You are running an <b><span style="color:red">Ad Block</span> extension</b> or <b><span style="color:red">Ad Block</span> setting</b> is enabled in your browser.<br>If you wish to continue please <b>disable</b> AdBlock for this website.
+                    <div class="fabok">
+                        <a href="">OK</a>
+                    </div>
+                </div>
+            </div>
         </footer>
     </body>
 </html>

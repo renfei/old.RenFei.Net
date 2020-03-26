@@ -19,6 +19,10 @@ public class MovieDO {
 
     private Long views;
 
+    private Long thumbsUp;
+
+    private Long thumbsDown;
+
     private Double score;
 
     private Date updateTime;
@@ -85,6 +89,22 @@ public class MovieDO {
 
     public void setViews(Long views) {
         this.views = views;
+    }
+
+    public Long getThumbsUp() {
+        return thumbsUp;
+    }
+
+    public void setThumbsUp(Long thumbsUp) {
+        this.thumbsUp = thumbsUp;
+    }
+
+    public Long getThumbsDown() {
+        return thumbsDown;
+    }
+
+    public void setThumbsDown(Long thumbsDown) {
+        this.thumbsDown = thumbsDown;
     }
 
     public Double getScore() {

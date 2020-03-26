@@ -1,21 +1,24 @@
 package net.renfei.web.controller;
 
 import com.alibaba.fastjson.JSON;
+import lombok.extern.slf4j.Slf4j;
 import net.renfei.core.entity.IPDTO;
+import net.renfei.dao.entity.ShortUrl;
 import net.renfei.web.baseclass.BaseController;
 import net.renfei.web.entity.APIResult;
 import net.renfei.web.entity.KitboxVO;
+import net.renfei.web.entity.ShortUrlVO;
 import org.apache.commons.io.output.FileWriterWithEncoding;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Controller
 @RequestMapping("/kitbox")
 public class KitboxController extends BaseController {
@@ -65,6 +68,7 @@ public class KitboxController extends BaseController {
         mv.setViewName("kitbox/getmyip");
         return mv;
     }
+
     @RequestMapping({"freemarkerTest", "FtlTest"})
     public ModelAndView freemarkerTest(ModelAndView mv) {
         setHead(mv, "FreeMarker在线测试工具 - 开发者工具箱 - Kitbox",
@@ -126,6 +130,64 @@ public class KitboxController extends BaseController {
                 "二维码,qrcode,在线,生成,工具");
         mv.setViewName("kitbox/qrcode");
         return mv;
+    }
+
+    @RequestMapping({"ShortUrl", "ShortURL"})
+    public ModelAndView shortUrl(ModelAndView mv) {
+        setHead(mv, "短网址在线生成工具 - 开发者工具箱 - Kitbox",
+                "短网址在线生成工具",
+                "短网址,Short,Url,生成,工具");
+        mv.setViewName("kitbox/ShortURL");
+        return mv;
+    }
+
+    @PostMapping("ShortURL/do")
+    @ResponseBody
+    public APIResult setShortUrl(String url) {
+        if (stringUtil.isEmpty(url)) {
+            return APIResult.fillResult(false, "Url不合法");
+        }
+        if (url.startsWith("http://") || url.startsWith("https://")) {
+            try {
+                ShortUrl shortUrl = shortUrlService.createShortUrl(url, null);
+                if (shortUrl != null) {
+                    ShortUrlVO shortUrlVO = new ShortUrlVO();
+                    BeanUtils.copyProperties(shortUrl, shortUrlVO);
+                    shortUrlVO.setShortUrl(ShortUrlVO.BASE_DOMAIN + shortUrl.getShortUrl());
+                    return APIResult.fillResult(true, "Success!", shortUrlVO);
+                } else {
+                    return APIResult.fillResult(false, "内部服务错误");
+                }
+            } catch (Exception ex) {
+                log.error(ex.getMessage(), ex);
+                return APIResult.fillResult(false, "内部服务错误");
+            }
+
+        } else {
+            return APIResult.fillResult(false, "Url不合法");
+        }
+    }
+
+    @RequestMapping("ShortURL/do/{url}")
+    @ResponseBody
+    public APIResult getShortUrl(@PathVariable("url") String url) {
+        if (stringUtil.isEmpty(url)) {
+            return APIResult.fillResult(false, "Url不合法");
+        }
+        try {
+            ShortUrl shortUrl = shortUrlService.getShortUrl(url);
+            if (shortUrl != null) {
+                ShortUrlVO shortUrlVO = new ShortUrlVO();
+                BeanUtils.copyProperties(shortUrl, shortUrlVO);
+                shortUrlVO.setShortUrl(shortUrl.getShortUrl());
+                return APIResult.fillResult(true, "Success!", shortUrlVO);
+            } else {
+                return APIResult.fillResult(false, "短网址不存在");
+            }
+        } catch (Exception ex) {
+            log.error(ex.getMessage(), ex);
+            return APIResult.fillResult(false, "内部服务错误");
+        }
     }
 
     @ResponseBody

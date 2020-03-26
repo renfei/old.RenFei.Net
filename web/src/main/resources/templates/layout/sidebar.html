@@ -2,11 +2,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <body>
         <div th:fragment="sidebar(sidebar)" class="sidebar blog-sidebar">
-            <div class="sidebar-item">
-                <div th:replace="layout/github::mygithub"></div>
-            </div>
-            <div class="sidebar-item">
-                <script th:if="${globalAD=='1'}" type="text/javascript" src="//window.renfei.net/site/x_sp/static/ta/production/ako/openjs/u.js"></script>
+            <div class="sidebar-item" th:if="${globalAD=='1'}">
+                <!--<div th:replace="layout/github::mygithub"></div>-->
+                <!-- sidebar_正方形 -->
+                <div th:replace="ads/ads::ads('4995060553')"></div>
             </div>
             <div class="sidebar-item categories">
                 <h3 th:if="${sidebar.categories!=null}">Categories</h3>
@@ -19,16 +18,20 @@
                     </li>
                 </ul>
             </div>
+            <div class="sidebar-item" th:if="${globalAD=='1'}">
+                <div th:replace="ads/ads::ads('6567996671')"></div>
+            </div>
             <div class="sidebar-item tag-cloud" th:if="${sidebar.tags!=null}">
                 <h3>Tag Cloud</h3>
                 <ul class="nav nav-pills">
                     <li th:if="${sidebar.tags!=null}" th:each="tag:${sidebar.tags}">
-                        <a th:href="${domain+'/posts/tag/'+tag.enName}" th:text="${tag.zhName+'('+tag.quantity+')'}"></a>
+                        <a th:href="${domain+'/posts/tag/'+tag.enName}"
+                           th:text="${tag.zhName+'('+tag.quantity+')'}"></a>
                     </li>
                 </ul>
             </div>
-            <div class="sidebar-item">
-                <script th:if="${globalAD=='1'}" type="text/javascript" src="//window.renfei.net/common/up_m/static/r/source/ov/common/qxq.js"></script>
+            <div class="sidebar-item" th:if="${globalAD=='1'}">
+                <script type="text/javascript" src="//window.renfei.net/source/u_pmr/production/ov/openjs/qxq.js"></script>
             </div>
             <div class="sidebar-item">
                 <div class="row">

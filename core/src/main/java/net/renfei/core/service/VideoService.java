@@ -6,12 +6,15 @@ import net.renfei.core.baseclass.BaseService;
 import net.renfei.core.entity.VideoDTO;
 import net.renfei.core.entity.VideoListDTO;
 import net.renfei.dao.entity.*;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
 
 @Service
+@CacheConfig(cacheNames = "VideoService")
 public class VideoService extends BaseService {
 
     /**
@@ -21,6 +24,7 @@ public class VideoService extends BaseService {
      * @param rows  每页容量
      * @return
      */
+    @Cacheable(key = "targetClass+'_'+methodName+'_'+#p0+'_'+#p1", condition = "#p0!=null&&#p1!=null")
     public VideoListDTO getAllVideo(String pages, String rows) {
         int intPage = convertPage(pages), intRows = convertRows(rows);
         VideoDOExample videoDOExample = new VideoDOExample();
@@ -33,6 +37,7 @@ public class VideoService extends BaseService {
         return convert(videoDOWithBLOBs, page.getTotal());
     }
 
+    @Cacheable(key = "targetClass+'_'+methodName+'_'+#p0+'_'+#p1+'_'+#p2", condition = "#p0!=null&&#p1!=null&&#p2!=null")
     public VideoListDTO getAllVideoByCatID(Long catID, String pages, String rows) {
         int intPage = convertPage(pages), intRows = convertRows(rows);
         VideoDOExample videoDOExample = new VideoDOExample();
@@ -55,6 +60,40 @@ public class VideoService extends BaseService {
         Page page = PageHelper.startPage(1, 1);
         videoDOMapper.selectByExampleWithBLOBs(videoDOExample);
         return page.getTotal();
+    }
+
+    /**
+     * 点赞
+     *
+     * @param id
+     */
+    public void thumbsUp(String id) {
+        VideoDTO videoDTO = getVideoByID(id, false);
+        if (videoDTO != null) {
+            VideoDOWithBLOBs videoDOWithBLOBs = new VideoDOWithBLOBs();
+            videoDOWithBLOBs.setId(videoDTO.getId());
+            videoDOWithBLOBs.setThumbsUp(videoDTO.getThumbsUp() + 1);
+            updateVideo(videoDOWithBLOBs);
+        }
+    }
+
+    /**
+     * 点踩
+     *
+     * @param id
+     */
+    public void thumbsDown(String id) {
+        VideoDTO videoDTO = getVideoByID(id, false);
+        if (videoDTO != null) {
+            VideoDOWithBLOBs videoDOWithBLOBs = new VideoDOWithBLOBs();
+            videoDOWithBLOBs.setId(videoDTO.getId());
+            videoDOWithBLOBs.setThumbsDown(videoDTO.getThumbsDown() + 1);
+            updateVideo(videoDOWithBLOBs);
+        }
+    }
+
+    public int updateVideo(VideoDOWithBLOBs videoDOWithBLOBs){
+        return videoDOMapper.updateByPrimaryKeySelective(videoDOWithBLOBs);
     }
 
     /**
@@ -104,6 +143,7 @@ public class VideoService extends BaseService {
         return getVideoByID(id, true);
     }
 
+    @Cacheable(key = "targetClass+'_'+methodName+'_'+#p0", condition = "#p0!=null")
     public List<VideoSourceDOWithBLOBs> getvideoSourceByVideoId(Long videoId) {
         VideoSourceDOExample videoSourceDOExample = new VideoSourceDOExample();
         videoSourceDOExample.createCriteria()
@@ -111,6 +151,7 @@ public class VideoService extends BaseService {
         return videoSourceDOMapper.selectByExampleWithBLOBs(videoSourceDOExample);
     }
 
+    @Cacheable(key = "targetClass+'_'+methodName+'_'+#p0", condition = "#p0!=null")
     public List<VideoTrackDOWithBLOBs> getVideoTrackByVideoId(Long videoId) {
         VideoTrackDOExample videoTrackDOExample = new VideoTrackDOExample();
         videoTrackDOExample.createCriteria()

@@ -10,6 +10,8 @@
     <result column="director" jdbcType="VARCHAR" property="director" />
     <result column="lead" jdbcType="VARCHAR" property="lead" />
     <result column="views" jdbcType="BIGINT" property="views" />
+    <result column="thumbs_up" jdbcType="BIGINT" property="thumbsUp" />
+    <result column="thumbs_down" jdbcType="BIGINT" property="thumbsDown" />
     <result column="score" jdbcType="DOUBLE" property="score" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
@@ -77,7 +79,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, category_id, name, region, years, director, lead, views, score, update_time
+    id, category_id, name, region, years, director, lead, views, thumbs_up, thumbs_down, 
+    score, update_time
   </sql>
   <sql id="Blob_Column_List">
     featured_image, synopsis, resource
@@ -133,12 +136,14 @@
   <insert id="insert" parameterType="net.renfei.dao.entity.MovieDOWithBLOBs">
     insert into t_movie (id, category_id, name, 
       region, years, director, 
-      lead, views, score, update_time, 
+      lead, views, thumbs_up, 
+      thumbs_down, score, update_time, 
       featured_image, synopsis, resource
       )
     values (#{id,jdbcType=BIGINT}, #{categoryId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, 
       #{region,jdbcType=VARCHAR}, #{years,jdbcType=INTEGER}, #{director,jdbcType=VARCHAR}, 
-      #{lead,jdbcType=VARCHAR}, #{views,jdbcType=BIGINT}, #{score,jdbcType=DOUBLE}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{lead,jdbcType=VARCHAR}, #{views,jdbcType=BIGINT}, #{thumbsUp,jdbcType=BIGINT}, 
+      #{thumbsDown,jdbcType=BIGINT}, #{score,jdbcType=DOUBLE}, #{updateTime,jdbcType=TIMESTAMP}, 
       #{featuredImage,jdbcType=LONGVARCHAR}, #{synopsis,jdbcType=LONGVARCHAR}, #{resource,jdbcType=LONGVARCHAR}
       )
   </insert>
@@ -168,6 +173,12 @@
       </if>
       <if test="views != null">
         views,
+      </if>
+      <if test="thumbsUp != null">
+        thumbs_up,
+      </if>
+      <if test="thumbsDown != null">
+        thumbs_down,
       </if>
       <if test="score != null">
         score,
@@ -209,6 +220,12 @@
       </if>
       <if test="views != null">
         #{views,jdbcType=BIGINT},
+      </if>
+      <if test="thumbsUp != null">
+        #{thumbsUp,jdbcType=BIGINT},
+      </if>
+      <if test="thumbsDown != null">
+        #{thumbsDown,jdbcType=BIGINT},
       </if>
       <if test="score != null">
         #{score,jdbcType=DOUBLE},
@@ -260,6 +277,12 @@
       <if test="record.views != null">
         views = #{record.views,jdbcType=BIGINT},
       </if>
+      <if test="record.thumbsUp != null">
+        thumbs_up = #{record.thumbsUp,jdbcType=BIGINT},
+      </if>
+      <if test="record.thumbsDown != null">
+        thumbs_down = #{record.thumbsDown,jdbcType=BIGINT},
+      </if>
       <if test="record.score != null">
         score = #{record.score,jdbcType=DOUBLE},
       </if>
@@ -290,6 +313,8 @@
       director = #{record.director,jdbcType=VARCHAR},
       lead = #{record.lead,jdbcType=VARCHAR},
       views = #{record.views,jdbcType=BIGINT},
+      thumbs_up = #{record.thumbsUp,jdbcType=BIGINT},
+      thumbs_down = #{record.thumbsDown,jdbcType=BIGINT},
       score = #{record.score,jdbcType=DOUBLE},
       update_time = #{record.updateTime,jdbcType=TIMESTAMP},
       featured_image = #{record.featuredImage,jdbcType=LONGVARCHAR},
@@ -309,6 +334,8 @@
       director = #{record.director,jdbcType=VARCHAR},
       lead = #{record.lead,jdbcType=VARCHAR},
       views = #{record.views,jdbcType=BIGINT},
+      thumbs_up = #{record.thumbsUp,jdbcType=BIGINT},
+      thumbs_down = #{record.thumbsDown,jdbcType=BIGINT},
       score = #{record.score,jdbcType=DOUBLE},
       update_time = #{record.updateTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
@@ -339,6 +366,12 @@
       <if test="views != null">
         views = #{views,jdbcType=BIGINT},
       </if>
+      <if test="thumbsUp != null">
+        thumbs_up = #{thumbsUp,jdbcType=BIGINT},
+      </if>
+      <if test="thumbsDown != null">
+        thumbs_down = #{thumbsDown,jdbcType=BIGINT},
+      </if>
       <if test="score != null">
         score = #{score,jdbcType=DOUBLE},
       </if>
@@ -366,6 +399,8 @@
       director = #{director,jdbcType=VARCHAR},
       lead = #{lead,jdbcType=VARCHAR},
       views = #{views,jdbcType=BIGINT},
+      thumbs_up = #{thumbsUp,jdbcType=BIGINT},
+      thumbs_down = #{thumbsDown,jdbcType=BIGINT},
       score = #{score,jdbcType=DOUBLE},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       featured_image = #{featuredImage,jdbcType=LONGVARCHAR},
@@ -382,6 +417,8 @@
       director = #{director,jdbcType=VARCHAR},
       lead = #{lead,jdbcType=VARCHAR},
       views = #{views,jdbcType=BIGINT},
+      thumbs_up = #{thumbsUp,jdbcType=BIGINT},
+      thumbs_down = #{thumbsDown,jdbcType=BIGINT},
       score = #{score,jdbcType=DOUBLE},
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}

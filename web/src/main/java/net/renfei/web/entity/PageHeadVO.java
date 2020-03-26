@@ -15,4 +15,5 @@ public class PageHeadVO {
     private List<String> css;
     private List<String> jss;
     private String script;
+    private String url;
 }

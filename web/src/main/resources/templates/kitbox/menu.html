@@ -82,10 +82,13 @@
                 <div class="panel-body">
                     <a th:class="${btnname=='qrcode'?'btn btn-primary btn-block':'btn btn-default btn-block'}" href="/kitbox/qrcode"
                        role="button">二维码生成工具</a>
+                    <a th:class="${btnname=='ShortURL'?'btn btn-primary btn-block':'btn btn-default btn-block'}" href="/kitbox/ShortURL"
+                       role="button">短网址生成工具</a>
                 </div>
             </div>
         </div>
     </div>
+    <div th:replace="ads/ads::ads('6567996671')"></div>
 </div>
 </body>
 </html>

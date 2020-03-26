@@ -105,14 +105,19 @@ public class WeChatKeywordService extends BaseService {
         // 默认回复文本消息
         TextMessage textMessage = new TextMessage(weChatMessage);
         if (weChatMessage.getMessage() != null) {
-            if (weChatMessage.getMessage().startsWith("极速下载") || weChatMessage.getMessage().startsWith("極速下載")) {
-                String fileid = weChatMessage.getMessage().replace("极速下载", "").replace("極速下載", "");
+            if (weChatMessage.getMessage().startsWith("极速下载") ||
+                    weChatMessage.getMessage().startsWith("極速下載")||
+                    weChatMessage.getMessage().startsWith("急速下載")) {
+                String fileid = weChatMessage.getMessage()
+                        .replace("极速下载", "")
+                        .replace("極速下載", "")
+                        .replace("急速下載", "");
                 //去查询下载资源列表，生成随机码，记录到cache中
                 DownloadDO downloadDO = downloadService.getDownloadInfoById(fileid);
                 if (downloadDO != null) {
                     String key = cacheService.getRandomKey();
                     //过期时间十分钟，10*60*1000=600000
-                    cacheService.set(key, JSON.toJSONString(downloadDO), new Date(new Date().getTime() + 600000));
+                    cacheService.set(key, JSON.toJSONString(downloadDO), new Date(System.currentTimeMillis() + 600000));
                     textMessage.setContent("您的极速下载授权码是：" + key + "。有效期10分钟，请尽快使用。");
                     return weChatMessageService.textMessageToXml(textMessage);
                 } else {

@@ -11,12 +11,15 @@ import net.renfei.dao.entity.PostsDOWithBLOBs;
 import net.renfei.dao.entity.VAllInfoExample;
 import net.renfei.dao.entity.VAllInfoWithBLOBs;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@CacheConfig(cacheNames = "IndexService")
 public class IndexService extends BaseService {
     @Autowired
     private TypeService typeService;
@@ -25,14 +28,16 @@ public class IndexService extends BaseService {
     @Autowired
     private PostsService postsService;
 
+    @Cacheable(key = "targetClass+'_'+methodName+'_'+#p0+'_'+#p1", condition = "#p0!=null&&#p1!=null")
     public AllInfoDTOList getAllInfo(String pages, String rows) {
         int intPage = convertPage(pages), intRows = convertRows(rows);
+        AllInfoDTOList allInfoDTOList;
         VAllInfoExample vAllInfoExample = new VAllInfoExample();
         vAllInfoExample.setOrderByClause("release_time DESC");
         vAllInfoExample.createCriteria();
         Page page = PageHelper.startPage(intPage, intRows);
         List<VAllInfoWithBLOBs> vAllInfoWithBLOBsList = vAllInfoMapper.selectByExampleWithBLOBs(vAllInfoExample);
-        AllInfoDTOList allInfoDTOList = new AllInfoDTOList();
+        allInfoDTOList = new AllInfoDTOList();
         allInfoDTOList.setCount(page.getTotal());
         allInfoDTOList.setVAllInfoWithBLOBsList(vAllInfoWithBLOBsList);
         return allInfoDTOList;
@@ -42,6 +47,7 @@ public class IndexService extends BaseService {
         return getAllInfoByTypeAndCatName(typeName, enName, page, "10");
     }
 
+    @Cacheable(key = "targetClass+'_'+methodName+'_'+#p0+'_'+#p1+'_'+#p2+'_'+#p3", condition = "#p0!=null&&#p1!=null&&#p2!=null&&#p3!=null")
     public AllInfoDTOList getAllInfoByTypeAndCatName(String typeName, String enName, String pages, String rows) {
         List<TypeDTO> typeDTOS = typeService.getTypeByName(typeName);
         if (typeDTOS != null && typeDTOS.size() > 0) {

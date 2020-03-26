@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/head::head(${head})">
+</head>
+<body>
+<style>
+    .lightbox {
+        position: initial;
+    }
+</style>
+<header th:replace="layout/header::header(${header})"></header>
+<section id="page-breadcrumb">
+    <div class="vertical-center sun">
+        <div class="container">
+            <div class="row">
+                <div class="action">
+                    <div class="col-sm-12">
+                        <h1 class="title">Weibo</h1>
+                        <p>任霏的微博客</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="blog-details" class="padding-top">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9 col-sm-7">
+                <div class="row" style="border-left: 1px solid #eeeeee;border-right: 1px solid #eeeeee;">
+                    <div class="weibo_item">
+                        <div class="col-xs-3 col-sm-2 col-md-1">
+                            <div class="single-blog single-column">
+                                <div class="post-content overflow">
+                                    <img src="https://cdn.renfei.net/images/renfei_600.jpg" style="width: 100%;"
+                                         alt="任霏" class="img-circle">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-9 col-sm-10 col-md-11">
+                            <div class="single-blog single-column">
+                                <div class="post-content overflow">
+                                    <h3 class="post-author weibo_author">任霏 <span th:text="${'· '+#dates.format(weibo.releaseTime,'yyyy-MM-dd')}"></span></h3>
+                                    <p th:utext="${weibo.content}"></p>
+                                    <div class="post-thumb weibo_radius" th:if="${weibo.img!=null}">
+                                        <a class="lightbox" th:href="${weibo.img}"><img th:src="${weibo.img}" class="img-responsive"></a>
+                                    </div>
+                                    <div class="post-bottom overflow" style="border: 0;padding: 0 20px;">
+                                        <ul class="nav navbar-nav post-nav">
+                                            <li><a th:utext="'<i class=\'fa fa-eye\'></i>'+${weibo.views}"></a></li>
+                                            <li><a th:utext="'<i class=\'fa fa-thumbs-o-up\'></i><span>'+${weibo.thumbsUp}+'</span>'" href="JavaScript:void(0)" th:onclick="'thumbsService(this,\'up\',6,'+${weibo.id}+')'"></a></li>
+                                            <li><a th:utext="'<i class=\'fa fa-thumbs-o-down\'></i><span>'+${weibo.thumbsDown}+'</span>'" href="JavaScript:void(0)" th:onclick="'thumbsService(this,\'down\',6,'+${weibo.id}+')'"></a></li>
+                                            <li><a th:utext="'<i class=\'fa fa-comments\'></i>'+${weibo.comments}" th:href="'/weibo/'+${weibo.id}"></a></li>
+                                        </ul>
+                                    </div>
+                                    <div th:if="${globalComment=='1'}" style="padding-top: 10px;">
+                                        <div th:replace="layout/comments::comments(${commentTypeId},${commentObjId},${commentVO})"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clear"></div>
+                <div th:if="${globalAD=='1'}" th:replace="ads/ads::ads('3646319863')"></div>
+                <div class="blog-pagination">
+                    <div th:replace="layout/pagination::pagination(${pagination})"></div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-5">
+                <div th:replace="layout/sidebar::sidebar(${sidebar})"></div>
+            </div>
+        </div>
+    </div>
+</section>
+<script type="application/ld+json" th:utext="${jsonld}">
+</script>
+<footer th:replace="layout/footer::footer(${footer},${performance})"></footer>
+<script>
+    $(function () {
+        baguetteBox.run('.weibo_item');
+    });
+</script>
+</body>
+</html>

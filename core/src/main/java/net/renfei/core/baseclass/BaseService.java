@@ -2,7 +2,6 @@ package net.renfei.core.baseclass;
 
 import net.renfei.core.service.CacheService;
 import net.renfei.core.service.LogDBService;
-import net.renfei.dao.entity.LibraryDO;
 import net.renfei.dao.entity.MovieDOWithBLOBs;
 import net.renfei.dao.entity.PostsDOWithBLOBs;
 import net.renfei.dao.entity.VideoDOWithBLOBs;
@@ -20,7 +19,7 @@ import org.springframework.stereotype.Service;
 public class BaseService extends BaseClass {
     protected static int DEFAULT_PAGE = 1;
     protected static int DEFAULT_ROWS = 10;
-
+    
     @Autowired
     protected CacheService cacheService;
     @Autowired
@@ -93,6 +92,10 @@ public class BaseService extends BaseClass {
     protected DownloadDOMapper downloadDOMapper;
     @Autowired
     protected PostsExtraDOMapper postsExtraDOMapper;
+    @Autowired
+    protected ShortUrlMapper shortUrlMapper;
+    @Autowired
+    protected WeiboDOMapper weiboDOMapper;
 
     protected int convertPage(String page) {
         return stringUtil.convertInt(page, DEFAULT_PAGE);

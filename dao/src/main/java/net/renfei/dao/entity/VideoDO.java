@@ -15,6 +15,10 @@ public class VideoDO {
 
     private Long views;
 
+    private Long thumbsUp;
+
+    private Long thumbsDown;
+
     private Boolean isComment;
 
     public Long getId() {
@@ -63,6 +67,22 @@ public class VideoDO {
 
     public void setViews(Long views) {
         this.views = views;
+    }
+
+    public Long getThumbsUp() {
+        return thumbsUp;
+    }
+
+    public void setThumbsUp(Long thumbsUp) {
+        this.thumbsUp = thumbsUp;
+    }
+
+    public Long getThumbsDown() {
+        return thumbsDown;
+    }
+
+    public void setThumbsDown(Long thumbsDown) {
+        this.thumbsDown = thumbsDown;
     }
 
     public Boolean getIsComment() {
