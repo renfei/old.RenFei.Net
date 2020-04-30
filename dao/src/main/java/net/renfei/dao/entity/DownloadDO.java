@@ -5,6 +5,8 @@ import java.util.Date;
 public class DownloadDO {
     private Long id;
 
+    private String disableArea;
+
     private String name;
 
     private String icon;
@@ -31,6 +33,14 @@ public class DownloadDO {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getDisableArea() {
+        return disableArea;
+    }
+
+    public void setDisableArea(String disableArea) {
+        this.disableArea = disableArea == null ? null : disableArea.trim();
     }
 
     public String getName() {

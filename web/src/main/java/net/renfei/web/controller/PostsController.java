@@ -1,18 +1,17 @@
 package net.renfei.web.controller;
 
 import net.renfei.core.entity.CategoryDTO;
-import net.renfei.core.entity.CommentDTO;
-import net.renfei.core.service.CategorService;
-import net.renfei.core.service.CommentsService;
+import net.renfei.core.entity.PostsDTO;
+import net.renfei.core.entity.PostsListDTO;
 import net.renfei.core.service.JsonLdService;
 import net.renfei.dao.entity.PostsDOWithBLOBs;
 import net.renfei.dao.entity.TagDO;
 import net.renfei.dao.entity.TagRelationDO;
 import net.renfei.web.baseclass.BaseController;
-import net.renfei.core.entity.PostsDTO;
-import net.renfei.core.entity.PostsListDTO;
-import net.renfei.web.entity.*;
-import net.renfei.core.service.PostsService;
+import net.renfei.web.entity.OGprotocol;
+import net.renfei.web.entity.PageHeadVO;
+import net.renfei.web.entity.PostsVO;
+import net.renfei.web.entity.ShareVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,8 +20,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -108,7 +107,7 @@ public class PostsController extends BaseController {
      * @return
      */
     @RequestMapping("{id}")
-    public ModelAndView getPostsByID(@PathVariable("id") String id, ModelAndView mv) throws NoHandlerFoundException {
+    public ModelAndView getPostsByID(@PathVariable("id") String id, ModelAndView mv, HttpServletRequest request) throws NoHandlerFoundException {
         PostsDTO postsDTO = postsService.getPostsByID(id, true);
         if (postsDTO != null) {
             postsService.addAds(postsDTO);
@@ -154,7 +153,7 @@ public class PostsController extends BaseController {
             //获得相关文章
             mv.addObject("related", postsService.getRelated(id));
             //获取文章扩展服务
-            postsService.getPostsExtraByID(id, mv);
+            postsService.getPostsExtraByID(id, mv, request);
             ShareVO shareVO = new ShareVO();
             shareVO.setTitle(postsVO.getTitle());
             shareVO.setUrl(domain + "/posts/" + postsVO.getId());

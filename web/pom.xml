@@ -76,6 +76,16 @@
             <artifactId>core</artifactId>
             <version>3.4.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.xmlunit</groupId>
+            <artifactId>xmlunit-core</artifactId>
+            <version>2.6.4</version>
+        </dependency>
+        <dependency>
+            <groupId>xmlunit</groupId>
+            <artifactId>xmlunit</artifactId>
+            <version>1.4</version>
+        </dependency>
     </dependencies>
     <build>
         <finalName>web2</finalName>

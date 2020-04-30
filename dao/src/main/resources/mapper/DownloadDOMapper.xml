@@ -3,6 +3,7 @@
 <mapper namespace="net.renfei.dao.persistences.DownloadDOMapper">
   <resultMap id="BaseResultMap" type="net.renfei.dao.entity.DownloadDO">
     <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="disable_area" jdbcType="VARCHAR" property="disableArea" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="icon" jdbcType="VARCHAR" property="icon" />
     <result column="size" jdbcType="VARCHAR" property="size" />
@@ -73,8 +74,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, name, icon, size, created, hash, file_name, bucket, file_path, baidu_yun_pan_url, 
-    baidu_yun_pan_code
+    id, disable_area, name, icon, size, created, hash, file_name, bucket, file_path, 
+    baidu_yun_pan_url, baidu_yun_pan_code
   </sql>
   <select id="selectByExample" parameterType="net.renfei.dao.entity.DownloadDOExample" resultMap="BaseResultMap">
     select
@@ -107,20 +108,25 @@
     </if>
   </delete>
   <insert id="insert" parameterType="net.renfei.dao.entity.DownloadDO">
-    insert into t_download (id, name, icon, 
-      size, created, hash, 
-      file_name, bucket, file_path, 
-      baidu_yun_pan_url, baidu_yun_pan_code)
-    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR}, 
-      #{size,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}, #{hash,jdbcType=VARCHAR}, 
-      #{fileName,jdbcType=VARCHAR}, #{bucket,jdbcType=VARCHAR}, #{filePath,jdbcType=VARCHAR}, 
-      #{baiduYunPanUrl,jdbcType=VARCHAR}, #{baiduYunPanCode,jdbcType=VARCHAR})
+    insert into t_download (id, disable_area, name, 
+      icon, size, created, 
+      hash, file_name, bucket, 
+      file_path, baidu_yun_pan_url, baidu_yun_pan_code
+      )
+    values (#{id,jdbcType=BIGINT}, #{disableArea,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{icon,jdbcType=VARCHAR}, #{size,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}, 
+      #{hash,jdbcType=VARCHAR}, #{fileName,jdbcType=VARCHAR}, #{bucket,jdbcType=VARCHAR}, 
+      #{filePath,jdbcType=VARCHAR}, #{baiduYunPanUrl,jdbcType=VARCHAR}, #{baiduYunPanCode,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="net.renfei.dao.entity.DownloadDO">
     insert into t_download
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
+      </if>
+      <if test="disableArea != null">
+        disable_area,
       </if>
       <if test="name != null">
         name,
@@ -156,6 +162,9 @@
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
         #{id,jdbcType=BIGINT},
+      </if>
+      <if test="disableArea != null">
+        #{disableArea,jdbcType=VARCHAR},
       </if>
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
@@ -201,6 +210,9 @@
       <if test="record.id != null">
         id = #{record.id,jdbcType=BIGINT},
       </if>
+      <if test="record.disableArea != null">
+        disable_area = #{record.disableArea,jdbcType=VARCHAR},
+      </if>
       <if test="record.name != null">
         name = #{record.name,jdbcType=VARCHAR},
       </if>
@@ -239,6 +251,7 @@
   <update id="updateByExample" parameterType="map">
     update t_download
     set id = #{record.id,jdbcType=BIGINT},
+      disable_area = #{record.disableArea,jdbcType=VARCHAR},
       name = #{record.name,jdbcType=VARCHAR},
       icon = #{record.icon,jdbcType=VARCHAR},
       size = #{record.size,jdbcType=VARCHAR},
@@ -256,6 +269,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="net.renfei.dao.entity.DownloadDO">
     update t_download
     <set>
+      <if test="disableArea != null">
+        disable_area = #{disableArea,jdbcType=VARCHAR},
+      </if>
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
       </if>
@@ -291,7 +307,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="net.renfei.dao.entity.DownloadDO">
     update t_download
-    set name = #{name,jdbcType=VARCHAR},
+    set disable_area = #{disableArea,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
       icon = #{icon,jdbcType=VARCHAR},
       size = #{size,jdbcType=VARCHAR},
       created = #{created,jdbcType=TIMESTAMP},

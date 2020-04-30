@@ -3,9 +3,11 @@ package net.renfei.core.service;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import net.renfei.core.baseclass.BaseService;
+import net.renfei.core.entity.IPDTO;
 import net.renfei.core.entity.PostsDTO;
 import net.renfei.core.entity.PostsListDTO;
 import net.renfei.dao.entity.*;
+import net.renfei.sdk.utils.BeanUtils;
 import net.renfei.util.PageRankUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
@@ -13,6 +15,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -33,6 +36,8 @@ public class PostsService extends BaseService {
     private DownloadService downloadService;
     @Autowired
     protected GlobalService globalService;
+    @Autowired
+    protected IpService ipService;
 
     public int updatePost(PostsDOWithBLOBs postsDOWithBLOBs) {
         return postsDOMapper.updateByPrimaryKeySelective(postsDOWithBLOBs);
@@ -312,7 +317,7 @@ public class PostsService extends BaseService {
      * @param id 文章ID
      * @param mv 视图对象
      */
-    public void getPostsExtraByID(String id, ModelAndView mv) {
+    public void getPostsExtraByID(String id, ModelAndView mv, HttpServletRequest request) {
         Long ID = 0L;
         if (!stringUtil.isEmpty(id)) {
             try {
@@ -327,6 +332,19 @@ public class PostsService extends BaseService {
                         if ("download".equals(postsExtra.getExtraType())) {
                             //文章扩展下载服务
                             DownloadDO downloadDO = downloadService.getDownloadInfoById(postsExtra.getExtraValue());
+                            if (!BeanUtils.isEmpty(downloadDO.getDisableArea())) {
+                                String[] disableArea = downloadDO.getDisableArea().split(",");
+                                IPDTO ipdto = ipService.getIPInfor(ipService.getIpAddr(request));
+                                for (String dis : disableArea
+                                ) {
+                                    if (ipdto.getCountryCode().toLowerCase().equals(dis.toLowerCase())) {
+                                        downloadDO.setBaiduYunPanUrl(null);
+                                        downloadDO.setBaiduYunPanCode("应版权方要求，您所在的地区暂不支持下载，请更换来访IP尝试。");
+                                        downloadDO.setFilePath(null);
+                                        break;
+                                    }
+                                }
+                            }
                             mv.addObject("downloadDO", downloadDO);
                         }
                         //....可以扩展其他类型

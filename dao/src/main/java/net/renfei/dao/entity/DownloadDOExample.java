@@ -165,6 +165,76 @@ public class DownloadDOExample {
             return (Criteria) this;
         }
 
+        public Criteria andDisableAreaIsNull() {
+            addCriterion("disable_area is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDisableAreaIsNotNull() {
+            addCriterion("disable_area is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDisableAreaEqualTo(String value) {
+            addCriterion("disable_area =", value, "disableArea");
+            return (Criteria) this;
+        }
+
+        public Criteria andDisableAreaNotEqualTo(String value) {
+            addCriterion("disable_area <>", value, "disableArea");
+            return (Criteria) this;
+        }
+
+        public Criteria andDisableAreaGreaterThan(String value) {
+            addCriterion("disable_area >", value, "disableArea");
+            return (Criteria) this;
+        }
+
+        public Criteria andDisableAreaGreaterThanOrEqualTo(String value) {
+            addCriterion("disable_area >=", value, "disableArea");
+            return (Criteria) this;
+        }
+
+        public Criteria andDisableAreaLessThan(String value) {
+            addCriterion("disable_area <", value, "disableArea");
+            return (Criteria) this;
+        }
+
+        public Criteria andDisableAreaLessThanOrEqualTo(String value) {
+            addCriterion("disable_area <=", value, "disableArea");
+            return (Criteria) this;
+        }
+
+        public Criteria andDisableAreaLike(String value) {
+            addCriterion("disable_area like", value, "disableArea");
+            return (Criteria) this;
+        }
+
+        public Criteria andDisableAreaNotLike(String value) {
+            addCriterion("disable_area not like", value, "disableArea");
+            return (Criteria) this;
+        }
+
+        public Criteria andDisableAreaIn(List<String> values) {
+            addCriterion("disable_area in", values, "disableArea");
+            return (Criteria) this;
+        }
+
+        public Criteria andDisableAreaNotIn(List<String> values) {
+            addCriterion("disable_area not in", values, "disableArea");
+            return (Criteria) this;
+        }
+
+        public Criteria andDisableAreaBetween(String value1, String value2) {
+            addCriterion("disable_area between", value1, value2, "disableArea");
+            return (Criteria) this;
+        }
+
+        public Criteria andDisableAreaNotBetween(String value1, String value2) {
+            addCriterion("disable_area not between", value1, value2, "disableArea");
+            return (Criteria) this;
+        }
+
         public Criteria andNameIsNull() {
             addCriterion("name is null");
             return (Criteria) this;

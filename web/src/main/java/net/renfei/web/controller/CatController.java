@@ -27,8 +27,8 @@ public class CatController extends BaseController {
             ModelAndView mv) throws NoHandlerFoundException {
         CategoryDTO categoryDTO = categorService.getCategoryByEnNaeme(enName);
         if (categoryDTO != null) {
-            switch (typeName) {
-                case "Posts":
+            switch (typeName.toLowerCase()) {
+                case "posts":
                     PostsListDTO postsListDTO = postsService.getAllPostsByCatID(categoryDTO.getId(), page, "10");
                     List<PostsVO> postsVOList = new ArrayList<>();
                     for (PostsDOWithBLOBs post : postsListDTO.getPostsList()
@@ -43,7 +43,7 @@ public class CatController extends BaseController {
                     setSidebarByPost(mv, null);
                     mv.setViewName("posts/list");
                     break;
-                case "Video":
+                case "video":
                     VideoListDTO videoListDTO = videoService.getAllVideoByCatID(categoryDTO.getId(), page, "10");
                     List<VideoDTO> videoDTOList = new ArrayList<>();
                     for (VideoDOWithBLOBs v : videoListDTO.getVideos()
@@ -58,7 +58,7 @@ public class CatController extends BaseController {
                     setSidebarByVideo(mv, null);
                     mv.setViewName("video/list");
                     break;
-                case "Photo":
+                case "photo":
                     setHead(mv, "Photo", "The RenFei Web Albums");
                     PhotoListDTO photoListDTO = photoService.getAllPhotosCatID(categoryDTO.getId(), page, "10");
                     mv.addObject("photoList", photoListDTO.getPhotoDOWithBLOBs());

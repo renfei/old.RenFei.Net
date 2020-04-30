@@ -39,9 +39,15 @@
         <commons-codec.version>1.12</commons-codec.version>
         <dom4j.version>1.6.1</dom4j.version>
         <xstream.version>1.4.10</xstream.version>
+        <renfeisdk.version>0.0.16</renfeisdk.version>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>net.renfei</groupId>
+            <artifactId>sdk</artifactId>
+            <version>${renfeisdk.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
