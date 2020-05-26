@@ -25,7 +25,6 @@ import java.util.Map;
 
 @Slf4j
 @Service
-@CacheConfig(cacheNames = "IpService")
 public class IpService {
     @Autowired
     private IPV4DOMapper ipv4DOMapper;
@@ -76,7 +75,6 @@ public class IpService {
      * @param ip
      * @return
      */
-    @Cacheable(key = "targetClass+'_'+methodName+'_'+#p0", condition = "#p0!=null")
     public IPDTO getIPInfor(String ip) {
         IPDTO ipdto = new IPDTO();
         BigInteger bIp;

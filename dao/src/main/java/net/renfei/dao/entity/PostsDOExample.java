@@ -705,6 +705,126 @@ public class PostsDOExample {
             return (Criteria) this;
         }
 
+        public Criteria andAvgViewsIsNull() {
+            addCriterion("avg_views is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvgViewsIsNotNull() {
+            addCriterion("avg_views is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvgViewsEqualTo(Double value) {
+            addCriterion("avg_views =", value, "avgViews");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvgViewsNotEqualTo(Double value) {
+            addCriterion("avg_views <>", value, "avgViews");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvgViewsGreaterThan(Double value) {
+            addCriterion("avg_views >", value, "avgViews");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvgViewsGreaterThanOrEqualTo(Double value) {
+            addCriterion("avg_views >=", value, "avgViews");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvgViewsLessThan(Double value) {
+            addCriterion("avg_views <", value, "avgViews");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvgViewsLessThanOrEqualTo(Double value) {
+            addCriterion("avg_views <=", value, "avgViews");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvgViewsIn(List<Double> values) {
+            addCriterion("avg_views in", values, "avgViews");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvgViewsNotIn(List<Double> values) {
+            addCriterion("avg_views not in", values, "avgViews");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvgViewsBetween(Double value1, Double value2) {
+            addCriterion("avg_views between", value1, value2, "avgViews");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvgViewsNotBetween(Double value1, Double value2) {
+            addCriterion("avg_views not between", value1, value2, "avgViews");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvgCommentIsNull() {
+            addCriterion("avg_comment is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvgCommentIsNotNull() {
+            addCriterion("avg_comment is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvgCommentEqualTo(Double value) {
+            addCriterion("avg_comment =", value, "avgComment");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvgCommentNotEqualTo(Double value) {
+            addCriterion("avg_comment <>", value, "avgComment");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvgCommentGreaterThan(Double value) {
+            addCriterion("avg_comment >", value, "avgComment");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvgCommentGreaterThanOrEqualTo(Double value) {
+            addCriterion("avg_comment >=", value, "avgComment");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvgCommentLessThan(Double value) {
+            addCriterion("avg_comment <", value, "avgComment");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvgCommentLessThanOrEqualTo(Double value) {
+            addCriterion("avg_comment <=", value, "avgComment");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvgCommentIn(List<Double> values) {
+            addCriterion("avg_comment in", values, "avgComment");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvgCommentNotIn(List<Double> values) {
+            addCriterion("avg_comment not in", values, "avgComment");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvgCommentBetween(Double value1, Double value2) {
+            addCriterion("avg_comment between", value1, value2, "avgComment");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvgCommentNotBetween(Double value1, Double value2) {
+            addCriterion("avg_comment not between", value1, value2, "avgComment");
+            return (Criteria) this;
+        }
+
         public Criteria andPageRankIsNull() {
             addCriterion("page_rank is null");
             return (Criteria) this;

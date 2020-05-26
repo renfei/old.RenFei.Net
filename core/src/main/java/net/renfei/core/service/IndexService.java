@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@CacheConfig(cacheNames = "IndexService")
 public class IndexService extends BaseService {
     @Autowired
     private TypeService typeService;
@@ -28,7 +27,6 @@ public class IndexService extends BaseService {
     @Autowired
     private PostsService postsService;
 
-    @Cacheable(key = "targetClass+'_'+methodName+'_'+#p0+'_'+#p1", condition = "#p0!=null&&#p1!=null")
     public AllInfoDTOList getAllInfo(String pages, String rows) {
         int intPage = convertPage(pages), intRows = convertRows(rows);
         AllInfoDTOList allInfoDTOList;
@@ -47,7 +45,6 @@ public class IndexService extends BaseService {
         return getAllInfoByTypeAndCatName(typeName, enName, page, "10");
     }
 
-    @Cacheable(key = "targetClass+'_'+methodName+'_'+#p0+'_'+#p1+'_'+#p2+'_'+#p3", condition = "#p0!=null&&#p1!=null&&#p2!=null&&#p3!=null")
     public AllInfoDTOList getAllInfoByTypeAndCatName(String typeName, String enName, String pages, String rows) {
         List<TypeDTO> typeDTOS = typeService.getTypeByName(typeName);
         if (typeDTOS != null && typeDTOS.size() > 0) {

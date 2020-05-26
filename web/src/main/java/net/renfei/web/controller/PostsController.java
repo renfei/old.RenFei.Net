@@ -43,7 +43,7 @@ public class PostsController extends BaseController {
     @RequestMapping("")
     public ModelAndView getAllPostsList(@RequestParam(value = "page", required = false) String page,
                                         ModelAndView mv) {
-        PostsListDTO postsListDTO = postsService.getAllPosts(page, "10");
+        PostsListDTO postsListDTO = postsService.getAllPosts(page, "20");
         List<PostsVO> postsVOList = new ArrayList<>();
         for (PostsDOWithBLOBs post : postsListDTO.getPostsList()
         ) {
@@ -51,6 +51,11 @@ public class PostsController extends BaseController {
             setInfo(postsVO);
             postsVOList.add(postsVO);
         }
+        //添加广告位
+        postsVOList.add(3,null);
+        postsVOList.add(6,null);
+        postsVOList.add(11,null);
+        postsVOList.add(14,null);
         mv.addObject("postsVOList", postsVOList);
         setHead(mv, "Posts",
                 "任霏的个人博客，分享关注软件开发技术，推动并帮助开发者通过互联网获得知识，从而让更多开发者从中受益。",

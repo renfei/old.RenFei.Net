@@ -11,10 +11,18 @@ public class PageRankUtil {
         if (days > -3) {
             return 10000D;
         }
-        double avgViews = 0;
-        double avgComments = 0;
-        avgViews = (float) views / (float) (0 - days);
-        avgComments = (float) comments / (float) (0 - days);
+        double avgViews = getAvgViews(date, views);
+        double avgComments = getAvgComments(date, comments);
         return ((days * dateWeighted) + (avgViews * viewWeighted) + (avgComments * commentWeighted)) / (dateWeighted + viewWeighted + commentWeighted);
+    }
+
+    public Double getAvgViews(Date date, Long views) {
+        long days = dateUtil.getDifferenceDay(date, new Date());
+        return (double) ((float) views / (float) (0 - days));
+    }
+
+    public Double getAvgComments(Date date, Long comments) {
+        long days = dateUtil.getDifferenceDay(date, new Date());
+        return (double) ((float) comments / (float) (0 - days));
     }
 }

@@ -6,16 +6,14 @@ import net.renfei.web.baseclass.BaseController;
 import net.renfei.web.entity.AllInfoVO;
 import net.renfei.web.entity.CategoryVO;
 import net.renfei.web.entity.OGprotocol;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import org.apache.commons.io.IOUtils;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 import javax.servlet.http.HttpServletResponse;
@@ -27,7 +25,6 @@ import java.util.List;
 
 
 @Controller
-@CacheConfig(cacheNames = "index")
 public class IndexController extends BaseController {
     @Value("classpath:xml/sitemap.xsl")
     private Resource sitemapxslXml;
@@ -50,8 +47,14 @@ public class IndexController extends BaseController {
                 obj.setCatHref(geCattUrl(obj.getTypeId(), obj.getCatEname()));
                 allInfoVOList.add(obj);
             }
+            //添加广告位
+            allInfoVOList.add(3,null);
+            allInfoVOList.add(6,null);
+            allInfoVOList.add(11,null);
+            allInfoVOList.add(14,null);
             mv.addObject("allInfoVOList", allInfoVOList);
             mv.addObject("count", allInfoDTOList.getCount());
+            setPagination(mv, page, allInfoDTOList.getCount(), "/?page=");
         }
         List<TypeDTO> typeDTOS = typeService.getAllType();
         mv.addObject("typeDTOS", typeDTOS);
@@ -66,6 +69,7 @@ public class IndexController extends BaseController {
             }
             mv.addObject("categories", categoryVOS);
         }
+        setSidebarByPost(mv, null);
         LinkDTO linkDTO = linkService.getLinks();
         mv.addObject("linkDTO", linkDTO);
         mv.addObject("page", intPage);
@@ -89,7 +93,6 @@ public class IndexController extends BaseController {
 
     @RequestMapping(value = "robots.txt", produces = "text/plain")
     @ResponseBody
-    @Cacheable(key = "'robots.txt'")
     public String getRobotsTxt() {
         String robots = "#\n" +
                 "# robots.txt for RENFEI.NET\n" +
@@ -106,7 +109,6 @@ public class IndexController extends BaseController {
 
     @RequestMapping(value = "ads.txt", produces = "text/plain")
     @ResponseBody
-    @Cacheable(key = "'ads.txt'")
     public String getGoogleAds() throws NoHandlerFoundException {
         String ads;
         ads = renFeiConfig.getGOOGLE_ADS();
@@ -118,7 +120,6 @@ public class IndexController extends BaseController {
 
     @RequestMapping(value = "sitemap.xml", produces = "text/xml;charset=UTF-8")
     @ResponseBody
-    @Cacheable(key = "'sitemap.xml'")
     public String getSiteMapXml() throws ParseException {
         List<SiteMapXml> siteMapXmls = siteMapService.getSiteMaps();
         String xmlTemplate = "    <url>\n" +
@@ -140,7 +141,6 @@ public class IndexController extends BaseController {
 
     @RequestMapping(value = "sitemap.xsl")
     @ResponseBody
-    @Cacheable(key = "'sitemap.xsl'")
     public String getSiteMapXsl(HttpServletResponse response) throws IOException {
         String sitemapxsl = IOUtils.toString(sitemapxslXml.getInputStream());
         response.setHeader("content-type", "application/octet-stream;charset=UTF-8");

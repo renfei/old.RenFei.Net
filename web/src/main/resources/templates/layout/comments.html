@@ -40,7 +40,7 @@
         <th:block th:fragment="child(ul)">
             <ul class="media-list">
                 <th:block th:each="comment:${ul}">
-                    <li class="media">
+                    <li class="media" th:id="${'cmt' + comment.id}">
                         <div class="post-comment">
                             <div class="media-body">
                                 <span><i class="fa fa-user"></i>Posted by

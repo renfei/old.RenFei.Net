@@ -20,7 +20,6 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-@CacheConfig(cacheNames = "WeiboService")
 public class WeiboService extends BaseService {
     @Autowired
     private PhotoService photoService;

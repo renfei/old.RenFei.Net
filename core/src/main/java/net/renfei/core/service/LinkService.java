@@ -19,12 +19,10 @@ import java.util.List;
 
 @Slf4j
 @Service
-@CacheConfig(cacheNames = "LinkService")
 public class LinkService extends BaseService {
     @Autowired
     private MailService mailService;
 
-    @Cacheable(key = "targetClass+'_'+methodName")
     public LinkDTO getLinks() {
         LinkDOExample linkDOExample = new LinkDOExample();
         linkDOExample.setOrderByClause("order_id ASC");

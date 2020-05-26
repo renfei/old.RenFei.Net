@@ -19,9 +19,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-@CacheConfig(cacheNames = "PhotoService")
 public class PhotoService extends BaseService {
-    @Cacheable(key = "targetClass+'_'+methodName+'_'+#p0+'_'+#p1", condition = "#p0!=null&&#p1!=null")
     public PhotoListDTO getAllPhotos(String pages, String rows) {
         int intPage = convertPage(pages), intRows = convertRows(rows);
         PhotoDOExample photoDOExample = new PhotoDOExample();
@@ -36,7 +34,6 @@ public class PhotoService extends BaseService {
         return convert(photoDOWithBLOBs, page.getTotal());
     }
 
-    @Cacheable(key = "targetClass+'_'+methodName+'_'+#p0+'_'+#p1+'_'+#p2", condition = "#p0!=null&&#p1!=null&&#p2!=null")
     public PhotoListDTO getAllPhotosCatID(Long catID, String pages, String rows) {
         int intPage = convertPage(pages), intRows = convertRows(rows);
         PhotoDOExample photoDOExample = new PhotoDOExample();
@@ -52,7 +49,6 @@ public class PhotoService extends BaseService {
         return convert(photoDOWithBLOBs, page.getTotal());
     }
 
-    @Cacheable(key = "targetClass+'_'+methodName+'_'+#p0", condition = "#p0!=null")
     public PhotoDTO getPhotoById(String id) {
         Long ID = 0L;
         if (!stringUtil.isEmpty(id)) {
@@ -78,7 +74,6 @@ public class PhotoService extends BaseService {
         }
     }
 
-    @Cacheable(key = "targetClass+'_'+methodName+'_'+#p0", condition = "#p0!=null")
     public PhotoImgDTO getPhotoImgByPhotoId(String id) {
         Long ID = 0L;
         if (!stringUtil.isEmpty(id)) {
@@ -109,7 +104,6 @@ public class PhotoService extends BaseService {
         }
     }
 
-    @Cacheable(key = "targetClass+'_'+methodName+'_'+#p0", condition = "#p0!=null")
     public PhotoImgDO getPhotoImgById(String id) {
         Long ID = 0L;
         if (!stringUtil.isEmpty(id)) {

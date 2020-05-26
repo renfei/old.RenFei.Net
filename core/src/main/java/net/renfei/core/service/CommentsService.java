@@ -73,6 +73,18 @@ public class CommentsService extends BaseService {
         return commentDTOS;
     }
 
+    public List<CommentDTO> getLastComment() {
+        CommentDOExample commentDOExample = new CommentDOExample();
+        commentDOExample.setOrderByClause("addtime DESC");
+        commentDOExample.createCriteria()
+                .andIsDeleteEqualTo(false)
+                .andParentIdIsNull();
+        PageHelper.startPage(1, 10);
+        List<CommentDTO> commentDTOS = ejbGenerator.convert(commentDOMapper.selectByExampleWithBLOBs(commentDOExample), CommentDTO.class);
+        getCommentByParentID(commentDTOS);
+        return commentDTOS;
+    }
+
     public Long getCommentNumber(Long typeId, Long targetId) {
         CommentDOExample commentDOExample = new CommentDOExample();
         commentDOExample.createCriteria()

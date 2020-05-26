@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@CacheConfig(cacheNames = "MoviesService")
 public class MoviesService extends BaseService {
 
     /**
@@ -25,7 +24,6 @@ public class MoviesService extends BaseService {
      * @param rows
      * @return
      */
-    @Cacheable(key = "targetClass+'_'+methodName+'_'+#p0+'_'+#p1", condition = "#p0!=null&&#p1!=null")
     public MoviesListDTO getAllMovies(String pages, String rows) {
         int intPage = convertPage(pages), intRows = convertRows(rows);
         MovieDOExample movieDOExample = new MovieDOExample();
@@ -35,7 +33,6 @@ public class MoviesService extends BaseService {
         return convert(movieDOMapper.selectByExampleWithBLOBs(movieDOExample), page.getTotal());
     }
 
-    @Cacheable(key = "targetClass+'_'+methodName+'_'+#p0+'_'+#p1+'_'+#p2", condition = "#p0!=null&&#p1!=null&&#p2!=null")
     public MoviesListDTO getMoviesListByCat(String catname, String pages, String rows) {
         if (stringUtil.isEmpty(catname)) {
             return null;
@@ -141,7 +138,7 @@ public class MoviesService extends BaseService {
             return null;
         }
     }
-    @Cacheable(key = "targetClass+'_'+methodName")
+
     public List<MovieClassificationDTO> getAllMovieClassification() {
         TypeDOExample typeDOExample = new TypeDOExample();
         typeDOExample.createCriteria().andTypeNameEqualTo("Movie");

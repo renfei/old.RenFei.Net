@@ -15,12 +15,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@CacheConfig(cacheNames = "CategorService")
 public class CategorService extends BaseService {
     @Autowired
     private TypeService typeService;
 
-    @Cacheable(key = "targetClass+'_'+methodName+'_'+#p0", condition = "#p0!=null")
     public CategoryDTO getCategoryByID(Long id) {
         CategoryDTO categoryDTO = ejbGenerator.convert(categoryDOMapper.selectByPrimaryKey(id), CategoryDTO.class);
         TypeDTO typeDTO = typeService.getTypeByID(categoryDTO.getTypeId());
@@ -29,7 +27,6 @@ public class CategorService extends BaseService {
         return categoryDTO;
     }
 
-    @Cacheable(key = "targetClass+'_'+methodName+'_'+#p0", condition = "#p0!=null")
     public CategoryDTO getCategoryByEnNaeme(String enName) {
         CategoryDOExample categoryDOExample = new CategoryDOExample();
         categoryDOExample.createCriteria()
@@ -51,7 +48,6 @@ public class CategorService extends BaseService {
         return getCategoryByID(postsListDTO.getCategoryId());
     }
 
-    @Cacheable(key = "targetClass+'_'+methodName+'_'+#p0", condition = "#p0!=null")
     public List<CategoryDTO> getAllCategoryByType(Long id) {
         CategoryDOExample categoryDOExample = new CategoryDOExample();
         categoryDOExample.createCriteria().andTypeIdEqualTo(id);
@@ -74,7 +70,6 @@ public class CategorService extends BaseService {
         }
     }
 
-    @Cacheable(key = "targetClass+'_'+methodName")
     public List<CategoryDTO> getAllCategory() {
         CategoryDOExample categoryDOExample = new CategoryDOExample();
         categoryDOExample.createCriteria();
@@ -97,7 +92,6 @@ public class CategorService extends BaseService {
         }
     }
 
-    @Cacheable(key = "targetClass+'_'+methodName+'_'+#p0+'_'+#p1", condition = "#p0!=null&&#p1!=null")
     public List<CategoryDTO> getCatByTypeIdAndName(Long TypeID, String name) {
         CategoryDOExample categoryDOExample = new CategoryDOExample();
         categoryDOExample.createCriteria()

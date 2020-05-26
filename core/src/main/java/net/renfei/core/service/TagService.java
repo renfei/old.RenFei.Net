@@ -10,10 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@CacheConfig(cacheNames = "TagService")
 public class TagService extends BaseService {
 
-    @Cacheable(key = "targetClass+'_'+methodName")
     public List<TagDOExtend> getAllTagDOExtend() {
         return tagDOMapper.getAllTag();
     }
@@ -23,7 +21,6 @@ public class TagService extends BaseService {
      *
      * @return
      */
-    @Cacheable(key = "targetClass+'_'+methodName")
     public List<TagDO> getAllTag() {
         TagDOExample tagDOExample = new TagDOExample();
         tagDOExample.createCriteria();
@@ -35,7 +32,6 @@ public class TagService extends BaseService {
      *
      * @return
      */
-    @Cacheable(key = "targetClass+'_'+methodName+'_'+#p0", condition = "#p0!=null")
     public List<TagDO> getTagByTargetId(long targetId) {
         List<TagRelationDO> tagRelationDOS = getTagRelationByTargetId(targetId);
         List<Long> longs = new ArrayList<>();
@@ -64,7 +60,6 @@ public class TagService extends BaseService {
         tagDO.setDescribe(describe);
         return tagDOMapper.insertSelective(tagDO);
     }
-    @Cacheable(key = "targetClass+'_'+methodName+'_'+#p0+'_'+#p1", condition = "#p0!=null&&#p1!=null")
     public List<TagRelationDO> getTagRelation(long typeId, long targetId) {
         TagRelationDOExample tagRelationDOExample = new TagRelationDOExample();
         tagRelationDOExample.createCriteria()
@@ -73,7 +68,6 @@ public class TagService extends BaseService {
         return tagRelationDOMapper.selectByExample(tagRelationDOExample);
     }
 
-    @Cacheable(key = "targetClass+'_'+methodName+'_'+#p0+'_'+#p1", condition = "#p0!=null&&#p1!=null")
     public List<TagRelationDO> getTagRelationByEnName(String enName, Long typeId) {
         TagDOExample tagDOExample = new TagDOExample();
         tagDOExample.createCriteria().andEnNameEqualTo(enName);
@@ -89,14 +83,12 @@ public class TagService extends BaseService {
         }
     }
 
-    @Cacheable(key = "targetClass+'_'+methodName+'_'+#p0", condition = "#p0!=null")
     public List<TagRelationDO> getTagRelationByTargetId(Long targetId) {
         TagRelationDOExample tagRelationDOExample = new TagRelationDOExample();
         tagRelationDOExample.createCriteria().andTargetIdEqualTo(targetId);
         return tagRelationDOMapper.selectByExample(tagRelationDOExample);
     }
 
-    @Cacheable(key = "targetClass+'_'+methodName+'_'+#p0", condition = "#p0!=null")
     public List<TagRelationDO> getTagRelationByTagId(Long tagId) {
         TagRelationDOExample tagRelationDOExample = new TagRelationDOExample();
         tagRelationDOExample.createCriteria().andTagIdEqualTo(tagId);
@@ -113,7 +105,6 @@ public class TagService extends BaseService {
         }
     }
 
-    @Cacheable(key = "targetClass+'_'+methodName+'_'+#p0", condition = "#p0!=null")
     public List<TagDO> getTagByEnName(String enName) {
         TagDOExample tagDOExample = new TagDOExample();
         tagDOExample.createCriteria().andEnNameEqualTo(enName);

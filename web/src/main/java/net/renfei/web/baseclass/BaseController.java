@@ -3,6 +3,7 @@ package net.renfei.web.baseclass;
 import net.renfei.core.baseclass.BaseClass;
 import net.renfei.core.entity.*;
 import net.renfei.core.service.*;
+import net.renfei.dao.entity.PostsDOWithBLOBs;
 import net.renfei.dao.entity.TagDOExtend;
 import net.renfei.web.entity.*;
 import net.renfei.web.service.PaginationService;
@@ -358,8 +359,67 @@ public class BaseController extends BaseClass {
         }
         //标签类
         sidebarVO.setTags(tagService.getAllTagDOExtend());
+        sidebarVO.setHotPost(getHotPost());
+        sidebarVO.setHotPostYear(getHotPostYear());
+        sidebarVO.setHotPostQuarter(getHotPostQuarter());
+        sidebarVO.setLatestComments(getLatestComments());
         sidebarVO.setStaticdomain(staticdomain);
         mv.addObject(SIDEBAR_KEY, sidebarVO);
+    }
+
+    private List<LinkVO> getHotPost() {
+        PostsListDTO postsListDTO = postsService.getHotPost();
+        return getLinkVOS(postsListDTO);
+    }
+
+    private List<LinkVO> getHotPostYear() {
+        PostsListDTO postsListDTO = postsService.getHotPostYear();
+        return getLinkVOS(postsListDTO);
+    }
+
+    private List<LinkVO> getHotPostQuarter() {
+        PostsListDTO postsListDTO = postsService.getHotPostQuarter();
+        return getLinkVOS(postsListDTO);
+    }
+
+    private List<LinkVO> getLatestComments() {
+        List<CommentDTO> commentDTOS = commentsService.getLastComment();
+        return getLinkVOS(commentDTOS);
+    }
+
+    private List<LinkVO> getLinkVOS(PostsListDTO postsListDTO) {
+        if (postsListDTO != null && postsListDTO.getCount() > 0) {
+            List<LinkVO> linkVOS = new ArrayList<>();
+            for (PostsDOWithBLOBs post : postsListDTO.getPostsList()
+            ) {
+                LinkVO linkVO = new LinkVO();
+                linkVO.setText(post.getTitle());
+                linkVO.setHref(domain + "/posts/" + post.getId());
+                linkVO.setTarget("_blank");
+                linkVOS.add(linkVO);
+            }
+            return linkVOS;
+        } else {
+            return null;
+        }
+    }
+
+    private List<LinkVO> getLinkVOS(List<CommentDTO> commentDTOS) {
+        if (commentDTOS != null && commentDTOS.size() > 0) {
+            List<LinkVO> linkVOS = new ArrayList<>();
+            for (CommentDTO commentDTO : commentDTOS
+            ) {
+                TypeDTO typeDTO = typeService.getTypeByID(commentDTO.getTypeId());
+                LinkVO linkVO = new LinkVO();
+                linkVO.setText(commentDTO.getContent());
+                linkVO.setHref(domain + typeDTO.getUriPath() + "/" + commentDTO.getTargetId() + "#cmt" + commentDTO.getId());
+                linkVO.setTarget("_blank");
+                linkVOS.add(linkVO);
+            }
+            return linkVOS;
+        } else {
+            return null;
+        }
     }
 
     /**

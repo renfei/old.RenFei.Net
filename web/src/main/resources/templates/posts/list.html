@@ -26,9 +26,9 @@
                 </div>
                 <div class="row">
                     <div th:if="${postsVOList!=null}" th:each="info:${postsVOList}"
-                         class="col-md-6 col-sm-12 blog-padding-right">
-                        <div class="single-blog two-column">
-                            <div class="post-thumb weibo_radius">
+                         class="col-md-6 col-sm-12 blog-padding-right renfei-blog-item">
+                        <div th:if="${info!=null}" class="single-blog two-column">
+                            <div class="post-thumb">
                                 <a th:href="${domain}+'/posts/'+${info.id}" target="_blank">
                                     <img th:src="${info.featuredImage}" class="img-responsive"
                                          th:alt="${info.title}">
@@ -58,6 +58,30 @@
                                 </div>
                             </div>
                         </div>
+                        <div th:if="${info==null}" class="single-blog two-column">
+                            <div class="post-content overflow" style="padding-top: 0;">
+                                <ins class="adsbygoogle"
+                                     style="display:block"
+                                     data-ad-format="fluid"
+                                     data-ad-layout-key="-58+cv+1i-cb+ec"
+                                     data-ad-client="ca-pub-8859756463807757"
+                                     data-ad-slot="2371058726"></ins>
+                                <script>
+                                    (adsbygoogle = window.adsbygoogle || []).push({});
+                                </script>
+                                <div class="post-bottom overflow">
+                                    <ul class="nav nav-justified post-nav">
+                                        <li><a><i class='fa fa-eye'></i>321</a></li>
+                                        <li>
+                                            <a href="JavaScript:void(0)"><i class='fa fa-thumbs-o-up'></i><span>0</span></a>
+                                        </li>
+                                        <li><a><i class='fa fa-comments'></i>0</a></li>
+                                        <li>
+                                            <a href="JavaScript:void(0)"><i class='fa fa-tag'></i>ADS</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="clear"></div>
@@ -73,5 +97,19 @@
     </div>
 </section>
 <footer th:replace="layout/footer::footer(${footer},${performance})"></footer>
+<script th:inline="javascript">
+    var renfei_blog_height=0;
+    window.onload = function () {
+        $(".renfei-blog-item").each(function () {
+            var height = $(this).height();
+            if(height > renfei_blog_height){
+                renfei_blog_height = height;
+            }
+        });
+        $(".renfei-blog-item").each(function () {
+            $(this).height(renfei_blog_height);
+        });
+    }
+</script>
 </body>
 </html>

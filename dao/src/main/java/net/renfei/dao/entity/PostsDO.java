@@ -23,6 +23,10 @@ public class PostsDO {
 
     private Boolean isComment;
 
+    private Double avgViews;
+
+    private Double avgComment;
+
     private Double pageRank;
 
     private Date pageRankUpdateTime;
@@ -105,6 +109,22 @@ public class PostsDO {
 
     public void setIsComment(Boolean isComment) {
         this.isComment = isComment;
+    }
+
+    public Double getAvgViews() {
+        return avgViews;
+    }
+
+    public void setAvgViews(Double avgViews) {
+        this.avgViews = avgViews;
+    }
+
+    public Double getAvgComment() {
+        return avgComment;
+    }
+
+    public void setAvgComment(Double avgComment) {
+        this.avgComment = avgComment;
     }
 
     public Double getPageRank() {

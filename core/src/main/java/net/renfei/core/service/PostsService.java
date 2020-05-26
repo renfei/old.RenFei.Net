@@ -8,6 +8,7 @@ import net.renfei.core.entity.PostsDTO;
 import net.renfei.core.entity.PostsListDTO;
 import net.renfei.dao.entity.*;
 import net.renfei.sdk.utils.BeanUtils;
+import net.renfei.sdk.utils.DateUtils;
 import net.renfei.util.PageRankUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
@@ -25,7 +26,6 @@ import java.util.List;
  * 文章服务
  */
 @Service
-@CacheConfig(cacheNames = "posts")
 public class PostsService extends BaseService {
     private static final Double DateWeighted = 37.5D;
     private static final Double ViewWeighted = 57.5D;
@@ -99,7 +99,6 @@ public class PostsService extends BaseService {
      * @param rows  每页容量
      * @return
      */
-    @Cacheable(key = "targetClass+'_'+methodName+'_'+#p0+'_'+#p1+'_'+#p2", condition = "#p0!=null&&#p1!=null&&#p2!=null")
     public PostsListDTO getAllPosts(String pages, String rows, String orderBy) {
         int intPage = convertPage(pages), intRows = convertRows(rows);
         PostsDOExample postsDOExample = new PostsDOExample();
@@ -136,7 +135,6 @@ public class PostsService extends BaseService {
      * @param tagEnName 标签
      * @return
      */
-    @Cacheable(key = "targetClass+'_'+methodName+'_'+#p0+'_'+#p1+'_'+#p2", condition = "#p0!=null&&#p1!=null&&#p2!=null")
     public PostsListDTO getAllPostsByTag(String pages, String rows, String tagEnName) {
         int intPage = convertPage(pages), intRows = convertRows(rows);
         List<TagRelationDO> tagRelationDOS = tagService.getTagRelationByEnName(tagEnName, 1L);
@@ -164,7 +162,6 @@ public class PostsService extends BaseService {
      *
      * @return
      */
-    @Cacheable(key = "targetClass+'_'+methodName+'_'+#p0", condition = "#p0!=null")
     public PostsListDTO getRelated(String id) {
         Long ID = 0L;
         if (!stringUtil.isEmpty(id)) {
@@ -211,6 +208,85 @@ public class PostsService extends BaseService {
     }
 
     /**
+     * 获取最热文章
+     *
+     * @return
+     */
+    public PostsListDTO getHotPost() {
+        PostsDOExample postsDOExample = new PostsDOExample();
+        postsDOExample.setOrderByClause("avg_views DESC,release_time DESC");
+        postsDOExample
+                .createCriteria()
+                .andIsDeleteEqualTo(false)
+                .andReleaseTimeLessThanOrEqualTo(new Date());
+        return doSelect(postsDOExample, 1, 10);
+    }
+
+    /**
+     * 获取年度最热文章
+     *
+     * @return
+     */
+    public PostsListDTO getHotPostYear() {
+        Date dateStart = DateUtils.parseDate(DateUtils.getYear() + "-01-01 00:00:00");
+        Date dateEnd = DateUtils.parseDate(DateUtils.getYear() + "-12-31 23:59:59");
+        PostsDOExample postsDOExample = new PostsDOExample();
+        postsDOExample.setOrderByClause("avg_views DESC,release_time DESC");
+        postsDOExample
+                .createCriteria()
+                .andIsDeleteEqualTo(false)
+                .andReleaseTimeLessThanOrEqualTo(new Date())
+                .andReleaseTimeBetween(dateStart, dateEnd);
+        return doSelect(postsDOExample, 1, 10);
+    }
+
+    /**
+     * 获取季度最热文章
+     *
+     * @return
+     */
+    public PostsListDTO getHotPostQuarter() {
+        Date dateStart, dateEnd;
+        String month = DateUtils.getMonth();
+        switch (month) {
+            case "01":
+            case "02":
+            case "03":
+                dateStart = DateUtils.parseDate(DateUtils.getYear() + "-01-01 00:00:00");
+                dateEnd = DateUtils.parseDate(DateUtils.getYear() + "-03-31 23:59:59");
+                break;
+            case "04":
+            case "05":
+            case "06":
+                dateStart = DateUtils.parseDate(DateUtils.getYear() + "-04-01 00:00:00");
+                dateEnd = DateUtils.parseDate(DateUtils.getYear() + "-06-30 23:59:59");
+                break;
+            case "07":
+            case "08":
+            case "09":
+                dateStart = DateUtils.parseDate(DateUtils.getYear() + "-07-01 00:00:00");
+                dateEnd = DateUtils.parseDate(DateUtils.getYear() + "-09-30 23:59:59");
+                break;
+            case "10":
+            case "11":
+            case "12":
+                dateStart = DateUtils.parseDate(DateUtils.getYear() + "-10-01 00:00:00");
+                dateEnd = DateUtils.parseDate(DateUtils.getYear() + "-12-31 23:59:59");
+                break;
+            default:
+                return null;
+        }
+        PostsDOExample postsDOExample = new PostsDOExample();
+        postsDOExample.setOrderByClause("avg_views DESC,release_time DESC");
+        postsDOExample
+                .createCriteria()
+                .andIsDeleteEqualTo(false)
+                .andReleaseTimeLessThanOrEqualTo(new Date())
+                .andReleaseTimeBetween(dateStart, dateEnd);
+        return doSelect(postsDOExample, 1, 10);
+    }
+
+    /**
      * 执行查询并转换
      *
      * @param postsDOExample
@@ -230,7 +306,6 @@ public class PostsService extends BaseService {
         return convert(postsDOWithBLOBs, page.getTotal());
     }
 
-    @Cacheable(key = "targetClass+'_'+methodName+'_'+#p0+'_'+#p1+'_'+#p2", condition = "#p0!=null&&#p1!=null&&#p2!=null")
     public PostsListDTO getAllPostsByCatID(Long catID, String pages, String rows) {
         int intPage = convertPage(pages), intRows = convertRows(rows);
         PostsDOExample postsDOExample = new PostsDOExample();
@@ -387,6 +462,14 @@ public class PostsService extends BaseService {
                 postsDO.getViews(),
                 0L,
                 DateWeighted, ViewWeighted, Commenthted
+        ));
+        postsDO.setAvgViews(pageRankUtil.getAvgViews(
+                postsDO.getReleaseTime(),
+                postsDO.getViews()
+        ));
+        postsDO.setAvgComment(pageRankUtil.getAvgComments(
+                postsDO.getReleaseTime(),
+                0L
         ));
         postsDO.setPageRankUpdateTime(new Date());
     }

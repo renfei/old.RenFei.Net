@@ -16,7 +16,6 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-@CacheConfig(cacheNames = "SiteMapService")
 public class SiteMapService extends BaseService {
     @Autowired
     private GlobalService globalService;
@@ -33,7 +32,6 @@ public class SiteMapService extends BaseService {
     @Autowired
     private CategorService categorService;
 
-    @Cacheable(key = "targetClass+'_'+methodName")
     public List<SiteMapXml> getSiteMaps() {
         String domain = globalService.getDomain();
         Date latestDate = new Date();
@@ -89,7 +87,7 @@ public class SiteMapService extends BaseService {
             if (categoryDTOS != null && categoryDTOS.size() > 0) {
                 for (CategoryDTO cat : categoryDTOS
                 ) {
-                    siteMapXmls.add(new SiteMapXml(domain + "/cat/" + cat.getUriPath() + "/" + cat.getEnName(), Changefreq.daily, "0.8", latestDate));
+                    siteMapXmls.add(new SiteMapXml(domain + "/cat" + cat.getUriPath() + "/" + cat.getEnName(), Changefreq.daily, "0.8", latestDate));
                 }
             }
         }

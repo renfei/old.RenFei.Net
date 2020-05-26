@@ -11,22 +11,18 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-@CacheConfig(cacheNames = "TypeService")
 public class TypeService extends BaseService {
 
-    @Cacheable(key = "targetClass+'_'+methodName+'_'+#p0", condition = "#p0!=null")
     public TypeDTO getTypeByID(Long id) {
         return ejbGenerator.convert(typeDOMapper.selectByPrimaryKey(id), TypeDTO.class);
     }
 
-    @Cacheable(key = "targetClass+'_'+methodName")
     public List<TypeDTO> getAllType() {
         TypeDOExample typeDOExample = new TypeDOExample();
         typeDOExample.createCriteria();
         return convertTypeDTOS(typeDOMapper.selectByExample(typeDOExample));
     }
 
-    @Cacheable(key = "targetClass+'_'+methodName+'_'+#p0", condition = "#p0!=null")
     public List<TypeDTO> getTypeByName(String name) {
         TypeDOExample typeDOExample = new TypeDOExample();
         typeDOExample.createCriteria().andTypeNameEqualTo(name);

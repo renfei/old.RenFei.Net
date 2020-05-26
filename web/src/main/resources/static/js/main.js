@@ -119,7 +119,7 @@ console.log("\n %c 开发交流QQ群 %c 130832168 %c \n", "color: #fff; backgrou
 
 function checkad() {
     $.ajax({
-        url: "https://cdn.renfei.net/js/ads.js",
+        url: "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js",
         dataType: "script"
     }).fail(function () {
         var fab = $("#fab");

@@ -12,8 +12,6 @@
     <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
     <result column="is_delete" jdbcType="BIT" property="isDelete" />
     <result column="is_comment" jdbcType="BIT" property="isComment" />
-    <result column="avg_views" jdbcType="DOUBLE" property="avgViews" />
-    <result column="avg_comment" jdbcType="DOUBLE" property="avgComment" />
     <result column="page_rank" jdbcType="DOUBLE" property="pageRank" />
     <result column="page_rank_update_time" jdbcType="TIMESTAMP" property="pageRankUpdateTime" />
   </resultMap>
@@ -86,7 +84,7 @@
   </sql>
   <sql id="Base_Column_List">
     id, category_id, is_original, views, thumbs_up, thumbs_down, release_time, add_time, 
-    is_delete, is_comment, avg_views, avg_comment, page_rank, page_rank_update_time
+    is_delete, is_comment, page_rank, page_rank_update_time
   </sql>
   <sql id="Blob_Column_List">
     featured_image, title, content, source_url, source_name, describes, keyword
@@ -143,19 +141,17 @@
     insert into t_posts (id, category_id, is_original, 
       views, thumbs_up, thumbs_down, 
       release_time, add_time, is_delete, 
-      is_comment, avg_views, avg_comment, 
-      page_rank, page_rank_update_time, featured_image, 
-      title, content, source_url, 
-      source_name, describes, keyword
-      )
+      is_comment, page_rank, page_rank_update_time, 
+      featured_image, title, content, 
+      source_url, source_name, describes, 
+      keyword)
     values (#{id,jdbcType=BIGINT}, #{categoryId,jdbcType=BIGINT}, #{isOriginal,jdbcType=BIT}, 
       #{views,jdbcType=BIGINT}, #{thumbsUp,jdbcType=BIGINT}, #{thumbsDown,jdbcType=BIGINT}, 
       #{releaseTime,jdbcType=TIMESTAMP}, #{addTime,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=BIT}, 
-      #{isComment,jdbcType=BIT}, #{avgViews,jdbcType=DOUBLE}, #{avgComment,jdbcType=DOUBLE}, 
-      #{pageRank,jdbcType=DOUBLE}, #{pageRankUpdateTime,jdbcType=TIMESTAMP}, #{featuredImage,jdbcType=LONGVARCHAR}, 
-      #{title,jdbcType=LONGVARCHAR}, #{content,jdbcType=LONGVARCHAR}, #{sourceUrl,jdbcType=LONGVARCHAR}, 
-      #{sourceName,jdbcType=LONGVARCHAR}, #{describes,jdbcType=LONGVARCHAR}, #{keyword,jdbcType=LONGVARCHAR}
-      )
+      #{isComment,jdbcType=BIT}, #{pageRank,jdbcType=DOUBLE}, #{pageRankUpdateTime,jdbcType=TIMESTAMP}, 
+      #{featuredImage,jdbcType=LONGVARCHAR}, #{title,jdbcType=LONGVARCHAR}, #{content,jdbcType=LONGVARCHAR}, 
+      #{sourceUrl,jdbcType=LONGVARCHAR}, #{sourceName,jdbcType=LONGVARCHAR}, #{describes,jdbcType=LONGVARCHAR}, 
+      #{keyword,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="net.renfei.dao.entity.PostsDOWithBLOBs">
     insert into t_posts
@@ -189,12 +185,6 @@
       </if>
       <if test="isComment != null">
         is_comment,
-      </if>
-      <if test="avgViews != null">
-        avg_views,
-      </if>
-      <if test="avgComment != null">
-        avg_comment,
       </if>
       <if test="pageRank != null">
         page_rank,
@@ -254,12 +244,6 @@
       </if>
       <if test="isComment != null">
         #{isComment,jdbcType=BIT},
-      </if>
-      <if test="avgViews != null">
-        #{avgViews,jdbcType=DOUBLE},
-      </if>
-      <if test="avgComment != null">
-        #{avgComment,jdbcType=DOUBLE},
       </if>
       <if test="pageRank != null">
         #{pageRank,jdbcType=DOUBLE},
@@ -329,12 +313,6 @@
       <if test="record.isComment != null">
         is_comment = #{record.isComment,jdbcType=BIT},
       </if>
-      <if test="record.avgViews != null">
-        avg_views = #{record.avgViews,jdbcType=DOUBLE},
-      </if>
-      <if test="record.avgComment != null">
-        avg_comment = #{record.avgComment,jdbcType=DOUBLE},
-      </if>
       <if test="record.pageRank != null">
         page_rank = #{record.pageRank,jdbcType=DOUBLE},
       </if>
@@ -379,8 +357,6 @@
       add_time = #{record.addTime,jdbcType=TIMESTAMP},
       is_delete = #{record.isDelete,jdbcType=BIT},
       is_comment = #{record.isComment,jdbcType=BIT},
-      avg_views = #{record.avgViews,jdbcType=DOUBLE},
-      avg_comment = #{record.avgComment,jdbcType=DOUBLE},
       page_rank = #{record.pageRank,jdbcType=DOUBLE},
       page_rank_update_time = #{record.pageRankUpdateTime,jdbcType=TIMESTAMP},
       featured_image = #{record.featuredImage,jdbcType=LONGVARCHAR},
@@ -406,8 +382,6 @@
       add_time = #{record.addTime,jdbcType=TIMESTAMP},
       is_delete = #{record.isDelete,jdbcType=BIT},
       is_comment = #{record.isComment,jdbcType=BIT},
-      avg_views = #{record.avgViews,jdbcType=DOUBLE},
-      avg_comment = #{record.avgComment,jdbcType=DOUBLE},
       page_rank = #{record.pageRank,jdbcType=DOUBLE},
       page_rank_update_time = #{record.pageRankUpdateTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
@@ -443,12 +417,6 @@
       </if>
       <if test="isComment != null">
         is_comment = #{isComment,jdbcType=BIT},
-      </if>
-      <if test="avgViews != null">
-        avg_views = #{avgViews,jdbcType=DOUBLE},
-      </if>
-      <if test="avgComment != null">
-        avg_comment = #{avgComment,jdbcType=DOUBLE},
       </if>
       <if test="pageRank != null">
         page_rank = #{pageRank,jdbcType=DOUBLE},
@@ -491,8 +459,6 @@
       add_time = #{addTime,jdbcType=TIMESTAMP},
       is_delete = #{isDelete,jdbcType=BIT},
       is_comment = #{isComment,jdbcType=BIT},
-      avg_views = #{avgViews,jdbcType=DOUBLE},
-      avg_comment = #{avgComment,jdbcType=DOUBLE},
       page_rank = #{pageRank,jdbcType=DOUBLE},
       page_rank_update_time = #{pageRankUpdateTime,jdbcType=TIMESTAMP},
       featured_image = #{featuredImage,jdbcType=LONGVARCHAR},
@@ -515,8 +481,6 @@
       add_time = #{addTime,jdbcType=TIMESTAMP},
       is_delete = #{isDelete,jdbcType=BIT},
       is_comment = #{isComment,jdbcType=BIT},
-      avg_views = #{avgViews,jdbcType=DOUBLE},
-      avg_comment = #{avgComment,jdbcType=DOUBLE},
       page_rank = #{pageRank,jdbcType=DOUBLE},
       page_rank_update_time = #{pageRankUpdateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}

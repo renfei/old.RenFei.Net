@@ -18,7 +18,6 @@ import java.util.Date;
  * @author RenFei
  */
 @Service
-@CacheConfig(cacheNames = "ShortUrlService")
 public class ShortUrlService extends BaseService {
     /**
      * 获取ShortUrl对象
@@ -26,7 +25,6 @@ public class ShortUrlService extends BaseService {
      * @param shortUrl 短网址
      * @return
      */
-    @Cacheable(key = "targetClass+'_'+methodName+'_'+#p0", condition = "#p0!=null")
     public ShortUrl getShortUrl(String shortUrl) {
         if (shortUrl == null || shortUrl.length() == 0) {
             return null;

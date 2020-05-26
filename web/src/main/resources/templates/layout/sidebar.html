@@ -2,13 +2,25 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <body>
         <div th:fragment="sidebar(sidebar)" class="sidebar blog-sidebar">
-            <div class="sidebar-item" th:if="${globalAD=='1'}">
-                <!--<div th:replace="layout/github::mygithub"></div>-->
-                <!-- sidebar_正方形 -->
-                <div th:replace="ads/ads::ads('4995060553')"></div>
+            <div class="sidebar-item">
+                <h3>订阅博客</h3>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <h4>微信公众</h4>
+                        <div class="sidebar-qrcode">
+                            <img th:src="${'//'+sidebar.staticdomain+'/images/wechat.jpg'}" style="width: 100%">
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <h4>今日头条</h4>
+                        <div class="sidebar-qrcode">
+                            <img th:src="${'//'+sidebar.staticdomain+'/images/toutiao.jpeg'}" style="width: 100%">
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="sidebar-item categories">
-                <h3 th:if="${sidebar.categories!=null}">Categories</h3>
+                <h3 th:if="${sidebar.categories!=null}">文章分类</h3>
                 <ul class="nav navbar-stacked">
                     <li th:if="${sidebar.categories!=null}" th:each="cat:${sidebar.categories}"
                         th:class="${cat.activ?'active':''}">
@@ -19,7 +31,48 @@
                 </ul>
             </div>
             <div class="sidebar-item" th:if="${globalAD=='1'}">
+                <!--<div th:replace="layout/github::mygithub"></div>-->
+                <!-- sidebar_正方形 -->
+                <div th:replace="ads/ads::ads('4995060553')"></div>
+            </div>
+            <div class="sidebar-item categories">
+                <h3 th:if="${sidebar.latestComments!=null}">最新留言</h3>
+                <ul class="nav navbar-stacked">
+                    <li th:if="${sidebar.latestComments!=null}" th:each="cmt:${sidebar.latestComments}">
+                        <a th:href="${cmt.href}" th:text="${cmt.text}">
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="sidebar-item categories">
+                <h3 th:if="${sidebar.hotPost!=null}">热文排行</h3>
+                <ul class="nav navbar-stacked">
+                    <li th:if="${sidebar.hotPost!=null}" th:each="cmt:${sidebar.hotPost}">
+                        <a th:href="${cmt.href}" th:text="${cmt.text}">
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="sidebar-item" th:if="${globalAD=='1'}">
                 <div th:replace="ads/ads::ads('6567996671')"></div>
+            </div>
+            <div class="sidebar-item categories">
+                <h3 th:if="${sidebar.hotPostYear!=null}">年度最热文章</h3>
+                <ul class="nav navbar-stacked">
+                    <li th:if="${sidebar.hotPostYear!=null}" th:each="cmt:${sidebar.hotPostYear}">
+                        <a th:href="${cmt.href}" th:text="${cmt.text}">
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="sidebar-item categories">
+                <h3 th:if="${sidebar.hotPostQuarter!=null}">季度最热文章</h3>
+                <ul class="nav navbar-stacked">
+                    <li th:if="${sidebar.hotPostQuarter!=null}" th:each="cmt:${sidebar.hotPostQuarter}">
+                        <a th:href="${cmt.href}" th:text="${cmt.text}">
+                        </a>
+                    </li>
+                </ul>
             </div>
             <div class="sidebar-item tag-cloud" th:if="${sidebar.tags!=null}">
                 <h3>Tag Cloud</h3>
@@ -32,22 +85,6 @@
             </div>
             <div class="sidebar-item" th:if="${globalAD=='1'}">
                 <script type="text/javascript" src="//window.renfei.net/source/u_pmr/production/ov/openjs/qxq.js"></script>
-            </div>
-            <div class="sidebar-item">
-                <div class="row">
-                    <div class="col-xs-6">
-                        <h4>今日头条</h4>
-                        <div class="sidebar-qrcode">
-                            <img th:src="${'//'+sidebar.staticdomain+'/images/toutiao.jpeg'}" style="width: 100%">
-                        </div>
-                    </div>
-                    <div class="col-xs-6">
-                        <h4>微信公众</h4>
-                        <div class="sidebar-qrcode">
-                            <img th:src="${'//'+sidebar.staticdomain+'/images/wechat.jpg'}" style="width: 100%">
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </body>

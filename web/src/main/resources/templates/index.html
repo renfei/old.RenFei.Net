@@ -28,111 +28,56 @@
 </section>
 <!--/#home-slider-->
 
-<section id="services">
+<section id="home" class="padding-top">
     <div class="container">
         <div class="row">
-            <div class="col-sm-4 text-center padding wow fadeIn" data-wow-duration="1000ms" data-wow-delay="300ms">
-                <div class="single-service">
-                    <a th:href="${domain}+'/posts'">
-                        <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="300ms">
-                            <img th:src="'//'+${staticdomain}+'/images/ico/blogs.png'" alt="">
+            <div class="col-md-9 col-sm-7">
+                <div class="row">
+                    <div th:if="${allInfoVOList!=null}" th:each="info:${allInfoVOList}"
+                         class="col-md-6 col-sm-12 blog-padding-right renfei-blog-item">
+                        <div th:if="${info!=null}" class="single-blog two-column">
+                            <div class="post-thumb">
+                                <a th:href="${info.href}" target="_blank">
+                                    <img th:src="${info.featuredImage}" class="img-responsive"
+                                         th:alt="${info.title}">
+                                </a>
+                            </div>
+                            <div class="post-content overflow">
+                                <a th:href="${info.href}" target="_blank">
+                                    <h2 class="post-title bold" th:text="${info.title}"></h2>
+                                </a>
+                                <h3 class="post-author">
+                                    <a th:text="${#dates.format(info.releaseTime,'yyyy-MM-dd HH:mm:ss')}"></a>
+                                </h3>
+                                <p th:text="${#strings.abbreviate(info.describes,150)}"
+                                   style="height: 100px;line-height:130%;"></p>
+                            </div>
                         </div>
-                        <h2>Blog Posts</h2>
-                    </a>
-                    <p>写博客不仅仅是为了分享，更是自己对知识的回顾和理解的加深，但是我更新代码的频率可能会超过文章的频率，也记得去我的Github上看看哦</p>
-
-                </div>
-            </div>
-            <div class="col-sm-4 text-center padding wow fadeIn" data-wow-duration="1000ms" data-wow-delay="600ms">
-                <div class="single-service">
-                    <a th:href="${domain}+'/video'">
-                        <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="600ms">
-                            <img th:src="'//'+${staticdomain}+'/images/ico/video.png'" alt="">
-                        </div>
-                        <h2>Video Vlog</h2>
-                    </a>
-                    <p>一个Vlog，一个人的生活方式，每个人都有自己独一份的人生体验；一个Vlog，一份虚拟的陪伴，点开一个视频就仿佛陪伴着主角走过精彩的一天</p>
-
-                </div>
-            </div>
-            <div class="col-sm-4 text-center padding wow fadeIn" data-wow-duration="1000ms" data-wow-delay="900ms">
-                <div class="single-service">
-                    <a th:href="${domain}+'/posts'">
-                        <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="900ms">
-                            <img th:src="'//'+${staticdomain}+'/images/ico/Album.png'" alt="">
-                        </div>
-                        <h2>Photo Album</h2>
-                    </a>
-                    <p>时间的流逝无法停止，但是美好的一瞬可以留住。一张照片，记载着一个故事；一张照片，讲述了一段经历；一张照片，勾起了一份回忆</p>
-
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!--/#services-->
-
-<section id="action" class="responsive">
-    <div class="vertical-center">
-        <div class="container">
-            <div class="row">
-                <div class="action take-tour">
-                    <div class="col-sm-7 wow fadeInLeft" data-wow-duration="500ms" data-wow-delay="300ms">
-                        <h1 class="title">Open source on GitHub</h1>
-                        <p>源于开源，回馈开源，从开源社区取得知识和技术，也要记得分享回去。</p>
-                    </div>
-                    <div class="col-sm-5 text-center wow fadeInRight" data-wow-duration="500ms" data-wow-delay="300ms">
-                        <div class="tour-button">
-                            <a href="https://github.com/neilren" class="btn btn-common" target="_blank">GitHub</a>
+                        <div th:if="${info==null}" class="single-blog two-column">
+                            <div class="post-thumb" style="padding-top: 0;">
+                                <ins class="adsbygoogle"
+                                     style="display:block"
+                                     data-ad-format="fluid"
+                                     data-ad-layout-key="-58+cv+1i-cb+ec"
+                                     data-ad-client="ca-pub-8859756463807757"
+                                     data-ad-slot="2371058726"></ins>
+                                <script>
+                                    (adsbygoogle = window.adsbygoogle || []).push({});
+                                </script>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <div class="blog-pagination">
+                    <div th:replace="layout/pagination::pagination(${pagination})"></div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-5">
+                <div th:replace="layout/sidebar::sidebar(${sidebar})"></div>
             </div>
         </div>
     </div>
 </section>
-<!--/#action-->
-
-<section id="features">
-    <div class="container">
-        <div class="row">
-            <div class="single-features">
-                <div class="col-sm-5 wow fadeInLeft" data-wow-duration="500ms" data-wow-delay="300ms">
-                    <a href="https://github.com/NeilRen/RenFei.Net" target="_blank"><img
-                            th:src="'//'+${staticdomain}+'/images/home/renfeinetgithub.jpg'" class="img-responsive"
-                            alt=""></a>
-                </div>
-                <div class="col-sm-6 wow fadeInRight" data-wow-duration="500ms" data-wow-delay="300ms">
-                    <a href="https://github.com/NeilRen/RenFei.Net" target="_blank"><h2>Open Source: RenFei.Net</h2></a>
-                    <P>2019年收购了 renfei.net 域名，由于流行前后端分离，重新开启开发之旅，用以替代 NEILREN4J，并尝试使用Docker容器技术。</P>
-                </div>
-            </div>
-            <div class="single-features">
-                <div class="col-sm-6 col-sm-offset-1 align-right wow fadeInLeft" data-wow-duration="500ms"
-                     data-wow-delay="300ms">
-                    <a href="https://github.com/NeilRen/NEILREN4J" target="_blank"><h2>Open Source: NEILREN4J</h2></a>
-                    <P>2017年技术转型Java开发，使用SpringMVC重新开发新的个人网站，代号 NEIRLEN4J，用以替代 ASP.NET 的 NeilNT 站点，并在Github上开源。</P>
-                </div>
-                <div class="col-sm-5 wow fadeInRight" data-wow-duration="500ms" data-wow-delay="300ms">
-                    <a href="https://github.com/NeilRen/NEILREN4J" target="_blank"><img
-                            th:src="'//'+${staticdomain}+'/images/home/neilren4jgithub.jpg'" class="img-responsive"
-                            alt=""></a>
-                </div>
-            </div>
-            <div class="single-features">
-                <div class="col-sm-5 wow fadeInLeft" data-wow-duration="500ms" data-wow-delay="300ms">
-                    <a href="https://github.com/NeilRen/NeilNT" target="_blank"><img
-                            th:src="'//'+${staticdomain}+'/images/home/neilntgithub.jpg'" class="img-responsive" alt=""></a>
-                </div>
-                <div class="col-sm-6 wow fadeInRight" data-wow-duration="500ms" data-wow-delay="300ms">
-                    <a href="https://github.com/NeilRen/NeilNT" target="_blank"><h2>Open Source: NeilNT</h2></a>
-                    <P>2015年大学毕业使用 ASP.NET 尝试开发自己的个人网站系统，代号 NeilNT，用以替代高中时期的 WordPress，并在 NEILREN4J上线时，在Github上开源。</P>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!--/#features-->
 
 <section id="clients">
     <div class="container">
@@ -174,7 +119,6 @@
                 "url": "https://www.renfei.net",
                 "potentialAction": {
                     "@type": "SearchAction",
-                    //targe指定的域名必须是站点域名，不能用第三方搜索
                     "target": "https://www.renfei.net/search/?q={search_term_string}",
                     "query-input": "required name=search_term_string"
                 }
@@ -197,7 +141,19 @@
 <script th:inline="javascript">
     var domain = [[${domain}]];
     var page = [[${page}]];
+    var renfei_blog_height=0;
 
+    window.onload = function () {
+        $(".renfei-blog-item").each(function () {
+            var height = $(this).height();
+            if(height > renfei_blog_height){
+                renfei_blog_height = height;
+            }
+        });
+        $(".renfei-blog-item").each(function () {
+            $(this).height(renfei_blog_height);
+        });
+    }
     function nextPage() {
         window.location.href = domain + '/?page=' + (page + 1);
     }

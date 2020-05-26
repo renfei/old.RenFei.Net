@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@CacheConfig(cacheNames = "MenuService")
 public class MenuService extends BaseService {
     private static int HEAD_MENU_TYPE = 1;
     private static int HEAD_TOPNAV_TYPE = 4;
@@ -43,7 +42,6 @@ public class MenuService extends BaseService {
         return getMenuByPid(pid, HEAD_MENU_TYPE);
     }
 
-    @Cacheable(key = "targetClass+'_'+methodName+'_'+#p0+'_'+#p1", condition = "#p0!=null&&#p1!=null")
     public List<MenuDTO> getMenuByPid(Long pid, int menuType) {
         List<MenuDTO> menuDTOS = new ArrayList<>();
         MenuDOExample menuDOExample = new MenuDOExample();

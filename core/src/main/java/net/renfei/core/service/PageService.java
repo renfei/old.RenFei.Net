@@ -8,10 +8,8 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 @Service
-@CacheConfig(cacheNames = "PageService")
 public class PageService extends BaseService {
 
-    @Cacheable(key = "targetClass+'_'+methodName+'_'+#p0", condition = "#p0!=null")
     public PageDTO getPageByID(String id) {
         Long ID = 0L;
         if (!stringUtil.isEmpty(id)) {

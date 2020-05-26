@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/head::head(${head})">
+</head>
+<body>
+<header th:replace="layout/header::header(${header})"></header>
+<section id="page-breadcrumb">
+    <div class="vertical-center sun">
+        <div class="container">
+            <div class="row">
+                <div class="action">
+                    <div class="col-sm-12">
+                        <h1 class="title">Services</h1>
+                        <p>Designed to suit you.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="company-information" class="choose">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="0ms">
+                <img src="https://cdn.renfei.net/images/services/site.png" class="img-responsive" alt="">
+            </div>
+            <div class="col-sm-6 padding-top wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="0ms">
+                <h2>为什么选择我？</h2>
+                <p>我自2012年开始建站，已经拥有「8」年的互联网建站经验，无论是SEO还是底层DNS解析还是上层应用开发，我都已经轻车熟路。<br/>
+                    自2015年参加工作，已经拥有「5」年的软件开发工作经验，无论是政府的国产化自主可控，还是企业级的分布式高可用，都已经有成功经验。</p>
+                <ul class="elements">
+                    <li class="wow fadeInUp" data-wow-duration="700ms" data-wow-delay="100ms"><i
+                            class="fa fa-angle-right"></i> Java后端开发
+                    </li>
+                    <li class="wow fadeInUp" data-wow-duration="900ms" data-wow-delay="200ms"><i
+                            class="fa fa-angle-right"></i> 企业官网建站与运维
+                    </li>
+                    <li class="wow fadeInUp" data-wow-duration="800ms" data-wow-delay="300ms"><i
+                            class="fa fa-angle-right"></i> 传统企业上云搬家
+                    </li>
+                    <li class="wow fadeInUp" data-wow-duration="600ms" data-wow-delay="400ms"><i
+                            class="fa fa-angle-right"></i> 服务器/域名代运维
+                    </li>
+                    <li class="wow fadeInUp" data-wow-duration="500ms" data-wow-delay="500ms"><i
+                            class="fa fa-angle-right"></i> 微信公众号对接及小程序
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="services">
+    <div class="container">
+        <div class="row">
+            <a href="https://www.renfei.net/maven" target="_blank" class="col-sm-4 text-center padding wow fadeIn"
+               data-wow-duration="1000ms" data-wow-delay="300ms">
+                <div class="single-service">
+                    <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="300ms">
+                        <img src="https://cdn.renfei.net/images/services/maven.png" alt="">
+                    </div>
+                    <h2>Maven公共仓库服务</h2>
+                    <p>代理多种公共的maven仓库，助力开发者快速构建自己的项目。有效解决国内仓库速度慢的问题。</p>
+                </div>
+            </a>
+            <a href="http://ip.renfei.net/" target="_blank" class="col-sm-4 text-center padding wow fadeIn"
+               data-wow-duration="1000ms" data-wow-delay="600ms">
+                <div class="single-service">
+                    <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="600ms">
+                        <img src="https://cdn.renfei.net/images/services/ip.png" alt="">
+                    </div>
+                    <h2>获取公网IP服务</h2>
+                    <p>支持IPv4/IPv6网络，基于CDN边缘计算，快速查询本机互联网公网IP地址，服务DDNS程序的API接口。</p>
+                </div>
+            </a>
+            <a href="https://www.renfei.net/kitbox" target="_blank" class="col-sm-4 text-center padding wow fadeIn"
+               data-wow-duration="1000ms" data-wow-delay="900ms">
+                <div class="single-service">
+                    <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="900ms">
+                        <img src="https://cdn.renfei.net/images/services/toolbox.png" alt="">
+                    </div>
+                    <h2>开发者工具箱</h2>
+                    <p>工欲善其事，必先利其器。开发中常用的工具汇聚于此，优秀的开发者是会利用工具提升效率的。</p>
+                </div>
+            </a>
+
+            <a href="https://www.renfei.net/swagger-ui.html" target="_blank"
+               class="col-sm-4 text-center padding wow fadeIn" data-wow-duration="1000ms" data-wow-delay="300ms">
+                <div class="single-service">
+                    <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="300ms">
+                        <img src="https://cdn.renfei.net/images/services/api.png" alt="">
+                    </div>
+                    <h2>开放接口服务</h2>
+                    <p>开放编程能力，不仅仅面向普通用户，会开发的你应该会利用别人的能力完成自己的事情。</p>
+                </div>
+            </a>
+            <a class="col-sm-4 text-center padding wow fadeIn" data-wow-duration="1000ms" data-wow-delay="600ms">
+                <div class="single-service">
+                    <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="600ms">
+                        <img src="https://cdn.renfei.net/images/services/tailor.png" alt="">
+                    </div>
+                    <h2>付费开发/咨询服务</h2>
+                    <p>属于自己的才是最好的，私有量身定制开发，只有量身打造的才好用，服务不同请联系我获取报价。</p>
+                </div>
+            </a>
+            <a href="https://github.com/renfei-net" target="_blank" class="col-sm-4 text-center padding wow fadeIn"
+               data-wow-duration="1000ms" data-wow-delay="900ms">
+                <div class="single-service">
+                    <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="900ms">
+                        <img src="https://cdn.renfei.net/images/services/github.png" alt="">
+                    </div>
+                    <h2>Github开源项目</h2>
+                    <p>聪明的你不应该仅仅去看教程文章，看看代码又何妨。立即开始实践，一起做些什么改变这个世界吧</p>
+                </div>
+            </a>
+        </div>
+    </div>
+</section>
+
+<section id="action" class="responsive">
+    <div class="vertical-center">
+        <div class="container">
+            <div class="row">
+                <div class="action take-tour">
+                    <div class="col-sm-7 wow fadeInLeft" data-wow-duration="500ms" data-wow-delay="300ms">
+                        <h1 class="title">科技让人类跑的更远更快</h1>
+                        <p>信息技术让曾经不敢想象的事情马上显示在屏幕上呈现眼前</p>
+                    </div>
+                    <div class="col-sm-5 text-center wow fadeInRight" data-wow-duration="500ms" data-wow-delay="300ms">
+                        <div class="tour-button">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="recent-projects" class="recent-projects">
+    <div class="container">
+        <div class="row">
+            <h1 class="title text-center wow fadeInDown" data-wow-duration="500ms" data-wow-delay="300ms">Open Source
+                Projects</h1>
+            <p class="text-center padding-bottom wow fadeInDown" data-wow-duration="400ms" data-wow-delay="400ms">
+                开源项目<br>
+                让编程更简单和有趣 </p>
+
+        </div>
+    </div>
+</section>
+<footer th:replace="layout/footer::footer(${footer},${performance})"></footer>
+</body>
+</html>
