@@ -5,6 +5,8 @@
 [![codebeat badge](https://codebeat.co/badges/aa156256-094d-4d10-8df3-34682eac16b0)](https://codebeat.co/projects/github-com-neilren-renfei-net-master)
 
 ## RenFei.Net
+【！】此版本已经停止更新，请移步[https://github.com/renfei-net/renfei.net](https://github.com/renfei-net/renfei.net)
+
 [RenFei.Net](https://www.renfei.net) is Ren Fei's personal website and blog. He is a young programmer. Here is the open source code
  
 ---
